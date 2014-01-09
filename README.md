@@ -10,7 +10,7 @@ WHO Adolescent Health Quality Assessment
 
 # Developing an electronic tool to evaluate/review/assess the quality – including the friendliness – of health services, building on WHO’s tried and tested ‘paper’ tool.
 
-Dates: December 4thth, 2013 – February 4thth  2014 
+Dates: December 4th, 2013 – February 4th  2014 
 
 ## Rationale
 
