@@ -23,7 +23,7 @@ def main(global_config, **settings):
 def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('home', '/')
-    config.add_route('user_clinics', '/clinics/user/*traverse',
+    config.add_route('users', '/users/*traverse',
                      factory=UserFactory)
     config.add_route('clinics', '/clinics/*traverse',
                      factory=ClinicFactory)
