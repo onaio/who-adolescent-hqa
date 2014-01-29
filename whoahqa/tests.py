@@ -66,6 +66,16 @@ class TestBaseModel(TestBase):
         self.assertEqual(user.id, 2)
 
 
+class TestUser(TestBase):
+    def test_get_clinics(self):
+        self.setup_test_data()
+        user = User.newest()
+
+        clinics = user.get_clinics()
+        self.assertEqual(len(clinics), 1)
+        self.assertEqual(clinics[0].name, "Clinic No. 1")
+
+
 class TestUserFactory(TestBase):
     def test_get_item_returns_clinic_if_id_exists(self):
         self.setup_test_data()
@@ -92,7 +102,7 @@ class TestClinicFactory(TestBase):
         self.assertEqual(len(clinics), 1)
         self.assertEqual(clinics[0].name, "Clinic No. 2")
 
-    def test_get_item_returns_user_if_id_exists(self):
+    def test_get_item_returns_clinic_if_id_exists(self):
         self.setup_test_data()
         clinic = Clinic.newest()
 
@@ -107,14 +117,6 @@ class TestClinicFactory(TestBase):
         request = testing.DummyRequest()
         self.assertRaises(KeyError,
                           ClinicFactory(request).__getitem__, clinic_id)
-
-    def test_get_user_clinics(self):
-        self.setup_test_data()
-        user = User.newest()
-
-        clinics = ClinicFactory.get_user_clinics(user)
-        self.assertEqual(len(clinics), 1)
-        self.assertEqual(clinics[0].name, "Clinic No. 1")
 
 
 class TestClinicViews(TestBase):
