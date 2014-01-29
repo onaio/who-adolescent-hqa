@@ -50,6 +50,8 @@ class UserFactory(object):
         except NoResultFound:
             raise KeyError
         else:
+            user.__parent__ = self
+            user.__name__ = item
             return user
 
 
@@ -58,13 +60,15 @@ class ClinicFactory(object):
         self.request = request
 
     def __getitem__(self, item):
-        # try to retrieve the user whose id matches item
+        # try to retrieve the clinic whose id matches item
         try:
-            user = DBSession.query(Clinic).filter_by(id=item).one()
+            clinic = DBSession.query(Clinic).filter_by(id=item).one()
         except NoResultFound:
             raise KeyError
         else:
-            return user
+            clinic.__parent__ = self
+            clinic.__name__ = item
+            return clinic
 
     @classmethod
     def get_unassigned_clinics(cls):

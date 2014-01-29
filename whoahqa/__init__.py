@@ -4,6 +4,7 @@ from sqlalchemy import engine_from_config
 from whoahqa.models import (
     DBSession,
     Base,
+    UserFactory,
     ClinicFactory
 )
 
@@ -22,6 +23,8 @@ def main(global_config, **settings):
 def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('home', '/')
-    config.add_route(
-        'clinics', '/clinics/*traverse', factory=ClinicFactory)
+    config.add_route('user_clinics', '/clinics/user/*traverse',
+                     factory=UserFactory)
+    config.add_route('clinics', '/clinics/*traverse',
+                     factory=ClinicFactory)
     config.scan()
