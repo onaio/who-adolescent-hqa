@@ -156,7 +156,7 @@ class FunctionalTestBase(IntegrationTestBase):
         self.request = testing.DummyRequest()
 
 
-class TestClinicViewsFunctionalTestBase(FunctionalTestBase):
+class TestClinicViewsFunctional(FunctionalTestBase):
     def test_unassigned_clinics_view(self):
         url = self.request.route_path('clinics', traverse=('unassigned',))
         response = self.testapp.get(url)
