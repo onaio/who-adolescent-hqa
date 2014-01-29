@@ -62,8 +62,9 @@ class ClinicFactory(object):
     def __getitem__(self, item):
         # try to retrieve the clinic whose id matches item
         try:
-            clinic = DBSession.query(Clinic).filter_by(id=item).one()
-        except NoResultFound:
+            clinic_id = int(item)
+            clinic = DBSession.query(Clinic).filter_by(id=clinic_id).one()
+        except (ValueError, NoResultFound):
             raise KeyError
         else:
             clinic.__parent__ = self
