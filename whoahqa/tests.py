@@ -37,7 +37,7 @@ class TestBase(unittest.TestCase):
     def tearDown(self):
         testing.tearDown()
 
-    def create_test_clinics(self):
+    def setup_test_data(self):
         user = User()
 
         # add a couple of clinics
@@ -64,16 +64,32 @@ class TestBaseModel(TestBase):
 
 class TestClinicFactory(TestBase):
     def test_get_unassigned_clinics(self):
-        self.create_test_clinics()
+        self.setup_test_data()
 
         clinics = ClinicFactory.get_unassigned_clinics()
         self.assertEqual(len(clinics), 1)
         self.assertEqual(clinics[0].name, "Clinic No. 2")
 
+    def test_get_item_returns_user_if_id_exists(self):
+        self.setup_test_data()
+        user = User.newest()
+
+        request = testing.DummyRequest()
+        user = ClinicFactory(request).__getitem__(user.id)
+        self.assertIsInstance(user, User)
+
+    def test_get_item_raises_key_error_if_id_doesnt_exist(self):
+        # invalid user id
+        user_id = -1
+
+        request = testing.DummyRequest()
+        self.assertRaises(KeyError,
+                          ClinicFactory(request).__getitem__, user_id)
+
 
 class TestClinicView(TestBase):
     def test_unassigned_clinic_view(self):
-        self.create_test_clinics()
+        self.setup_test_data()
 
         request = testing.DummyRequest()
         response = unassigned_clinics(request)
@@ -81,6 +97,3 @@ class TestClinicView(TestBase):
         # we should only Clinic No. 2 in the response
         self.assertEqual(len(response['clinics']), 1)
         self.assertEqual(response['clinics'][0].name, "Clinic No. 2")
-
-
-

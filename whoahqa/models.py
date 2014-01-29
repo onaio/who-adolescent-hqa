@@ -44,7 +44,13 @@ class ClinicFactory(object):
         self.request = request
 
     def __getitem__(self, item):
-        pass
+        # try to retrieve the user whose id matches item
+        try:
+            user = DBSession.query(User).filter_by(id=item).one()
+        except NoResultFound:
+            raise KeyError
+        else:
+            return user
 
     @classmethod
     def get_unassigned_clinics(cls):
