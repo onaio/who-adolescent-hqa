@@ -86,6 +86,14 @@ class TestClinicFactory(TestBase):
         self.assertRaises(KeyError,
                           ClinicFactory(request).__getitem__, user_id)
 
+    def test_get_user_clinics(self):
+        self.setup_test_data()
+        user = User.newest()
+
+        clinics = ClinicFactory.get_user_clinics(user)
+        self.assertEqual(len(clinics), 1)
+        self.assertEqual(clinics[0].name, "Clinic No. 1")
+
 
 class TestClinicView(TestBase):
     def test_unassigned_clinic_view(self):
