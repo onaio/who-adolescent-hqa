@@ -10,7 +10,7 @@ from whoahqa.models import (
 )
 
 
-@view_config(route_name='clinics', renderer='templates/unassigned_clinics.pt',
+@view_config(route_name='clinics', renderer='templates/unassigned_clinics.jinja2',
              name='unassigned')
 def unassigned_clinics(request):
     clinics = ClinicFactory.get_unassigned_clinics()
@@ -19,7 +19,7 @@ def unassigned_clinics(request):
     }
 
 
-@view_config(route_name='users', renderer='templates/user_clinics.pt',
+@view_config(route_name='users', renderer='templates/user_clinics.jinja2',
              name='clinics')
 def user_clinics(request):
     user = request.context
