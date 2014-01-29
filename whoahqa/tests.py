@@ -155,6 +155,6 @@ class TestClinicViewsFunctional(TestBaseFunctional):
 
     def test_user_clinics_view(self):
         self.setup_test_data()
-        url = self.request.route_path('user_clinics', traverse=('1',))
+        url = self.request.route_path('users', traverse=('1', 'clinics'))
         response = self.testapp.get(url)
         self.assertEqual(response.status_code, 200)

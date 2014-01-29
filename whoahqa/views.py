@@ -19,8 +19,8 @@ def unassigned_clinics(request):
     }
 
 
-@view_config(route_name='user_clinics', renderer='templates/user_clinics.pt',
-             name='')
+@view_config(route_name='users', renderer='templates/user_clinics.pt',
+             name='clinics')
 def user_clinics(request):
     clinics = ClinicFactory.get_user_clinics(request.context)
     return {
