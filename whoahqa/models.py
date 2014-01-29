@@ -77,12 +77,6 @@ class ClinicFactory(object):
             user_clinics.columns.clinic_id == None).all()
         return clinics
 
-    @classmethod
-    def get_user_clinics(cls, user):
-        clinics = DBSession.query(Clinic).join(user_clinics).filter(
-            user_clinics.columns.user_id == user.id).all()
-        return clinics
-
 
 user_clinics = Table(
     'user_clinics',
@@ -96,6 +90,11 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     clinics = relationship("Clinic", secondary=user_clinics)
+
+    def get_clinics(self):
+        clinics = DBSession.query(Clinic).join(user_clinics).filter(
+            user_clinics.columns.user_id == self.id).all()
+        return clinics
 
 
 class Clinic(Base):
