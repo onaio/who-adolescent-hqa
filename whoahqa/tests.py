@@ -8,6 +8,7 @@ from pyramid.paster import (
 from sqlalchemy import engine_from_config
 from webtest import TestApp
 
+from whoahqa import main
 from whoahqa.models import (
     DBSession,
     Base,
@@ -30,7 +31,6 @@ engine = engine_from_config(settings, 'sqlalchemy.')
 class TestBase(unittest.TestCase):
     def setUp(self):
         self.config = testing.setUp()
-        self.config.include('whoahqa')
         # setup db
         DBSession.configure(bind=engine)
         Base.metadata.bind = engine
@@ -54,6 +54,12 @@ class TestBase(unittest.TestCase):
 
         with transaction.manager:
             DBSession.add_all([user, clinic1, clinic2])
+
+
+class IntegrationTestBase(TestBase):
+    def setUp(self):
+        super(IntegrationTestBase, self).setUp()
+        self.config.include('whoahqa')
 
 
 class TestBaseModel(TestBase):
@@ -119,7 +125,7 @@ class TestClinicFactory(TestBase):
                           ClinicFactory(request).__getitem__, clinic_id)
 
 
-class TestClinicViews(TestBase):
+class TestClinicViews(IntegrationTestBase):
     def test_unassigned_clinics_view(self):
         self.setup_test_data()
 
@@ -142,14 +148,15 @@ class TestClinicViews(TestBase):
         self.assertEqual(response['clinics'][0].name, "Clinic No. 1")
 
 
-class TestBaseFunctional(TestBase):
+class FunctionalTestBase(IntegrationTestBase):
     def setUp(self):
-        super(TestBaseFunctional, self).setUp()
-        self.testapp = TestApp("config:test.ini", relative_to="./")
+        super(FunctionalTestBase, self).setUp()
+        app = main({}, **settings)
+        self.testapp = TestApp(app)
         self.request = testing.DummyRequest()
 
 
-class TestClinicViewsFunctional(TestBaseFunctional):
+class TestClinicViewsFunctionalTestBase(FunctionalTestBase):
     def test_unassigned_clinics_view(self):
         url = self.request.route_path('clinics', traverse=('unassigned',))
         response = self.testapp.get(url)
