@@ -11,7 +11,9 @@ from pyramid.paster import (
 
 from whoahqa.models import (
     DBSession,
-    Base
+    Base,
+    User,
+    Clinic
 )
 
 
@@ -32,4 +34,5 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        pass
+        user = User()
+        DBSession.add_all([user])
