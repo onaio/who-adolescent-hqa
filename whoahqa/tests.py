@@ -11,6 +11,7 @@ from sqlalchemy import engine_from_config
 from whoahqa.models import (
     DBSession,
     Base,
+    BaseModel,
     User,
     Clinic,
     ClinicFactory
@@ -49,6 +50,16 @@ class TestBase(unittest.TestCase):
 
         with transaction.manager:
             DBSession.add_all([user, clinic1, clinic2])
+
+
+class TestBaseModel(TestBase):
+    def test_newest_returns_newest_record_by_id_desc(self):
+        user1 = User(id=1)
+        user2 = User(id=2)
+        with transaction.manager:
+            DBSession.add_all([user1, user2])
+        user = User.newest()
+        self.assertEqual(user.id, 2)
 
 
 class TestClinicFactory(TestBase):

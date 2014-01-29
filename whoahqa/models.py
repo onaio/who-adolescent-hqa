@@ -9,6 +9,8 @@ from sqlalchemy import (
 )
 
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.sql.expression import desc
 
 from sqlalchemy.orm import (
     scoped_session,
@@ -21,7 +23,15 @@ from sqlalchemy.orm import (
 from zope.sqlalchemy import ZopeTransactionExtension
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
-Base = declarative_base()
+
+
+class BaseModel(object):
+    @classmethod
+    def newest(cls):
+        return DBSession.query(cls).order_by(desc(cls.id)).first()
+
+
+Base = declarative_base(cls=BaseModel)
 
 
 class RootFactory(object):
