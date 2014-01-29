@@ -10,12 +10,19 @@ from whoahqa.models import (
 )
 
 
-@view_config(
-    route_name='clinics', renderer='templates/unassigned_clinics',
-    name='un-assigned')
+@view_config(route_name='clinics', renderer='templates/unassigned_clinics.pt',
+             name='unassigned')
 def unassigned_clinics(request):
     clinics = ClinicFactory.get_unassigned_clinics()
     return {
         'clinics': clinics
     }
 
+
+@view_config(route_name='user_clinics', renderer='templates/user_clinics.pt',
+             name='')
+def user_clinics(request):
+    clinics = ClinicFactory.get_user_clinics(request.context)
+    return {
+        'clinics': clinics
+    }

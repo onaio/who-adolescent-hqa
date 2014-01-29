@@ -5,8 +5,8 @@ from pyramid import testing
 from pyramid.paster import (
     get_appsettings
 )
-
 from sqlalchemy import engine_from_config
+from webtest import TestApp
 
 from whoahqa.models import (
     DBSession,
@@ -17,7 +17,6 @@ from whoahqa.models import (
     User,
     Clinic
 )
-
 from whoahqa.views import (
     unassigned_clinics,
     user_clinics
@@ -26,7 +25,6 @@ from whoahqa.views import (
 
 settings = get_appsettings('test.ini')
 engine = engine_from_config(settings, 'sqlalchemy.')
-DBSession.configure(bind=engine)
 
 
 class TestBase(unittest.TestCase):
@@ -34,11 +32,13 @@ class TestBase(unittest.TestCase):
         self.config = testing.setUp()
         self.config.include('whoahqa')
         # setup db
+        DBSession.configure(bind=engine)
         Base.metadata.bind = engine
         Base.metadata.drop_all()
         Base.metadata.create_all()
 
     def tearDown(self):
+        DBSession.remove()
         testing.tearDown()
 
     def setup_test_data(self):
@@ -117,8 +117,8 @@ class TestClinicFactory(TestBase):
         self.assertEqual(clinics[0].name, "Clinic No. 1")
 
 
-class TestClinicView(TestBase):
-    def test_unassigned_clinic_view(self):
+class TestClinicViews(TestBase):
+    def test_unassigned_clinics_view(self):
         self.setup_test_data()
 
         request = testing.DummyRequest()
@@ -138,3 +138,23 @@ class TestClinicView(TestBase):
         # we should only have Clinic No. 1 in the response
         self.assertEqual(len(response['clinics']), 1)
         self.assertEqual(response['clinics'][0].name, "Clinic No. 1")
+
+
+class TestBaseFunctional(TestBase):
+    def setUp(self):
+        super(TestBaseFunctional, self).setUp()
+        self.testapp = TestApp("config:test.ini", relative_to="./")
+        self.request = testing.DummyRequest()
+
+
+class TestClinicViewsFunctional(TestBaseFunctional):
+    def test_unassigned_clinics_view(self):
+        url = self.request.route_path('clinics', traverse=('unassigned',))
+        response = self.testapp.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_clinics_view(self):
+        self.setup_test_data()
+        url = self.request.route_path('user_clinics', traverse=('1',))
+        response = self.testapp.get(url)
+        self.assertEqual(response.status_code, 200)
