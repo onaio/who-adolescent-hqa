@@ -12,12 +12,16 @@ from whoahqa.models import (
     DBSession,
     Base,
     BaseModel,
+    UserFactory,
+    ClinicFactory,
     User,
-    Clinic,
-    ClinicFactory
+    Clinic
 )
 
-from whoahqa.views import unassigned_clinics
+from whoahqa.views import (
+    unassigned_clinics,
+    user_clinics
+)
 
 
 settings = get_appsettings('test.ini')
@@ -62,6 +66,24 @@ class TestBaseModel(TestBase):
         self.assertEqual(user.id, 2)
 
 
+class TestUserFactory(TestBase):
+    def test_get_item_returns_clinic_if_id_exists(self):
+        self.setup_test_data()
+        clinic = Clinic.newest()
+
+        request = testing.DummyRequest()
+        clinic = ClinicFactory(request).__getitem__(clinic.id)
+        self.assertIsInstance(clinic, Clinic)
+
+    def test_get_item_raises_key_error_if_id_doesnt_exist(self):
+        # invalid clinic id
+        clinic_id = -1
+
+        request = testing.DummyRequest()
+        self.assertRaises(KeyError,
+                          ClinicFactory(request).__getitem__, clinic_id)
+
+
 class TestClinicFactory(TestBase):
     def test_get_unassigned_clinics(self):
         self.setup_test_data()
@@ -72,19 +94,19 @@ class TestClinicFactory(TestBase):
 
     def test_get_item_returns_user_if_id_exists(self):
         self.setup_test_data()
-        user = User.newest()
+        clinic = Clinic.newest()
 
         request = testing.DummyRequest()
-        user = ClinicFactory(request).__getitem__(user.id)
-        self.assertIsInstance(user, User)
+        clinic = ClinicFactory(request).__getitem__(clinic.id)
+        self.assertIsInstance(clinic, Clinic)
 
     def test_get_item_raises_key_error_if_id_doesnt_exist(self):
         # invalid user id
-        user_id = -1
+        clinic_id = -1
 
         request = testing.DummyRequest()
         self.assertRaises(KeyError,
-                          ClinicFactory(request).__getitem__, user_id)
+                          ClinicFactory(request).__getitem__, clinic_id)
 
     def test_get_user_clinics(self):
         self.setup_test_data()
@@ -102,6 +124,17 @@ class TestClinicView(TestBase):
         request = testing.DummyRequest()
         response = unassigned_clinics(request)
 
-        # we should only Clinic No. 2 in the response
+        # we should only have Clinic No. 2 in the response
         self.assertEqual(len(response['clinics']), 1)
         self.assertEqual(response['clinics'][0].name, "Clinic No. 2")
+
+    def test_user_clinics_view(self):
+        self.setup_test_data()
+        user = User.newest()
+        request = testing.DummyRequest()
+        request.context = user
+        response = user_clinics(request)
+
+        # we should only have Clinic No. 1 in the response
+        self.assertEqual(len(response['clinics']), 1)
+        self.assertEqual(response['clinics'][0].name, "Clinic No. 1")
