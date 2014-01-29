@@ -36,7 +36,21 @@ Base = declarative_base(cls=BaseModel)
 
 class RootFactory(object):
     def __init__(self, request):
-        pass
+        self.request = request
+
+
+class UserFactory(object):
+    def __init__(self, request):
+        self.request = request
+
+    def __getitem__(self, item):
+        # try to retrieve the user whose id matches item
+        try:
+            user = DBSession.query(User).filter_by(id=item).one()
+        except NoResultFound:
+            raise KeyError
+        else:
+            return user
 
 
 class ClinicFactory(object):
@@ -46,7 +60,7 @@ class ClinicFactory(object):
     def __getitem__(self, item):
         # try to retrieve the user whose id matches item
         try:
-            user = DBSession.query(User).filter_by(id=item).one()
+            user = DBSession.query(Clinic).filter_by(id=item).one()
         except NoResultFound:
             raise KeyError
         else:
