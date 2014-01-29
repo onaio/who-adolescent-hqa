@@ -55,7 +55,13 @@ class ClinicFactory(object):
     @classmethod
     def get_unassigned_clinics(cls):
         clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
-            "user_clinics.clinic_id IS NULL").all()
+            user_clinics.columns.clinic_id == None).all()
+        return clinics
+
+    @classmethod
+    def get_user_clinics(cls, user):
+        clinics = DBSession.query(Clinic).join(user_clinics).filter(
+            user_clinics.columns.user_id == user.id).all()
         return clinics
 
 
