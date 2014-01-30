@@ -16,7 +16,6 @@ requires = [
     'waitress',
     'alembic',
     'psycopg2',
-    'webtest',
     'fabric',
     'python-slugify'
 ]
@@ -40,6 +39,9 @@ setup(name='who-ahqa',
       zip_safe=False,
       test_suite='whoahqa',
       install_requires=requires,
+      tests_require=[
+          'webtest'
+      ],
       entry_points="""\
       [paste.app_factory]
       main = whoahqa:main
