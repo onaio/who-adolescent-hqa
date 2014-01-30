@@ -1,6 +1,7 @@
 import unittest
 import transaction
 
+from webob.multidict import MultiDict
 from pyramid import testing
 from pyramid.paster import (
     get_appsettings
@@ -15,12 +16,13 @@ from whoahqa.models import (
     BaseModel,
     UserFactory,
     ClinicFactory,
+    user_clinics,
     User,
     Clinic
 )
 from whoahqa.views import (
-    unassigned_clinics,
-    user_clinics
+    ClinicViews,
+    users_clinics
 )
 
 
@@ -82,6 +84,17 @@ class TestUser(TestBase):
         self.assertEqual(clinics[0].name, "Clinic No. 1")
 
 
+class TestClinic(TestBase):
+    def test_assign_to_user(self):
+        self.setup_test_data()
+        user = User.newest()
+        clinic = DBSession.query(Clinic).filter_by(name="Clinic No. 2").one()
+        clinic.assign_to(user)
+        user = DBSession.merge(user)
+        clinic = DBSession.merge(clinic)
+        self.assertEqual(clinic.user, user)
+
+
 class TestUserFactory(TestBase):
     def test_get_item_returns_clinic_if_id_exists(self):
         self.setup_test_data()
@@ -126,17 +139,41 @@ class TestClinicFactory(TestBase):
 
 
 class TestClinicViews(IntegrationTestBase):
+    def setUp(self):
+        super(TestClinicViews, self).setUp()
+        self.request = testing.DummyRequest()
+        self.clinic_views = ClinicViews(self.request)
+
     def test_unassigned_clinics_view(self):
         self.setup_test_data()
-
-        request = testing.DummyRequest()
-        response = unassigned_clinics(request)
+        response = self.clinic_views.unassigned()
 
         # we should only have Clinic No. 2 in the response
         self.assertEqual(len(response['clinics']), 1)
         self.assertEqual(response['clinics'][0].name, "Clinic No. 2")
 
-    def test_user_clinics_view(self):
+    def test_assign_view(self):
+        self.setup_test_data()
+        user = User.newest()
+
+        # get the unassigned clinic
+        clinic = DBSession.query(Clinic).filter_by(name="Clinic No. 2").one()
+        clinic_id = clinic.id
+        self.request.context = clinic
+        self.request.method = 'POST'
+        self.request.user = user
+        values = []
+        self.request.POST = MultiDict(values)
+        response = self.clinic_views.assign()
+
+        # clinic should now be assigned to user
+        count = DBSession.query(user_clinics).filter(
+            user_clinics.columns.clinic_id == clinic_id).count()
+        self.assertEqual(count, 1)
+
+
+class TestUserViews(IntegrationTestBase):
+    def _test_user_clinics_view(self):
         self.setup_test_data()
         user = User.newest()
         request = testing.DummyRequest()

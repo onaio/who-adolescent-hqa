@@ -1,6 +1,9 @@
 from pyramid.config import Configurator
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
 from sqlalchemy import engine_from_config
 
+from whoahqa.security import group_finder
 from whoahqa.models import (
     DBSession,
     Base,
@@ -15,7 +18,13 @@ def main(global_config, **settings):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.bind = engine
-    config = Configurator(settings=settings)
+    config = Configurator(settings=settings,
+                          root_factory='whoahqa.models.RootFactory')
+    config.set_authentication_policy(
+        AuthTktAuthenticationPolicy(settings['auth_key'],
+                                    callback=group_finder,
+                                    hashalg='sha512'))
+    config.set_authorization_policy(ACLAuthorizationPolicy())
     includeme(config)
     return config.make_wsgi_app()
 
