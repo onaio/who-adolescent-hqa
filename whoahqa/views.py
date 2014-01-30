@@ -14,15 +14,19 @@ from whoahqa.models import (
 )
 
 
+@view_defaults(route_name='users')
+class UserViews(object):
+    def __init__(self, request):
+        self.request = request
 
-@view_config(route_name='users', renderer='templates/user_clinics.jinja2',
-             name='clinics')
-def users_clinics(request):
-    user = request.context
-    clinics = user.get_clinics()
-    return {
-        'clinics': clinics
-    }
+    @view_config(renderer='templates/user_clinics.jinja2', name='clinics')
+    def clinics(self):
+        user = self.request.context
+        clinics = user.get_clinics()
+        return {
+            'clinics': clinics
+        }
+
 
 @view_defaults(route_name='clinics')
 class ClinicViews(object):
