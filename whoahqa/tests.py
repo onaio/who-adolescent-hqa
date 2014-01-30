@@ -6,6 +6,7 @@ from pyramid import testing
 from pyramid.paster import (
     get_appsettings
 )
+from pyramid.security import IAuthenticationPolicy
 from sqlalchemy import engine_from_config
 from webtest import TestApp
 
@@ -192,9 +193,20 @@ class FunctionalTestBase(IntegrationTestBase):
         app = main({}, **settings)
         self.testapp = TestApp(app)
         self.request = testing.DummyRequest()
+        self.request.environ = {
+            'SERVER_NAME': 'localhost'
+        }
 
 
-class TestClinicViewsFunctional(FunctionalTestBase):
+class TestViewsFunctional(FunctionalTestBase):
+    def _login_user(self, user):
+        policy = self.testapp.app.registry.queryUtility(IAuthenticationPolicy)
+        headers = policy.remember(self.request, user.id)
+        cookie_parts = dict(headers)['Set-Cookie'].split('; ')
+        cookie = filter(
+            lambda i: i.split('=')[0] == 'auth_tkt', cookie_parts)[0]
+        return {'Cookie': cookie}
+
     def test_unassigned_clinics_view(self):
         url = self.request.route_path('clinics', traverse=('unassigned',))
         response = self.testapp.get(url)
@@ -205,3 +217,14 @@ class TestClinicViewsFunctional(FunctionalTestBase):
         url = self.request.route_path('users', traverse=('1', 'clinics'))
         response = self.testapp.get(url)
         self.assertEqual(response.status_code, 200)
+
+    def test_assign_clinic_view(self):
+        self.setup_test_data()
+        user = User.newest()
+        headers = self._login_user(user)
+
+        unassigned_clinic = ClinicFactory.get_unassigned_clinics()[0]
+        url = self.request.route_path(
+            'clinics', traverse=(unassigned_clinic.id, 'assign'))
+        params = MultiDict([])
+        response = self.testapp.post(url, params, headers=headers)
