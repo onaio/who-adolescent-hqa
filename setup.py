@@ -40,7 +40,7 @@ setup(name='who-ahqa',
       test_suite='whoahqa',
       install_requires=requires,
       tests_require=[
-          'webtest'
+          'WebTest'
       ],
       entry_points="""\
       [paste.app_factory]

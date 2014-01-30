@@ -1,17 +1,34 @@
 from pyramid.security import authenticated_userid
 from pyramid.response import Response
+from pyramid.httpexceptions import (
+    HTTPFound,
+    HTTPNotFound,
+    )
 from pyramid.view import (
     view_config,
     view_defaults,
 )
+from pyramid.events import NewRequest
+from pyramid.events import subscriber
 
 from sqlalchemy.exc import DBAPIError
+from sqlalchemy.orm.exc import NoResultFound
 
 from whoahqa.models import (
     DBSession,
-    Clinic,
-    ClinicFactory
+    ClinicFactory,
+    User,
+    Clinic
 )
+
+@subscriber(NewRequest)
+def set_request_user(event):
+    request = event.request
+    user_id = authenticated_userid(request)
+    try:
+        request.user = User.get(User.id == user_id)
+    except NoResultFound:
+        request.user = None
 
 
 @view_defaults(route_name='users')
@@ -41,8 +58,10 @@ class ClinicViews(object):
             'clinics': clinics
         }
 
-    @view_config(name='assign', request_method='POST', check_csrf=True)
+    @view_config(name='assign', request_method='POST', check_csrf=False)
     def assign(self):
         clinic = self.request.context
         user = self.request.user
         clinic.assign_to(user)
+        return HTTPFound(
+            self.request.route_url('clinics', traverse=('unassigned',)))
