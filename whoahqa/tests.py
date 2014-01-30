@@ -22,7 +22,7 @@ from whoahqa.models import (
 )
 from whoahqa.views import (
     ClinicViews,
-    users_clinics
+    UserViews
 )
 
 
@@ -173,12 +173,13 @@ class TestClinicViews(IntegrationTestBase):
 
 
 class TestUserViews(IntegrationTestBase):
-    def _test_user_clinics_view(self):
+    def test_user_clinics_view(self):
         self.setup_test_data()
         user = User.newest()
         request = testing.DummyRequest()
         request.context = user
-        response = user_clinics(request)
+        user_views = UserViews(request)
+        response = user_views.clinics()
 
         # we should only have Clinic No. 1 in the response
         self.assertEqual(len(response['clinics']), 1)
