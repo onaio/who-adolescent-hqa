@@ -74,6 +74,13 @@ class TestBaseModel(TestBase):
         user = User.newest()
         self.assertEqual(user.id, 2)
 
+    def test_get_returns_record_filtered_by_criterion(self):
+        user = User(id=1)
+        with transaction.manager:
+            DBSession.add(user)
+        user = User.get(User.id == 1)
+        self.assertIsInstance(user, User)
+
 
 class TestUser(TestBase):
     def test_get_clinics(self):

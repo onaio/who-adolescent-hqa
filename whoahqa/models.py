@@ -32,6 +32,10 @@ class BaseModel(object):
     def newest(cls):
         return DBSession.query(cls).order_by(desc(cls.id)).first()
 
+    @classmethod
+    def get(cls, *criterion):
+        return DBSession.query(cls).filter(*criterion).one()
+
 
 Base = declarative_base(cls=BaseModel)
 
