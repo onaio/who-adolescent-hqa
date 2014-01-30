@@ -1,3 +1,5 @@
+import transaction
+
 from sqlalchemy import (
     Column,
     Index,
@@ -101,3 +103,9 @@ class Clinic(Base):
     __tablename__ = 'clinics'
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
+    user = relationship("User", secondary=user_clinics, uselist=False)
+
+    def assign_to(self, user):
+        self.user = user
+        with transaction.manager:
+            DBSession.add(self)
