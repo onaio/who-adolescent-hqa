@@ -36,7 +36,8 @@ class UserViews(object):
     def __init__(self, request):
         self.request = request
 
-    @view_config(renderer='templates/user_clinics.jinja2', name='clinics')
+    @view_config(name='clinics',
+                 renderer='templates/user_clinics.jinja2')
     def clinics(self):
         user = self.request.context
         clinics = user.get_clinics()
@@ -50,8 +51,8 @@ class ClinicViews(object):
     def __init__(self, request):
         self.request = request
 
-    @view_config(renderer='templates/clinics_unassigned.jinja2',
-                 name='unassigned')
+    @view_config(name='unassigned',
+                 renderer='templates/clinics_unassigned.jinja2')
     def unassigned(self):
         clinics = Clinic.get_unassigned()
         return {
