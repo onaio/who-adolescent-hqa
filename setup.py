@@ -17,7 +17,8 @@ requires = [
     'alembic',
     'psycopg2',
     'fabric',
-    'python-slugify'
+    'python-slugify',
+    'pyramid_jinja2'
 ]
 
 setup(name='who-ahqa',
