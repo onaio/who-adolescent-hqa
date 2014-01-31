@@ -69,3 +69,10 @@ class ClinicViews(object):
             clinic.assign_to(user)
         return HTTPFound(
             self.request.route_url('clinics', traverse=('unassigned',)))
+
+    @view_config(name='', request_method='GET', context=Clinic)
+    def show(self):
+        clinic = self.request.context
+        return {
+            'clinic': clinic
+        }
