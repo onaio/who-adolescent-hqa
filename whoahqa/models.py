@@ -36,6 +36,10 @@ class BaseModel(object):
     def get(cls, *criterion):
         return DBSession.query(cls).filter(*criterion).one()
 
+    @classmethod
+    def all(cls, *criterion):
+        return DBSession.query(cls).filter(*criterion).all()
+
 
 Base = declarative_base(cls=BaseModel)
 
@@ -111,5 +115,4 @@ class Clinic(Base):
 
     def assign_to(self, user):
         self.user = user
-        with transaction.manager:
-            DBSession.add(self)
+        DBSession.add(self)

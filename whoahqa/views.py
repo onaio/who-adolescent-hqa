@@ -62,6 +62,11 @@ class ClinicViews(object):
     def assign(self):
         clinic = self.request.context
         user = self.request.user
-        clinic.assign_to(user)
+
+        # get the list of requested clinics
+        clinic_ids = self.request.POST.getall('clinic_id')
+        clinics = Clinic.all(Clinic.id.in_(clinic_ids))
+        for clinic in clinics:
+            clinic.assign_to(user)
         return HTTPFound(
             self.request.route_url('clinics', traverse=('unassigned',)))
