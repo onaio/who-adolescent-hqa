@@ -260,3 +260,12 @@ class TestViewsFunctional(FunctionalTestBase):
         url = self.request.route_path('clinics', traverse=('assign',))
         params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
         response = self.testapp.post(url, params, headers=headers)
+
+    def test_clinic_show(self):
+        self.setup_test_data()
+        user = User.newest()
+
+        clinic = Clinic.get(Clinic.id == 1)
+        url = self.request.route_path('clinics', traverse=(clinic.id,))
+        response = self.testapp.get(url)
+        self.assertEqual(response.status_code, 200)
