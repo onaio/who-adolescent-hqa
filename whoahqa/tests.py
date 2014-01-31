@@ -193,9 +193,17 @@ class TestClinicViews(IntegrationTestBase):
         self.request.POST = params
         response = self.clinic_views.assign()
 
-        # both clinic2 should now be assigned to user
+        # both clinics should now be assigned to user
         count = DBSession.query(user_clinics).count()
         self.assertEqual(count, 2)
+
+    def test_show(self):
+        self.setup_test_data()
+        clinic = Clinic.get(Clinic.id == 1)
+        self.request.context = clinic
+        response = self.clinic_views.show()
+        self.assertIsInstance(response['clinic'], Clinic)
+        self.assertEqual(response['clinic'].id, clinic.id)
 
 
 class TestUserViews(IntegrationTestBase):
