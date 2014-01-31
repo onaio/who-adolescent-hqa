@@ -18,7 +18,8 @@ requires = [
     'psycopg2',
     'fabric',
     'python-slugify',
-    'pyramid_jinja2'
+    'pyramid_jinja2',
+    'WebTest'
 ]
 
 setup(name='who-ahqa',
