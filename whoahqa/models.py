@@ -40,6 +40,9 @@ class BaseModel(object):
     def all(cls, *criterion):
         return DBSession.query(cls).filter(*criterion).all()
 
+    @classmethod
+    def count(cls, *criterion):
+        return DBSession.query(cls).filter(*criterion).count()
 
 Base = declarative_base(cls=BaseModel)
 
