@@ -53,14 +53,13 @@ class ClinicViews(object):
     @view_config(renderer='templates/unassigned_clinics.jinja2',
                  name='unassigned')
     def unassigned(self):
-        clinics = ClinicFactory.get_unassigned_clinics()
+        clinics = Clinic.get_unassigned()
         return {
             'clinics': clinics
         }
 
     @view_config(name='assign', request_method='POST', check_csrf=False)
     def assign(self):
-        clinic = self.request.context
         user = self.request.user
 
         # get the list of requested clinics
