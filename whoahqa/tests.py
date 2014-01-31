@@ -94,6 +94,11 @@ class TestBaseModel(TestBase):
         clinics = Clinic.all(Clinic.id.in_([1, 2]))
         self.assertEqual(len(clinics), 2)
 
+    def test_count_returns_count_filtered_by_criterion(self):
+        self.setup_test_data()
+        count = Clinic.count(Clinic.id.in_([1, 2]))
+        self.assertEqual(count, 2)
+
 
 class TestUser(TestBase):
     def test_get_clinics(self):
@@ -179,7 +184,7 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(count, 1)
 
         user = User.newest()
-        
+
         # get the clinics
         clinics = Clinic.all()
         self.request.method = 'POST'
