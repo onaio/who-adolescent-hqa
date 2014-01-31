@@ -48,12 +48,12 @@ class TestBase(unittest.TestCase):
         user = User()
 
         # add a couple of clinics
-        clinic1 = Clinic(name="Clinic No. 1")
+        clinic1 = Clinic(id=1, name="Clinic No. 1")
         # assign a user to clinic1
         user.clinics.append(clinic1)
 
         # leave clinic 2 unassigned
-        clinic2 = Clinic(name="Clinic No. 2")
+        clinic2 = Clinic(id=2, name="Clinic No. 2")
 
         with transaction.manager:
             DBSession.add_all([user, clinic1, clinic2])
@@ -63,6 +63,14 @@ class IntegrationTestBase(TestBase):
     def setUp(self):
         super(IntegrationTestBase, self).setUp()
         self.config.include('whoahqa')
+
+
+class TestSetRequestUser(TestBase):
+    def test_sets_user_if_id_exists(self):
+        pass
+
+    def test_sets_none_if_id_doesnt_exist(self):
+        pass
 
 
 class TestBaseModel(TestBase):
@@ -80,6 +88,11 @@ class TestBaseModel(TestBase):
             DBSession.add(user)
         user = User.get(User.id == 1)
         self.assertIsInstance(user, User)
+
+    def test_all_returns_multiple_matches_filtered_by_criterion(self):
+        self.setup_test_data()
+        clinics = Clinic.all(Clinic.id.in_([1, 2]))
+        self.assertEqual(len(clinics), 2)
 
 
 class TestUser(TestBase):
@@ -162,22 +175,22 @@ class TestClinicViews(IntegrationTestBase):
 
     def test_assign_view(self):
         self.setup_test_data()
-        user = User.newest()
+        count = DBSession.query(user_clinics).count()
+        self.assertEqual(count, 1)
 
-        # get the unassigned clinic
-        clinic = DBSession.query(Clinic).filter_by(name="Clinic No. 2").one()
-        clinic_id = clinic.id
-        self.request.context = clinic
+        user = User.newest()
+        
+        # get the clinics
+        clinics = Clinic.all()
         self.request.method = 'POST'
         self.request.user = user
-        values = []
-        self.request.POST = MultiDict(values)
+        params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
+        self.request.POST = params
         response = self.clinic_views.assign()
 
-        # clinic should now be assigned to user
-        count = DBSession.query(user_clinics).filter(
-            user_clinics.columns.clinic_id == clinic_id).count()
-        self.assertEqual(count, 1)
+        # both clinic2 should now be assigned to user
+        count = DBSession.query(user_clinics).count()
+        self.assertEqual(count, 2)
 
 
 class TestUserViews(IntegrationTestBase):
@@ -230,8 +243,7 @@ class TestViewsFunctional(FunctionalTestBase):
         user = User.newest()
         headers = self._login_user(user)
 
-        unassigned_clinic = ClinicFactory.get_unassigned_clinics()[0]
-        url = self.request.route_path(
-            'clinics', traverse=(unassigned_clinic.id, 'assign'))
-        params = MultiDict([])
+        clinics = Clinic.all()
+        url = self.request.route_path('clinics', traverse=('assign',))
+        params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
         response = self.testapp.post(url, params, headers=headers)
