@@ -50,7 +50,7 @@ class ClinicViews(object):
     def __init__(self, request):
         self.request = request
 
-    @view_config(renderer='templates/unassigned_clinics.jinja2',
+    @view_config(renderer='templates/clinics_unassigned.jinja2',
                  name='unassigned')
     def unassigned(self):
         clinics = Clinic.get_unassigned()
