@@ -84,12 +84,6 @@ class ClinicFactory(object):
             clinic.__name__ = item
             return clinic
 
-    @classmethod
-    def get_unassigned_clinics(cls):
-        clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
-            user_clinics.columns.clinic_id == None).all()
-        return clinics
-
 
 user_clinics = Table(
     'user_clinics',
@@ -119,3 +113,9 @@ class Clinic(Base):
     def assign_to(self, user):
         self.user = user
         DBSession.add(self)
+
+    @classmethod
+    def get_unassigned(cls):
+        clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
+            user_clinics.columns.clinic_id == None).all()
+        return clinics

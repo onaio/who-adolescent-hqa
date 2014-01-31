@@ -120,6 +120,13 @@ class TestClinic(TestBase):
         clinic = DBSession.merge(clinic)
         self.assertEqual(clinic.user, user)
 
+    def test_get_unassigned_clinics(self):
+        self.setup_test_data()
+
+        clinics = Clinic.get_unassigned()
+        self.assertEqual(len(clinics), 1)
+        self.assertEqual(clinics[0].name, "Clinic No. 2")
+
 
 class TestUserFactory(TestBase):
     def test_get_item_returns_clinic_if_id_exists(self):
@@ -140,13 +147,6 @@ class TestUserFactory(TestBase):
 
 
 class TestClinicFactory(TestBase):
-    def test_get_unassigned_clinics(self):
-        self.setup_test_data()
-
-        clinics = ClinicFactory.get_unassigned_clinics()
-        self.assertEqual(len(clinics), 1)
-        self.assertEqual(clinics[0].name, "Clinic No. 2")
-
     def test_get_item_returns_clinic_if_id_exists(self):
         self.setup_test_data()
         clinic = Clinic.newest()
