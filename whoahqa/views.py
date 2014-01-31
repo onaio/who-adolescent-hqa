@@ -70,7 +70,8 @@ class ClinicViews(object):
         return HTTPFound(
             self.request.route_url('clinics', traverse=('unassigned',)))
 
-    @view_config(name='', request_method='GET', context=Clinic)
+    @view_config(name='', request_method='GET', context=Clinic,
+                 renderer='templates/clinics_show.jinja2')
     def show(self):
         clinic = self.request.context
         return {
