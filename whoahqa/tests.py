@@ -232,9 +232,9 @@ class FunctionalTestBase(IntegrationTestBase):
 
 
 class TestViewsFunctional(FunctionalTestBase):
-    def _login_user(self, user):
+    def _login_user(self, user_id):
         policy = self.testapp.app.registry.queryUtility(IAuthenticationPolicy)
-        headers = policy.remember(self.request, user.id)
+        headers = policy.remember(self.request, user_id)
         cookie_parts = dict(headers)['Set-Cookie'].split('; ')
         cookie = filter(
             lambda i: i.split('=')[0] == 'auth_tkt', cookie_parts)[0]
@@ -254,16 +254,16 @@ class TestViewsFunctional(FunctionalTestBase):
     def test_assign_clinic_view(self):
         self.setup_test_data()
         user = User.newest()
-        headers = self._login_user(user)
+        headers = self._login_user(user.id)
 
         clinics = Clinic.all()
         url = self.request.route_path('clinics', traverse=('assign',))
         params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
         response = self.testapp.post(url, params, headers=headers)
         self.assertEqual(response.status_code, 302)
-        url = self.request.route_url('clinics', traverse=('unassigned',))
+        path = self.request.route_path('clinics', traverse=('unassigned',))
         # TODO: have request use example.com as host
-        #self.assertEqual(response.location, url)
+        self.assertEqual(response.location, "http://localhost{}".format(path))
 
     def test_clinic_show(self):
         self.setup_test_data()
