@@ -227,7 +227,7 @@ class FunctionalTestBase(IntegrationTestBase):
         self.testapp = TestApp(app)
         self.request = testing.DummyRequest()
         self.request.environ = {
-            'SERVER_NAME': 'localhost'
+            'SERVER_NAME': 'example.com',
         }
 
 
@@ -260,6 +260,10 @@ class TestViewsFunctional(FunctionalTestBase):
         url = self.request.route_path('clinics', traverse=('assign',))
         params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
         response = self.testapp.post(url, params, headers=headers)
+        self.assertEqual(response.status_code, 302)
+        url = self.request.route_url('clinics', traverse=('unassigned',))
+        # TODO: have request use example.com as host
+        #self.assertEqual(response.location, url)
 
     def test_clinic_show(self):
         self.setup_test_data()

@@ -20,12 +20,12 @@ def main(global_config, **settings):
     DBSession.configure(bind=engine)
     Base.metadata.bind = engine
     session_factory = UnencryptedCookieSessionFactoryConfig(
-        settings['session_key'])
+        settings['secret_key'])
     config = Configurator(settings=settings,
                           root_factory='whoahqa.models.RootFactory',
                           session_factory=session_factory)
     config.set_authentication_policy(
-        AuthTktAuthenticationPolicy(settings['auth_key'],
+        AuthTktAuthenticationPolicy(settings['secret_key'],
                                     callback=group_finder,
                                     hashalg='sha512'))
 
