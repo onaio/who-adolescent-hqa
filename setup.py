@@ -41,9 +41,6 @@ setup(name='who-ahqa',
       zip_safe=False,
       test_suite='whoahqa',
       install_requires=requires,
-      tests_require=[
-          'WebTest'
-      ],
       entry_points="""\
       [paste.app_factory]
       main = whoahqa:main
