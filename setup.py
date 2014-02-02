@@ -19,7 +19,8 @@ requires = [
     'fabric',
     'python-slugify',
     'pyramid_jinja2',
-    'WebTest'
+    'WebTest',
+    'alembic',
 ]
 
 setup(name='who-ahqa',
