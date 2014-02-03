@@ -127,6 +127,13 @@ class TestClinic(TestBase):
         self.assertEqual(len(clinics), 1)
         self.assertEqual(clinics[0].name, "Clinic No. 2")
 
+class TestSubmission(TestBase):
+    def test_save_submission(self):
+        test_data = '{"test":true}'
+        Submission.save(test_data)
+        submission = Submission.newest()
+        self.assertEqual(Submission.count(), 1)
+        self.assertEqual(submission.raw_data, test_data)
 
 class TestUserFactory(TestBase):
     def test_get_item_returns_clinic_if_id_exists(self):

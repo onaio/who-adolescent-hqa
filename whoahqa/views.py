@@ -18,7 +18,8 @@ from whoahqa.models import (
     DBSession,
     ClinicFactory,
     User,
-    Clinic
+    Clinic,
+    Submission
 )
 
 @subscriber(NewRequest)
@@ -78,3 +79,12 @@ class ClinicViews(object):
         return {
             'clinic': clinic
         }
+
+class SubmissionViews(object):
+    def __init__(self, request):
+        self.request = request
+
+    def json_post(self):
+        payload = self.request.POST.get('payload')
+        Submission.save(payload)
+        return Response('Saved', status=201)

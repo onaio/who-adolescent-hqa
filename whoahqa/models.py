@@ -9,7 +9,7 @@ from sqlalchemy import (
     Text,
     Table
 )
-
+from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql.expression import desc
@@ -119,3 +119,22 @@ class Clinic(Base):
         clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
             user_clinics.columns.clinic_id == None).all()
         return clinics
+
+
+class Submission(Base):
+    __tablename__ = 'submissions'
+    id = Column(Integer, primary_key=True)
+    raw_data = Column(JSON, nullable=False)
+
+    @classmethod
+    def save(cls, payload):
+        submission = Submission(raw_data=payload)
+        DBSession.add(submission)
+
+
+clinic_submissions = Table(
+    'clinic_submissions',
+    Base.metadata,
+    Column('clinic_id', Integer, ForeignKey('clinics.id')),
+    Column('submission_id', Integer, ForeignKey('submissions.id'))
+    )
