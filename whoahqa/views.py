@@ -3,6 +3,7 @@ from pyramid.response import Response
 from pyramid.httpexceptions import (
     HTTPFound,
     HTTPNotFound,
+    HTTPBadRequest,
     )
 from pyramid.view import (
     view_config,
@@ -80,11 +81,14 @@ class ClinicViews(object):
             'clinic': clinic
         }
 
+
 class SubmissionViews(object):
     def __init__(self, request):
         self.request = request
 
     def json_post(self):
         payload = self.request.POST.get('payload')
+        if not payload:
+            return HTTPBadRequest(comment='Missing JSON Payload')
         Submission.save(payload)
         return Response('Saved', status=201)

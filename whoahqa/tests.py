@@ -19,11 +19,13 @@ from whoahqa.models import (
     ClinicFactory,
     user_clinics,
     User,
-    Clinic
+    Clinic,
+    Submission,
 )
 from whoahqa.views import (
     ClinicViews,
-    UserViews
+    UserViews,
+    SubmissionViews,
 )
 
 
@@ -225,6 +227,27 @@ class TestUserViews(IntegrationTestBase):
         # we should only have Clinic No. 1 in the response
         self.assertEqual(len(response['clinics']), 1)
         self.assertEqual(response['clinics'][0].name, "Clinic No. 1")
+
+
+class TestSubmissionViews(IntegrationTestBase):
+    def make_submission(self, payload=None):
+        request = testing.DummyRequest()
+        if payload:
+            request.POST['payload'] = payload
+        submission_view = SubmissionViews(request)
+        return submission_view.json_post()
+
+    def test_json_post(self):
+        response = self.make_submission('{"test":"1234"}')
+
+        #should return a 201 response code
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.body, 'Saved')
+
+    def test_null_json(self):
+        response = self.make_submission(None)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.comment, 'Missing JSON Payload')
 
 
 class FunctionalTestBase(IntegrationTestBase):
