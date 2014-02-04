@@ -21,6 +21,7 @@ from whoahqa.models import (
     User,
     Clinic,
     Submission,
+    clinic_submissions,
 )
 from whoahqa.views import (
     ClinicViews,
@@ -50,12 +51,12 @@ class TestBase(unittest.TestCase):
         user = User()
 
         # add a couple of clinics
-        clinic1 = Clinic(id=1, name="Clinic No. 1")
+        clinic1 = Clinic(id=1, name="Clinic No. 1", identifier="wxyz")
         # assign a user to clinic1
         user.clinics.append(clinic1)
 
         # leave clinic 2 unassigned
-        clinic2 = Clinic(id=2, name="Clinic No. 2")
+        clinic2 = Clinic(id=2, name="Clinic No. 2", identifier="ijkl")
 
         with transaction.manager:
             DBSession.add_all([user, clinic1, clinic2])
@@ -129,15 +130,55 @@ class TestClinic(TestBase):
         self.assertEqual(len(clinics), 1)
         self.assertEqual(clinics[0].name, "Clinic No. 2")
 
+
 class TestSubmission(TestBase):
-    def test_save_submission(self):
-        test_data = '{"test":true}'
+    submissions = [
+        '{"clinic_id": "abcd", "_notes": [], "_bamboo_dataset_id": "", "_tags": [], "respondent_dem/respondent_sex": "female", "_xform_id_string": "health_facility_manager_interview", "_geolocation": ["-1.2988785", "36.7905801"], "facility_info/facility_geopoint": "-1.2988785 36.7905801 0.0 36.452", "meta/instanceID": "uuid:478a3355-9fe9-44ab-a9c9-6a10cd50c827", "_status": "submitted_via_web", "characteristic_twenty/ch20_q3_yes": "Meds", "facility_info/HS_char": "twenty", "characteristic_twenty/ch20_q3": "0", "characteristic_twenty/ch20_q1": "1", "characteristic_twenty/ch20_q2": "1", "_uuid": "478a3355-9fe9-44ab-a9c9-6a10cd50c827", "facility_info/interviewer": "Larry", "respondent_dem/years_worked": "2", "formhub/uuid": "ae6ca5877a2949e58191e8029c465ebe", "_submission_time": "2014-02-03T11:06:36", "_attachments": [], "facility_info/interview_date": "2014-02-03", "_id": 23803}',
+        '{"clinic_id": "efgh", "_notes": [], "_bamboo_dataset_id": "", "_tags": [], "respondent_dem/respondent_sex": "male", "_xform_id_string": "adolescent_quality_assessmentEnSp", "respondent_dem/study_yes_Esp": "Yes", "_geolocation": ["-1.2988671", "36.7906039"], "respondent_dem/res_age": "18", "facility_info/facility_geopoint": "-1.2988671 36.7906039 0.0 34.208", "meta/instanceID": "uuid:a795726b-9989-4c70-ad92-93eb2c460b57", "_status": "submitted_via_web", "facility_info/HS_char": "twenty", "respondent_dem/study": "yes", "respondent_dem/marital_status": "single", "characteristic_twenty/ch20_q1": "1", "_uuid": "a795726b-9989-4c70-ad92-93eb2c460b57", "facility_info/interviewer": "Larry Weya", "respondent_dem/highest_study": "High school", "formhub/uuid": "dccae423c9704aa283b4a10343c916c9", "_submission_time": "2014-02-04T06:22:32", "_attachments": [], "facility_info/interview_date": "2014-02-03", "_id": 23936}'
+    ]
+
+    def test_save_submission_with_valid_clinic_id(self):
+        # create clinic with matching id
+        clinic_identifier = "abcd"
+        clinic = Clinic(identifier=clinic_identifier, name="Clinic A")
+        DBSession.add(clinic)
+
         # check current count
         count = Submission.count()
+        test_data = self.submissions[0]
         Submission.save(test_data)
         submission = Submission.newest()
-        self.assertEqual(Submission.count(), count +  1)
+        self.assertEqual(Submission.count(), count + 1)
         self.assertEqual(submission.raw_data, test_data)
+
+        # check that a clinic_submission record was created
+        count = DBSession.query(clinic_submissions)\
+            .join(Submission)\
+            .filter(Submission.id == submission.id).count()
+        self.assertEqual(count, 1)
+
+    def test_save_submission_with_invalid_clinic_id(self):
+        count = Submission.count()
+        clinic_submissions_count = DBSession.query(clinic_submissions).count()
+        test_data = self.submissions[1]
+        Submission.save(test_data)
+        submission = Submission.newest()
+        self.assertEqual(Submission.count(), count + 1)
+        self.assertEqual(submission.raw_data, test_data)
+        self.assertEqual(clinic_submissions_count,
+                         DBSession.query(clinic_submissions).count())
+
+
+    def test_parse_json(self):
+        parsed_json = Submission.parse_json(self.submissions[0])
+        # we expect a structure with the determined clinic id (characteristic,
+        # mapping of client tools to form ids)
+        self.assertEqual(parsed_json, {
+            'clinic_id': "abcd",
+            'characteristic': "twenty",
+            'xform_id': "health_facility_manager_interview"
+        })
+
 
 class TestUserFactory(TestBase):
     def test_get_item_returns_clinic_if_id_exists(self):
