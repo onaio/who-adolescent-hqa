@@ -14,6 +14,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql.expression import desc
+from sqlalchemy.schema import Index, UniqueConstraint
 
 from sqlalchemy.orm import (
     scoped_session,
@@ -108,21 +109,20 @@ class User(Base):
         return clinics
 
 
-# TODO: Add a UNIQUE key constraint on both clinic_id and submission_id
-# together
 clinic_submissions = Table(
     'clinic_submissions',
     Base.metadata,
     Column('clinic_id', Integer, ForeignKey('clinics.id')),
-    Column('submission_id', Integer, ForeignKey('submissions.id'))
+    Column('submission_id', Integer, ForeignKey('submissions.id')),
+    UniqueConstraint('clinic_id', 'submission_id',
+                     name='uix_clinic_id_submission_id')
 )
 
 
 class Clinic(Base):
     __tablename__ = 'clinics'
     id = Column(Integer, primary_key=True)
-    # TODO: Add unique constraint on identifier
-    identifier = Column(String(100), nullable=False)
+    identifier = Column(String(100), nullable=False, unique=True)
     name = Column(String(255), nullable=False)
     user = relationship("User", secondary=user_clinics, uselist=False)
     submissions = relationship("Submission", secondary=clinic_submissions)

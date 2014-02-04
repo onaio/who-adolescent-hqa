@@ -168,7 +168,6 @@ class TestSubmission(TestBase):
         self.assertEqual(clinic_submissions_count,
                          DBSession.query(clinic_submissions).count())
 
-
     def test_parse_json(self):
         parsed_json = Submission.parse_json(self.submissions[0])
         # we expect a structure with the determined clinic id (characteristic,
