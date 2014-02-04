@@ -148,15 +148,19 @@ class Submission(Base):
 
         parsed_json = cls.parse_json(payload)
         # check if we have a valid clinic with said id
-        clinic_identifier = parsed_json.get(CLINIC_IDENTIFIER)
-        if clinic_identifier:
-            try:
-                clinic = Clinic.get(Clinic.identifier == clinic_identifier)
-            except NoResultFound:
-                pass
-            else:
-                clinic.submissions.append(submission)
-                DBSession.add(clinic)
+        clinic_identifier = parsed_json.get(CLINIC_IDENTIFIER, '')
+        try:
+            clinic = Clinic.get(Clinic.identifier == clinic_identifier)
+        except NoResultFound:
+            raise ClinicNotFound
+        else:
+            clinic_submission = ClinicSubmission(
+                clinic_id=clinic.id,
+                submission=submission,
+                characteristic=parsed_json.get(CHARACTERISTIC),
+                xform_id=parsed_json.get(XFORM_ID)
+            )
+            DBSession.add(clinic_submission)
 
     @classmethod
     def parse_json(cls, json_string):

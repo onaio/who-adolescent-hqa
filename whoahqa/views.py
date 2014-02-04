@@ -20,7 +20,8 @@ from whoahqa.models import (
     ClinicFactory,
     User,
     Clinic,
-    Submission
+    Submission,
+    ClinicNotFound
 )
 
 @subscriber(NewRequest)
@@ -90,5 +91,9 @@ class SubmissionViews(object):
         payload = self.request.POST.get('payload')
         if not payload:
             return HTTPBadRequest(comment='Missing JSON Payload')
-        Submission.save(payload)
-        return Response('Saved', status=201)
+        try:
+            Submission.save(payload)
+        except ClinicNotFound:
+            return Response('Accepted Pending Clinic Match', status=202)
+        else:
+            return Response('Saved', status=201)
