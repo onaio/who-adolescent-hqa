@@ -278,8 +278,10 @@ class TestSubmissionViews(IntegrationTestBase):
         submission_view = SubmissionViews(request)
         return submission_view.json_post()
 
-    def test_json_post(self):
-        response = self.make_submission('{"test":"1234"}')
+    def test_json_post_with_valid_clinic_id(self):
+        clinic = Clinic(identifier='abcd', name="Clinic A")
+        DBSession.add(clinic)
+        response = self.make_submission(self.submissions[0])
 
         #should return a 201 response code
         self.assertEqual(response.status_code, 201)
@@ -289,6 +291,24 @@ class TestSubmissionViews(IntegrationTestBase):
         response = self.make_submission(None)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.comment, 'Missing JSON Payload')
+
+    def test_json_post_with_invalid_clinic_id(self):
+        clinic = Clinic(identifier='abcd', name="Clinic A")
+        DBSession.add(clinic)
+        response = self.make_submission(self.submissions[1])
+
+        #should return a 201 response code
+        self.assertEqual(response.status_code, 202)
+        self.assertEqual(response.body,
+                         'Accepted Pending Clinic Match')
+
+    def test_json_post_without_clinic_id(self):
+        response = self.make_submission('{"test":"1234"}')
+
+        #should return a 202 response code
+        self.assertEqual(response.status_code, 202)
+        self.assertEqual(response.body,
+                         'Accepted Pending Clinic Match')
 
 
 class FunctionalTestBase(IntegrationTestBase):
