@@ -132,6 +132,7 @@ class Submission(Base):
         DBSession.add(submission)
 
 
+
 clinic_submissions = Table(
     'clinic_submissions',
     Base.metadata,
