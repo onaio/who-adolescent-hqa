@@ -1,27 +1,21 @@
-import transaction
 import json
 
 from sqlalchemy import (
     Column,
-    Index,
     ForeignKey,
     Integer,
     String,
-    Text,
     Table
 )
 from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql.expression import desc
-from sqlalchemy.schema import Index, UniqueConstraint
 
 from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
     relationship,
-    backref,
-    synonym
 )
 
 from zope.sqlalchemy import ZopeTransactionExtension
@@ -109,14 +103,15 @@ class User(Base):
         return clinics
 
 
-clinic_submissions = Table(
-    'clinic_submissions',
-    Base.metadata,
-    Column('clinic_id', Integer, ForeignKey('clinics.id')),
-    Column('submission_id', Integer, ForeignKey('submissions.id')),
-    UniqueConstraint('clinic_id', 'submission_id',
-                     name='uix_clinic_id_submission_id')
-)
+class ClinicSubmission(Base):
+    __tablename__ = 'clinic_submissions'
+    clinic_id = Column(Integer, ForeignKey('clinics.id'))
+    submission_id = Column(Integer, ForeignKey('submissions.id'),
+                           primary_key=True, autoincrement=False)
+    characteristic = Column(String, nullable=False)
+    xform_id = Column(String, nullable=False)
+    submission = relationship("Submission")
+
 
 
 class Clinic(Base):
@@ -125,7 +120,6 @@ class Clinic(Base):
     identifier = Column(String(100), nullable=False, unique=True)
     name = Column(String(255), nullable=False)
     user = relationship("User", secondary=user_clinics, uselist=False)
-    submissions = relationship("Submission", secondary=clinic_submissions)
 
     def assign_to(self, user):
         self.user = user
@@ -136,6 +130,10 @@ class Clinic(Base):
         clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
             user_clinics.columns.clinic_id == None).all()
         return clinics
+
+
+class ClinicNotFound(Exception):
+    pass
 
 
 class Submission(Base):
