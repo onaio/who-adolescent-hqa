@@ -132,9 +132,11 @@ class TestClinic(TestBase):
 class TestSubmission(TestBase):
     def test_save_submission(self):
         test_data = '{"test":true}'
+        # check current count
+        count = Submission.count()
         Submission.save(test_data)
         submission = Submission.newest()
-        self.assertEqual(Submission.count(), 1)
+        self.assertEqual(Submission.count(), count +  1)
         self.assertEqual(submission.raw_data, test_data)
 
 class TestUserFactory(TestBase):
