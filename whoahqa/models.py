@@ -1,4 +1,5 @@
 import transaction
+import json
 
 from sqlalchemy import (
     Column,
@@ -25,6 +26,9 @@ from sqlalchemy.orm import (
 from zope.sqlalchemy import ZopeTransactionExtension
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
+CLINIC_IDENTIFIER = 'clinic_id'
+CHARACTERISTIC = 'characteristic'
+XFORM_ID = 'xform_id'
 
 
 class BaseModel(object):
@@ -104,11 +108,24 @@ class User(Base):
         return clinics
 
 
+# TODO: Add a UNIQUE key constraint on both clinic_id and submission_id
+# together
+clinic_submissions = Table(
+    'clinic_submissions',
+    Base.metadata,
+    Column('clinic_id', Integer, ForeignKey('clinics.id')),
+    Column('submission_id', Integer, ForeignKey('submissions.id'))
+)
+
+
 class Clinic(Base):
     __tablename__ = 'clinics'
     id = Column(Integer, primary_key=True)
+    # TODO: Add unique constraint on identifier
+    identifier = Column(String(100), nullable=False)
     name = Column(String(255), nullable=False)
     user = relationship("User", secondary=user_clinics, uselist=False)
+    submissions = relationship("Submission", secondary=clinic_submissions)
 
     def assign_to(self, user):
         self.user = user
@@ -131,11 +148,24 @@ class Submission(Base):
         submission = Submission(raw_data=payload)
         DBSession.add(submission)
 
+        parsed_json = cls.parse_json(payload)
+        # check if we have a valid clinic with said id
+        clinic_identifier = parsed_json.get(CLINIC_IDENTIFIER)
+        if clinic_identifier:
+            try:
+                clinic = Clinic.get(Clinic.identifier == clinic_identifier)
+            except NoResultFound:
+                pass
+            else:
+                clinic.submissions.append(submission)
+                DBSession.add(clinic)
 
+    @classmethod
+    def parse_json(cls, json_string):
+        json_data = json.loads(json_string)
+        return {
+            CLINIC_IDENTIFIER: json_data.get('clinic_id'),
+            CHARACTERISTIC: json_data.get('facility_info/HS_char'),
+            XFORM_ID: json_data.get('_xform_id_string'),
+        }
 
-clinic_submissions = Table(
-    'clinic_submissions',
-    Base.metadata,
-    Column('clinic_id', Integer, ForeignKey('clinics.id')),
-    Column('submission_id', Integer, ForeignKey('submissions.id'))
-    )
