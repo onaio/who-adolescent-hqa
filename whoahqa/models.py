@@ -22,9 +22,12 @@ from zope.sqlalchemy import ZopeTransactionExtension
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 
-CLINIC_IDENTIFIER = 'clinic_id'
-CHARACTERISTIC = 'characteristic'
-XFORM_ID = 'xform_id'
+CLINIC_IDENTIFIER = 'facility_info/clinic_id'
+CHARACTERISTIC = 'facility_info/HS_char'
+XFORM_ID = '_xform_id_string'
+
+# characteristic mappings
+CHARACTERISTIC_MAPPING = (("one", 1), ("two", 2),)
 
 
 class BaseModel(object):
@@ -107,9 +110,9 @@ class User(Base):
 class ClinicSubmission(Base):
     __tablename__ = 'clinic_submissions'
     clinic_id = Column(Integer, ForeignKey('clinics.id'))
-    submission_id = Column(Integer, ForeignKey('submissions.id'),
-                           primary_key=True, autoincrement=False)
-    characteristic = Column(String, nullable=False)
+    submission_id = Column(
+        Integer, ForeignKey('submissions.id'), primary_key=True)
+    characteristic = Column(String, nullable=False, primary_key=True)
     xform_id = Column(String, nullable=False)
     submission = relationship("Submission")
 
@@ -145,29 +148,30 @@ class Submission(Base):
     def save(cls, payload):
         submission = Submission(raw_data=payload)
         DBSession.add(submission)
+        clinic_code, characteristics, xform_id = cls.parse_json(payload)
 
-        parsed_json = cls.parse_json(payload)
         # check if we have a valid clinic with said id
-        clinic_identifier = parsed_json.get(CLINIC_IDENTIFIER, '')
         try:
-            clinic = Clinic.get(Clinic.code == clinic_identifier)
+            clinic = Clinic.get(Clinic.code == clinic_code)
         except NoResultFound:
             raise ClinicNotFound
         else:
-            clinic_submission = ClinicSubmission(
-                clinic_id=clinic.id,
-                submission=submission,
-                characteristic=parsed_json.get(CHARACTERISTIC),
-                xform_id=parsed_json.get(XFORM_ID)
-            )
-            DBSession.add(clinic_submission)
+            for characteristic in characteristics:
+                clinic_submission = ClinicSubmission(
+                    clinic_id=clinic.id,
+                    submission=submission,
+                    characteristic=characteristic,
+                    xform_id=xform_id
+                )
+                DBSession.add(clinic_submission)
 
     @classmethod
     def parse_json(cls, json_string):
         json_data = json.loads(json_string)
-        return {
-            CLINIC_IDENTIFIER: json_data.get('clinic_id'),
-            CHARACTERISTIC: json_data.get('facility_info/HS_char'),
-            XFORM_ID: json_data.get('_xform_id_string'),
-        }
+        # split characteristic on [space] for multiple characteristic
+        # submissions
+        characteristics = json_data.get(CHARACTERISTIC, '').split(" ")
+        return (json_data.get('facility_info/clinic_id'),
+                characteristics,
+                json_data.get('_xform_id_string'),)
 
