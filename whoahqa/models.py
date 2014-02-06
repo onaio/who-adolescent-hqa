@@ -21,6 +21,7 @@ from sqlalchemy.orm import (
 from zope.sqlalchemy import ZopeTransactionExtension
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
+
 CLINIC_IDENTIFIER = 'clinic_id'
 CHARACTERISTIC = 'characteristic'
 XFORM_ID = 'xform_id'
@@ -113,11 +114,10 @@ class ClinicSubmission(Base):
     submission = relationship("Submission")
 
 
-
 class Clinic(Base):
     __tablename__ = 'clinics'
     id = Column(Integer, primary_key=True)
-    identifier = Column(String(100), nullable=False, unique=True)
+    code = Column(String(100), nullable=False, unique=True)
     name = Column(String(255), nullable=False)
     user = relationship("User", secondary=user_clinics, uselist=False)
 
@@ -150,7 +150,7 @@ class Submission(Base):
         # check if we have a valid clinic with said id
         clinic_identifier = parsed_json.get(CLINIC_IDENTIFIER, '')
         try:
-            clinic = Clinic.get(Clinic.identifier == clinic_identifier)
+            clinic = Clinic.get(Clinic.code == clinic_identifier)
         except NoResultFound:
             raise ClinicNotFound
         else:

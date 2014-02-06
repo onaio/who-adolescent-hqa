@@ -35,7 +35,7 @@ engine = engine_from_config(settings, 'sqlalchemy.')
 
 class TestBase(unittest.TestCase):
     submissions = [
-        '{"clinic_id": "abcd", "_notes": [], "_bamboo_dataset_id": "", "_tags": [], "respondent_dem/respondent_sex": "female", "_xform_id_string": "health_facility_manager_interview", "_geolocation": ["-1.2988785", "36.7905801"], "facility_info/facility_geopoint": "-1.2988785 36.7905801 0.0 36.452", "meta/instanceID": "uuid:478a3355-9fe9-44ab-a9c9-6a10cd50c827", "_status": "submitted_via_web", "characteristic_twenty/ch20_q3_yes": "Meds", "facility_info/HS_char": "twenty", "characteristic_twenty/ch20_q3": "0", "characteristic_twenty/ch20_q1": "1", "characteristic_twenty/ch20_q2": "1", "_uuid": "478a3355-9fe9-44ab-a9c9-6a10cd50c827", "facility_info/interviewer": "Larry", "respondent_dem/years_worked": "2", "formhub/uuid": "ae6ca5877a2949e58191e8029c465ebe", "_submission_time": "2014-02-03T11:06:36", "_attachments": [], "facility_info/interview_date": "2014-02-03", "_id": 23803}',
+        '{"clinic_id": "abcd", "_notes": [], "_bamboo_dataset_id": "","_tags": [], "respondent_dem/respondent_sex": "female", "_xform_id_string": "health_facility_manager_interview_EnSp", "_geolocation": ["-1.2988785", "36.7905801"], "facility_info/facility_geopoint": "-1.2988785 36.7905801 0.0 36.452", "meta/instanceID": "uuid:478a3355-9fe9-44ab-a9c9-6a10cd50c827", "_status": "submitted_via_web", "characteristic_twenty/ch20_q3_yes": "Meds", "facility_info/HS_char": "twenty", "characteristic_twenty/ch20_q3": "0", "characteristic_twenty/ch20_q1": "1", "characteristic_twenty/ch20_q2": "1", "_uuid": "478a3355-9fe9-44ab-a9c9-6a10cd50c827", "facility_info/interviewer": "Larry", "respondent_dem/years_worked": "2", "formhub/uuid": "ae6ca5877a2949e58191e8029c465ebe", "_submission_time": "2014-02-03T11:06:36", "_attachments": [], "facility_info/interview_date": "2014-02-03", "_id": 23803}',
         '{"clinic_id": "efgh", "_notes": [], "_bamboo_dataset_id": "", "_tags": [], "respondent_dem/respondent_sex": "male", "_xform_id_string": "adolescent_quality_assessmentEnSp", "respondent_dem/study_yes_Esp": "Yes", "_geolocation": ["-1.2988671", "36.7906039"], "respondent_dem/res_age": "18", "facility_info/facility_geopoint": "-1.2988671 36.7906039 0.0 34.208", "meta/instanceID": "uuid:a795726b-9989-4c70-ad92-93eb2c460b57", "_status": "submitted_via_web", "facility_info/HS_char": "twenty", "respondent_dem/study": "yes", "respondent_dem/marital_status": "single", "characteristic_twenty/ch20_q1": "1", "_uuid": "a795726b-9989-4c70-ad92-93eb2c460b57", "facility_info/interviewer": "Larry Weya", "respondent_dem/highest_study": "High school", "formhub/uuid": "dccae423c9704aa283b4a10343c916c9", "_submission_time": "2014-02-04T06:22:32", "_attachments": [], "facility_info/interview_date": "2014-02-03", "_id": 23936}'
     ]
 
@@ -55,12 +55,12 @@ class TestBase(unittest.TestCase):
         user = User()
 
         # add a couple of clinics
-        clinic1 = Clinic(id=1, name="Clinic No. 1", identifier="wxyz")
+        clinic1 = Clinic(id=1, name="Clinic A", code="wxyz")
         # assign a user to clinic1
         user.clinics.append(clinic1)
 
         # leave clinic 2 unassigned
-        clinic2 = Clinic(id=2, name="Clinic No. 2", identifier="ijkl")
+        clinic2 = Clinic(id=2, name="Clinic B", code="ijkl")
 
         with transaction.manager:
             DBSession.add_all([user, clinic1, clinic2])
@@ -114,14 +114,14 @@ class TestUser(TestBase):
 
         clinics = user.get_clinics()
         self.assertEqual(len(clinics), 1)
-        self.assertEqual(clinics[0].name, "Clinic No. 1")
+        self.assertEqual(clinics[0].name, "Clinic A")
 
 
 class TestClinic(TestBase):
     def test_assign_to_user(self):
         self.setup_test_data()
         user = User.newest()
-        clinic = DBSession.query(Clinic).filter_by(name="Clinic No. 2").one()
+        clinic = DBSession.query(Clinic).filter_by(name="Clinic B").one()
         clinic.assign_to(user)
         user = DBSession.merge(user)
         clinic = DBSession.merge(clinic)
@@ -132,14 +132,14 @@ class TestClinic(TestBase):
 
         clinics = Clinic.get_unassigned()
         self.assertEqual(len(clinics), 1)
-        self.assertEqual(clinics[0].name, "Clinic No. 2")
+        self.assertEqual(clinics[0].name, "Clinic B")
 
 
 class TestSubmission(TestBase):
     def test_save_submission_with_valid_clinic_id(self):
         # create clinic with matching id
-        clinic_identifier = "abcd"
-        clinic = Clinic(identifier=clinic_identifier, name="Clinic A")
+        clinic_code = "abcd"
+        clinic = Clinic(code=clinic_code, name="Clinic A")
         DBSession.add(clinic)
 
         # check current counts
@@ -174,7 +174,7 @@ class TestSubmission(TestBase):
         self.assertEqual(parsed_json, {
             'clinic_id': "abcd",
             'characteristic': "twenty",
-            'xform_id': "health_facility_manager_interview"
+            'xform_id': "health_facility_manager_interview_EnSp"
         })
 
 
@@ -224,9 +224,9 @@ class TestClinicViews(IntegrationTestBase):
         self.setup_test_data()
         response = self.clinic_views.unassigned()
 
-        # we should only have Clinic No. 2 in the response
+        # we should only have Clinic B in the response
         self.assertEqual(len(response['clinics']), 1)
-        self.assertEqual(response['clinics'][0].name, "Clinic No. 2")
+        self.assertEqual(response['clinics'][0].name, "Clinic B")
 
     def test_assign_view(self):
         self.setup_test_data()
@@ -265,9 +265,9 @@ class TestUserViews(IntegrationTestBase):
         user_views = UserViews(request)
         response = user_views.clinics()
 
-        # we should only have Clinic No. 1 in the response
+        # we should only have Clinic A in the response
         self.assertEqual(len(response['clinics']), 1)
-        self.assertEqual(response['clinics'][0].name, "Clinic No. 1")
+        self.assertEqual(response['clinics'][0].name, "Clinic A")
 
 
 class TestSubmissionViews(IntegrationTestBase):
@@ -279,7 +279,7 @@ class TestSubmissionViews(IntegrationTestBase):
         return submission_view.json_post()
 
     def test_json_post_with_valid_clinic_id(self):
-        clinic = Clinic(identifier='abcd', name="Clinic A")
+        clinic = Clinic(code='abcd', name="Clinic A")
         DBSession.add(clinic)
         response = self.make_submission(self.submissions[0])
 
@@ -293,7 +293,7 @@ class TestSubmissionViews(IntegrationTestBase):
         self.assertEqual(response.comment, 'Missing JSON Payload')
 
     def test_json_post_with_invalid_clinic_id(self):
-        clinic = Clinic(identifier='abcd', name="Clinic A")
+        clinic = Clinic(code='abcd', name="Clinic A")
         DBSession.add(clinic)
         response = self.make_submission(self.submissions[1])
 
