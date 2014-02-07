@@ -9,7 +9,8 @@ from whoahqa.models import (
     DBSession,
     Base,
     UserFactory,
-    ClinicFactory
+    ClinicFactory,
+    SubmissionFactory
 )
 
 
@@ -41,4 +42,6 @@ def includeme(config):
                      factory=UserFactory)
     config.add_route('clinics', '/clinics/*traverse',
                      factory=ClinicFactory)
+    config.add_route('submissions', '/submissions/*traverse',
+                     factory=SubmissionFactory)
     config.scan()

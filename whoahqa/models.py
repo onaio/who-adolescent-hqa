@@ -86,6 +86,14 @@ class ClinicFactory(object):
             return clinic
 
 
+class SubmissionFactory(object):
+    def __init__(self, request):
+        self.request = request
+
+    def __getitem__(self, item):
+        raise NotImplementedError
+
+
 user_clinics = Table(
     'user_clinics',
     Base.metadata,

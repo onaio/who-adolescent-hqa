@@ -22,7 +22,7 @@
         <th class="sorting" role="columnheader" tabindex="0"
             aria-controls="sample_1" rowspan="1" colspan="1"
             aria-label="Points: activate to sort column ascending"
-            style="width: 136px;">Submissions
+            style="width: 136px;">Clinic Code
         </th>
         <th class="sorting_disabled" role="columnheader" rowspan="1"
             colspan="1" aria-label="Joined" style="width: 186px;">
@@ -46,10 +46,10 @@
               href="{{ request.route_url('clinics', traverse=(clinic.id)) }}">{{ clinic.name }}</a>
           </td>
           </td>
-          <td class=" ">120</td>
+          <td class=" ">{{ clinic.code }}</td>
           <td class="center ">12 Jan 2014</td>
           <td class=" "><span
-              class="label label-sm label-success">Approved</span>
+              class="label label-sm label-success"> </span>
           </td>
         </tr>
       {% endfor %}
