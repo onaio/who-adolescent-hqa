@@ -92,7 +92,7 @@ class SubmissionViews(object):
         if not payload:
             return HTTPBadRequest(comment='Missing JSON Payload')
         try:
-            Submission.save(payload)
+            Submission.create_from_json(payload)
         except ClinicNotFound:
             return Response('Accepted Pending Clinic Match', status=202)
         else:

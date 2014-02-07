@@ -1,4 +1,5 @@
 import unittest
+import json
 import transaction
 
 from webob.multidict import MultiDict
@@ -35,9 +36,11 @@ engine = engine_from_config(settings, 'sqlalchemy.')
 
 class TestBase(unittest.TestCase):
     submissions = [
-        '{"facility_info/clinic_id": "1A2B", "_notes": [], "_bamboo_dataset_id": "","_tags": [], "respondent_dem/respondent_sex": "female", "_xform_id_string": "health_facility_manager_interview_EnSp", "_geolocation": ["-1.2988785", "36.7905801"], "facility_info/facility_geopoint": "-1.2988785 36.7905801 0.0 36.452", "meta/instanceID": "uuid:478a3355-9fe9-44ab-a9c9-6a10cd50c827", "_status": "submitted_via_web", "characteristic_twenty/ch20_q3_yes": "Meds", "facility_info/HS_char": "twenty", "characteristic_twenty/ch20_q3": "0", "characteristic_twenty/ch20_q1": "1", "characteristic_twenty/ch20_q2": "1", "_uuid": "478a3355-9fe9-44ab-a9c9-6a10cd50c827", "facility_info/interviewer": "Larry", "respondent_dem/years_worked": "2", "formhub/uuid": "ae6ca5877a2949e58191e8029c465ebe", "_submission_time": "2014-02-03T11:06:36", "_attachments": [], "facility_info/interview_date": "2014-02-03", "_id": 23803}',
+        '{"facility_info/clinic_id": "1A2B", "_notes": [], "_bamboo_dataset_id": "", "_tags": [], "respondent_dem/respondent_sex": "female", "_xform_id_string": "health_facility_manager_interview_EnSp", "_geolocation": ["-1.2988785", "36.7905801"], "facility_info/facility_geopoint": "-1.2988785 36.7905801 0.0 36.452", "meta/instanceID": "uuid:478a3355-9fe9-44ab-a9c9-6a10cd50c827", "_status": "submitted_via_web", "characteristic_twenty/ch20_q3_yes": "Meds", "facility_info/HS_char": "twenty", "characteristic_twenty/ch20_q3": "0", "characteristic_twenty/ch20_q1": "1", "characteristic_twenty/ch20_q2": "1", "_uuid": "478a3355-9fe9-44ab-a9c9-6a10cd50c827", "facility_info/interviewer": "Larry", "respondent_dem/years_worked": "2", "formhub/uuid": "ae6ca5877a2949e58191e8029c465ebe", "_submission_time": "2014-02-03T11:06:36", "_attachments": [], "facility_info/interview_date": "2014-02-03", "_id": 23803}',
         '{"facility_info/clinic_id": "3E4G", "_notes": [], "_bamboo_dataset_id": "", "_tags": [], "respondent_dem/respondent_sex": "male", "_xform_id_string": "adolescent_quality_assessmentEnSp", "respondent_dem/study_yes_Esp": "Yes", "_geolocation": ["-1.2988671", "36.7906039"], "respondent_dem/res_age": "18", "facility_info/facility_geopoint": "-1.2988671 36.7906039 0.0 34.208", "meta/instanceID": "uuid:a795726b-9989-4c70-ad92-93eb2c460b57", "_status": "submitted_via_web", "facility_info/HS_char": "twenty", "respondent_dem/study": "yes", "respondent_dem/marital_status": "single", "characteristic_twenty/ch20_q1": "1", "_uuid": "a795726b-9989-4c70-ad92-93eb2c460b57", "facility_info/interviewer": "Larry Weya", "respondent_dem/highest_study": "High school", "formhub/uuid": "dccae423c9704aa283b4a10343c916c9", "_submission_time": "2014-02-04T06:22:32", "_attachments": [], "facility_info/interview_date": "2014-02-03", "_id": 23936}',
-        '{"facility_info/clinic_id": "1A2B", "_notes": [], "_bamboo_dataset_id": "", "_tags": [], "respondent_dem/respondent_sex": "female", "_xform_id_string": "adolescent_quality_assementEnSp", "respondent_dem/study_yes_Esp": "Yes", "characteristic_one/ch1_q1_yes": "A lot of patients", "respondent_dem/res_age": "17", "facility_info/facility_geopoint": "-1.2988326 36.7906152 0.0 31.12", "meta/instanceID": "uuid:af18e938-8cb7-4a99-aa6d-35b05ae942d2", "_geolocation": ["-1.2988326", "36.7906152"], "_status": "submitted_via_web", "facility_info/HS_char": "one three", "respondent_dem/study": "yes", "characteristic_three/ch3_q1": "1", "respondent_dem/marital_status": "married", "characteristic_three/ch3_q2": "1", "characteristic_three/ch3_q3": "0", "_uuid": "af18e938-8cb7-4a99-aa6d-35b05ae942d2", "characteristic_three/ch3_q4": "0", "facility_info/interviewer": "Kwhba", "respondent_dem/highest_study": "High school", "formhub/uuid": "753bba82422444eda5c4d05d39f73667", "characteristic_one/ch1_q2": "1", "characteristic_one/ch1_q1": "0", "_submission_time": "2014-02-06T08:56:02", "_attachments": [], "facility_info/interview_date": "2014-02-06", "_id": 24651}'
+        '{"facility_info/clinic_id": "1A2B", "_notes": [], "_bamboo_dataset_id": "", "_tags": [], "respondent_dem/respondent_sex": "female", "_xform_id_string": "adolescent_quality_assementEnSp", "respondent_dem/study_yes_Esp": "Yes", "characteristic_one/ch1_q1_yes": "A lot of patients", "respondent_dem/res_age": "17", "facility_info/facility_geopoint": "-1.2988326 36.7906152 0.0 31.12", "meta/instanceID": "uuid:af18e938-8cb7-4a99-aa6d-35b05ae942d2", "_geolocation": ["-1.2988326", "36.7906152"], "_status": "submitted_via_web", "facility_info/HS_char": "one three", "respondent_dem/study": "yes", "characteristic_three/ch3_q1": "1", "respondent_dem/marital_status": "married", "characteristic_three/ch3_q2": "1", "characteristic_three/ch3_q3": "0", "_uuid": "af18e938-8cb7-4a99-aa6d-35b05ae942d2", "characteristic_three/ch3_q4": "0", "facility_info/interviewer": "Kwhba", "respondent_dem/highest_study": "High school", "formhub/uuid": "753bba82422444eda5c4d05d39f73667", "characteristic_one/ch1_q2": "1", "characteristic_one/ch1_q1": "0", "_submission_time": "2014-02-06T08:56:02", "_attachments": [], "facility_info/interview_date": "2014-02-06", "_id": 24651}',
+        '{"facility_info/clinic_id": "1A2B", "_notes": [], "_bamboo_dataset_id": "", "_tags": [], "respondent_dem/respondent_sex": "female", "_xform_id_string": "adolescent_quality_assementEnSp", "respondent_dem/study_yes_Esp": "Yes", "characteristic_one/ch1_q1_yes": "A lot of patients", "respondent_dem/res_age": "17", "facility_info/facility_geopoint": "-1.2988326 36.7906152 0.0 31.12", "meta/instanceID": "uuid:af18e938-8cb7-4a99-aa6d-35b05ae942d2", "_geolocation": ["-1.2988326", "36.7906152"], "_status": "submitted_via_web", "facility_info/HS_char": "one three", "respondent_dem/study": "yes", "characteristic_three/ch3_q1": "1", "respondent_dem/marital_status": "married", "characteristic_three/ch3_q2": "0", "characteristic_three/ch3_q3": "0", "_uuid": "bd18e938-8cb7-4a99-aa6d-35b05ae942f1", "characteristic_three/ch3_q4": "1", "facility_info/interviewer": "Hwwk", "respondent_dem/highest_study": "Primary school", "formhub/uuid": "933bba82422444eda5c4d05d39f73684", "characteristic_one/ch1_q2": "1", "characteristic_one/ch1_q1": "1", "_submission_time": "2014-02-06T08:56:02", "_attachments": [], "facility_info/interview_date": "2014-02-06", "_id": 24651}',
+        '{"facility_info/clinic_id": "3E4G", "_notes": [], "_bamboo_dataset_id": "", "_tags": [], "respondent_dem/respondent_sex": "female", "_xform_id_string": "adolescent_quality_assementEnSp", "respondent_dem/study_yes_Esp": "Yes", "characteristic_one/ch1_q1_yes": "A lot of patients", "respondent_dem/res_age": "17", "facility_info/facility_geopoint": "-1.2988326 36.7906152 0.0 31.12", "meta/instanceID": "uuid:af18e938-8cb7-4a99-aa6d-35b05ae942d2", "_geolocation": ["-1.2988326", "36.7906152"], "_status": "submitted_via_web", "facility_info/HS_char": "one three", "respondent_dem/study": "yes", "characteristic_three/ch3_q1": "1", "respondent_dem/marital_status": "married", "characteristic_three/ch3_q2": "0", "characteristic_three/ch3_q3": "0", "_uuid": "ac18e938-8cb7-4a99-aa6d-35b05ae942d3", "characteristic_three/ch3_q4": "1", "facility_info/interviewer": "Hask", "respondent_dem/highest_study": "College", "formhub/uuid": "873bba82422444eda5c4d05d39f73616", "characteristic_one/ch1_q2": "0", "characteristic_one/ch1_q1": "1", "_submission_time": "2014-02-06T08:56:02", "_attachments": [], "facility_info/interview_date": "2014-02-06", "_id": 24651}'
     ]
 
     def setUp(self):
@@ -135,6 +138,20 @@ class TestClinic(TestBase):
         self.assertEqual(len(clinics), 1)
         self.assertEqual(clinics[0].name, "Clinic B")
 
+    def test_calculate_score_works(self):
+        self.setup_test_data()
+
+        # make submissions
+        for i in range(5):
+            Submission.create_from_json(self.submissions[i])
+
+        transaction.commit()
+
+        clinic = Clinic.get(Clinic.id == 1)
+        score = clinic.calculate_score(
+            'one', 'adolescent_quality_assementEnSp')
+        self.assertEqual(score, 1.5)
+
 
 class TestSubmission(TestBase):
     def test_save_submission_with_valid_clinic_id(self):
@@ -147,10 +164,10 @@ class TestSubmission(TestBase):
         count = Submission.count()
         clinic_submission_count = ClinicSubmission.count()
         test_data = self.submissions[0]
-        Submission.save(test_data)
+        Submission.create_from_json(test_data)
         submission = Submission.newest()
         self.assertEqual(Submission.count(), count + 1)
-        self.assertEqual(submission.raw_data, test_data)
+        self.assertEqual(submission.raw_data, json.loads(test_data))
 
         # check that a clinic_submission record was created
         self.assertEqual(ClinicSubmission.count(), clinic_submission_count + 1)
@@ -165,10 +182,10 @@ class TestSubmission(TestBase):
         count = Submission.count()
         clinic_submission_count = ClinicSubmission.count()
         test_data = self.submissions[2]
-        Submission.save(test_data)
+        Submission.create_from_json(test_data)
         submission = Submission.newest()
         self.assertEqual(Submission.count(), count + 1)
-        self.assertEqual(submission.raw_data, test_data)
+        self.assertEqual(submission.raw_data, json.loads(test_data))
 
         # check that 2 clinic_submission record was created
         self.assertEqual(ClinicSubmission.count(), clinic_submission_count + 2)
@@ -178,17 +195,18 @@ class TestSubmission(TestBase):
         clinic_submissions_count = ClinicSubmission.count()
         test_data = self.submissions[1]
 
-        self.assertRaises(ClinicNotFound, Submission.save, test_data)
+        self.assertRaises(ClinicNotFound, Submission.create_from_json,
+                          test_data)
 
         submission = Submission.newest()
         self.assertEqual(Submission.count(), count + 1)
-        self.assertEqual(submission.raw_data, test_data)
+        self.assertEqual(submission.raw_data, json.loads(test_data))
         self.assertEqual(clinic_submissions_count,
                          ClinicSubmission.count())
 
     def test_parse_json(self):
         parsed_json = Submission.parse_json(self.submissions[0])
-        # we expect a structure with the determined clinic id (characteristic,
+        # we expect a structure with the determined clinic id (characteristics,
         # mapping of client tools to form ids)
         self.assertEqual(
             parsed_json,
@@ -375,8 +393,6 @@ class TestViewsFunctional(FunctionalTestBase):
 
     def test_clinic_show(self):
         self.setup_test_data()
-        user = User.newest()
-
         clinic = Clinic.get(Clinic.id == 1)
         url = self.request.route_path('clinics', traverse=(clinic.id,))
         response = self.testapp.get(url)
