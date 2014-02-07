@@ -118,6 +118,35 @@ class ClinicSubmission(Base):
     submission = relationship("Submission")
 
 
+# Client tools
+ADOLESCENT_CLIENT = 'adolescent_quality_assementEnSp'
+HEALTH_CARE_PROVIDER = 'health_care_provider_interview_EnSp'
+SUPPORT_STAFF = 'support_staff_interview_EnSp'
+HEALTH_FACILITY_MANAGER = 'health_facility_manager_interview_EnSp'
+OUTREACH_WORKER = 'outreach_worker_interview_EnSp'
+COMMUNITY_MEMBER = 'community_member_interview_EnSp'
+ADOLESCENT_IN_COMMUNITY = 'adolescent_in_community_tool_EnSp'
+OBSERVATION_GUIDE = 'observation_guide_EnSp'
+
+CHARACTERISTICS = {
+    'one': {
+        ADOLESCENT_CLIENT: (
+            'characteristic_one/ch1_q1',
+            'characteristic_one/ch1_q2'
+        ),
+        HEALTH_CARE_PROVIDER: (
+            'characteristic_one/ch1_q1',
+        ),
+        HEALTH_FACILITY_MANAGER: (
+            'characteristic_one/ch1_q1',
+        ),
+        ADOLESCENT_IN_COMMUNITY: (
+            'characteristic_one/ch1_q1',
+        )
+    }
+}
+
+
 class Clinic(Base):
     __tablename__ = 'clinics'
     id = Column(Integer, primary_key=True)
@@ -141,10 +170,7 @@ class Clinic(Base):
         tool
         """
         # get the questions in this client tool for this characteristic
-        question_xpaths = [
-            'characteristic_one/ch1_q1',
-            'characteristic_one/ch1_q2'
-        ]
+        question_xpaths = CHARACTERISTICS[characteristic][xform_id]
 
         submissions_table = Base.metadata.tables['submissions']
         clinic_submissions_table = Base.metadata.tables['clinic_submissions']
@@ -153,7 +179,6 @@ class Clinic(Base):
         # clinic_id matches self's and characteristic and the client tool are
         # also a match to the requested ones. Joint to submissions to do an
         # aggregation
-        # TODO: we would not need to do separate queries per function if the formula is always the same i.e. total '1's/total
         score = .0
         denominator = float(DBSession.execute(
             select(['COUNT(*)'])
