@@ -152,6 +152,20 @@ class TestClinic(TestBase):
             'one', 'adolescent_quality_assementEnSp')
         self.assertEqual(score, 1.5)
 
+    def test_calculate_score_when_no_responses_returns_none(self):
+        self.setup_test_data()
+
+        # make submissions
+        for i in range(5):
+            Submission.create_from_json(self.submissions[i])
+
+        transaction.commit()
+
+        clinic = Clinic.get(Clinic.id == 1)
+        score = clinic.calculate_score(
+            'one', 'health_care_provider_interview_EnSp')
+        self.assertIsNone(score)
+
 
 class TestSubmission(TestBase):
     def test_save_submission_with_valid_clinic_id(self):
