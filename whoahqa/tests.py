@@ -12,6 +12,7 @@ from sqlalchemy import engine_from_config
 from webtest import TestApp
 
 from whoahqa import main
+from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
     DBSession,
     Base,
@@ -32,6 +33,17 @@ from whoahqa.views import (
 
 settings = get_appsettings('test.ini')
 engine = engine_from_config(settings, 'sqlalchemy.')
+
+
+class TestUtils(unittest.TestCase):
+    def test_tuple_to_dict_list_creates_dict_from_list_of_tuples(self):
+        result = tuple_to_dict_list(
+            ("name", "age"),
+            [("Billy", 12), ("Bob", 15)])
+        self.assertEqual(result, [
+            {"name": "Billy", "age": 12},
+            {"name": "Bob", "age": 15}
+        ])
 
 
 class TestBase(unittest.TestCase):
