@@ -27,9 +27,6 @@ CLINIC_IDENTIFIER = 'facility_info/clinic_id'
 CHARACTERISTIC = 'facility_info/HS_char'
 XFORM_ID = '_xform_id_string'
 
-# characteristic mappings
-CHARACTERISTIC_MAPPING = (("one", 1), ("two", 2),)
-
 
 class BaseModel(object):
     @classmethod
@@ -118,7 +115,7 @@ class ClinicSubmission(Base):
     submission = relationship("Submission")
 
 
-# Client tools
+# Client Tool Constants
 ADOLESCENT_CLIENT = 'adolescent_quality_assementEnSp'
 HEALTH_CARE_PROVIDER = 'health_care_provider_interview_EnSp'
 SUPPORT_STAFF = 'support_staff_interview_EnSp'
@@ -128,7 +125,23 @@ COMMUNITY_MEMBER = 'community_member_interview_EnSp'
 ADOLESCENT_IN_COMMUNITY = 'adolescent_in_community_tool_EnSp'
 OBSERVATION_GUIDE = 'observation_guide_EnSp'
 
-CHARACTERISTICS = {
+CLIENT_TOOLS = [
+    (ADOLESCENT_CLIENT, u"AC"),
+    (HEALTH_CARE_PROVIDER, u"HC"),
+    (SUPPORT_STAFF, u"SS"),
+    (HEALTH_FACILITY_MANAGER, u"M"),
+    (OUTREACH_WORKER, u"OW"),
+    (COMMUNITY_MEMBER, u"CM"),
+    (ADOLESCENT_IN_COMMUNITY, u"A in C"),
+    (OBSERVATION_GUIDE, u"OG")
+]
+
+CHARACTERISTICS = [
+    ('one', u"Policies and procedures are in place that do not restrict the "
+            u"provision of health services on any terms"),
+]
+
+CHARACTERISTIC_MAPPING = {
     'one': {
         ADOLESCENT_CLIENT: (
             'characteristic_one/ch1_q1',
@@ -170,7 +183,7 @@ class Clinic(Base):
         tool
         """
         # get the questions in this client tool for this characteristic
-        question_xpaths = CHARACTERISTICS[characteristic][xform_id]
+        question_xpaths = CHARACTERISTIC_MAPPING[characteristic][xform_id]
 
         submissions_table = Base.metadata.tables['submissions']
         clinic_submissions_table = Base.metadata.tables['clinic_submissions']

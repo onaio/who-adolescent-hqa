@@ -22,7 +22,9 @@ from whoahqa.models import (
     Clinic,
     Submission,
     ClinicSubmission,
-    ClinicNotFound
+    ClinicNotFound,
+    CHARACTERISTICS,
+    CHARACTERISTIC_MAPPING
 )
 from whoahqa.views import (
     ClinicViews,
@@ -121,6 +123,12 @@ class TestBaseModel(TestBase):
         self.setup_test_data()
         count = Clinic.count(Clinic.id.in_([1, 2]))
         self.assertEqual(count, 2)
+
+    # TODO: this test belongs elsewehere
+    def test_each_characteristic_has_a_characteristic_mapping(self):
+        keys = [c[0] for c in CHARACTERISTICS]
+        mapping_keys = CHARACTERISTIC_MAPPING.keys()
+        self.assertTrue(all([k in mapping_keys for k in keys]))
 
 
 class TestUser(TestBase):
@@ -315,6 +323,9 @@ class TestClinicViews(IntegrationTestBase):
         response = self.clinic_views.show()
         self.assertIsInstance(response['clinic'], Clinic)
         self.assertEqual(response['clinic'].id, clinic.id)
+        self.assertEqual(
+            response['characteristics'],
+            tuple_to_dict_list(("id", "description"), CHARACTERISTICS))
 
 
 class TestUserViews(IntegrationTestBase):

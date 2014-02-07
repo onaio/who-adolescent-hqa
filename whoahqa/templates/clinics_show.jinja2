@@ -1,2 +1,36 @@
 {% extends "templates/base.jinja2" %}
 {% block title %}{{ clinic.name }}{% endblock %}
+{% block content %}
+  <div class="portlet">
+    <div class="portlet-title">
+      <div class="caption"><i class="icon-comments"></i>Characteristics
+      </div>
+    </div>
+    <div class="portlet-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th width="37%">Characteristic</th>
+            {% for client_tool in client_tools %}
+              <th width="6%">{{ client_tool.name }}</th>
+            {% endfor %}
+            <th width="6%">Totals</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for characteristic in characteristics %}
+            <tr>
+              <td>{{ characteristic.description }}</td>
+              {% for client_tool in client_tools %}
+                <td>{{ scores[characteristic.id][client_tool.id] }}</td>
+              {% endfor %}
+              <td><span class="bold">{{ scores[characteristic.id].totals }}</span></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
