@@ -19,6 +19,7 @@ from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
     DBSession,
     ClinicFactory,
+    SubmissionFactory,
     User,
     Clinic,
     Submission,
@@ -105,14 +106,17 @@ class ClinicViews(object):
         }
 
 
+@view_defaults(route_name='submissions')
 class SubmissionViews(object):
     def __init__(self, request):
         self.request = request
 
+    @view_config(name='', request_method='POST', context=SubmissionFactory)
     def json_post(self):
-        payload = self.request.POST.get('payload')
+        payload = self.request.body
         if not payload:
             return HTTPBadRequest(comment='Missing JSON Payload')
+
         try:
             Submission.create_from_json(payload)
         except ClinicNotFound:
