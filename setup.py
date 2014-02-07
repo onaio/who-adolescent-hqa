@@ -21,6 +21,8 @@ requires = [
     'pyramid_jinja2',
     'WebTest',
     'alembic',
+    'nose',
+    'coverage'
 ]
 
 setup(name='who-ahqa',
