@@ -11,6 +11,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql.expression import desc
+from sqlalchemy.sql import select, and_
 
 from sqlalchemy.orm import (
     scoped_session,
@@ -113,7 +114,7 @@ class ClinicSubmission(Base):
     submission_id = Column(
         Integer, ForeignKey('submissions.id'), primary_key=True)
     characteristic = Column(String, nullable=False, primary_key=True)
-    xform_id = Column(String, nullable=False)
+    xform_id = Column(String, nullable=False, primary_key=True)
     submission = relationship("Submission")
 
 
@@ -134,6 +135,61 @@ class Clinic(Base):
             user_clinics.columns.clinic_id == None).all()
         return clinics
 
+    def calculate_score(self, characteristic, xform_id):
+        """
+        Calculate a specific characteristic's score for the specified client
+        tool
+        """
+        # get the questions in this client tool for this characteristic
+        question_xpaths = [
+            'characteristic_one/ch1_q1',
+            'characteristic_one/ch1_q2'
+        ]
+
+        submissions_table = Base.metadata.tables['submissions']
+        clinic_submissions_table = Base.metadata.tables['clinic_submissions']
+
+        # for each question, select from clinic_submissions where the
+        # clinic_id matches self's and characteristic and the client tool are
+        # also a match to the requested ones. Joint to submissions to do an
+        # aggregation
+        # TODO: we would not need to do separate queries per function if the formula is always the same i.e. total '1's/total
+        score = .0
+        denominator = float(DBSession.execute(
+            select(['COUNT(*)'])
+            .select_from(clinic_submissions_table)
+            .where(
+                and_(
+                    clinic_submissions_table.c.clinic_id == self.id,
+                    clinic_submissions_table.c.characteristic ==
+                    characteristic,
+                    clinic_submissions_table.c.xform_id == xform_id
+                )
+            )).scalar())
+
+        # simple optimization, if denominator is zero i.e. no responses return
+        # now
+        if denominator == 0:
+            return None
+
+        for xpath in question_xpaths:
+            numerator = DBSession.execute(
+                select(['COUNT(*)'])
+                .select_from(clinic_submissions_table.join(
+                    submissions_table))
+                .where(
+                    and_(
+                        clinic_submissions_table.c.clinic_id == self.id,
+                        clinic_submissions_table.c.characteristic ==
+                        characteristic,
+                        clinic_submissions_table.c.xform_id == xform_id,
+                        submissions_table.c.raw_data[xpath].astext == '1'
+                    )
+                )).scalar()
+            score += float(numerator)/denominator
+
+        return score
+
 
 class ClinicNotFound(Exception):
     pass
@@ -145,12 +201,14 @@ class Submission(Base):
     raw_data = Column(JSON, nullable=False)
 
     @classmethod
-    def save(cls, payload):
-        submission = Submission(raw_data=payload)
+    def create_from_json(cls, payload):
+        # TODO: check for and handle json.loads parse errors
+        submission = Submission(raw_data=json.loads(payload))
         DBSession.add(submission)
         clinic_code, characteristics, xform_id = cls.parse_json(payload)
 
         # check if we have a valid clinic with said id
+        # select([Base.metadata.tables['clinic_submissions'].c.characteristic]).select_from(Base.metadata.tables['clinic_submissions']).join(Base.metadata.tables['submissions'], 'clinic_submissions.submission_id = submissions.id'))
         try:
             clinic = Clinic.get(Clinic.code == clinic_code)
         except NoResultFound:
