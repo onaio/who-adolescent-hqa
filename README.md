@@ -1,42 +1,68 @@
 who-ahqa README
 ==================
 
-Getting Started
----------------
-
-- cd <directory containing this file>
-
-- $venv/bin/python setup.py develop
-
-- $venv/bin/initialize_who-ahqa_db development.ini
-
-- $venv/bin/pserve development.ini
-
-
 Deploy with [Vagrant](http://www.vagrantup.com/)
 -------------------
 
-1. Install Vagrant
+### Installing
 
-2. Install Ansible
 
-3. Clone the Ona playbooks repo to a different directory
+1. Download Install Vagrant from its [website](http://www.vagrantup.com/downloads.html)
+
+2. Install Ansible. Preferably [from source](http://docs.ansible.com/intro_installation.html#running-from-source)
+
+3. Load your `terminal` and change into this project's directory
+
     ```
-    git clone git@github.com:onaio/playbooks.git /some/other/directory
+    cd /path/to/this/directory
     ```
 
-4. Run Vagrant from within this project's directory
+4. Clone the Ona playbooks repo to a different directory
     ```
-    cd /this/projects/dir
+    git clone git@github.com:onaio/playbooks.git /some/other/directory/playbooks
+    ```
+
+5. Make a symbolic link to the playbooks directory
+    ```
+    ln -s /some/other/directory/playbooks ansible
+    ```
+
+6. Bring up the virtual machine with Vagrant
+    ```
     vagrant up
     ```
 
-5. Make a symbolic link from tha playbooks directory to ansible within this directory
-    ```
-    ln -s /path/to/playbooks/repo ansible
-    ```
+    NOTE: This will keep the virtual machine running until you halt it via `vagrant halt`
 
-6. Provision using ansible
+7. Provision using ansible
     ```
     vagrant provision
     ```
+
+    NOTE: To update to the latest version at any time, run the provision command again.
+
+### Running
+
+1. ssh into the virtual machine
+    ```
+    vagrant ssh
+    ```
+
+2. Change into the project's directory
+    ```
+    cd /vagrant
+    ```
+
+3. Activate the virtual environment
+    ```
+    source ~/.virtualenvs/whoahqa/bin/activate
+    ```
+
+4. Run the server
+    ```
+    pserve development --reload
+    ```
+
+    Load the app in your browser at http://192.168.33.13:6543/clinics/unassigned
+
+    You can now make edits from your host (read OSX) and have them reflected when you refresh the browser.
