@@ -55,7 +55,7 @@ Deploy with [Vagrant](http://www.vagrantup.com/)
 
 3. Activate the virtual environment
     ```
-    source ~/.virtualenvs/whoahqa/bin/activate
+    source ~/.virtualenvs/whoahqa_dev/bin/activate
     ```
 
 4. Run the server
