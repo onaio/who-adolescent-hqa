@@ -37,3 +37,5 @@ nosetests.xml
 *.sqlite
 .idea
 .coverage
+.vagrant
+/ansible
