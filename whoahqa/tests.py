@@ -181,10 +181,13 @@ class TestClinic(TestBase):
             Submission.create_from_json(self.submissions[i])
 
         transaction.commit()
+    def test_calculate_score_when_no_responses_returns_none(self):
+        self.setup_test_data()
+        self.create_submissions()
 
         clinic = Clinic.get(Clinic.id == 1)
         score = clinic.calculate_score(
-            'one', 'health_care_provider_interview_EnSp')
+            'two', 'health_care_provider_interview_EnSp')
         self.assertIsNone(score)
 
 

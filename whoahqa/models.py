@@ -147,6 +147,8 @@ CLIENT_TOOLS = [
 CHARACTERISTICS = [
     ('one', u"Policies and procedures are in place that do not restrict the "
             u"provision of health services on any terms"),
+    ('two', u"Health-care providers treat all adolescent clients with equal"
+            u"care and respect, regardless of status"),
 ]
 
 CHARACTERISTIC_MAPPING = {
@@ -164,6 +166,11 @@ CHARACTERISTIC_MAPPING = {
         ADOLESCENT_IN_COMMUNITY: (
             'characteristic_one/ch1_q1',
         )
+    },
+    'two': {
+        HEALTH_CARE_PROVIDER: (
+            'characteristic_two/ch2_q1',
+        ),
     }
 }
 
