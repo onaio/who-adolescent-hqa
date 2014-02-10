@@ -277,7 +277,8 @@ class Clinic(Base):
                 aggregate_score, num_responses = self.calculate_score(
                     characteristic, client_tool_id)
                 stats = {
-                    'aggregate_score': aggregate_score,
+                    'aggregate_score': aggregate_score if aggregate_score
+                    is not None else "-",
                     'num_responses': num_responses,
                     'num_questions': len(questions),
                 }
