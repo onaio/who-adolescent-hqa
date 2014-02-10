@@ -83,19 +83,7 @@ class ClinicViews(object):
                  renderer='templates/clinics_show.jinja2')
     def show(self):
         clinic = self.request.context
-        scores = {}
-
-        # get scores for each characteristic
-        for characteristic, label in CHARACTERISTICS:
-            scores[characteristic] = {}
-            scores[characteristic]['totals'] = 0.0
-            mapping = CHARACTERISTIC_MAPPING[characteristic]
-            for xform_id in mapping.keys():
-                score = clinic.calculate_score(characteristic, xform_id)
-                scores[characteristic][xform_id] = score
-                # increment total if value is not None
-                if score is not None:
-                    scores[characteristic]['totals'] += score
+        scores = clinic.get_scores()
 
         return {
             'clinic': clinic,

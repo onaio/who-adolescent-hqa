@@ -194,8 +194,8 @@ class Clinic(Base):
 
     def calculate_score(self, characteristic, xform_id):
         """
-        Calculate a specific characteristic's score for the specified client
-        tool
+        Calculate the aggregate score and the no. of respondents for the
+        characteristic/xform_id pair
         """
         # get the questions in this client tool for this characteristic
         question_xpaths = CHARACTERISTIC_MAPPING[characteristic][xform_id]
@@ -207,8 +207,8 @@ class Clinic(Base):
         # clinic_id matches self's and characteristic and the client tool are
         # also a match to the requested ones. Joint to submissions to do an
         # aggregation
-        score = .0
-        denominator = float(DBSession.execute(
+        aggregate_score = .0
+        num_responses = DBSession.execute(
             select(['COUNT(*)'])
             .select_from(clinic_submissions_table)
             .where(
@@ -218,12 +218,14 @@ class Clinic(Base):
                     characteristic,
                     clinic_submissions_table.c.xform_id == xform_id
                 )
-            )).scalar())
+            )).scalar()
+        # convert to float once
+        denominator = float(num_responses)
 
-        # simple optimization, if denominator is zero i.e. no responses return
+        # simple optimization, if num_responses is zero i.e. no responses return
         # now
-        if denominator == 0:
-            return None
+        if num_responses == 0:
+            return None, 0
 
         for xpath in question_xpaths:
             numerator = DBSession.execute(
@@ -239,9 +241,64 @@ class Clinic(Base):
                         submissions_table.c.raw_data[xpath].astext == '1'
                     )
                 )).scalar()
-            score += float(numerator)/denominator
+            aggregate_score += float(numerator)/denominator
 
-        return score
+        return aggregate_score, num_responses
+
+    def get_scores(self):
+        """
+        scores = {
+            'one': {
+                'adolescent_quality_assementEnSp': {
+                    'aggregate_score': 1.5,
+                    'num_questions': 2,
+                    'num_responses': 4,
+                    'num_expected_responses': 5
+                },
+                'totals': {
+                    'total_scores': 3
+                    'total_questions': 5,
+                }
+            }
+        }
+        """
+        scores = {}
+
+        for characteristic, label in CHARACTERISTICS:
+            scores[characteristic] = {}
+            scores[characteristic]['totals'] = {
+                'total_scores': 0.0,
+                'total_questions': 0,
+                'total_responses': 0,
+                'total_percentage': 0
+            }
+            mapping = CHARACTERISTIC_MAPPING[characteristic]
+            for client_tool_id, questions in mapping.items():
+                aggregate_score, num_responses = self.calculate_score(
+                    characteristic, client_tool_id)
+                stats = {
+                    'aggregate_score': aggregate_score,
+                    'num_responses': num_responses,
+                    'num_questions': len(questions),
+                }
+                scores[characteristic][client_tool_id] = stats
+
+                # increment total if value is not None
+                if aggregate_score is not None:
+                    scores[characteristic]['totals']['total_scores'] +=\
+                        aggregate_score
+
+                scores[characteristic]['totals']['total_questions'] +=\
+                    len(questions)
+                scores[characteristic]['totals']['total_responses'] +=\
+                    num_responses
+
+            scores[characteristic]['totals']['total_percentage'] =\
+                (scores[characteristic]['totals']['total_scores']/
+                 float(scores[characteristic]['totals']['total_questions']))\
+                * 100
+
+        return scores
 
 
 class ClinicNotFound(Exception):
