@@ -24,7 +24,9 @@ from whoahqa.models import (
     ClinicSubmission,
     ClinicNotFound,
     CHARACTERISTICS,
-    CHARACTERISTIC_MAPPING
+    CHARACTERISTIC_MAPPING,
+    ADOLESCENT_CLIENT,
+    HEALTH_CARE_PROVIDER
 )
 from whoahqa.views import (
     ClinicViews,
@@ -143,6 +145,12 @@ class TestUser(TestBase):
 
 
 class TestClinic(TestBase):
+    def create_submissions(self):
+        # make submissions
+        for i in range(6):
+            Submission.create_from_json(self.submissions[i])
+        transaction.commit()
+
     def test_assign_to_user(self):
         self.setup_test_data()
         user = User.newest()
@@ -161,26 +169,43 @@ class TestClinic(TestBase):
 
     def test_calculate_score_works(self):
         self.setup_test_data()
-
-        # make submissions
-        for i in range(6):
-            Submission.create_from_json(self.submissions[i])
-
-        transaction.commit()
+        self.create_submissions()
 
         clinic = Clinic.get(Clinic.id == 1)
         score = clinic.calculate_score(
             'one', 'adolescent_quality_assementEnSp')
-        self.assertEqual(score, 1.5)
+        self.assertEqual(score, (1.5, 2))
 
-    def test_calculate_score_when_no_responses_returns_none(self):
+    def test_get_scores_works(self):
+        """
+        Test scores calculation for all characteristic and tool pairs per
+        clinic
+        """
         self.setup_test_data()
+        self.create_submissions()
 
-        # make submissions
-        for i in range(6):
-            Submission.create_from_json(self.submissions[i])
+        clinic = Clinic.get(Clinic.id == 1)
+        scores = clinic.get_scores()
 
-        transaction.commit()
+        scores_1 = scores['one']
+        self.assertEqual(scores_1[ADOLESCENT_CLIENT], {
+            'aggregate_score': 1.5,
+            'num_questions': 2,
+            'num_responses': 2,
+        })
+        self.assertEqual(scores_1[HEALTH_CARE_PROVIDER], {
+            'aggregate_score': 1,
+            'num_questions': 1,
+            'num_responses': 1,
+        })
+
+        self.assertEqual(scores_1['totals'], {
+            'total_scores': 2.5,
+            'total_questions': 5,
+            'total_responses': 3,
+            'total_percentage': 50.0
+        })
+
     def test_calculate_score_when_no_responses_returns_none(self):
         self.setup_test_data()
         self.create_submissions()
@@ -188,7 +213,7 @@ class TestClinic(TestBase):
         clinic = Clinic.get(Clinic.id == 1)
         score = clinic.calculate_score(
             'two', 'health_care_provider_interview_EnSp')
-        self.assertIsNone(score)
+        self.assertEqual(score, (None, 0))
 
 
 class TestSubmission(TestBase):
@@ -347,7 +372,7 @@ class TestUserViews(IntegrationTestBase):
 
 
 class TestSubmissionViews(IntegrationTestBase):
-    def make_submission(self, payload=None):
+    def post_json(self, payload=None):
         request = testing.DummyRequest()
         if payload:
             request.body = payload
@@ -357,21 +382,21 @@ class TestSubmissionViews(IntegrationTestBase):
     def test_json_post_with_valid_clinic_id(self):
         clinic = Clinic(code='1A2B', name="Clinic A")
         DBSession.add(clinic)
-        response = self.make_submission(self.submissions[0])
+        response = self.post_json(self.submissions[0])
 
         #should return a 201 response code
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.body, 'Saved')
 
     def test_null_json(self):
-        response = self.make_submission(None)
+        response = self.post_json(None)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.comment, 'Missing JSON Payload')
 
     def test_json_post_with_invalid_clinic_id(self):
         clinic = Clinic(code='1A2B', name="Clinic A")
         DBSession.add(clinic)
-        response = self.make_submission(self.submissions[1])
+        response = self.post_json(self.submissions[1])
 
         #should return a 201 response code
         self.assertEqual(response.status_code, 202)
@@ -379,7 +404,7 @@ class TestSubmissionViews(IntegrationTestBase):
                          'Accepted Pending Clinic Match')
 
     def test_json_post_without_clinic_id(self):
-        response = self.make_submission('{"test":"1234"}')
+        response = self.post_json('{"test":"1234"}')
 
         #should return a 202 response code
         self.assertEqual(response.status_code, 202)

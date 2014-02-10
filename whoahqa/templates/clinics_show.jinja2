@@ -11,21 +11,46 @@
         <table class="table table-bordered table-hover">
           <thead>
           <tr>
-            <th width="37%">Characteristic</th>
+            <th width="5%">#</th>
+            <th width="20%">Characteristic</th>
+            <th width="9%">{# breakdown #}</th>
             {% for client_tool in client_tools %}
               <th width="6%">{{ client_tool.name }}</th>
             {% endfor %}
-            <th width="6%">Totals</th>
+            <th colspan="2" width="11%">Totals</th>
           </tr>
           </thead>
           <tbody>
           {% for characteristic in characteristics %}
             <tr>
-              <td>{{ characteristic.description }}</td>
+              <td rowspan="3">{{ loop.index }}</td>
+              <td rowspan="3">{{ characteristic.description }}</td>
+              <td class="bold">Range</td>
               {% for client_tool in client_tools %}
-                <td>{{ scores[characteristic.id][client_tool.id] }}</td>
+                <td class="{% if not scores[characteristic.id][client_tool.id] is defined %}active{% endif %}">
+                  {% if scores[characteristic.id][client_tool.id] is defined %}
+                    0 - {{ scores[characteristic.id][client_tool.id].num_questions }}{% endif %}</td>
               {% endfor %}
-              <td><span class="bold">{{ scores[characteristic.id].totals }}</span></td>
+              <td width="6%" class="bold">0 - {{ scores[characteristic.id].totals.total_questions }}</td>
+              <td width="6%" rowspan="3">{{ scores[characteristic.id].totals.total_percentage }}</td>
+            </tr>
+            <tr>
+              <td class="bold">Avg. Score</td>
+              {% for client_tool in client_tools %}
+                <td class="{% if not scores[characteristic.id][client_tool.id] is defined %}active{% endif %}">
+                  {% if scores[characteristic.id][client_tool.id] is defined %}
+                    {{ scores[characteristic.id][client_tool.id].aggregate_score }}{% endif %}</td>
+              {% endfor %}
+              <td class="bold">{{ scores[characteristic.id].totals.total_scores }}</td>
+            </tr>
+            <tr>
+              <td class="bold"># Respondents</td>
+              {% for client_tool in client_tools %}
+                <td class="{% if not scores[characteristic.id][client_tool.id] is defined %}active{% endif %}">
+                  {% if scores[characteristic.id][client_tool.id] is defined %}
+                    {{ scores[characteristic.id][client_tool.id].num_responses }}{% endif %}</td>
+              {% endfor %}
+              <td class="bold">{{ scores[characteristic.id].totals.total_responses }}</td>
             </tr>
           {% endfor %}
           </tbody>
