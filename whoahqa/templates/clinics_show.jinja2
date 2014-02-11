@@ -25,7 +25,7 @@
             <tr>
               <td rowspan="3" class="center-align middle-align"><h2>{{ loop.index }}</h2></td>
               <td rowspan="3" class="middle-align">{{ characteristic.description }}</td>
-              <td class="bold">Range</td>
+              <td class="bold">Min - Max</td>
               {% for client_tool in client_tools %}
                 <td class="center-align {% if not scores[characteristic.id][client_tool.id] is defined %}active{% endif %}">
                   {% if scores[characteristic.id][client_tool.id] is defined %}
@@ -35,7 +35,7 @@
               <td width="6%" rowspan="3" class="center-align middle-align"><h4 class="bold">{{ "%(percentage).1f"|format(percentage=scores[characteristic.id].totals.total_percentage) }}%</h4></td>
             </tr>
             <tr>
-              <td class="bold">Avg. Score</td>
+              <td class="bold">Aggregate</td>
               {% for client_tool in client_tools %}
                 <td class="center-align {% if not scores[characteristic.id][client_tool.id] is defined %}active{% endif %}">
                   {% if scores[characteristic.id][client_tool.id] is defined %}
