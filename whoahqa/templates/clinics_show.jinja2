@@ -32,7 +32,7 @@
                     0 - {{ scores[characteristic.id][client_tool.id].num_questions }}{% endif %}</td>
               {% endfor %}
               <td width="6%" class="bold center-align">0 - {{ scores[characteristic.id].totals.total_questions }}</td>
-              <td width="6%" rowspan="3" class="center-align middle-align"><h4 class="bold">{{ scores[characteristic.id].totals.total_percentage }}%</h4></td>
+              <td width="6%" rowspan="3" class="center-align middle-align"><h4 class="bold">{{ "%(percentage).1f"|format(percentage=scores[characteristic.id].totals.total_percentage) }}%</h4></td>
             </tr>
             <tr>
               <td class="bold">Avg. Score</td>
