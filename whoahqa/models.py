@@ -259,8 +259,8 @@ CHARACTERISTIC_MAPPING = {
     FOUR: {
         ADOLESCENT_CLIENT: (
             'characteristic_four/ch4_q1',
-            'characteristic_four/ch4_q2',
-            'characteristic_four/ch4_q3'
+            'characteristic_four/ch4_q1_yes',
+            'characteristic_four/ch4_q1_yes2'
         ),
         HEALTH_FACILITY_MANAGER: {
             'characteristic_four/ch4_q1',
@@ -272,7 +272,7 @@ CHARACTERISTIC_MAPPING = {
     },
     FIVE: {
         ADOLESCENT_CLIENT: (
-            'characteristic_five/ch5_q1',
+            'characteristic_five/ch5_q2',
         ),
         HEALTH_FACILITY_MANAGER: {
             'characteristic_five/ch5_q1',
