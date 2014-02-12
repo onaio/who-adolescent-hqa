@@ -209,6 +209,27 @@ class TestClinic(TestBase):
             'total_percentage': 50.0
         })
 
+    def test_get_scores_when_no_responses_sets_totals_to_none(self):
+        self.setup_test_data()
+        self.create_submissions()
+
+        clinic = Clinic.get(Clinic.id == 1)
+        scores = clinic.get_scores()
+
+        scores_10 = scores['ten']
+        self.assertEqual(scores_10[ADOLESCENT_CLIENT], {
+            'aggregate_score': None,
+            'num_questions': 4,
+            'num_responses': 0,
+        })
+
+        self.assertEqual(scores_10['totals'], {
+            'total_scores': None,
+            'total_questions': 10,
+            'total_responses': 0,
+            'total_percentage': None
+        })
+
     def test_calculate_score_when_no_responses_returns_none(self):
         self.setup_test_data()
         self.create_submissions()

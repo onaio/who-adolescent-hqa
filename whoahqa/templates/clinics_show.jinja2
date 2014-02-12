@@ -24,8 +24,8 @@
             <h2>{{ loop.index }}</h2></td>
           <td rowspan="3"
               class="middle-align">{{ characteristic.description }}</td>
-          <td rowspan="3" class="center-align middle-align {{ score_class(percentage) }}"><h4
-              class="bold">{{ "%(percentage).1f"|format(percentage=percentage) }}%</h4>
+          <td rowspan="3" class="center-align middle-align {% if percentage is not none %}{{ score_class(percentage) }}{% endif %}"><h4
+              class="bold">{% if percentage is not none %}{{ "%(percentage).1f"|format(percentage=percentage) }}%{% else %} - {% endif %}</h4>
           </td>
           <td class="bold">Min - Max</td>
           {% for client_tool in client_tools %}
