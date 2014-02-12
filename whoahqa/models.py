@@ -714,19 +714,13 @@ class Clinic(Base):
 
         for characteristic, label in CHARACTERISTICS:
             scores[characteristic] = {}
-            scores[characteristic]['totals'] = {
-                'total_scores': 0.0,
-                'total_questions': 0,
-                'total_responses': 0,
-                'total_percentage': 0
-            }
+            total_scores = total_questions = total_responses = 0
             mapping = CHARACTERISTIC_MAPPING[characteristic]
             for client_tool_id, questions in mapping.items():
                 aggregate_score, num_responses = self.calculate_score(
                     characteristic, client_tool_id)
                 stats = {
-                    'aggregate_score': aggregate_score if aggregate_score
-                    is not None else "-",
+                    'aggregate_score': aggregate_score,
                     'num_responses': num_responses,
                     'num_questions': len(questions),
                 }
@@ -734,18 +728,18 @@ class Clinic(Base):
 
                 # increment total if value is not None
                 if aggregate_score is not None:
-                    scores[characteristic]['totals']['total_scores'] +=\
-                        aggregate_score
+                    total_scores += aggregate_score
 
-                scores[characteristic]['totals']['total_questions'] +=\
-                    len(questions)
-                scores[characteristic]['totals']['total_responses'] +=\
-                    num_responses
+                total_questions += len(questions)
+                total_responses += num_responses
 
-            scores[characteristic]['totals']['total_percentage'] =\
-                (scores[characteristic]['totals']['total_scores']/
-                 float(scores[characteristic]['totals']['total_questions']))\
-                * 100
+            scores[characteristic]['totals'] = {
+                'total_scores': None if total_scores == 0 else total_scores,
+                'total_questions': total_questions,
+                'total_responses': total_responses,
+                'total_percentage': None if total_responses == 0 else (
+                    total_scores/float(total_questions) * 100)
+            }
 
         return scores
 
