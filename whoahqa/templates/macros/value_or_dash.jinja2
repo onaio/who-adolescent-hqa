@@ -1,0 +1,3 @@
+{% macro value_or_dash(value) -%}
+  {% if value is none %} - {% else %} {{ value }} {% endif %}
+{%- endmacro %}

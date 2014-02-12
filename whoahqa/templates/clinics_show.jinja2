@@ -1,5 +1,6 @@
 {% extends 'base.jinja2' %}
 {% from 'macros/score_class.jinja2' import score_class %}
+{% from 'macros/value_or_dash.jinja2' import value_or_dash %}
 {% block title %}{{ clinic.name }}{% endblock %}
 {% block content %}
   <div class="table-responsive">
@@ -41,10 +42,11 @@
           <td class="bold">Aggregate</td>
           {% for client_tool in client_tools %}
             <td class="center-align {% if not scores[characteristic.id][client_tool.id] is defined %}active{% endif %}">
-              {% if scores[characteristic.id][client_tool.id] is defined %}
-                {{ scores[characteristic.id][client_tool.id].aggregate_score }}{% endif %}</td>
+              {%- if scores[characteristic.id][client_tool.id] is defined -%}
+                {{ value_or_dash(scores[characteristic.id][client_tool.id].aggregate_score) }}
+              {%- endif %}</td>
           {% endfor %}
-          <td class="bold center-align">{{ scores[characteristic.id].totals.total_scores }}</td>
+          <td class="bold center-align">{{ value_or_dash(scores[characteristic.id].totals.total_scores) }}</td>
         </tr>
         <tr>
           <td class="bold"># Respondents</td>
