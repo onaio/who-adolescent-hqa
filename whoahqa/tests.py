@@ -7,6 +7,9 @@ from pyramid import testing
 from pyramid.paster import (
     get_appsettings
 )
+from pyramid.httpexceptions import (
+    HTTPBadRequest,
+)
 from pyramid.security import IAuthenticationPolicy
 from sqlalchemy import engine_from_config
 from webtest import TestApp
@@ -215,6 +218,16 @@ class TestClinic(TestBase):
             'two', 'health_care_provider_interview_EnSp')
         self.assertEqual(score, (None, 0))
 
+    def test_is_assigned_returns_true_if_assigned(self):
+        self.setup_test_data()
+        clinic_a = Clinic.get(Clinic.id == 1)
+        self.assertTrue(clinic_a.is_assigned)
+
+    def test_is_assigned_returns_false_if_not_assigned(self):
+        self.setup_test_data()
+        clinic_b = Clinic.get(Clinic.id == 2)
+        self.assertFalse(clinic_b.is_assigned)
+
 
 class TestSubmission(TestBase):
     def test_save_submission_with_valid_clinic_id(self):
@@ -355,6 +368,12 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(
             response['characteristics'],
             tuple_to_dict_list(("id", "description"), CHARACTERISTICS))
+
+    def test_show_raises_bad_request_if_clinic_is_not_assigned(self):
+        self.setup_test_data()
+        clinic = Clinic.get(Clinic.id == 2)
+        self.request.context = clinic
+        self.assertRaises(HTTPBadRequest, self.clinic_views.show)
 
 
 class TestUserViews(IntegrationTestBase):
