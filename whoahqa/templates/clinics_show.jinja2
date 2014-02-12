@@ -13,11 +13,12 @@
           <tr>
             <th width="5%" class="center-align">#</th>
             <th width="20%">Characteristic</th>
+            <th width="5%" class="center-align">Score</th>
             <th width="9%">{# breakdown #}</th>
             {% for client_tool in client_tools %}
               <th width="6%" class="center-align">{{ client_tool.name }}</th>
             {% endfor %}
-            <th colspan="2" width="11%" class="center-align">Totals</th>
+            <th width="6%" class="center-align">Total</th>
           </tr>
           </thead>
           <tbody>
@@ -25,6 +26,7 @@
             <tr>
               <td rowspan="3" class="center-align middle-align"><h2>{{ loop.index }}</h2></td>
               <td rowspan="3" class="middle-align">{{ characteristic.description }}</td>
+              <td rowspan="3" class="center-align middle-align"><h4 class="bold">{{ "%(percentage).1f"|format(percentage=scores[characteristic.id].totals.total_percentage) }}%</h4></td>
               <td class="bold">Min - Max</td>
               {% for client_tool in client_tools %}
                 <td class="center-align {% if not scores[characteristic.id][client_tool.id] is defined %}active{% endif %}">
@@ -32,7 +34,6 @@
                     0 - {{ scores[characteristic.id][client_tool.id].num_questions }}{% endif %}</td>
               {% endfor %}
               <td width="6%" class="bold center-align">0 - {{ scores[characteristic.id].totals.total_questions }}</td>
-              <td width="6%" rowspan="3" class="center-align middle-align"><h4 class="bold">{{ "%(percentage).1f"|format(percentage=scores[characteristic.id].totals.total_percentage) }}%</h4></td>
             </tr>
             <tr>
               <td class="bold">Aggregate</td>
