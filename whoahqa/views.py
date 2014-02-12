@@ -83,8 +83,12 @@ class ClinicViews(object):
                  renderer='templates/clinics_show.jinja2')
     def show(self):
         clinic = self.request.context
-        scores = clinic.get_scores()
 
+        # if clinic is not assigned, throw a bad request
+        if not clinic.is_assigned:
+            raise HTTPBadRequest("The clinic is not yet assigned")
+
+        scores = clinic.get_scores()
         return {
             'clinic': clinic,
             'client_tools': tuple_to_dict_list(("id", "name"), CLIENT_TOOLS),

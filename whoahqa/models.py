@@ -630,6 +630,10 @@ class Clinic(Base):
         self.user = user
         DBSession.add(self)
 
+    @property
+    def is_assigned(self):
+        return self.user is not None
+
     @classmethod
     def get_unassigned(cls):
         clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
