@@ -1,0 +1,3 @@
+{% macro score_class(value) -%}
+  {% if value <= 30 %} danger {% elif value < 60 %} warning {% else %} success {% endif %}
+{%- endmacro %}

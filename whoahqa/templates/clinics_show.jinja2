@@ -1,4 +1,5 @@
 {% extends "templates/base.jinja2" %}
+{% from 'templates/macros/score_class.jinja2' import score_class %}
 {% block title %}{{ clinic.name }}{% endblock %}
 {% block content %}
   <div class="table-responsive">
@@ -17,13 +18,14 @@
       </thead>
       <tbody>
       {% for characteristic in characteristics %}
+        {% set percentage = scores[characteristic.id].totals.total_percentage %}
         <tr>
           <td rowspan="3" class="center-align middle-align">
             <h2>{{ loop.index }}</h2></td>
           <td rowspan="3"
               class="middle-align">{{ characteristic.description }}</td>
-          <td rowspan="3" class="center-align middle-align"><h4
-              class="bold">{{ "%(percentage).1f"|format(percentage=scores[characteristic.id].totals.total_percentage) }}%</h4>
+          <td rowspan="3" class="center-align middle-align {{ score_class(percentage) }}"><h4
+              class="bold">{{ "%(percentage).1f"|format(percentage=percentage) }}%</h4>
           </td>
           <td class="bold">Min - Max</td>
           {% for client_tool in client_tools %}
