@@ -45,7 +45,7 @@ class UserViews(object):
         self.request = request
 
     @view_config(name='clinics',
-                 renderer='templates/user_clinics.jinja2')
+                 renderer='user_clinics.jinja2')
     def clinics(self):
         user = self.request.context
         clinics = user.get_clinics()
@@ -60,7 +60,7 @@ class ClinicViews(object):
         self.request = request
 
     @view_config(name='unassigned',
-                 renderer='templates/clinics_unassigned.jinja2')
+                 renderer='clinics_unassigned.jinja2')
     def unassigned(self):
         clinics = Clinic.get_unassigned()
         return {
@@ -80,7 +80,7 @@ class ClinicViews(object):
             self.request.route_url('clinics', traverse=('unassigned',)))
 
     @view_config(name='', request_method='GET', context=Clinic,
-                 renderer='templates/clinics_show.jinja2')
+                 renderer='clinics_show.jinja2')
     def show(self):
         clinic = self.request.context
 
