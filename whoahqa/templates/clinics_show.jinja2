@@ -26,14 +26,14 @@
           <td rowspan="3"
               class="middle-align">{{ characteristic.description }}</td>
           <td rowspan="3" class="center-align middle-align {% if percentage is not none %}{{ score_class(percentage) }}{% endif %}"><h4
-              class="bold">{% if percentage is not none %}{{ "%(percentage).1f"|format(percentage=percentage) }}%{% else %} - {% endif %}</h4>
+              class="bold">{% if percentage is not none %}{{ "%.1f"|format(percentage) }}%{% else %} - {% endif %}</h4>
           </td>
           <td class="bold">Min - Max</td>
           {% for client_tool in client_tools %}
-            <td class="center-align {% if not scores[characteristic.id][client_tool.id] is defined %}active{% endif %}">
-              {% if scores[characteristic.id][client_tool.id] is defined %}
-                0 -
-                {{ scores[characteristic.id][client_tool.id].num_questions }}{% endif %}</td>
+            {% set score = scores[characteristic.id] %}
+            <td class="center-align {% if score[client_tool.id] is not defined %}active{% endif %}">
+              {% if score[client_tool.id] is defined %}
+                0 - {{ score[client_tool.id].num_questions }}{% endif %}</td>
           {% endfor %}
           <td width="6%" class="bold center-align">0
             - {{ scores[characteristic.id].totals.total_questions }}</td>
@@ -41,9 +41,10 @@
         <tr>
           <td class="bold">Aggregate</td>
           {% for client_tool in client_tools %}
-            <td class="center-align {% if not scores[characteristic.id][client_tool.id] is defined %}active{% endif %}">
-              {%- if scores[characteristic.id][client_tool.id] is defined -%}
-                {{ value_or_dash(scores[characteristic.id][client_tool.id].aggregate_score) }}
+            {% set score = scores[characteristic.id] %}
+            <td class="center-align {% if not score[client_tool.id] is defined %}active{% endif %}">
+              {%- if score[client_tool.id] is defined -%}
+                {{ value_or_dash(score[client_tool.id].aggregate_score) }}
               {%- endif %}</td>
           {% endfor %}
           <td class="bold center-align">{{ value_or_dash(scores[characteristic.id].totals.total_scores) }}</td>
@@ -51,9 +52,10 @@
         <tr>
           <td class="bold"># Respondents</td>
           {% for client_tool in client_tools %}
-            <td class="center-align {% if not scores[characteristic.id][client_tool.id] is defined %}active{% endif %}">
-              {% if scores[characteristic.id][client_tool.id] is defined %}
-                {{ scores[characteristic.id][client_tool.id].num_responses }}{% endif %}</td>
+            {% set score = scores[characteristic.id] %}
+            <td class="center-align {% if not score[client_tool.id] is defined %}active{% endif %}">
+              {% if score[client_tool.id] is defined %}
+                {{ score[client_tool.id].num_responses }}{% endif %}</td>
           {% endfor %}
           <td class="bold center-align">{{ scores[characteristic.id].totals.total_responses }}</td>
         </tr>
