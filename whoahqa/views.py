@@ -59,6 +59,14 @@ def oauth_login(request):
     return HTTPFound(authorization_url)
 
 
+@view_config(route_name='oauth', match_param='action=callback')
+def oauth_callback(request):
+    # check if we have `error` in our params, meaning user canceled
+    if 'error' in request.GET:
+        # redirect to login page with an alert
+        request.session.flash(
+            u"You must accept the permissions to login", 'error')
+        return HTTPFound(request.route_url('oauth', action='login'))
 @view_defaults(route_name='users')
 class UserViews(object):
     def __init__(self, request):
