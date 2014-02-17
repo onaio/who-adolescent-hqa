@@ -163,7 +163,10 @@ class TestOnaUser(TestBase):
             'first_name': u"",
             'last_name': u""
         }]
-        ona_user = OnaUser.get_or_create_from_api_data(user_data)
+        refresh_token = 'a123f4'
+        ona_user = OnaUser.get_or_create_from_api_data(
+            user_data,
+            refresh_token)
         self.assertIsInstance(ona_user, OnaUser)
         self.assertIsInstance(ona_user.user, User)
 
@@ -174,12 +177,17 @@ class TestOnaUser(TestBase):
             'last_name': u""
         }]
         # create the instance
-        OnaUser.get_or_create_from_api_data(user_data)
+        refresh_token = 'a123f4'
+        OnaUser.get_or_create_from_api_data(user_data, refresh_token)
 
         # try to get or create
-        ona_user = OnaUser.get_or_create_from_api_data(user_data)
+        new_refresh_token = 'b234f5'
+        ona_user = OnaUser.get_or_create_from_api_data(
+            user_data,
+            new_refresh_token)
         self.assertIsInstance(ona_user, OnaUser)
         self.assertIsInstance(ona_user.user, User)
+        self.assertEqual(ona_user.refresh_token, new_refresh_token)
 
     def test_get_or_create_from_api_data_raises_value_error_if_bad_json(self):
         user_data = [
@@ -192,8 +200,12 @@ class TestOnaUser(TestBase):
                 'first_name': u"",
                 'last_name': u""
             }]
+        refresh_token = 'a123f4'
         self.assertRaises(
-            ValueError, OnaUser.get_or_create_from_api_data, user_data)
+            ValueError,
+            OnaUser.get_or_create_from_api_data,
+            user_data,
+            refresh_token)
 
 
 class TestClinic(TestBase):

@@ -118,10 +118,11 @@ class OnaUser(Base):
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True,
                      autoincrement=False)
     username = Column(String(255), nullable=False, unique=True)
+    refresh_token = Column(String(255), nullable=False)
     user = relationship('User')
 
     @classmethod
-    def get_or_create_from_api_data(cls, json_data):
+    def get_or_create_from_api_data(cls, json_data, refresh_token):
         # check that data has length of 1 and raise ValueError otherwise
         if len(json_data) != 1:
             raise ValueError("We only know how to handle a single user")
@@ -130,11 +131,12 @@ class OnaUser(Base):
         username = data['username']
         try:
             ona_user = OnaUser.get(OnaUser.username == username)
+            ona_user.refresh_token = refresh_token
         except NoResultFound:
             user = User()
-            ona_user = OnaUser(username=username)
+            ona_user = OnaUser(username=username, refresh_token=refresh_token)
             ona_user.user = user
-            DBSession.add(ona_user)
+        DBSession.add(ona_user)
         return ona_user
 
 
