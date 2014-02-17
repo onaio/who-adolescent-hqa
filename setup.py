@@ -21,8 +21,11 @@ requires = [
     'pyramid_jinja2',
     'WebTest',
     'alembic',
+    'requests',
+    'requests-oauthlib',
+    'httmock',
     'nose',
-    'coverage'
+    'coverage',
 ]
 
 setup(name='who-ahqa',

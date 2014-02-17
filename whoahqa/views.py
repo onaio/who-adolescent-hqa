@@ -15,6 +15,8 @@ from pyramid.events import subscriber
 from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm.exc import NoResultFound
 
+from requests_oauthlib import OAuth2Session
+
 from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
     DBSession,
@@ -37,6 +39,24 @@ def set_request_user(event):
         request.user = User.get(User.id == user_id)
     except NoResultFound:
         request.user = None
+
+
+@view_config(route_name='oauth', match_param='action=login')
+def oauth_login(request):
+    client_id = request.registry.settings['oauth_client_id']
+    authorization_endpoint = request.registry.settings[
+        'oauth_authorization_endpoint']
+    redirect_uri = request.route_url('oauth', action='callback')
+
+    session = OAuth2Session(
+        client_id,
+        scope=['profile', 'email'],
+        redirect_uri=redirect_uri)
+    authorization_url, state = session.authorization_url(
+        authorization_endpoint)
+    # State is used to prevent CSRF, keep this for later.
+    request.session['oauth_state'] = state
+    return HTTPFound(authorization_url)
 
 
 @view_defaults(route_name='users')
