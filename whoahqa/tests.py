@@ -26,6 +26,7 @@ from whoahqa.models import (
     ClinicFactory,
     user_clinics,
     User,
+    OnaUser,
     Clinic,
     Submission,
     ClinicSubmission,
@@ -153,6 +154,46 @@ class TestUser(TestBase):
         clinics = user.get_clinics()
         self.assertEqual(len(clinics), 1)
         self.assertEqual(clinics[0].name, "Clinic A")
+
+
+class TestOnaUser(TestBase):
+    def test_get_or_create_from_api_data_creates_user(self):
+        user_data = [{
+            'username': u"user_one",
+            'first_name': u"",
+            'last_name': u""
+        }]
+        ona_user = OnaUser.get_or_create_from_api_data(user_data)
+        self.assertIsInstance(ona_user, OnaUser)
+        self.assertIsInstance(ona_user.user, User)
+
+    def test_get_or_create_from_api_data_returns_user_if_exists(self):
+        user_data = [{
+            'username': u"user_one",
+            'first_name': u"",
+            'last_name': u""
+        }]
+        # create the instance
+        OnaUser.get_or_create_from_api_data(user_data)
+
+        # try to get or create
+        ona_user = OnaUser.get_or_create_from_api_data(user_data)
+        self.assertIsInstance(ona_user, OnaUser)
+        self.assertIsInstance(ona_user.user, User)
+
+    def test_get_or_create_from_api_data_raises_value_error_if_bad_json(self):
+        user_data = [
+            {
+                'username': u"user_one",
+                'first_name': u"",
+                'last_name': u""
+            }, {
+                'username': u"user_one",
+                'first_name': u"",
+                'last_name': u""
+            }]
+        self.assertRaises(
+            ValueError, OnaUser.get_or_create_from_api_data, user_data)
 
 
 class TestClinic(TestBase):
