@@ -1,4 +1,5 @@
-from pyramid.security import authenticated_userid
+import json
+from pyramid.security import authenticated_userid, remember
 from pyramid.response import Response
 from pyramid.httpexceptions import (
     HTTPFound,
@@ -23,6 +24,7 @@ from whoahqa.models import (
     ClinicFactory,
     SubmissionFactory,
     User,
+    OnaUser,
     Clinic,
     Submission,
     ClinicNotFound,
@@ -71,11 +73,12 @@ def oauth_callback(request):
         return Response(request.GET['error'])
 
     # TODO: validate the `oauth_state` session
+    base_url = request.registry.settings['oauth_base_url']
     state = request.GET.get('state')
     client_id = request.registry.settings['oauth_client_id']
     client_secret = request.registry.settings['oauth_secret']
     token_url = "{base_url}{path}".format(
-        base_url=request.registry.settings['oauth_base_url'],
+        base_url=base_url,
         path=request.registry.settings['oauth_token_path'])
     redirect_uri = request.route_url('oauth', action='callback')
 
@@ -90,11 +93,31 @@ def oauth_callback(request):
         code=code)
 
     # retrieve username and store in db if it doesnt exist yet
+    user_api_url = "{base_url}{path}".format(
+        base_url=base_url,
+        path=request.registry.settings['oauth_user_api_path'])
+    response = session.request('GET', user_api_url)
+    user_data = json.loads(response.text)
+    refresh_token = token['refresh_token']
 
-    #request.session['oauth_token'] = token
-    # redirect to `from` url
-    #return HTTPFound(request.route_url('users', traverse=('1', 'clinics')))
-    return Response("Token")
+    try:
+        ona_user = OnaUser.get_or_create_from_api_data(user_data, refresh_token)
+    except ValueError:
+        request.session.flash(
+            u"Failed to login, please try again", 'error')
+    else:
+        #request.session['oauth_token'] = token
+        # flash to get the auto id
+        DBSession.flush()
+        user_id = ona_user.user.id
+
+        # login user
+        headers = remember(request, user_id)
+
+        # redirect to `came_from` url
+        return HTTPFound(
+            request.route_url('users', traverse=(user_id, 'clinics')),
+            headers=headers)
 
 
 @view_defaults(route_name='users')
