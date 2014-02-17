@@ -37,8 +37,8 @@ def upgrade():
     )
     op.bulk_insert(clinics_table,
                    [
-                       {'id': 1, 'code': '1A2B', 'name': 'Clinic A'},
-                       {'id': 2, 'code': '3E4G', 'name': 'Clinic B'}
+                       {'code': '1A2B', 'name': 'Clinic A'},
+                       {'code': '3E4G', 'name': 'Clinic B'}
                    ]
     )
     op.create_table('users',
@@ -50,7 +50,7 @@ def upgrade():
     )
     op.bulk_insert(users_table,
                    [
-                       {'id': 1},
+                       {},
                    ]
     )
     op.create_table('user_clinics',
