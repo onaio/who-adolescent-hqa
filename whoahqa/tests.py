@@ -456,8 +456,11 @@ class FunctionalTestBase(IntegrationTestBase):
     def setUp(self):
         super(FunctionalTestBase, self).setUp()
         app = main({}, **settings)
-        self.testapp = TestApp(app)
+        self.testapp = TestApp(app, extra_environ={
+            'HTTP_HOST': 'example.com'
+        })
         self.request = testing.DummyRequest()
+        # used by cookie auth as the domain
         self.request.environ = {
             'SERVER_NAME': 'example.com',
         }
@@ -493,9 +496,9 @@ class TestViewsFunctional(FunctionalTestBase):
         params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
         response = self.testapp.post(url, params, headers=headers)
         self.assertEqual(response.status_code, 302)
-        path = self.request.route_path('clinics', traverse=('unassigned',))
-        # TODO: have request use example.com as host
-        self.assertEqual(response.location, "http://localhost{}".format(path))
+        self.assertEqual(
+            response.location,
+            self.request.route_url('clinics', traverse=('unassigned',)))
 
     def test_clinic_show(self):
         self.setup_test_data()
