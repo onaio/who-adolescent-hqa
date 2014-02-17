@@ -490,6 +490,19 @@ class TestOAuth(IntegrationTestBase):
 
         # test that the `oauth_state` is saved in the session
         self.assertIn('oauth_state', request.session)
+
+    def test_oauth_login_accepted(self):
+        pass
+
+    def test_oauth_login_canceled(self):
+        request = testing.DummyRequest()
+        request.GET = MultiDict([
+            ('error', u"access_denied"), ('state', 'a123f4')])
+        response = oauth_callback(request)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.headers['Location'],
+            request.route_url('oauth', action='login'))
 class FunctionalTestBase(IntegrationTestBase):
     def setUp(self):
         super(FunctionalTestBase, self).setUp()
