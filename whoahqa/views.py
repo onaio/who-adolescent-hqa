@@ -44,8 +44,9 @@ def set_request_user(event):
 @view_config(route_name='oauth', match_param='action=login')
 def oauth_login(request):
     client_id = request.registry.settings['oauth_client_id']
-    authorization_endpoint = request.registry.settings[
-        'oauth_authorization_endpoint']
+    authorization_endpoint = "{base_url}{path}".format(
+        base_url=request.registry.settings['oauth_base_url'],
+        path=request.registry.settings['oauth_authorization_path'])
     redirect_uri = request.route_url('oauth', action='callback')
 
     session = OAuth2Session(

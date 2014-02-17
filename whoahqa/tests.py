@@ -468,14 +468,15 @@ class TestOAuth(IntegrationTestBase):
 
         # parse the url
         parse_result = urlparse.urlparse(response.headers['Location'])
-        # url must equal settings.oauth_authorization_endpoint
+        # url must equal oauth_authorization_endpoint
         base_url = "{scheme}://{netloc}{path}".format(
             scheme=parse_result.scheme,
             netloc=parse_result.netloc,
             path=parse_result.path)
-        self.assertEqual(
-            base_url,
-            settings['oauth_authorization_endpoint'])
+        oauth_authorization_endpoint = "{base_url}{path}".format(
+            base_url=settings['oauth_base_url'],
+            path=settings['oauth_authorization_path'])
+        self.assertEqual(base_url, oauth_authorization_endpoint)
 
         # query params must include 1. correct client_id 2. required scopes
         # and 3. correct redirect url
