@@ -486,7 +486,8 @@ class TestOAuth(IntegrationTestBase):
         self.assertEqual(
             query_params['client_id'],
             settings['oauth_client_id'])
-        self.assertEqual(query_params['scope'].split(), ['profile', 'email'])
+        self.assertEqual(query_params['scope'].split(),
+                         ['read', 'write', 'groups'])
         self.assertEqual(
             query_params['redirect_uri'],
             request.route_url('oauth', action="callback"))
@@ -573,7 +574,7 @@ class TestViewsFunctional(FunctionalTestBase):
 
 class TestOAuthFunctional(FunctionalTestBase):
     @staticmethod
-    @urlmatch(netloc='accounts.example.com', path='/o/oauth2/token')
+    @urlmatch(netloc='accounts.example.com', path='/o/token')
     def oauth_token_mock(url, request):
         return {
             'status_code': 200,
@@ -581,22 +582,15 @@ class TestOAuthFunctional(FunctionalTestBase):
         }
 
     @staticmethod
-    @urlmatch(netloc='accounts.example.com', path='/o/oauth2/token')
+    @urlmatch(netloc='accounts.example.com', path='/api/v1/users')
     def oauth_profile_mock(url, request):
         pass
 
     def test_oauth_login_accepted(self):
         state = 'a123f4'
         code = 'f27299'
-        request = testing.DummyRequest()
-        request.url = 'https://example.com/auth/callback?code={}&state={}'\
-            .format(code, state)
-        request.GET = MultiDict([('code', code), ('state', state)])
-        request.session['oauth_state'] = state
-
         url = self.request.route_path('oauth', action='callback')
-        with HTTMock(TestOAuthFunctional.oauth_token_mock,
-                     TestOAuthFunctional.oauth_profile_mock):
+        with HTTMock(TestOAuthFunctional.oauth_token_mock):
             response = self.testapp.get(url, params={
                 'state': state,
                 'code': code

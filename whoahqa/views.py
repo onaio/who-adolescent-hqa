@@ -51,7 +51,7 @@ def oauth_login(request):
 
     session = OAuth2Session(
         client_id,
-        scope=['profile', 'email'],
+        scope=['read', 'groups'],
         redirect_uri=redirect_uri)
     authorization_url, state = session.authorization_url(
         authorization_endpoint)
@@ -66,10 +66,12 @@ def oauth_callback(request):
     if 'error' in request.GET:
         # redirect to login page with an alert
         request.session.flash(
-            u"You must accept the permissions to login", 'error')
-        return HTTPFound(request.route_url('oauth', action='login'))
+            u"You must select authorize to continue", 'error')
+        #return HTTPFound(request.route_url('oauth', action='login'))
+        return Response(request.GET['error'])
 
     # TODO: validate the `oauth_state` session
+    state = request.GET.get('state')
     client_id = request.registry.settings['oauth_client_id']
     client_secret = request.registry.settings['oauth_secret']
     token_url = "{base_url}{path}".format(
@@ -79,19 +81,20 @@ def oauth_callback(request):
 
     session = OAuth2Session(
         client_id,
-        state=request.GET.get('state'),
+        state=state,
         redirect_uri=redirect_uri)
     code = request.GET.get('code')
-    access_token = session.fetch_token(
+    token = session.fetch_token(
         token_url,
         client_secret=client_secret,
         code=code)
 
     # retrieve username and store in db if it doesnt exist yet
 
-    request.session['oauth_token'] = access_token
+    #request.session['oauth_token'] = token
     # redirect to `from` url
-    return HTTPFound(request.route_url('users', traverse=('1', 'clinics')))
+    #return HTTPFound(request.route_url('users', traverse=('1', 'clinics')))
+    return Response("Token")
 
 
 @view_defaults(route_name='users')
