@@ -77,6 +77,7 @@ class TestBase(unittest.TestCase):
         # setup db
         DBSession.configure(bind=engine)
         Base.metadata.bind = engine
+        # TODO: run migrations instead of create_all to test migrations
         Base.metadata.drop_all()
         Base.metadata.create_all()
 
@@ -540,7 +541,7 @@ class TestOAuth(IntegrationTestBase):
             query_params['client_id'],
             settings['oauth_client_id'])
         self.assertEqual(query_params['scope'].split(),
-                         ['read', 'write', 'groups'])
+                         ['read', 'groups'])
         self.assertEqual(
             query_params['redirect_uri'],
             request.route_url('oauth', action="callback"))
@@ -636,20 +637,31 @@ class TestOAuthFunctional(FunctionalTestBase):
 
     @staticmethod
     @urlmatch(netloc='accounts.example.com', path='/api/v1/users')
-    def oauth_profile_mock(url, request):
-        pass
+    def oauth_users_mock(url, request):
+        return {
+            'status_code': 200,
+            'content': '[{"username": "user_one", "first_name": "", "last_name": ""}]'
+        }
 
     def test_oauth_login_accepted(self):
         state = 'a123f4'
         code = 'f27299'
         url = self.request.route_path('oauth', action='callback')
-        with HTTMock(TestOAuthFunctional.oauth_token_mock):
+        with HTTMock(TestOAuthFunctional.oauth_token_mock,
+                     TestOAuthFunctional.oauth_users_mock):
             response = self.testapp.get(url, params={
                 'state': state,
                 'code': code
             })
 
-        # test that user is got ot created
+        # test that user is gotten or created
+        ona_user = OnaUser.get(OnaUser.username == 'user_one')
 
         self.assertEqual(response.status_code, 302)
-        # TODO: check url is to dashboard
+        self.assertEqual(
+            response.location,
+            self.request.route_url(
+                'users', traverse=(ona_user.user.id, 'clinics')))
+
+        # check that we set the login header
+        self.assertIn('Set-Cookie', response.headers)
