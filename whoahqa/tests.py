@@ -20,12 +20,14 @@ from httmock import urlmatch, HTTMock
 
 from whoahqa import main
 from whoahqa.utils import tuple_to_dict_list
+from whoahqa.security import group_finder
 from whoahqa.models import (
     DBSession,
     Base,
     ClinicFactory,
     user_clinics,
     User,
+    Group,
     OnaUser,
     Clinic,
     Submission,
@@ -104,6 +106,24 @@ class IntegrationTestBase(TestBase):
     def setUp(self):
         super(IntegrationTestBase, self).setUp()
         self.config.include('whoahqa')
+
+
+class TestSecurity(TestBase):
+    def test_group_finder_returns_users_groups(self):
+        user = User()
+        su_group = Group(name='su')
+        user.groups.append(su_group)
+        DBSession.add(user)
+        user = User.newest()
+
+        request = testing.DummyRequest()
+        groups = group_finder(user.id, request)
+        self.assertListEqual(sorted(groups), sorted(['g:su', 'u:1']))
+
+    def test_group_finder_returns_none_if_user_doesnt_exist(self):
+        request = testing.DummyRequest()
+        groups = group_finder(1234, request)
+        self.assertIsNone(groups)
 
 
 class TestSetRequestUser(TestBase):
