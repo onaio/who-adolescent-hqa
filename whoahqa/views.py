@@ -68,6 +68,32 @@ def oauth_callback(request):
         request.session.flash(
             u"You must accept the permissions to login", 'error')
         return HTTPFound(request.route_url('oauth', action='login'))
+
+    # TODO: validate the `oauth_state` session
+    client_id = request.registry.settings['oauth_client_id']
+    client_secret = request.registry.settings['oauth_secret']
+    token_url = "{base_url}{path}".format(
+        base_url=request.registry.settings['oauth_base_url'],
+        path=request.registry.settings['oauth_token_path'])
+    redirect_uri = request.route_url('oauth', action='callback')
+
+    session = OAuth2Session(
+        client_id,
+        state=request.GET.get('state'),
+        redirect_uri=redirect_uri)
+    code = request.GET.get('code')
+    access_token = session.fetch_token(
+        token_url,
+        client_secret=client_secret,
+        code=code)
+
+    # retrieve username and store in db if it doesnt exist yet
+
+    request.session['oauth_token'] = access_token
+    # redirect to `from` url
+    return HTTPFound(request.route_url('users', traverse=('1', 'clinics')))
+
+
 @view_defaults(route_name='users')
 class UserViews(object):
     def __init__(self, request):

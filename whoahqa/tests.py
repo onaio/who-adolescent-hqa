@@ -16,6 +16,8 @@ from pyramid.security import IAuthenticationPolicy
 from sqlalchemy import engine_from_config
 from webtest import TestApp
 
+from httmock import urlmatch, HTTMock
+
 from whoahqa import main
 from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
@@ -504,6 +506,8 @@ class TestOAuth(IntegrationTestBase):
         self.assertEqual(
             response.headers['Location'],
             request.route_url('oauth', action='login'))
+
+
 class FunctionalTestBase(IntegrationTestBase):
     def setUp(self):
         super(FunctionalTestBase, self).setUp()
@@ -565,3 +569,40 @@ class TestViewsFunctional(FunctionalTestBase):
         payload = self.submissions[2]
         response = self.testapp.post(url, payload)
         self.assertEqual(response.status_code, 201)
+
+
+class TestOAuthFunctional(FunctionalTestBase):
+    @staticmethod
+    @urlmatch(netloc='accounts.example.com', path='/o/oauth2/token')
+    def oauth_token_mock(url, request):
+        return {
+            'status_code': 200,
+            'content': '{"access_token":"1/fFAGRNJru1FTz70BzhT3Zg", "expires_in":3920, "token_type":"Bearer", "refresh_token":"1/f4YTbBjMoBbXfg7oFh_FKg6r3r6bh8M9Y-0"}'
+        }
+
+    @staticmethod
+    @urlmatch(netloc='accounts.example.com', path='/o/oauth2/token')
+    def oauth_profile_mock(url, request):
+        pass
+
+    def test_oauth_login_accepted(self):
+        state = 'a123f4'
+        code = 'f27299'
+        request = testing.DummyRequest()
+        request.url = 'https://example.com/auth/callback?code={}&state={}'\
+            .format(code, state)
+        request.GET = MultiDict([('code', code), ('state', state)])
+        request.session['oauth_state'] = state
+
+        url = self.request.route_path('oauth', action='callback')
+        with HTTMock(TestOAuthFunctional.oauth_token_mock,
+                     TestOAuthFunctional.oauth_profile_mock):
+            response = self.testapp.get(url, params={
+                'state': state,
+                'code': code
+            })
+
+        # test that user is got ot created
+
+        self.assertEqual(response.status_code, 302)
+        # TODO: check url is to dashboard
