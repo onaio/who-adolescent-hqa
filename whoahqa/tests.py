@@ -1,8 +1,10 @@
 import unittest
 import json
+import urlparse
 import transaction
 
 from webob.multidict import MultiDict
+from pyramid.registry import Registry
 from pyramid import testing
 from pyramid.paster import (
     get_appsettings
@@ -32,6 +34,8 @@ from whoahqa.models import (
     HEALTH_CARE_PROVIDER
 )
 from whoahqa.views import (
+    oauth_login,
+    oauth_callback,
     ClinicViews,
     UserViews,
     SubmissionViews,
@@ -64,7 +68,9 @@ class TestBase(unittest.TestCase):
     ]
 
     def setUp(self):
-        self.config = testing.setUp()
+        registry = Registry()
+        registry.settings = settings
+        self.config = testing.setUp(registry=registry)
         # setup db
         DBSession.configure(bind=engine)
         Base.metadata.bind = engine
@@ -452,6 +458,38 @@ class TestSubmissionViews(IntegrationTestBase):
                          'Accepted Pending Clinic Match')
 
 
+class TestOAuth(IntegrationTestBase):
+    def test_oauth_login(self):
+        request = testing.DummyRequest()
+        response = oauth_login(request)
+
+        # redirect url
+        self.assertEqual(response.status_code, 302)
+
+        # parse the url
+        parse_result = urlparse.urlparse(response.headers['Location'])
+        # url must equal settings.oauth_authorization_endpoint
+        base_url = "{scheme}://{netloc}{path}".format(
+            scheme=parse_result.scheme,
+            netloc=parse_result.netloc,
+            path=parse_result.path)
+        self.assertEqual(
+            base_url,
+            settings['oauth_authorization_endpoint'])
+
+        # query params must include 1. correct client_id 2. required scopes
+        # and 3. correct redirect url
+        query_params = dict(urlparse.parse_qsl(parse_result.query))
+        self.assertEqual(
+            query_params['client_id'],
+            settings['oauth_client_id'])
+        self.assertEqual(query_params['scope'].split(), ['profile', 'email'])
+        self.assertEqual(
+            query_params['redirect_uri'],
+            request.route_url('oauth', action="callback"))
+
+        # test that the `oauth_state` is saved in the session
+        self.assertIn('oauth_state', request.session)
 class FunctionalTestBase(IntegrationTestBase):
     def setUp(self):
         super(FunctionalTestBase, self).setUp()
