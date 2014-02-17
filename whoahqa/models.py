@@ -102,15 +102,30 @@ user_clinics = Table(
 )
 
 
+user_groups = Table(
+    'user_groups',
+    Base.metadata,
+    Column('user_id', Integer, ForeignKey('users.id')),
+    Column('group_id', Integer, ForeignKey('groups.id'))
+)
+
+
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     clinics = relationship("Clinic", secondary=user_clinics)
+    groups = relationship("Group", secondary=user_groups)
 
     def get_clinics(self):
         clinics = DBSession.query(Clinic).join(user_clinics).filter(
             user_clinics.columns.user_id == self.id).all()
         return clinics
+
+
+class Group(Base):
+    __tablename__ = 'groups'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), nullable=False)
 
 
 class OnaUser(Base):
