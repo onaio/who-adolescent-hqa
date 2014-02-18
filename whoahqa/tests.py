@@ -534,7 +534,7 @@ class TestSubmissionViews(IntegrationTestBase):
                          'Accepted Pending Clinic Match')
 
 
-class TestOAuth(IntegrationTestBase):
+class TestAuth(IntegrationTestBase):
     def test_oauth_authorize(self):
         request = testing.DummyRequest()
         response = oauth_authorize(request)
@@ -650,7 +650,7 @@ class TestSubmissionViewsFunctional(FunctionalTestBase):
         self.assertEqual(response.status_code, 201)
 
 
-class TestOAuthFunctional(FunctionalTestBase):
+class TestAuthFunctional(FunctionalTestBase):
     @staticmethod
     @urlmatch(netloc='accounts.example.com', path='/o/token')
     def oauth_token_mock(url, request):
@@ -667,12 +667,17 @@ class TestOAuthFunctional(FunctionalTestBase):
             'content': '[{"username": "user_one", "first_name": "", "last_name": ""}]'
         }
 
+    def test_login_response(self):
+        url = self.request.route_url('auth', action='login')
+        response = self.testapp.get(url)
+        self.assertEqual(response.status_code, 200)
+
     def test_oauth_authorize_accepted(self):
         state = 'a123f4'
         code = 'f27299'
         url = self.request.route_path('auth', action='callback')
-        with HTTMock(TestOAuthFunctional.oauth_token_mock,
-                     TestOAuthFunctional.oauth_users_mock):
+        with HTTMock(TestAuthFunctional.oauth_token_mock,
+                     TestAuthFunctional.oauth_users_mock):
             response = self.testapp.get(url, params={
                 'state': state,
                 'code': code
