@@ -39,7 +39,7 @@ from whoahqa.models import (
     HEALTH_CARE_PROVIDER
 )
 from whoahqa.views import (
-    oauth_login,
+    oauth_authorize,
     oauth_callback,
     ClinicViews,
     UserViews,
@@ -535,9 +535,9 @@ class TestSubmissionViews(IntegrationTestBase):
 
 
 class TestOAuth(IntegrationTestBase):
-    def test_oauth_login(self):
+    def test_oauth_authorize(self):
         request = testing.DummyRequest()
-        response = oauth_login(request)
+        response = oauth_authorize(request)
 
         # redirect url
         self.assertEqual(response.status_code, 302)
@@ -564,15 +564,15 @@ class TestOAuth(IntegrationTestBase):
                          ['read', 'groups'])
         self.assertEqual(
             query_params['redirect_uri'],
-            request.route_url('oauth', action="callback"))
+            request.route_url('auth', action="callback"))
 
         # test that the `oauth_state` is saved in the session
         self.assertIn('oauth_state', request.session)
 
-    def test_oauth_login_accepted(self):
+    def test_oauth_authorize_accepted(self):
         pass
 
-    def test_oauth_login_canceled(self):
+    def test_oauth_authorize_canceled(self):
         request = testing.DummyRequest()
         request.GET = MultiDict([
             ('error', u"access_denied"), ('state', 'a123f4')])
@@ -580,7 +580,7 @@ class TestOAuth(IntegrationTestBase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
             response.headers['Location'],
-            request.route_url('oauth', action='login'))
+            request.route_url('auth', action='login'))
 
 
 class FunctionalTestBase(IntegrationTestBase):
@@ -667,10 +667,10 @@ class TestOAuthFunctional(FunctionalTestBase):
             'content': '[{"username": "user_one", "first_name": "", "last_name": ""}]'
         }
 
-    def test_oauth_login_accepted(self):
+    def test_oauth_authorize_accepted(self):
         state = 'a123f4'
         code = 'f27299'
-        url = self.request.route_path('oauth', action='callback')
+        url = self.request.route_path('auth', action='callback')
         with HTTMock(TestOAuthFunctional.oauth_token_mock,
                      TestOAuthFunctional.oauth_users_mock):
             response = self.testapp.get(url, params={
