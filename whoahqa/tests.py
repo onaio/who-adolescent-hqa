@@ -88,18 +88,32 @@ class TestBase(unittest.TestCase):
         testing.tearDown()
 
     def setup_test_data(self):
-        user = User()
+        su = User()
+        su_ona_user = OnaUser(
+            user=su, username='super', refresh_token="a123f4")
+        # always persist this last as the test use User.newest to refer to
+        # this user
+        manager = User()
+        manager_ona_user = OnaUser(
+            user=manager, username='manager', refresh_token="b345d6")
+
+        su_group = Group(name='su')
+        su.groups.append(su_group)
+
+        clinic_manager_group = Group(name='managers')
+        manager.groups.append(clinic_manager_group)
 
         # add a couple of clinics
         clinic1 = Clinic(id=1, name="Clinic A", code="1A2B")
-        # assign a user to clinic1
-        user.clinics.append(clinic1)
+        # assign a su to clinic1
+        manager.clinics.append(clinic1)
 
         # leave clinic 2 unassigned
         clinic2 = Clinic(id=2, name="Clinic B", code="3E4G")
 
         with transaction.manager:
-            DBSession.add_all([user, clinic1, clinic2])
+            DBSession.add_all(
+                [su_ona_user, manager_ona_user, clinic1, clinic2])
 
 
 class IntegrationTestBase(TestBase):
@@ -110,11 +124,8 @@ class IntegrationTestBase(TestBase):
 
 class TestSecurity(TestBase):
     def test_group_finder_returns_users_groups(self):
-        user = User()
-        su_group = Group(name='su')
-        user.groups.append(su_group)
-        DBSession.add(user)
-        user = User.newest()
+        self.setup_test_data()
+        user = OnaUser.get(OnaUser.username == 'super').user
 
         request = testing.DummyRequest()
         groups = group_finder(user.id, request)
@@ -170,7 +181,7 @@ class TestBaseModel(TestBase):
 class TestUser(TestBase):
     def test_get_clinics(self):
         self.setup_test_data()
-        user = User.newest()
+        user = OnaUser.get(OnaUser.username == 'manager').user
 
         clinics = user.get_clinics()
         self.assertEqual(len(clinics), 1)
@@ -238,8 +249,8 @@ class TestClinic(TestBase):
 
     def test_assign_to_user(self):
         self.setup_test_data()
-        user = User.newest()
-        clinic = DBSession.query(Clinic).filter_by(name="Clinic B").one()
+        user = OnaUser.get(OnaUser.username == 'manager').user
+        clinic = Clinic.get(Clinic.name == "Clinic B")
         clinic.assign_to(user)
         user = DBSession.merge(user)
         clinic = DBSession.merge(clinic)
@@ -447,7 +458,7 @@ class TestClinicViews(IntegrationTestBase):
         count = DBSession.query(user_clinics).count()
         self.assertEqual(count, 1)
 
-        user = User.newest()
+        user = OnaUser.get(OnaUser.username == 'manager').user
 
         # get the clinics
         clinics = Clinic.all()
@@ -482,7 +493,7 @@ class TestClinicViews(IntegrationTestBase):
 class TestUserViews(IntegrationTestBase):
     def test_user_clinics_view(self):
         self.setup_test_data()
-        user = User.newest()
+        user = OnaUser.get(OnaUser.username == 'manager').user
         request = testing.DummyRequest()
         request.context = user
         user_views = UserViews(request)
@@ -613,7 +624,7 @@ class TestClinicViewsFunctional(FunctionalTestBase):
 
     def test_assign_clinic_view(self):
         self.setup_test_data()
-        user = User.newest()
+        user = OnaUser.get(OnaUser.username == 'manager').user
         headers = self._login_user(user.id)
 
         clinics = Clinic.all()
@@ -634,7 +645,7 @@ class TestClinicViewsFunctional(FunctionalTestBase):
 
 
 class TestUserViewsFunctional(FunctionalTestBase):
-    def test_user_clinics_view(self):
+    def test_user_clinics_view_allows_owner(self):
         self.setup_test_data()
         url = self.request.route_path('users', traverse=('1', 'clinics'))
         response = self.testapp.get(url)
