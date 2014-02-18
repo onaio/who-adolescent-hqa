@@ -43,13 +43,18 @@ def set_request_user(event):
         request.user = None
 
 
-@view_config(route_name='oauth', match_param='action=login')
-def oauth_login(request):
+@view_config(route_name='auth', match_param='action=login')
+def login(request):
+    return Response('<a href="' + request.route_url('oauth', action='login') +'">Login with Ona</a>')
+
+
+@view_config(route_name='auth', match_param='action=authorize')
+def oauth_authorize(request):
     client_id = request.registry.settings['oauth_client_id']
     authorization_endpoint = "{base_url}{path}".format(
         base_url=request.registry.settings['oauth_base_url'],
         path=request.registry.settings['oauth_authorization_path'])
-    redirect_uri = request.route_url('oauth', action='callback')
+    redirect_uri = request.route_url('auth', action='callback')
 
     session = OAuth2Session(
         client_id,
@@ -62,15 +67,14 @@ def oauth_login(request):
     return HTTPFound(authorization_url)
 
 
-@view_config(route_name='oauth', match_param='action=callback')
+@view_config(route_name='auth', match_param='action=callback')
 def oauth_callback(request):
     # check if we have `error` in our params, meaning user canceled
     if 'error' in request.GET:
         # redirect to login page with an alert
         request.session.flash(
             u"You must select authorize to continue", 'error')
-        #return HTTPFound(request.route_url('oauth', action='login'))
-        return Response(request.GET['error'])
+        return HTTPFound(request.route_url('auth', action='login'))
 
     # TODO: validate the `oauth_state` session
     base_url = request.registry.settings['oauth_base_url']
@@ -80,7 +84,7 @@ def oauth_callback(request):
     token_url = "{base_url}{path}".format(
         base_url=base_url,
         path=request.registry.settings['oauth_token_path'])
-    redirect_uri = request.route_url('oauth', action='callback')
+    redirect_uri = request.route_url('auth', action='callback')
 
     session = OAuth2Session(
         client_id,
