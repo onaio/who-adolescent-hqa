@@ -45,7 +45,7 @@ def set_request_user(event):
 
 @view_config(route_name='auth', match_param='action=login')
 def login(request):
-    return Response('<a href="' + request.route_url('oauth', action='login') +'">Login with Ona</a>')
+    return Response('<a href="' + request.route_url('auth', action='authorize') +'">Login with Ona</a>')
 
 
 @view_config(route_name='auth', match_param='action=authorize')
