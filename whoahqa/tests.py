@@ -584,6 +584,14 @@ class TestOAuth(IntegrationTestBase):
 
 
 class FunctionalTestBase(IntegrationTestBase):
+    def _login_user(self, user_id):
+        policy = self.testapp.app.registry.queryUtility(IAuthenticationPolicy)
+        headers = policy.remember(self.request, user_id)
+        cookie_parts = dict(headers)['Set-Cookie'].split('; ')
+        cookie = filter(
+            lambda i: i.split('=')[0] == 'auth_tkt', cookie_parts)[0]
+        return {'Cookie': cookie}
+
     def setUp(self):
         super(FunctionalTestBase, self).setUp()
         app = main({}, **settings)
@@ -597,23 +605,9 @@ class FunctionalTestBase(IntegrationTestBase):
         }
 
 
-class TestViewsFunctional(FunctionalTestBase):
-    def _login_user(self, user_id):
-        policy = self.testapp.app.registry.queryUtility(IAuthenticationPolicy)
-        headers = policy.remember(self.request, user_id)
-        cookie_parts = dict(headers)['Set-Cookie'].split('; ')
-        cookie = filter(
-            lambda i: i.split('=')[0] == 'auth_tkt', cookie_parts)[0]
-        return {'Cookie': cookie}
-
+class TestClinicViewsFunctional(FunctionalTestBase):
     def test_unassigned_clinics_view(self):
         url = self.request.route_path('clinics', traverse=('unassigned',))
-        response = self.testapp.get(url)
-        self.assertEqual(response.status_code, 200)
-
-    def test_user_clinics_view(self):
-        self.setup_test_data()
-        url = self.request.route_path('users', traverse=('1', 'clinics'))
         response = self.testapp.get(url)
         self.assertEqual(response.status_code, 200)
 
@@ -638,6 +632,16 @@ class TestViewsFunctional(FunctionalTestBase):
         response = self.testapp.get(url)
         self.assertEqual(response.status_code, 200)
 
+
+class TestUserViewsFunctional(FunctionalTestBase):
+    def test_user_clinics_view(self):
+        self.setup_test_data()
+        url = self.request.route_path('users', traverse=('1', 'clinics'))
+        response = self.testapp.get(url)
+        self.assertEqual(response.status_code, 200)
+
+
+class TestSubmissionViewsFunctional(FunctionalTestBase):
     def test_json_post(self):
         self.setup_test_data()
         url = self.request.route_path('submissions', traverse=())
