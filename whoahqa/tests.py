@@ -595,9 +595,10 @@ class TestAuth(IntegrationTestBase):
 
 
 class FunctionalTestBase(IntegrationTestBase):
-    def _login_user(self, user_id):
+    def _login_user(self, ona_username):
+        user = OnaUser.get(OnaUser.username == ona_username).user
         policy = self.testapp.app.registry.queryUtility(IAuthenticationPolicy)
-        headers = policy.remember(self.request, user_id)
+        headers = policy.remember(self.request, user.id)
         cookie_parts = dict(headers)['Set-Cookie'].split('; ')
         cookie = filter(
             lambda i: i.split('=')[0] == 'auth_tkt', cookie_parts)[0]
@@ -624,8 +625,7 @@ class TestClinicViewsFunctional(FunctionalTestBase):
 
     def test_assign_clinic_view(self):
         self.setup_test_data()
-        user = OnaUser.get(OnaUser.username == 'manager').user
-        headers = self._login_user(user.id)
+        headers = self._login_user('manager')
 
         clinics = Clinic.all()
         url = self.request.route_path('clinics', traverse=('assign',))
@@ -647,6 +647,7 @@ class TestClinicViewsFunctional(FunctionalTestBase):
 class TestUserViewsFunctional(FunctionalTestBase):
     def test_user_clinics_view_allows_owner(self):
         self.setup_test_data()
+        self._login_user('manager')
         url = self.request.route_path('users', traverse=('1', 'clinics'))
         response = self.testapp.get(url)
         self.assertEqual(response.status_code, 200)
