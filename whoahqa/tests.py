@@ -88,32 +88,36 @@ class TestBase(unittest.TestCase):
         testing.tearDown()
 
     def setup_test_data(self):
+        su_group = Group(name='su')
+        clinic_managers_group = Group(name='managers')
+
         su = User()
         su_ona_user = OnaUser(
             user=su, username='super', refresh_token="a123f4")
-        # always persist this last as the test use User.newest to refer to
-        # this user
-        manager = User()
-        manager_ona_user = OnaUser(
-            user=manager, username='manager', refresh_token="b345d6")
-
-        su_group = Group(name='su')
         su.groups.append(su_group)
 
-        clinic_manager_group = Group(name='managers')
-        manager.groups.append(clinic_manager_group)
+        manager_a = User()
+        manager_a_ona_user = OnaUser(
+            user=manager_a, username='manager_a', refresh_token="b345d6")
+        manager_a.groups.append(clinic_managers_group)
+
+        manager_b = User()
+        manager_b_ona_user = OnaUser(
+            user=manager_b, username='manager_b', refresh_token="c563e9")
+        manager_b.groups.append(clinic_managers_group)
 
         # add a couple of clinics
         clinic1 = Clinic(id=1, name="Clinic A", code="1A2B")
         # assign a su to clinic1
-        manager.clinics.append(clinic1)
+        manager_a.clinics.append(clinic1)
 
         # leave clinic 2 unassigned
         clinic2 = Clinic(id=2, name="Clinic B", code="3E4G")
 
         with transaction.manager:
             DBSession.add_all(
-                [su_ona_user, manager_ona_user, clinic1, clinic2])
+                [su_ona_user, manager_a_ona_user, manager_b_ona_user,
+                 clinic1, clinic2])
 
 
 class IntegrationTestBase(TestBase):
@@ -181,7 +185,7 @@ class TestBaseModel(TestBase):
 class TestUser(TestBase):
     def test_get_clinics(self):
         self.setup_test_data()
-        user = OnaUser.get(OnaUser.username == 'manager').user
+        user = OnaUser.get(OnaUser.username == 'manager_a').user
 
         clinics = user.get_clinics()
         self.assertEqual(len(clinics), 1)
@@ -249,7 +253,7 @@ class TestClinic(TestBase):
 
     def test_assign_to_user(self):
         self.setup_test_data()
-        user = OnaUser.get(OnaUser.username == 'manager').user
+        user = OnaUser.get(OnaUser.username == 'manager_a').user
         clinic = Clinic.get(Clinic.name == "Clinic B")
         clinic.assign_to(user)
         user = DBSession.merge(user)
@@ -458,7 +462,7 @@ class TestClinicViews(IntegrationTestBase):
         count = DBSession.query(user_clinics).count()
         self.assertEqual(count, 1)
 
-        user = OnaUser.get(OnaUser.username == 'manager').user
+        user = OnaUser.get(OnaUser.username == 'manager_a').user
 
         # get the clinics
         clinics = Clinic.all()
@@ -493,7 +497,7 @@ class TestClinicViews(IntegrationTestBase):
 class TestUserViews(IntegrationTestBase):
     def test_user_clinics_view(self):
         self.setup_test_data()
-        user = OnaUser.get(OnaUser.username == 'manager').user
+        user = OnaUser.get(OnaUser.username == 'manager_a').user
         request = testing.DummyRequest()
         request.context = user
         user_views = UserViews(request)
@@ -625,7 +629,7 @@ class TestClinicViewsFunctional(FunctionalTestBase):
 
     def test_assign_clinic_view(self):
         self.setup_test_data()
-        headers = self._login_user('manager')
+        headers = self._login_user('manager_a')
 
         clinics = Clinic.all()
         url = self.request.route_path('clinics', traverse=('assign',))
@@ -655,9 +659,9 @@ class TestUserViewsFunctional(FunctionalTestBase):
 
     def test_user_clinics_view_allows_owner(self):
         self.setup_test_data()
-        headers = self._login_user('manager')
+        headers = self._login_user('manager_a')
         # get the manager user
-        user = OnaUser.get(OnaUser.username == "manager").user
+        user = OnaUser.get(OnaUser.username == "manager_a").user
         url = self.request.route_path('users', traverse=(user.id, 'clinics'))
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
@@ -666,7 +670,7 @@ class TestUserViewsFunctional(FunctionalTestBase):
         self.setup_test_data()
         headers = self._login_user('super')
         # get the manager user
-        user = OnaUser.get(OnaUser.username == "manager").user
+        user = OnaUser.get(OnaUser.username == "manager_a").user
         url = self.request.route_path('users', traverse=(user.id, 'clinics'))
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
