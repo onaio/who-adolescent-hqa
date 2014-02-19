@@ -28,6 +28,7 @@ from sqlalchemy.orm import (
 from zope.sqlalchemy import ZopeTransactionExtension
 
 from whoahqa import constants
+from whoahqa.constants import permissions as perms
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 
@@ -59,7 +60,8 @@ class RootFactory(object):
 
 class UserFactory(object):
     __acl__ = [
-        (Allow, 'g:su', ALL_PERMISSIONS)
+        (Allow, 'g:su', ALL_PERMISSIONS),
+        (Allow, Authenticated, perms.AUTHENTICATED)
     ]
 
     def __init__(self, request):
@@ -79,7 +81,8 @@ class UserFactory(object):
 
 class ClinicFactory(object):
     __acl__ = [
-        (Allow, 'g:su', ALL_PERMISSIONS)
+        (Allow, 'g:su', ALL_PERMISSIONS),
+        (Allow, Authenticated, perms.AUTHENTICATED)
     ]
 
     def __init__(self, request):
@@ -99,6 +102,11 @@ class ClinicFactory(object):
 
 
 class SubmissionFactory(object):
+    __acl__ = [
+        (Allow, 'g:su', ALL_PERMISSIONS),
+        (Allow, Authenticated, perms.AUTHENTICATED)
+    ]
+
     def __init__(self, request):
         self.request = request
 
@@ -189,6 +197,13 @@ class Clinic(Base):
     code = Column(String(100), nullable=False, unique=True)
     name = Column(String(255), nullable=False)
     user = relationship("User", secondary=user_clinics, uselist=False)
+
+    @property
+    def __acl__(self):
+        acl = []
+        if self.user is not None:
+            acl.append((Allow, "u:{}".format(self.user.id), perms.SHOW_CLINIC))
+        return acl
 
     def assign_to(self, user):
         self.user = user
