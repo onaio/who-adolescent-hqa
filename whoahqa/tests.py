@@ -620,47 +620,41 @@ class FunctionalTestBase(IntegrationTestBase):
 
 
 class TestClinicViewsFunctional(FunctionalTestBase):
-    def test_unassigned_clinics_view(self):
+    def test_unassigned_clinics_view_allows_authenticated(self):
+        self.setup_test_data()
         url = self.request.route_path('clinics', traverse=('unassigned',))
-        response = self.testapp.get(url)
+        headers = self._login_user('manager_b')
+        response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
 
-    def test_assign_clinic_view(self):
+    def test_assign_clinic_view_allows_authenticated(self):
         self.setup_test_data()
-        headers = self._login_user('manager_a')
-
         clinics = Clinic.all()
         url = self.request.route_path('clinics', traverse=('assign',))
         params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
+        headers = self._login_user('manager_a')
         response = self.testapp.post(url, params, headers=headers)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
             response.location,
             self.request.route_url('clinics', traverse=('unassigned',)))
 
-    def test_clinic_show(self):
+    def test_clinic_show_allows_owner(self):
         self.setup_test_data()
-        clinic = Clinic.get(Clinic.id == 1)
+        clinic = Clinic.get(Clinic.name == "Clinic A")
         url = self.request.route_path('clinics', traverse=(clinic.id,))
-        response = self.testapp.get(url)
+        headers = self._login_user('manager_a')
+        response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
 
 
 class TestUserViewsFunctional(FunctionalTestBase):
-    def test_user_clinics_view_denies_anon(self):
-        self.setup_test_data()
-        # get the assigned clinic
-        clinic = Clinic.get(Clinic.name == "Clinic A")
-        url = self.request.route_path('users', traverse=(clinic.id, 'clinics'))
-        response = self.testapp.get(url, status=403)
-        self.assertEqual(response.status_code, 403)
-
     def test_user_clinics_view_allows_owner(self):
         self.setup_test_data()
-        headers = self._login_user('manager_a')
         # get the manager user
         user = OnaUser.get(OnaUser.username == "manager_a").user
         url = self.request.route_path('users', traverse=(user.id, 'clinics'))
+        headers = self._login_user('manager_a')
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
 
@@ -675,11 +669,12 @@ class TestUserViewsFunctional(FunctionalTestBase):
 
 
 class TestSubmissionViewsFunctional(FunctionalTestBase):
-    def test_json_post(self):
+    def test_json_post_allows_authenticated(self):
         self.setup_test_data()
         url = self.request.route_path('submissions', traverse=())
         payload = self.submissions[2]
-        response = self.testapp.post(url, payload)
+        headers = self._login_user('manager_b')
+        response = self.testapp.post(url, payload, headers=headers)
         self.assertEqual(response.status_code, 201)
 
 

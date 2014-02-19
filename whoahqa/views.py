@@ -122,8 +122,8 @@ def oauth_callback(request):
         request.session.flash(
             u"Failed to login, please try again", 'error')
     else:
-        #request.session['oauth_token'] = token
-        # flash to get the auto id
+        request.session['oauth_token'] = json.dumps(token)
+        # flash to get the auto-inc id
         DBSession.flush()
         user_id = ona_user.user.id
 
@@ -159,6 +159,7 @@ class ClinicViews(object):
         self.request = request
 
     @view_config(name='unassigned',
+                 context=ClinicFactory,
                  renderer='clinics_unassigned.jinja2')
     def unassigned(self):
         clinics = Clinic.get_unassigned()
@@ -178,7 +179,10 @@ class ClinicViews(object):
         return HTTPFound(
             self.request.route_url('clinics', traverse=('unassigned',)))
 
-    @view_config(name='', request_method='GET', context=Clinic,
+    @view_config(name='',
+                 request_method='GET',
+                 context=Clinic,
+                 permission=perms.SHOW_CLINIC,
                  renderer='clinics_show.jinja2')
     def show(self):
         clinic = self.request.context
@@ -203,7 +207,10 @@ class SubmissionViews(object):
     def __init__(self, request):
         self.request = request
 
-    @view_config(name='', request_method='POST', context=SubmissionFactory)
+    @view_config(
+        name='',
+        request_method='POST',
+        context=SubmissionFactory)
     def json_post(self):
         payload = self.request.body
         if not payload:
