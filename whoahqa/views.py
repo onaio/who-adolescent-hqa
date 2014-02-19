@@ -18,6 +18,7 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from requests_oauthlib import OAuth2Session
 
+from whoahqa import constants
 from whoahqa.constants import permissions as perms
 from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
@@ -29,9 +30,6 @@ from whoahqa.models import (
     Clinic,
     Submission,
     ClinicNotFound,
-    CLIENT_TOOLS,
-    CHARACTERISTICS,
-    CHARACTERISTIC_MAPPING
 )
 
 @subscriber(NewRequest)
@@ -179,9 +177,10 @@ class ClinicViews(object):
         scores = clinic.get_scores()
         return {
             'clinic': clinic,
-            'client_tools': tuple_to_dict_list(("id", "name"), CLIENT_TOOLS),
+            'client_tools': tuple_to_dict_list(
+                ("id", "name"), constants.CLIENT_TOOLS),
             'characteristics': tuple_to_dict_list(
-                ("id", "description"), CHARACTERISTICS),
+                ("id", "description"), constants.CHARACTERISTICS),
             'scores': scores
         }
 

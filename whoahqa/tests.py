@@ -19,6 +19,7 @@ from webtest import TestApp
 from httmock import urlmatch, HTTMock
 
 from whoahqa import main
+from whoahqa import constants
 from whoahqa.utils import tuple_to_dict_list
 from whoahqa.security import group_finder
 from whoahqa.models import (
@@ -33,10 +34,6 @@ from whoahqa.models import (
     Submission,
     ClinicSubmission,
     ClinicNotFound,
-    CHARACTERISTICS,
-    CHARACTERISTIC_MAPPING,
-    ADOLESCENT_CLIENT,
-    HEALTH_CARE_PROVIDER
 )
 from whoahqa.views import (
     oauth_authorize,
@@ -177,8 +174,8 @@ class TestBaseModel(TestBase):
 
     # TODO: this test belongs elsewehere
     def test_each_characteristic_has_a_characteristic_mapping(self):
-        keys = [c[0] for c in CHARACTERISTICS]
-        mapping_keys = CHARACTERISTIC_MAPPING.keys()
+        keys = [c[0] for c in constants.CHARACTERISTICS]
+        mapping_keys = constants.CHARACTERISTIC_MAPPING.keys()
         self.assertTrue(all([k in mapping_keys for k in keys]))
 
 
@@ -288,12 +285,12 @@ class TestClinic(TestBase):
         scores = clinic.get_scores()
 
         scores_1 = scores['one']
-        self.assertEqual(scores_1[ADOLESCENT_CLIENT], {
+        self.assertEqual(scores_1[constants.ADOLESCENT_CLIENT], {
             'aggregate_score': 1.5,
             'num_questions': 2,
             'num_responses': 2,
         })
-        self.assertEqual(scores_1[HEALTH_CARE_PROVIDER], {
+        self.assertEqual(scores_1[constants.HEALTH_CARE_PROVIDER], {
             'aggregate_score': 1,
             'num_questions': 1,
             'num_responses': 1,
@@ -314,7 +311,7 @@ class TestClinic(TestBase):
         scores = clinic.get_scores()
 
         scores_10 = scores['ten']
-        self.assertEqual(scores_10[ADOLESCENT_CLIENT], {
+        self.assertEqual(scores_10[constants.ADOLESCENT_CLIENT], {
             'aggregate_score': None,
             'num_questions': 4,
             'num_responses': 0,
@@ -485,7 +482,8 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(response['clinic'].id, clinic.id)
         self.assertEqual(
             response['characteristics'],
-            tuple_to_dict_list(("id", "description"), CHARACTERISTICS))
+            tuple_to_dict_list(
+                ("id", "description"), constants.CHARACTERISTICS))
 
     def test_show_raises_bad_request_if_clinic_is_not_assigned(self):
         self.setup_test_data()
