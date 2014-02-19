@@ -2,6 +2,7 @@ import json
 from pyramid.security import (
     authenticated_userid,
     remember,
+    forget,
     NO_PERMISSION_REQUIRED,
 )
 from pyramid.response import Response
@@ -49,9 +50,20 @@ def set_request_user(event):
 @view_config(
     route_name='auth',
     match_param='action=login',
-    permission=NO_PERMISSION_REQUIRED)
+    permission=NO_PERMISSION_REQUIRED,
+    renderer='login.jinja2')
 def login(request):
-    return Response('<a href="' + request.route_url('auth', action='authorize') +'">Login with Ona</a>')
+    return {}
+
+
+@view_config(
+    route_name='auth',
+    match_param='action=logout',
+    permission=NO_PERMISSION_REQUIRED)
+def logout(request):
+    headers = forget(request)
+    return HTTPFound(
+        request.route_url('auth', action='login'), headers=headers)
 
 
 @view_config(
@@ -182,7 +194,7 @@ class ClinicViews(object):
     @view_config(name='',
                  request_method='GET',
                  context=Clinic,
-                 permission=perms.SHOW_CLINIC,
+                 permission=perms.SHOW,
                  renderer='clinics_show.jinja2')
     def show(self):
         clinic = self.request.context

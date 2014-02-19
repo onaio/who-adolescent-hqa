@@ -202,7 +202,7 @@ class Clinic(Base):
     def __acl__(self):
         acl = []
         if self.user is not None:
-            acl.append((Allow, "u:{}".format(self.user.id), perms.SHOW_CLINIC))
+            acl.append((Allow, "u:{}".format(self.user.id), perms.SHOW))
         return acl
 
     def assign_to(self, user):
