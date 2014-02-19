@@ -48,6 +48,14 @@ def can_list_clinics(request):
 
 
 @view_config(
+    route_name='default',
+    permission=NO_PERMISSION_REQUIRED,
+    renderer='login.jinja2')
+def default(request):
+    return HTTPFound(request.route_url('clinics', traverse=()))
+
+
+@view_config(
     route_name='auth',
     match_param='action=login',
     permission=NO_PERMISSION_REQUIRED,

@@ -49,6 +49,7 @@ def includeme(config):
     config.include('pyramid_jinja2')
     config.add_jinja2_search_path("whoahqa:templates")
     config.add_static_view('static', 'static', cache_max_age=3600)
+    config.add_route('default', '/')
     config.add_route('auth', '/auth/{action}')
     config.add_route('users', '/users/*traverse',
                      factory=UserFactory)
