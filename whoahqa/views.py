@@ -10,11 +10,16 @@ from pyramid.response import Response
 from pyramid.httpexceptions import (
     HTTPFound,
     HTTPBadRequest,
-    )
+    HTTPUnauthorized,
+    HTTPForbidden,
+)
 from pyramid.view import (
     view_config,
     view_defaults,
+    forbidden_view_config,
+    render_view
 )
+
 
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -47,19 +52,30 @@ def can_list_clinics(request):
     return has_permission('list', ClinicFactory(request), request)
 
 
+@forbidden_view_config()
+def forbidden(context, request):
+    # if not authenticated, show login screen
+    if not request.user:
+        return Response(render_view(context, request, 'login', secure=False))
+    # otherwise, raise HTTPUnauthorized
+    return HTTPUnauthorized()
+
+
 @view_config(
     route_name='default',
-    permission=NO_PERMISSION_REQUIRED,
     renderer='login.jinja2')
 def default(request):
     return HTTPFound(request.route_url('clinics', traverse=()))
 
 
-@view_config(
-    route_name='auth',
-    match_param='action=login',
-    permission=NO_PERMISSION_REQUIRED,
-    renderer='login.jinja2')
+@view_config(route_name='auth',
+             match_param='action=login',
+             permission=NO_PERMISSION_REQUIRED,
+             renderer='login.jinja2')
+@view_config(name='login',
+             context=HTTPForbidden,
+             permission=NO_PERMISSION_REQUIRED,
+             renderer='login.jinja2')
 def login(request):
     return {}
 
