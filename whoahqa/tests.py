@@ -36,7 +36,6 @@ from whoahqa.models import (
     ClinicNotFound,
 )
 from whoahqa.views import (
-    default,
     oauth_authorize,
     oauth_callback,
     ClinicViews,
