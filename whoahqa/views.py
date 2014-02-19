@@ -9,17 +9,13 @@ from pyramid.security import (
 from pyramid.response import Response
 from pyramid.httpexceptions import (
     HTTPFound,
-    HTTPNotFound,
     HTTPBadRequest,
     )
 from pyramid.view import (
     view_config,
     view_defaults,
 )
-from pyramid.events import BeforeRender
-from pyramid.events import subscriber
 
-from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm.exc import NoResultFound
 
 from requests_oauthlib import OAuth2Session
@@ -47,10 +43,8 @@ def set_request_user(request):
         request.user = None
 
 
-@subscriber(BeforeRender)
-def set_permissions(event):
-    event['can_list_clinics'] = has_permission(
-        'list', ClinicFactory(event['request']), event['request'])
+def can_list_clinics(request):
+    return has_permission('list', ClinicFactory(request), request)
 
 
 @view_config(
