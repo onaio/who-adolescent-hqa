@@ -58,7 +58,7 @@ def forbidden(context, request):
     if not request.user:
         return Response(render_view(context, request, 'login', secure=False))
     # otherwise, raise HTTPUnauthorized
-    return HTTPUnauthorized()
+    return HTTPForbidden()
 
 
 @view_config(

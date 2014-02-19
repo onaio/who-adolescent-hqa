@@ -798,5 +798,5 @@ class TestForbiddenViewFunctional(FunctionalTestBase):
         clinic = Clinic.get(Clinic.name == "Clinic A")
         url = self.request.route_url('clinics', traverse=(clinic.id,))
         headers = self._login_user('manager_b')
-        response = self.testapp.get(url, headers=headers, status=401)
-        self.assertEqual(response.status_code, 401)
+        response = self.testapp.get(url, headers=headers, status=403)
+        self.assertEqual(response.status_code, 403)
