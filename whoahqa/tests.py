@@ -36,6 +36,7 @@ from whoahqa.models import (
     ClinicNotFound,
 )
 from whoahqa.views import (
+    default,
     oauth_authorize,
     oauth_callback,
     ClinicViews,
@@ -658,6 +659,16 @@ class FunctionalTestBase(IntegrationTestBase):
         self.request.environ = {
             'SERVER_NAME': 'example.com',
         }
+
+
+class TestDefaultViewsFunctional(FunctionalTestBase):
+    def test_redirects_to_clinics(self):
+        url = self.request.route_url('default')
+        response = self.testapp.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.headers['Location'],
+            self.request.route_url('clinics', traverse=()))
 
 
 class TestClinicViewsFunctional(FunctionalTestBase):
