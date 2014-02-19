@@ -645,11 +645,30 @@ class TestClinicViewsFunctional(FunctionalTestBase):
 
 
 class TestUserViewsFunctional(FunctionalTestBase):
+    def test_user_clinics_view_denies_anon(self):
+        self.setup_test_data()
+        # get the assigned clinic
+        clinic = Clinic.get(Clinic.name == "Clinic A")
+        url = self.request.route_path('users', traverse=(clinic.id, 'clinics'))
+        response = self.testapp.get(url, status=403)
+        self.assertEqual(response.status_code, 403)
+
     def test_user_clinics_view_allows_owner(self):
         self.setup_test_data()
-        self._login_user('manager')
-        url = self.request.route_path('users', traverse=('1', 'clinics'))
-        response = self.testapp.get(url)
+        headers = self._login_user('manager')
+        # get the manager user
+        user = OnaUser.get(OnaUser.username == "manager").user
+        url = self.request.route_path('users', traverse=(user.id, 'clinics'))
+        response = self.testapp.get(url, headers=headers)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_clinics_view_allows_super_user(self):
+        self.setup_test_data()
+        headers = self._login_user('super')
+        # get the manager user
+        user = OnaUser.get(OnaUser.username == "manager").user
+        url = self.request.route_path('users', traverse=(user.id, 'clinics'))
+        response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
 
 
