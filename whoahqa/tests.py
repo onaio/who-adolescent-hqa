@@ -492,6 +492,35 @@ class TestClinicViews(IntegrationTestBase):
         self.assertRaises(HTTPBadRequest, self.clinic_views.show)
 
 
+class TestClinicViewsList(IntegrationTestBase):
+    def setUp(self):
+        super(TestClinicViewsList, self).setUp()
+        self.setup_test_data()
+        self.request = testing.DummyRequest()
+        self.user = OnaUser.get(OnaUser.username == 'manager_a').user
+        self.request.user = self.user
+        self.request.context = ClinicFactory(self.request)
+        self.clinic_views = ClinicViews(self.request)
+
+    def test_list_redirects_to_user_clinics_if_perms_deny(self):
+        # deny permissions
+        self.config.testing_securitypolicy(
+            userid='bob', permissive=False)
+        response = self.clinic_views.list()
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.headers['Location'],
+            self.request.route_url(
+                'users', traverse=(self.user.id, 'clinics')))
+
+    def test_list_list_clinics_if_perms_allow(self):
+        # allow permissions
+        self.config.testing_securitypolicy(
+            userid='bob', permissive=True)
+        response = self.clinic_views.list()
+        self.assertIn('clinics', response)
+
+
 class TestUserViews(IntegrationTestBase):
     def test_user_clinics_view(self):
         self.setup_test_data()
@@ -644,6 +673,13 @@ class TestClinicViewsFunctional(FunctionalTestBase):
         clinic = Clinic.get(Clinic.name == "Clinic A")
         url = self.request.route_path('clinics', traverse=(clinic.id,))
         headers = self._login_user('manager_a')
+        response = self.testapp.get(url, headers=headers)
+        self.assertEqual(response.status_code, 200)
+
+    def test_clinic_list_allows_super_user(self):
+        self.setup_test_data()
+        url = self.request.route_path('clinics', traverse=())
+        headers = self._login_user('super')
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
 
