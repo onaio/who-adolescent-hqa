@@ -1,5 +1,9 @@
 import json
-from pyramid.security import authenticated_userid, remember
+from pyramid.security import (
+    authenticated_userid,
+    remember,
+    NO_PERMISSION_REQUIRED,
+)
 from pyramid.response import Response
 from pyramid.httpexceptions import (
     HTTPFound,
@@ -42,12 +46,18 @@ def set_request_user(event):
         request.user = None
 
 
-@view_config(route_name='auth', match_param='action=login')
+@view_config(
+    route_name='auth',
+    match_param='action=login',
+    permission=NO_PERMISSION_REQUIRED)
 def login(request):
     return Response('<a href="' + request.route_url('auth', action='authorize') +'">Login with Ona</a>')
 
 
-@view_config(route_name='auth', match_param='action=authorize')
+@view_config(
+    route_name='auth',
+    match_param='action=authorize',
+    permission=NO_PERMISSION_REQUIRED)
 def oauth_authorize(request):
     client_id = request.registry.settings['oauth_client_id']
     authorization_endpoint = "{base_url}{path}".format(
@@ -66,7 +76,10 @@ def oauth_authorize(request):
     return HTTPFound(authorization_url)
 
 
-@view_config(route_name='auth', match_param='action=callback')
+@view_config(
+    route_name='auth',
+    match_param='action=callback',
+    permission=NO_PERMISSION_REQUIRED)
 def oauth_callback(request):
     # check if we have `error` in our params, meaning user canceled
     if 'error' in request.GET:

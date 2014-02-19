@@ -4,6 +4,7 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from sqlalchemy import engine_from_config
 
+from whoahqa.constants import permissions as perms
 from whoahqa.security import group_finder
 from whoahqa.models import (
     DBSession,
@@ -31,6 +32,7 @@ def main(global_config, **settings):
                                     hashalg='sha512'))
 
     config.set_authorization_policy(ACLAuthorizationPolicy())
+    config.set_default_permission(perms.AUTHENTICATED)
     includeme(config)
     return config.make_wsgi_app()
 
