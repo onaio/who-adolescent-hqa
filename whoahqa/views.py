@@ -16,7 +16,7 @@ from pyramid.view import (
     view_config,
     view_defaults,
 )
-from pyramid.events import (NewRequest, BeforeRender,)
+from pyramid.events import BeforeRender
 from pyramid.events import subscriber
 
 from sqlalchemy.exc import DBAPIError
@@ -38,9 +38,8 @@ from whoahqa.models import (
     ClinicNotFound,
 )
 
-@subscriber(NewRequest)
-def set_request_user(event):
-    request = event.request
+
+def set_request_user(request):
     user_id = authenticated_userid(request)
     try:
         request.user = User.get(User.id == user_id)
