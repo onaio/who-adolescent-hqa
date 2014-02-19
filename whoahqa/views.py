@@ -18,6 +18,7 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from requests_oauthlib import OAuth2Session
 
+from whoahqa.constants import permissions as perms
 from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
     DBSession,
@@ -130,7 +131,9 @@ class UserViews(object):
         self.request = request
 
     @view_config(name='clinics',
-                 renderer='user_clinics.jinja2')
+                 renderer='user_clinics.jinja2',
+                 permission=perms.LIST_USER_CLINICS,
+                 context=User)
     def clinics(self):
         user = self.request.context
         clinics = user.get_clinics()

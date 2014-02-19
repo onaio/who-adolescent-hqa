@@ -1,5 +1,11 @@
 import json
 
+from pyramid.security import (
+    Allow,
+    Authenticated,
+    ALL_PERMISSIONS,
+)
+
 from sqlalchemy import (
     Column,
     ForeignKey,
@@ -54,6 +60,10 @@ class RootFactory(object):
 
 
 class UserFactory(object):
+    __acl__ = [
+        (Allow, 'g:su', ALL_PERMISSIONS)
+    ]
+
     def __init__(self, request):
         self.request = request
 
@@ -70,6 +80,10 @@ class UserFactory(object):
 
 
 class ClinicFactory(object):
+    __acl__ = [
+        (Allow, 'g:su', ALL_PERMISSIONS)
+    ]
+
     def __init__(self, request):
         self.request = request
 
@@ -120,6 +134,12 @@ class User(Base):
         clinics = DBSession.query(Clinic).join(user_clinics).filter(
             user_clinics.columns.user_id == self.id).all()
         return clinics
+
+    @property
+    def __acl__(self):
+        return [
+            (Allow, "u:{}".format(self.id), ALL_PERMISSIONS),
+        ]
 
 
 class Group(Base):
