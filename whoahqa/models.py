@@ -54,11 +54,6 @@ Base = declarative_base(cls=BaseModel)
 
 
 class RootFactory(object):
-    def __init__(self, request):
-        self.request = request
-
-
-class UserFactory(object):
     __acl__ = [
         (Allow, 'g:su', ALL_PERMISSIONS),
         (Allow, Authenticated, perms.AUTHENTICATED)
@@ -66,6 +61,20 @@ class UserFactory(object):
 
     def __init__(self, request):
         self.request = request
+
+
+class BaseModelFactory(object):
+    def __init__(self, request):
+        self.request = request
+
+    @property
+    def __parent__(self):
+        # set root factory as parent to inherit root's acl
+        return RootFactory(self.request)
+
+
+class UserFactory(BaseModelFactory):
+    __acl__ = []
 
     def __getitem__(self, item):
         # try to retrieve the user whose id matches item
@@ -79,14 +88,8 @@ class UserFactory(object):
             return user
 
 
-class ClinicFactory(object):
-    __acl__ = [
-        (Allow, 'g:su', ALL_PERMISSIONS),
-        (Allow, Authenticated, perms.AUTHENTICATED)
-    ]
-
-    def __init__(self, request):
-        self.request = request
+class ClinicFactory(BaseModelFactory):
+    __acl__ = []
 
     def __getitem__(self, item):
         # try to retrieve the clinic whose id matches item
@@ -101,14 +104,8 @@ class ClinicFactory(object):
             return clinic
 
 
-class SubmissionFactory(object):
-    __acl__ = [
-        (Allow, 'g:su', ALL_PERMISSIONS),
-        (Allow, Authenticated, perms.AUTHENTICATED)
-    ]
-
-    def __init__(self, request):
-        self.request = request
+class SubmissionFactory(BaseModelFactory):
+    __acl__ = []
 
     def __getitem__(self, item):
         raise NotImplementedError
