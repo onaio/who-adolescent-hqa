@@ -13,6 +13,7 @@ from whoahqa.models import (
     ClinicFactory,
     SubmissionFactory
 )
+from whoahqa.views import set_request_user
 
 
 def main(global_config, **settings):
@@ -33,6 +34,9 @@ def main(global_config, **settings):
 
     config.set_authorization_policy(ACLAuthorizationPolicy())
     config.set_default_permission(perms.AUTHENTICATED)
+
+    # add .user to requests and cache it with reify
+    config.add_request_method(set_request_user, 'user', reify=True)
     includeme(config)
     return config.make_wsgi_app()
 
