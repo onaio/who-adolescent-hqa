@@ -6,35 +6,36 @@ Deploy with [Vagrant](http://www.vagrantup.com/)
 
 ### Installing
 
+1. Download Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 
-1. Download Install Vagrant from its [website](http://www.vagrantup.com/downloads.html)
+2. Download Install [Vagrant](http://www.vagrantup.com/downloads.html)
 
-2. Install Ansible. Preferably [from source](http://docs.ansible.com/intro_installation.html#running-from-source)
+3. Install Ansible. Preferably [from source](http://docs.ansible.com/intro_installation.html#running-from-source)
 
-3. Load your `terminal` and change into this project's directory
+4. Load your `terminal` and change into this project's directory
 
     ```
     cd /path/to/this/directory
     ```
 
-4. Clone the Ona playbooks repo to a different directory
+5. Clone the Ona playbooks repo to a different directory
     ```
     git clone git@github.com:onaio/playbooks.git /some/other/directory/playbooks
     ```
 
-5. Make a symbolic link to the playbooks directory
+6. Make a symbolic link to the playbooks directory
     ```
     ln -s /some/other/directory/playbooks ansible
     ```
 
-6. Bring up the virtual machine with Vagrant
+7. Bring up the virtual machine with Vagrant
     ```
     vagrant up
     ```
 
     NOTE: This will keep the virtual machine running until you halt it via `vagrant halt`
 
-7. Provision using ansible
+8. Provision using ansible
     ```
     vagrant provision
     ```
