@@ -35,12 +35,12 @@ from whoahqa.models import (
 )
 
 
-def set_request_user(request):
+def get_request_user(request):
     user_id = authenticated_userid(request)
     try:
-        request.user = User.get(User.id == user_id)
+        return User.get(User.id == user_id)
     except NoResultFound:
-        request.user = None
+        return None
 
 
 def can_list_clinics(request):

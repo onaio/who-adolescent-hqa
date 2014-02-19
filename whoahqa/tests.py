@@ -41,6 +41,7 @@ from whoahqa.views import (
     ClinicViews,
     UserViews,
     SubmissionViews,
+    get_request_user,
 )
 
 
@@ -138,12 +139,23 @@ class TestSecurity(TestBase):
         self.assertIsNone(groups)
 
 
-class TestSetRequestUser(TestBase):
-    def test_sets_user_if_id_exists(self):
-        pass
+class TestGetRequestUser(TestBase):
+    def setUp(self):
+        super(TestGetRequestUser, self).setUp()
+        self.setup_test_data()
+        self.request = testing.DummyRequest()
 
-    def test_sets_none_if_id_doesnt_exist(self):
-        pass
+    def test_returns_user_if_authenticated(self):
+        self.config.testing_securitypolicy(
+            userid='1', permissive=True)
+        user = get_request_user(self.request)
+        self.assertIsInstance(user, User)
+
+    def test_sets_none_if_id_not_authenticated(self):
+        self.config.testing_securitypolicy(
+            userid=None, permissive=False)
+        user = get_request_user(self.request)
+        self.assertIsNone(user)
 
 
 class TestBaseModel(TestBase):
