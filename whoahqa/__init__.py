@@ -14,7 +14,7 @@ from whoahqa.models import (
     SubmissionFactory
 )
 from whoahqa.views import (
-    set_request_user,
+    get_request_user,
     can_list_clinics
 )
 
@@ -39,7 +39,7 @@ def main(global_config, **settings):
     config.set_default_permission(perms.AUTHENTICATED)
 
     # add .user to requests and cache it with reify
-    config.add_request_method(set_request_user, 'user', reify=True)
+    config.add_request_method(get_request_user, 'user', reify=True)
     config.add_request_method(can_list_clinics, 'can_list_clinics', reify=True)
     includeme(config)
     return config.make_wsgi_app()
