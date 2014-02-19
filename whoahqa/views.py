@@ -4,6 +4,7 @@ from pyramid.security import (
     remember,
     forget,
     NO_PERMISSION_REQUIRED,
+    has_permission,
 )
 from pyramid.response import Response
 from pyramid.httpexceptions import (
@@ -15,7 +16,7 @@ from pyramid.view import (
     view_config,
     view_defaults,
 )
-from pyramid.events import NewRequest
+from pyramid.events import (NewRequest, BeforeRender,)
 from pyramid.events import subscriber
 
 from sqlalchemy.exc import DBAPIError
@@ -45,6 +46,12 @@ def set_request_user(event):
         request.user = User.get(User.id == user_id)
     except NoResultFound:
         request.user = None
+
+
+@subscriber(BeforeRender)
+def set_permissions(event):
+    event['can_list_clinics'] = has_permission(
+        'list', ClinicFactory(event['request']), event['request'])
 
 
 @view_config(
@@ -169,6 +176,24 @@ class UserViews(object):
 class ClinicViews(object):
     def __init__(self, request):
         self.request = request
+
+    @view_config(name='',
+                 context=ClinicFactory,
+                 renderer='clinics_list.jinja2')
+    def list(self):
+        # if the user doesnt have permissions to list all clinics,
+        #  redirect to his own clinics
+        if not has_permission(perms.LIST, self.request.context, self.request):
+            return HTTPFound(
+                self.request.route_url(
+                    'users', traverse=(self.request.user.id, 'clinics')))
+
+        # otherwise, list all clinics
+        # TODO: paginate
+        return {
+            'can_list_clinics': True,
+            'clinics': Clinic.all()
+        }
 
     @view_config(name='unassigned',
                  context=ClinicFactory,

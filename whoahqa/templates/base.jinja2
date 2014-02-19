@@ -67,15 +67,22 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                <span class="selected"></span>
                <span class="arrow open"></span>
                </a>
-               <ul class="sub-menu">
-                  <li >
-                     <a href="{{ request.route_url('users', traverse=(1, 'clinics')) }}">My Clinics</a>
+              <ul class="sub-menu">
+                {% if can_list_clinics %}
+                  <li>
+                    <a href="{{ request.route_url('clinics', traverse=()) }}">All
+                      Clinics </a>
                   </li>
-                  <li >
-                     <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
-                     Unassigned Clinics</a>
-                  </li>
-               </ul>
+                {% endif %}
+                <li>
+                  <a href="{{ request.route_url('users', traverse=(request.user.id, 'clinics')) }}">My
+                    Clinics </a>
+                </li>
+                <li>
+                  <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
+                    Unassigned Clinics</a>
+                </li>
+              </ul>
             </li>
            <li class="last ">
              <a href="{{ request.route_url('auth', action='logout') }}">
