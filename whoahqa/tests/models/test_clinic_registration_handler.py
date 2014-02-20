@@ -32,22 +32,17 @@ class TestClinicRegistrationHandler(TestBase):
         clinic = Clinic.newest()
         self.assertNotEqual(clinic.code, '0')
 
-    def test_raises_user_not_found_if_user_doesnt_exist(self):
-        # create user with matching id
-        DBSession.add(User())
-        user = User.newest()
-
+    def test_creates_unassigned_clinic_if_user_doesnt_exist(self):
         payload = self.clinic_registrations[0]
         raw_data = json.loads(payload)
-        raw_data[constants.USER_ID] = user.id + 10
-        submission = Submission(raw_data=raw_data)
         count = Clinic.count()
+        submission = Submission(raw_data=raw_data)
         self.assertRaises(
             UserNotFound,
             ClinicRegistrationHandler(submission).handle_submission)
 
         # check that a clinic_submission record was NOT created
-        self.assertEqual(Clinic.count(), count)
+        self.assertEqual(Clinic.count(), count + 1)
 
     def test_parse_data(self):
         raw_data = json.loads(self.clinic_registrations[0])

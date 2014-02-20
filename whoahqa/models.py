@@ -386,17 +386,25 @@ class ClinicRegistrationHandler(BaseSubmissionHandler):
         user_id, clinic_name = ClinicRegistrationHandler.parse_data(
             self.submission.raw_data)
 
+        clinic = Clinic(name=clinic_name, code='0')
+
         # check is user exists
+        user = None
         try:
             user = User.get(User.id == user_id)
         except NoResultFound:
-            raise UserNotFound()
+            pass
         else:
-            clinic = Clinic(user=user, name=clinic_name, code='0')
+            clinic.user = user
+        finally:
             DBSession.add(clinic)
-            # flush to gte the clinic's id
+            # flush to get the clinic's id
             DBSession.flush()
             clinic.code = hashid.encrypt(clinic.id)
+
+        # if no user, raise UserNotFound
+        if user is None:
+            raise UserNotFound("User with id {} was not found".format(user_id))
 
 
 def determine_handler_class(submission, mapping):

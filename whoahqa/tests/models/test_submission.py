@@ -40,5 +40,5 @@ class TestSubmission(TestBase):
         self.assertEqual(Submission.count(), count + 1)
         self.assertEqual(submission.raw_data, json.loads(payload))
 
-        # check that a clinic record was NOT created
-        self.assertEqual(Clinic.count(), clinic_count)
+        # check that a clinic record was still created
+        self.assertEqual(Clinic.count(), clinic_count + 1)
