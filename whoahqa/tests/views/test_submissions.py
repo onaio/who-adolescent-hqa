@@ -2,6 +2,8 @@ from pyramid import testing
 from whoahqa.models import (
     DBSession,
     Clinic,
+    Submission,
+    ClinicSubmission,
 )
 from whoahqa.views import (
     SubmissionViews,
@@ -58,3 +60,17 @@ class TestSubmissionViewsFunctional(FunctionalTestBase):
         headers = self._login_user('manager_b')
         response = self.testapp.post(url, payload, headers=headers)
         self.assertEqual(response.status_code, 201)
+
+    def test_submission_created_when_submission_handler_errors(self):
+        self.setup_test_data()
+        count = Submission.count()
+        clinic_submission_count = ClinicSubmission.count()
+        url = self.request.route_path('submissions', traverse=())
+        payload = self.submissions[6]
+        headers = self._login_user('manager_b')
+        response = self.testapp.post(url, payload, headers=headers)
+        self.assertEqual(response.status_code, 202)
+        # check that a submission was created
+        self.assertEqual(Submission.count(), count + 1)
+        # check that a clinic submission was NOT created
+        self.assertEqual(ClinicSubmission.count(), clinic_submission_count)

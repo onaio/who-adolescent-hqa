@@ -10,7 +10,7 @@ from pyramid.view import (
 from whoahqa.models import (
     SubmissionFactory,
     Submission,
-    HandleSubmissionError,
+    SubmissionHandlerError,
 )
 
 
@@ -30,7 +30,7 @@ class SubmissionViews(object):
 
         try:
             Submission.create_from_json(payload)
-        except HandleSubmissionError:
+        except SubmissionHandlerError:
             return Response(
                 'Accepted pending manual matching process', status=202)
         else:
