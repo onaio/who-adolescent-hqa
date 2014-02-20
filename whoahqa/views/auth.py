@@ -119,7 +119,7 @@ def oauth_callback(request):
         # login user
         headers = remember(request, user_id)
 
-        # redirect to `came_from` url
+        # TODO: redirect to `came_from` url
         return HTTPFound(
             request.route_url('users', traverse=(user_id, 'clinics')),
             headers=headers)

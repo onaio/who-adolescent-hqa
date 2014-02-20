@@ -10,7 +10,7 @@ from pyramid.view import (
 from whoahqa.models import (
     SubmissionFactory,
     Submission,
-    ClinicNotFound,
+    HandleSubmissionError,
 )
 
 
@@ -30,7 +30,8 @@ class SubmissionViews(object):
 
         try:
             Submission.create_from_json(payload)
-        except ClinicNotFound:
-            return Response('Accepted Pending Clinic Match', status=202)
+        except HandleSubmissionError:
+            return Response(
+                'Accepted pending manual matching process', status=202)
         else:
             return Response('Saved', status=201)
