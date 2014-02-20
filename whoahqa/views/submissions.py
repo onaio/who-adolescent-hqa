@@ -6,6 +6,7 @@ from pyramid.view import (
     view_config,
     view_defaults,
 )
+from pyramid.security import NO_PERMISSION_REQUIRED
 
 from whoahqa.models import (
     SubmissionFactory,
@@ -22,7 +23,8 @@ class SubmissionViews(object):
     @view_config(
         name='',
         request_method='POST',
-        context=SubmissionFactory)
+        context=SubmissionFactory,
+        permission=NO_PERMISSION_REQUIRED)
     def json_post(self):
         payload = self.request.body
         if not payload:
