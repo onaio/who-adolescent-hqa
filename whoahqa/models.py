@@ -28,6 +28,7 @@ from sqlalchemy.orm import (
 from zope.sqlalchemy import ZopeTransactionExtension
 
 from whoahqa import constants
+from whoahqa.utils import hashid
 from whoahqa.constants import permissions as perms
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
@@ -391,9 +392,11 @@ class ClinicRegistrationHandler(BaseSubmissionHandler):
         except NoResultFound:
             raise UserNotFound()
         else:
-            # TODO: generate unique short code
-            clinic = Clinic(user=user, name=clinic_name, code='3123')
+            clinic = Clinic(user=user, name=clinic_name, code='0')
             DBSession.add(clinic)
+            # flush to gte the clinic's id
+            DBSession.flush()
+            clinic.code = hashid.encrypt(clinic.id)
 
 
 def determine_handler_class(submission, mapping):
@@ -438,6 +441,7 @@ class Submission(Base):
         submission = Submission(raw_data=json.loads(payload))
         DBSession.add(submission)
 
+        # TODO: handle duplicates within handlers, via uuid
         handler_class = determine_handler_class(
             submission, cls.HANDLER_TO_XFORMS_MAPPING)
         handler_class(submission).handle_submission()

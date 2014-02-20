@@ -28,6 +28,10 @@ class TestClinicRegistrationHandler(TestBase):
         # check that a clinic_submission record was created
         self.assertEqual(Clinic.count(), count + 1)
 
+        # make sure the code is not the default '0'
+        clinic = Clinic.newest()
+        self.assertNotEqual(clinic.code, '0')
+
     def test_raises_user_not_found_if_user_doesnt_exist(self):
         # create user with matching id
         DBSession.add(User())
