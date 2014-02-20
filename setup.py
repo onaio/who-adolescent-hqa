@@ -24,6 +24,7 @@ requires = [
     'requests',
     'requests-oauthlib',
     'httmock',
+    'hashids',
     'nose',
     'coverage',
 ]
