@@ -24,7 +24,8 @@ from submissions import SubmissionViews
 def forbidden(context, request):
     # if not authenticated, show login screen
     if not request.user:
-        return Response(render_view(context, request, 'login', secure=False))
+        return Response(
+            render_view(context, request, 'login', secure=False), status=401)
     # otherwise, raise HTTPUnauthorized
     return HTTPForbidden()
 
