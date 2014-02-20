@@ -5,6 +5,7 @@ from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from sqlalchemy import engine_from_config
 
 from whoahqa.constants import permissions as perms
+from utils import hashid
 from whoahqa.security import group_finder
 from whoahqa.models import (
     DBSession,
@@ -41,6 +42,10 @@ def main(global_config, **settings):
     # add .user to requests and cache it with reify
     config.add_request_method(get_request_user, 'user', reify=True)
     config.add_request_method(can_list_clinics, 'can_list_clinics', reify=True)
+
+    # setup the hashid salt
+    hashid._salt = settings['hashid_salt']
+
     includeme(config)
     return config.make_wsgi_app()
 
