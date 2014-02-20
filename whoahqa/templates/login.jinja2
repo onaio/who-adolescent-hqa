@@ -32,7 +32,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
   <!-- END GLOBAL MANDATORY STYLES -->
   <!-- BEGIN PAGE LEVEL STYLES -->
   <link rel="stylesheet" type="text/css"
-        href="assets/plugins/select2/select2_conquer.css') }}"/>
+        href="{{ request.static_url('whoahqa:static/plugins/select2/select2_conquer.css') }}"/>
   <!-- END PAGE LEVEL SCRIPTS -->
   <!-- BEGIN THEME STYLES -->
   <link href="{{ request.static_url('whoahqa:static/css/style-conquer.css') }}"
@@ -90,8 +90,8 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN CORE PLUGINS -->
 <!--[if lt IE 9]>
-	<script src="assets/plugins/respond.min.js"></script>
-	<script src="assets/plugins/excanvas.min.js"></script>
+	<script src="{{ request.static_url('whoahqa:static/plugins/respond.min.js') }}"></script>
+	<script src="{{ request.static_url('whoahqa:static/plugins/excanvas.min.js') }}"></script>
 	<![endif]-->
 <script
     src="{{ request.static_url('whoahqa:static/plugins/jquery-1.10.2.min.js') }}"
