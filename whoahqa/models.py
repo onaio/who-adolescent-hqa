@@ -321,15 +321,15 @@ class Clinic(Base):
         return scores
 
 
-class HandleSubmissionError(Exception):
+class SubmissionHandlerError(Exception):
     pass
 
 
-class ClinicNotFound(HandleSubmissionError):
+class ClinicNotFound(SubmissionHandlerError):
     pass
 
 
-class UserNotFound(HandleSubmissionError):
+class UserNotFound(SubmissionHandlerError):
     pass
 
 
@@ -403,7 +403,7 @@ def determine_handler_class(submission, mapping):
     try:
         xform_id = submission.raw_data[constants.XFORM_ID]
     except KeyError:
-        raise HandleSubmissionError(
+        raise SubmissionHandlerError(
             "'{}' not found in json".format(constants.XFORM_ID))
 
     # for each item in mapping check if this id exists
@@ -413,9 +413,11 @@ def determine_handler_class(submission, mapping):
         handler_class, xform_ids = handlers[0]
         return handler_class
     elif len(handlers) == 0:
-        raise ValueError("No handlers found for '{}'".format(xform_id))
+        raise SubmissionHandlerError(
+            "No handlers found for '{}'".format(xform_id))
     else:
-        raise ValueError("Multiple handlers found for '{}'".format(xform_id))
+        raise SubmissionHandlerError(
+            "Multiple handlers found for '{}'".format(xform_id))
 
 
 class Submission(Base):
