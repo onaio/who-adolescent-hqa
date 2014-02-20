@@ -39,7 +39,7 @@ class TestClinic(TestBase):
 
         clinic = Clinic.get(Clinic.id == 1)
         score = clinic.calculate_score(
-            'one', 'adolescent_quality_assementEnSp')
+            constants.ONE, constants.ADOLESCENT_CLIENT)
         self.assertEqual(score, (1.5, 2))
 
     def test_get_scores_works(self):
@@ -99,7 +99,7 @@ class TestClinic(TestBase):
 
         clinic = Clinic.get(Clinic.id == 1)
         score = clinic.calculate_score(
-            'two', 'health_care_provider_interview_EnSp')
+            constants.TWO, constants.HEALTH_CARE_PROVIDER)
         self.assertEqual(score, (None, 0))
 
     def test_is_assigned_returns_true_if_assigned(self):
