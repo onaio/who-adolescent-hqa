@@ -1,9 +1,11 @@
 CLINIC_IDENTIFIER = 'facility_info/clinic_id'
 CHARACTERISTIC = 'facility_info/HS_char'
 XFORM_ID = '_xform_id_string'
+USER_ID = 'user_id'
+CLINIC_NAME = 'clinic_name'
 
 # Client Tool Constants
-ADOLESCENT_CLIENT = 'adolescent_quality_assementEnSp'
+ADOLESCENT_CLIENT = 'adolescent_quality_assessmentEnSp'
 HEALTH_CARE_PROVIDER = 'health_care_provider_interview_EnSp'
 SUPPORT_STAFF = 'support_staff_interview_EnSp'
 HEALTH_FACILITY_MANAGER = 'health_facility_manager_interview_EnSp'

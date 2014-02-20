@@ -329,6 +329,10 @@ class ClinicNotFound(HandleSubmissionError):
     pass
 
 
+class UserNotFound(HandleSubmissionError):
+    pass
+
+
 class BaseSubmissionHandler(object):
     def __init__(self, submission):
         self.submission = submission
@@ -369,21 +373,49 @@ class ClinicReportHandler(BaseSubmissionHandler):
 
 
 class ClinicRegistrationHandler(BaseSubmissionHandler):
+    @classmethod
+    def parse_data(cls, raw_data):
+        """
+        Return the user_id and the clinic's name
+        """
+        return (raw_data.get(constants.USER_ID),
+                raw_data.get(constants.CLINIC_NAME))
+
     def handle_submission(self):
-        pass
+        user_id, clinic_name = ClinicRegistrationHandler.parse_data(
+            self.submission.raw_data)
+
+        # check is user exists
+        try:
+            user = User.get(User.id == user_id)
+        except NoResultFound:
+            raise UserNotFound()
+        else:
+            # TODO: generate unique short code
+            clinic = Clinic(user=user, name=clinic_name, code='3123')
+            DBSession.add(clinic)
 
 
 def determine_handler_class(submission, mapping):
     """
     Determine the handler to use to handle the submission
     """
-    xform_id = submission.raw_data[constants.XFORM_ID]
+    try:
+        xform_id = submission.raw_data[constants.XFORM_ID]
+    except KeyError:
+        raise HandleSubmissionError(
+            "'{}' not found in json".format(constants.XFORM_ID))
+
     # for each item in mapping check if this id exists
     handlers = filter(lambda x: xform_id in x[1], mapping)
-    if len(handlers) != 1:
-        raise ValueError("Multiple handler found for '{}'".format(xform_id))
-    handler_class, xform_ids = handlers[0]
-    return handler_class
+
+    if len(handlers) == 1:
+        handler_class, xform_ids = handlers[0]
+        return handler_class
+    elif len(handlers) == 0:
+        raise ValueError("No handlers found for '{}'".format(xform_id))
+    else:
+        raise ValueError("Multiple handlers found for '{}'".format(xform_id))
 
 
 class Submission(Base):
@@ -395,7 +427,7 @@ class Submission(Base):
     HANDLER_TO_XFORMS_MAPPING = (
         (ClinicReportHandler,
          [tool for tool, label in constants.CLIENT_TOOLS]),
-        (ClinicReportHandler, [constants.CLINIC_REGISTRATION]),
+        (ClinicRegistrationHandler, [constants.CLINIC_REGISTRATION]),
     )
 
     @classmethod
