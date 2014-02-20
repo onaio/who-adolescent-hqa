@@ -321,8 +321,46 @@ class Clinic(Base):
         return scores
 
 
-class ClinicNotFound(Exception):
+class HandleSubmissionError(Exception):
     pass
+
+
+class ClinicNotFound(HandleSubmissionError):
+    pass
+
+
+class ClinicReportHandler(object):
+    def __init__(self, submission):
+        self.submission = submission
+
+    @classmethod
+    def parse_data(cls, raw_data):
+        # split characteristic on [space] for multiple characteristic
+        # submissions
+        characteristics = raw_data.get(
+            constants.CHARACTERISTIC, '').split(" ")
+        return (raw_data.get(constants.CLINIC_IDENTIFIER),
+                characteristics,
+                raw_data.get(constants.XFORM_ID),)
+
+    def handle_submission(self):
+        clinic_code, characteristics, xform_id = \
+            ClinicReportHandler.parse_data(self.submission.raw_data)
+
+        # check if we have a valid clinic with said id
+        try:
+            clinic = Clinic.get(Clinic.code == clinic_code)
+        except NoResultFound:
+            raise ClinicNotFound
+        else:
+            for characteristic in characteristics:
+                clinic_submission = ClinicSubmission(
+                    clinic_id=clinic.id,
+                    submission=self.submission,
+                    characteristic=characteristic,
+                    xform_id=xform_id
+                )
+                DBSession.add(clinic_submission)
 
 
 class Submission(Base):
@@ -335,32 +373,6 @@ class Submission(Base):
         # TODO: check for and handle json.loads parse errors
         submission = Submission(raw_data=json.loads(payload))
         DBSession.add(submission)
-        clinic_code, characteristics, xform_id = cls.parse_json(payload)
 
-        # check if we have a valid clinic with said id
-        # select([Base.metadata.tables['clinic_submissions'].c.characteristic]).select_from(Base.metadata.tables['clinic_submissions']).join(Base.metadata.tables['submissions'], 'clinic_submissions.submission_id = submissions.id'))
-        try:
-            clinic = Clinic.get(Clinic.code == clinic_code)
-        except NoResultFound:
-            raise ClinicNotFound
-        else:
-            for characteristic in characteristics:
-                clinic_submission = ClinicSubmission(
-                    clinic_id=clinic.id,
-                    submission=submission,
-                    characteristic=characteristic,
-                    xform_id=xform_id
-                )
-                DBSession.add(clinic_submission)
-
-    @classmethod
-    def parse_json(cls, json_string):
-        json_data = json.loads(json_string)
-        # split characteristic on [space] for multiple characteristic
-        # submissions
-        characteristics = json_data.get(
-            constants.CHARACTERISTIC, '').split(" ")
-        return (json_data.get('facility_info/clinic_id'),
-                characteristics,
-                json_data.get('_xform_id_string'),)
-
+        ClinicReportHandler(submission).handle_submission()
+        return submission
