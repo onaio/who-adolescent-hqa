@@ -12,6 +12,9 @@ COMMUNITY_MEMBER = 'community_member_interview_EnSp'
 ADOLESCENT_IN_COMMUNITY = 'adolescent_in_community_tool_EnSp'
 OBSERVATION_GUIDE = 'observation_guide_EnSp'
 
+# Clinic registration
+CLINIC_REGISTRATION = 'clinic_registration'
+
 CLIENT_TOOLS = [
     (ADOLESCENT_CLIENT, u"AC"),
     (HEALTH_CARE_PROVIDER, u"HC"),
