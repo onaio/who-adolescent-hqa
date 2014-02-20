@@ -329,10 +329,15 @@ class ClinicNotFound(HandleSubmissionError):
     pass
 
 
-class ClinicReportHandler(object):
+class BaseSubmissionHandler(object):
     def __init__(self, submission):
         self.submission = submission
 
+    def handle_submission(self):
+        raise NotImplementedError("handle_submission is not implemented")
+
+
+class ClinicReportHandler(BaseSubmissionHandler):
     @classmethod
     def parse_data(cls, raw_data):
         # split characteristic on [space] for multiple characteristic
@@ -363,10 +368,35 @@ class ClinicReportHandler(object):
                 DBSession.add(clinic_submission)
 
 
+class ClinicRegistrationHandler(BaseSubmissionHandler):
+    def handle_submission(self):
+        pass
+
+
+def determine_handler_class(submission, mapping):
+    """
+    Determine the handler to use to handle the submission
+    """
+    xform_id = submission.raw_data[constants.XFORM_ID]
+    # for each item in mapping check if this id exists
+    handlers = filter(lambda x: xform_id in x[1], mapping)
+    if len(handlers) != 1:
+        raise ValueError("Multiple handler found for '{}'".format(xform_id))
+    handler_class, xform_ids = handlers[0]
+    return handler_class
+
+
 class Submission(Base):
     __tablename__ = 'submissions'
     id = Column(Integer, primary_key=True)
     raw_data = Column(JSON, nullable=False)
+
+    # tools to handler mapping
+    HANDLER_TO_XFORMS_MAPPING = (
+        (ClinicReportHandler,
+         [tool for tool, label in constants.CLIENT_TOOLS]),
+        (ClinicReportHandler, [constants.CLINIC_REGISTRATION]),
+    )
 
     @classmethod
     def create_from_json(cls, payload):
@@ -374,5 +404,7 @@ class Submission(Base):
         submission = Submission(raw_data=json.loads(payload))
         DBSession.add(submission)
 
-        ClinicReportHandler(submission).handle_submission()
+        handler_class = determine_handler_class(
+            submission, cls.HANDLER_TO_XFORMS_MAPPING)
+        handler_class(submission).handle_submission()
         return submission
