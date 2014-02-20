@@ -1,4 +1,5 @@
 import json
+import random
 
 from pyramid.security import (
     Allow,
@@ -32,6 +33,7 @@ from whoahqa.utils import hashid
 from whoahqa.constants import permissions as perms
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
+random.seed()
 
 
 class BaseModel(object):
@@ -386,7 +388,9 @@ class ClinicRegistrationHandler(BaseSubmissionHandler):
         user_id, clinic_name = ClinicRegistrationHandler.parse_data(
             self.submission.raw_data)
 
-        clinic = Clinic(name=clinic_name, code='0')
+        clinic = Clinic(
+            name=clinic_name,
+            code='{}'.format(random.randint(189, 1287190)))
 
         # check is user exists
         user = None

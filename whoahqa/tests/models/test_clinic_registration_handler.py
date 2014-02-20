@@ -1,6 +1,7 @@
 import json
 
 from whoahqa import constants
+from whoahqa.utils import hashid
 from whoahqa.models import (
     DBSession,
     User,
@@ -28,9 +29,9 @@ class TestClinicRegistrationHandler(TestBase):
         # check that a clinic_submission record was created
         self.assertEqual(Clinic.count(), count + 1)
 
-        # make sure the code is not the default '0'
+        # make sure the decrypted code is equal to the clinic's id
         clinic = Clinic.newest()
-        self.assertNotEqual(clinic.code, '0')
+        self.assertEqual((clinic.id,), hashid.decrypt(clinic.code))
 
     def test_creates_unassigned_clinic_if_user_doesnt_exist(self):
         payload = self.clinic_registrations[0]
