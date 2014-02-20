@@ -74,3 +74,11 @@ class TestSubmissionViewsFunctional(FunctionalTestBase):
         self.assertEqual(Submission.count(), count + 1)
         # check that a clinic submission was NOT created
         self.assertEqual(ClinicSubmission.count(), clinic_submission_count)
+
+    # TODO: temp. until basic auth (or other scheme is implemented ona side)
+    def test_allows_anon(self):
+        self.setup_test_data()
+        url = self.request.route_path('submissions', traverse=())
+        payload = self.submissions[2]
+        response = self.testapp.post(url, payload)
+        self.assertEqual(response.status_code, 201)
