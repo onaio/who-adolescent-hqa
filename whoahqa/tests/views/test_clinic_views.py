@@ -69,6 +69,14 @@ class TestClinicViews(IntegrationTestBase):
         self.request.context = clinic
         self.assertRaises(HTTPBadRequest, self.clinic_views.show)
 
+    def test_list_redirects_when_user_has_no_permissions(self):
+        self.setup_test_data()
+        self.request.ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+        self.config.testing_securitypolicy(
+            userid=2, permissive=False)
+        response = self.clinic_views.list()
+        self.assertEqual(response.status_code, 302)
+
 
 class TestClinicViewsFunctional(FunctionalTestBase):
     def test_unassigned_clinics_view_allows_authenticated(self):
