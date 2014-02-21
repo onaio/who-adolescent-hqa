@@ -52,6 +52,9 @@ def main(global_config, **settings):
     logging.config.fileConfig(
         settings['logging.config'], disable_existing_loggers=False)
 
+    logger = logging.getLogger(__name__)
+    logger.error("Starting server")
+
     includeme(config)
     return config.make_wsgi_app()
 
