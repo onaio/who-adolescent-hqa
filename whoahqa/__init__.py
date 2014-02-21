@@ -1,3 +1,6 @@
+import logging
+import logging.config
+
 from pyramid.config import Configurator
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
@@ -45,6 +48,9 @@ def main(global_config, **settings):
 
     # setup the hashid salt
     hashid._salt = settings['hashid_salt']
+
+    logging.config.fileConfig(
+        settings['logging.config'], disable_existing_loggers=False)
 
     includeme(config)
     return config.make_wsgi_app()
