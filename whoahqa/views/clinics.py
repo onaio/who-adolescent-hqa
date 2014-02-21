@@ -31,6 +31,8 @@ class ClinicViews(object):
         # if the user doesnt have permissions to list all clinics,
         #  redirect to his own clinics
         if not has_permission(perms.LIST, self.request.context, self.request):
+            import logging
+            logging.getLogger(__name__).error("An error")
             return HTTPFound(
                 self.request.route_url(
                     'users', traverse=(self.request.ona_user.id, 'clinics')))
