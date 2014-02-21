@@ -75,7 +75,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                   </li>
                 {% endif %}
                 <li>
-                  <a href="{{ request.route_url('users', traverse=(request.user.id, 'clinics')) }}">My
+                  <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'clinics')) }}">My
                     Clinics </a>
                 </li>
                 <li>
@@ -87,7 +87,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
            <li class="last ">
              <a href="{{ request.route_url('auth', action='logout') }}">
                <i class="icon-signout"></i>
-               <span class="title">Logout</span>
+               <span class="title">Logout ({{ request.ona_user.username }})</span>
              </a>
            </li>
          </ul>

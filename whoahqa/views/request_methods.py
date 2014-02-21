@@ -7,14 +7,14 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from whoahqa.models import (
     ClinicFactory,
-    User,
+    OnaUser,
 )
 
 
 def get_request_user(request):
     user_id = authenticated_userid(request)
     try:
-        return User.get(User.id == user_id)
+        return OnaUser.get(OnaUser.user_id == user_id)
     except NoResultFound:
         return None
 
