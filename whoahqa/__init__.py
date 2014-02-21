@@ -1,4 +1,3 @@
-import logging
 import logging.config
 
 from pyramid.config import Configurator
@@ -51,8 +50,6 @@ def main(global_config, **settings):
 
     logging.config.fileConfig(
         settings['logging.config'], disable_existing_loggers=False)
-
-    logging.getLogger(__name__).error("Staring app")
 
     includeme(config)
     return config.make_wsgi_app()
