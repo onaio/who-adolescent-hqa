@@ -49,7 +49,7 @@ def main(global_config, **settings):
     hashid._salt = settings['hashid_salt']
 
     logging.config.fileConfig(
-        settings['logging.config'], disable_existing_loggers=True)
+        settings['logging.config'], disable_existing_loggers=False)
 
     includeme(config)
     return config.make_wsgi_app()
