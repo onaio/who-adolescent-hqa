@@ -33,7 +33,8 @@ class ClinicViews(object):
         if not has_permission(perms.LIST, self.request.context, self.request):
             return HTTPFound(
                 self.request.route_url(
-                    'users', traverse=(self.request.ona_user.id, 'clinics')))
+                    'users', traverse=(
+                        self.request.ona_user.user_id, 'clinics')))
 
         # otherwise, list all clinics
         # TODO: paginate
