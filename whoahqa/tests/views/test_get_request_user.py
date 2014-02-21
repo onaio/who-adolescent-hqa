@@ -1,7 +1,7 @@
 from pyramid import testing
 
 from whoahqa.models import (
-    User,
+    OnaUser,
 )
 from whoahqa.views import (
     get_request_user,
@@ -19,7 +19,7 @@ class TestGetRequestUser(TestBase):
         self.config.testing_securitypolicy(
             userid='1', permissive=True)
         user = get_request_user(self.request)
-        self.assertIsInstance(user, User)
+        self.assertIsInstance(user, OnaUser)
 
     def test_sets_none_if_id_not_authenticated(self):
         self.config.testing_securitypolicy(

@@ -23,7 +23,7 @@ from submissions import SubmissionViews
 @forbidden_view_config()
 def forbidden(context, request):
     # if not authenticated, show login screen
-    if not request.user:
+    if not request.ona_user:
         return Response(
             render_view(context, request, 'login', secure=False), status=401)
     # otherwise, raise HTTPUnauthorized

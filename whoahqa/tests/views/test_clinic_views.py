@@ -37,12 +37,12 @@ class TestClinicViews(IntegrationTestBase):
         count = DBSession.query(user_clinics).count()
         self.assertEqual(count, 1)
 
-        user = OnaUser.get(OnaUser.username == 'manager_a').user
+        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
 
         # get the clinics
         clinics = Clinic.all()
         self.request.method = 'POST'
-        self.request.user = user
+        self.request.ona_user = ona_user
         params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
         self.request.POST = params
         self.clinic_views.assign()

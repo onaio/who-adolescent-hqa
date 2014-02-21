@@ -33,7 +33,7 @@ class ClinicViews(object):
         if not has_permission(perms.LIST, self.request.context, self.request):
             return HTTPFound(
                 self.request.route_url(
-                    'users', traverse=(self.request.user.id, 'clinics')))
+                    'users', traverse=(self.request.ona_user.id, 'clinics')))
 
         # otherwise, list all clinics
         # TODO: paginate
@@ -53,7 +53,7 @@ class ClinicViews(object):
 
     @view_config(name='assign', request_method='POST', check_csrf=False)
     def assign(self):
-        user = self.request.user
+        user = self.request.ona_user.user
 
         # get the list of requested clinics
         clinic_ids = self.request.POST.getall('clinic_id')
