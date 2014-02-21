@@ -50,7 +50,7 @@ def main(global_config, **settings):
     hashid._salt = settings['hashid_salt']
 
     logging.config.fileConfig(
-        settings['logging.config'], disable_existing_loggers=False)
+        settings['logging.config'], disable_existing_loggers=True)
 
     logger = logging.getLogger(__name__)
     logger.error("Starting server")
