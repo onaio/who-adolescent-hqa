@@ -27,6 +27,7 @@ requires = [
     'hashids',
     'nose',
     'coverage',
+    'pyramid_exclog'
 ]
 
 setup(name='who-ahqa',
