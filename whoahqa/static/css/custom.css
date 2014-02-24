@@ -14,3 +14,15 @@
 .scores-table thead > tr > th, .scores-table tbody > tr:nth-child(3n+0) {
     border-bottom: 3px solid #ddd;
 }
+
+.header.navbar{
+	background:#EFEFEF;
+	border-bottom:1px solid #D7D7D7;
+}
+
+body{
+	background:pink!important;
+}
+.underline{
+	text-decoration:underline;
+}
