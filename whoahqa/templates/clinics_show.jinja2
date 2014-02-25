@@ -6,66 +6,65 @@
 {% block content %}
   <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped scores-table">
-      <thead>
-      <tr>
-        <th class="char-defn">Characteristic</th>
-        <th class="char-no center-align">No.</th>
-        <th class="char-desc">Description</th>
-        <th class="char-cat">Category</th>
-        <th class="min-max">Min - Max</th>
-        <th class="char-resp"># Respondents</th>
-        <th class="char-score">Score</th>
-        <th class="char-rel-score">Relative Score</th>
-      </tr>
-      </thead>
-      <tbody>
       {% for characteristic in characteristics %}
         {% set percentage = scores[characteristic.id].totals.total_percentage %}
+        <thead>
         <tr>
-          <td class="center-align middle-align">
-            
-          </td>
-          <td class="center-align middle-align">
-            <h2>{{ loop.index }}</h2>
-          </td>
-          <td class="middle-align">{{ characteristic.description }}
-          </td>
-          <td class="client-tool-table">
-            <table class="table table-striped">
-              {{ generate_client_rows(scores, client_tools, characteristic.id, client_property='name', characteristic_id=characteristic.id)}}
-              <tr>
-                <td class="text-right bold">Absolute total score</td>
-              </tr>
-            </table>
-          </td>
-          <td class="client-tool-table">
-            <table class="table table-striped">
-              {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_questions', output_prefix='0 - ', characteristic_id=characteristic.id) }}
-              <tr>
-                <td class="text-center bold">
-                  0 - {{ scores[characteristic.id].totals.total_questions }}
-                </td>
-              </tr>
-            </table>
-          </td>
-          <td class="client-tool-table">
-            <table class="table table-striped respondents">
-              {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_responses', characteristic_id=characteristic.id) }}
-            </table>
-          </td>
-          <td class="client-tool-table">
-            <table class="table table-striped">
-              {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
-              <tr>
-                <td class="text-center">0</td>
-              </tr>
-            </table>
-          </td>
-          <td>
-            {{ "%s "| format(percentage|int(0)) }}%
-          </td>
+          <th class="char-defn">Characteristic</th>
+          <th class="char-no center-align">No.</th>
+          <th class="char-desc">Description</th>
+          <th class="char-cat">Category</th>
+          <th class="min-max">Min - Max</th>
+          <th class="char-resp"># Respondents</th>
+          <th class="char-score">Score</th>
+          <th class="char-rel-score">Relative Score</th>
         </tr>
-        
+        </thead>
+        <tbody>
+          <tr>
+            <td class="center-align middle-align">
+              
+            </td>
+            <td class="center-align middle-align">
+              <h2>{{ loop.index }}</h2>
+            </td>
+            <td class="middle-align">{{ characteristic.description }}
+            </td>
+            <td class="client-tool-table">
+              <table class="table table-striped">
+                {{ generate_client_rows(scores, client_tools, characteristic.id, client_property='name', characteristic_id=characteristic.id)}}
+                <tr>
+                  <td class="text-right bold">Absolute total score</td>
+                </tr>
+              </table>
+            </td>
+            <td class="client-tool-table">
+              <table class="table table-striped">
+                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_questions', output_prefix='0 - ', characteristic_id=characteristic.id) }}
+                <tr>
+                  <td class="text-center bold">
+                    0 - {{ scores[characteristic.id].totals.total_questions }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td class="client-tool-table">
+              <table class="table table-striped respondents">
+                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_responses', characteristic_id=characteristic.id) }}
+              </table>
+            </td>
+            <td class="client-tool-table">
+              <table class="table table-striped">
+                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
+                <tr>
+                  <td class="text-center">0</td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              {{ "%s "| format(percentage|int(0)) }}%
+            </td>
+          </tr>
       {% endfor %}
       </tbody>
     </table>
