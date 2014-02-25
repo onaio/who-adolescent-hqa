@@ -8,7 +8,6 @@
     <table class="table table-bordered table-hover table-striped scores-table">
       <thead>
       <tr>
-        <!-- TODO refactor width elements into CSS -->
         <th class="char-defn">Characteristic</th>
         <th class="char-no center-align">No.</th>
         <th class="char-desc">Description</th>
@@ -50,7 +49,7 @@
             </table>
           </td>
           <td class="client-tool-table">
-            <table class="table table-striped">
+            <table class="table table-striped respondents">
               {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_responses', characteristic_id=characteristic.id) }}
             </table>
           </td>
@@ -58,7 +57,7 @@
             <table class="table table-striped">
               {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
               <tr>
-                <td>0</td>
+                <td class="text-center">0</td>
               </tr>
             </table>
           </td>
