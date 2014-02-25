@@ -1,15 +1,15 @@
 <div id="sample_1_wrapper" class="dataTables_wrapper form-inline"
      role="grid">
-  <div class="table-scrollable">
+  <div class="table-responsive">
     <table
         class="table table-striped table-bordered table-hover"
         id="sample_1" aria-describedby="sample_1_info">
       <thead>
-      <tr role="row">
+      <tr role="row" class="score_summary_header_1">
             <th colspan=2> Characteristics</th>
-            <th colspan=1> Scores</th>
+            <th colspan=2> Scores</th>
       </tr>
-      <tr role="row">
+      <tr role="row" class="score_summary_header_2">
         <th class="sorting" role="columnheader" tabindex="0"
             aria-controls="sample_1" rowspan="1" colspan="1"
             aria-label="No."
@@ -33,7 +33,6 @@
       </thead>
 
       <tbody role="alert" aria-live="polite" aria-relevant="all">
-      </tbody>
       {% for characteristic in characteristics %}
         <tr class="gradeX odd">
           <td class=" ">
@@ -55,27 +54,5 @@
       {% endfor %}
       </tbody>
     </table>
-  </div>
-  <div class="row">
-    <div class="col-md-5 col-sm-12">
-      <div class="dataTables_info" id="sample_1_info">Showing 1 to 5
-        of 25 entries
-      </div>
-    </div>
-    <div class="col-md-7 col-sm-12">
-      <div class="dataTables_paginate paging_bootstrap">
-        <ul class="pagination">
-          <li class="prev disabled"><a href="#" title="Prev"><i
-              class="icon-angle-left"></i></a></li>
-          <li class="active"><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li class="next"><a href="#" title="Next"><i
-              class="icon-angle-right"></i></a></li>
-        </ul>
-      </div>
-    </div>
   </div>
 </div>

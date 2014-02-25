@@ -14,3 +14,9 @@
 .scores-table thead > tr > th, .scores-table tbody > tr:nth-child(3n+0) {
     border-bottom: 3px solid #ddd;
 }
+
+.score_summary_header_2{
+    background-color:#1175cb;
+    color:#ffffff;
+}
+
