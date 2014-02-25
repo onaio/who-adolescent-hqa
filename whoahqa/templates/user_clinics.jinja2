@@ -18,7 +18,7 @@
                 </div>
             </div>
             {% for clinic in clinics %}
-                <a href="#" class="btn btn-primary btn-lg">{{ clinic.name }}  Code: {{ clinic.code }}</a>
+                <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-lg">{{ clinic.name }} &nbsp;&nbsp; Code: {{ clinic.code }}</a>
             {% endfor %}
             <br>
             <br>
