@@ -25,10 +25,6 @@
     border-bottom: 0px;
 }
 
-td.client-tool-table > table > tbody > tr:nth-child(1) > td {
-    border-top: 0px;
-}
-
 .scores-table thead > tr > th.char-defn {
     width: 16%;
 }
@@ -53,3 +49,12 @@ td.client-tool-table > table > tbody > tr:nth-child(1) > td {
 .scores-table thead > tr > th.char-rel-score {
     width: 16%;
 }
+
+
+td.client-tool-table > table > tbody > tr:first-child > td {
+    border-top: 0px;
+}
+
+td.client-tool-table > table.respondents > tbody > tr:last-child > td {
+    border-bottom: 1px solid #ddd;
+} 
