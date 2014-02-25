@@ -11,6 +11,45 @@
     text-align: right;
 }
 
-.scores-table thead > tr > th, .scores-table tbody > tr:nth-child(3n+0) {
+.scores-table thead > tr > th, .scores-table > tbody > tr:nth-child(1n+0) {
     border-bottom: 3px solid #ddd;
+}
+
+.scores-table .client-tool-table {
+    padding: 0px;
+}
+
+.scores-table .client-tool-table > table {
+    margin-bottom: 0px;
+    border-top: 0px;
+    border-bottom: 0px;
+}
+
+td.client-tool-table > table > tbody > tr:nth-child(1) > td {
+    border-top: 0px;
+}
+
+.scores-table thead > tr > th.char-defn {
+    width: 16%;
+}
+.scores-table thead > tr > th.char-no {
+    width: 5%;
+}
+.scores-table thead > tr > th.char-desc {
+    width: 16%;
+}
+.scores-table thead > tr > th.char-cat {
+    width: 16%;
+}
+.scores-table thead > tr > th.min-max {
+    width: 9%;
+}
+.scores-table thead > tr > th.char-resp {
+    width: 16%;
+}
+.scores-table thead > tr > th.char-score {
+    width: 5%;
+}
+.scores-table thead > tr > th.char-rel-score {
+    width: 16%;
 }
