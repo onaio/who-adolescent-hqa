@@ -3,15 +3,16 @@
 {% block content %}
   <div class="row">
     <div class="col-md-12">
-      <form method="post" action="">
+      <form method="post" action="{{ request.route_url('clinics', traverse=('assign')) }}">
         <div class="table-toolbar">
           <div class="btn-group">
-            <button id="sample_editable_1_new" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary">
               Assign Selected to Myself <i class="icon-share-alt"></i>
             </button>
           </div>
         </div>
-        {% include '_clinics_table.jinja2' %}</form>
+        {% include '_clinics_table.jinja2' %}
+      </form>
     </div>
   </div>
 {% endblock content %}
