@@ -18,11 +18,9 @@
 .header.navbar{
 	background:#EFEFEF;
 	border-bottom:1px solid #D7D7D7;
+	height:1.2em;
 }
 
-body{
-	background:pink!important;
-}
 .underline{
 	text-decoration:underline;
 }
