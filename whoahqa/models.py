@@ -1,5 +1,6 @@
 import json
 import random
+import datetime
 
 from pyramid.security import (
     Allow,
@@ -12,7 +13,8 @@ from sqlalchemy import (
     ForeignKey,
     Integer,
     String,
-    Table
+    Table,
+    DateTime,
 )
 from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.declarative import declarative_base
@@ -196,6 +198,7 @@ class Clinic(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String(100), nullable=False, unique=True)
     name = Column(String(255), nullable=False)
+    date_created = Column(DateTime, default=datetime.datetime.utcnow)
     user = relationship("User", secondary=user_clinics, uselist=False)
 
     @property
