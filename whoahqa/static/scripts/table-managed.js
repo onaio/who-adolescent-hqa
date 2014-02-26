@@ -11,14 +11,6 @@ var TableManaged = function () {
 
             // begin first table
             $('#sample_1').dataTable({
-                "aoColumns": [
-                  { "bSortable": false },
-                  null,
-                  { "bSortable": false },
-                  null,
-                  { "bSortable": false },
-                  { "bSortable": false }
-                ],
                 "aLengthMenu": [
                     [5, 15, 20, -1],
                     [5, 15, 20, "All"] // change per page values here
@@ -26,6 +18,8 @@ var TableManaged = function () {
                 // set the initial value
                 "iDisplayLength": 5,
                 "sPaginationType": "bootstrap",
+                "bFilter": false,
+                "bInfo": false,
                 "oLanguage": {
                     "sLengthMenu": "_MENU_ records",
                     "oPaginate": {
