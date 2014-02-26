@@ -15,6 +15,7 @@ from sqlalchemy import (
     String,
     Table,
     DateTime,
+    func,
 )
 from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.declarative import declarative_base
@@ -198,7 +199,7 @@ class Clinic(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String(100), nullable=False, unique=True)
     name = Column(String(255), nullable=False)
-    date_created = Column(DateTime, default=datetime.datetime.utcnow)
+    date_created = Column(DateTime, server_default=func.now())
     user = relationship("User", secondary=user_clinics, uselist=False)
 
     @property
