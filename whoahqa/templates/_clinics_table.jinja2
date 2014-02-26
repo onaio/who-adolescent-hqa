@@ -17,7 +17,7 @@
       {% for clinic in clinics %}
         <tr class="gradeX odd">
           <td>
-            <input type="checkbox" class="checkboxes" value="1">
+            <input type="checkbox" name="clinic_id" class="checkboxes" value="{{ clinic.id }}">
           </td>
           <td>
             {% if clinic.is_assigned %}
