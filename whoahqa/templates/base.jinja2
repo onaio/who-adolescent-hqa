@@ -181,13 +181,13 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
    <script src="{{ request.static_url('whoahqa:static/scripts/app.js') }}"></script>
+   {% block page_scripts %}
+   {% endblock %}
    <script>
       jQuery(document).ready(function() {    
          App.init();
       });
    </script>
-   {% block footer %}
-   {% endblock %}
    <!-- END PAGE LEVEL SCRIPTS -->
    <!-- END JAVASCRIPTS -->
 </body>
