@@ -19,4 +19,7 @@
 {% block page_scripts %}
   <script src="{{ request.static_url('whoahqa:static/scripts/custom.js') }}"></script>
 {% endblock %}
+{% block jquery_ready %}
+  {{ super() }}
+  Custom.addCheckAllListener();
 {% endblock %}
