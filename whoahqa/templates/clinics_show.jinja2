@@ -4,15 +4,9 @@
 {% from 'macros/client_rows.jinja2' import generate_client_rows %}
 {% block title %}{{ clinic.name }} {{ clinic.code }} {% endblock %}
 {% block content %}
-  <div class="row">
-    <div class="col-md-2">
-      <div class="bg-info">Characteristics</div>
-    </div>
-    <div class="col-md-2 pull-right">
-      <div class="bg-info">Relative Score</div>
-    </div>
-  </div>
   <div class="table-responsive">
+    <div class="pull-left char-header">Characteristics</div>
+    <div class="pull-right score-header">Relative Score</div>
     <table class="table table-bordered table-hover scores-table">
       {% for characteristic in characteristics %}
         {% set percentage = scores[characteristic.id].totals.total_percentage %}
