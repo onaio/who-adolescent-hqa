@@ -47,6 +47,16 @@
               </table>
             </td>
             <td class="client-tool-table">
+              <table class="table table-striped">
+                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_questions', output_prefix='0 - ', characteristic_id=characteristic.id) }}
+                <tr>
+                  <td class="text-center bold">
+                    0 - {{ scores[characteristic.id].totals.total_questions }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td class="client-tool-table">
               <table class="table table-striped respondents">
                 {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_responses', characteristic_id=characteristic.id) }}
               </table>
@@ -56,16 +66,6 @@
                 {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
                 <tr>
                   <td class="text-center">0</td>
-                </tr>
-              </table>
-            </td>
-            <td class="client-tool-table">
-              <table class="table table-striped">
-                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_questions', output_prefix='0 - ', characteristic_id=characteristic.id) }}
-                <tr>
-                  <td class="text-center bold">
-                    0 - {{ scores[characteristic.id].totals.total_questions }}
-                  </td>
                 </tr>
               </table>
             </td>
