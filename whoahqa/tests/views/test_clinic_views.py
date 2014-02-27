@@ -2,6 +2,7 @@ from webob.multidict import MultiDict
 from pyramid import testing
 from pyramid.httpexceptions import (
     HTTPBadRequest,
+    HTTPFound
 )
 
 from whoahqa import constants
@@ -80,7 +81,7 @@ class TestClinicViews(IntegrationTestBase):
     def test_register_clinic(self):
         self.setup_test_data()
         response = self.clinic_views.register_clinic()
-        self.assertIsNotNone(response)
+        self.assertIsInstance(response, HTTPFound)
 
 class TestClinicViewsFunctional(FunctionalTestBase):
     def test_unassigned_clinics_view_allows_authenticated(self):
