@@ -54,7 +54,24 @@
             </td>
             <td class="client-tool-table">
               <table class="table table-striped respondents">
-                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_responses', characteristic_id=characteristic.id) }}
+              {% for client_tool in client_tools %}
+                {% set score = scores[characteristic.id] %}
+                {% if score[client_tool.id] is defined %}
+                    <tr>
+                        <td>
+                        {% set responses = score[client_tool.id]['num_responses']|int(0) %}
+                        {% if responses %}
+                          {% for response in range(responses) %}
+                            <i class="icon-blue icon-circle"></i>
+                          {% endfor %}
+                        {% else %}
+                          <i class="icon-grey icon-circle"></i>
+                        {% endif %}
+                        <i class="pull-right icon-blue icon-plus-sign"></i>
+                        </td>
+                    </tr>
+                {% endif %}
+              {% endfor %}
               </table>
             </td>
             <td class="client-tool-table">

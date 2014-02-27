@@ -120,3 +120,14 @@ td.client-tool-table > table.respondents > tbody > tr:last-child > td {
     border-bottom: 1px solid #ddd;
 }
 
+td.client-tool-table > table.respondents > tbody > tr > td > i.icon-blue {
+    color: #1175cb;
+}
+
+td.client-tool-table > table.respondents > tbody > tr > td > i.icon-blue.icon-plus-sign {
+    color: #1175cb;
+}
+
+td.client-tool-table > table.respondents > tbody > tr > td > i.icon-grey {
+    color: #ccc;
+}
