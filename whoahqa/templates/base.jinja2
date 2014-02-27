@@ -179,12 +179,18 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    <script src="{{ request.static_url('whoahqa:static/plugins/jquery.cookie.min.js') }}" type="text/javascript"></script>
    <script src="{{ request.static_url('whoahqa:static/plugins/uniform/jquery.uniform.min.js') }}" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
+   <!-- BEGIN PAGE LEVEL SCRIPTS -->
    <script src="{{ request.static_url('whoahqa:static/scripts/app.js') }}"></script>
+   {% block page_scripts %}
+   {% endblock %}
    <script>
-      jQuery(document).ready(function() {    
-         App.init();
+      jQuery(document).ready(function() {
+        {% block jquery_ready %}
+          App.init();
+        {% endblock %}
       });
    </script>
+   <!-- END PAGE LEVEL SCRIPTS -->
    <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
