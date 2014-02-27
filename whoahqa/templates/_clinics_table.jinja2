@@ -10,6 +10,7 @@
           <th>Name</th>
           <th>Clinic Code</th>
           <th>Created</th>
+          <th> </th>
         </tr>
       </thead>
 
@@ -26,8 +27,11 @@
               {{ clinic.name }}
             {% endif %}
           </td>
-          <td>{{ clinic.code }}</td>
-          <td>12 Jan 2014</td>
+          <td class=" ">{{ clinic.code }}</td>
+          <td class="center ">{{ clinic.date_created.strftime('%d %b %Y') }}</td>
+          <td class=" "><span
+              class="label label-sm label-success"> </span>
+          </td>
         </tr>
       {% endfor %}
       </tbody>
