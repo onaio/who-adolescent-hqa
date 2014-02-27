@@ -7,7 +7,7 @@
   <div class="table-responsive">
     <div class="pull-left char-header">Characteristics</div>
     <div class="pull-right score-header">Relative Score</div>
-    <table class="table table-bordered table-hover scores-table">
+    <table class="table table-bordered scores-table">
       {% for characteristic in characteristics %}
         {% set percentage = scores[characteristic.id].totals.total_percentage %}
         <thead>
