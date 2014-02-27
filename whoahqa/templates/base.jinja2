@@ -184,8 +184,10 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    {% block page_scripts %}
    {% endblock %}
    <script>
-      jQuery(document).ready(function() {    
-         App.init();
+      jQuery(document).ready(function() {
+        {% block jquery_ready %}
+          App.init();
+        {% endblock %}
       });
    </script>
    <!-- END PAGE LEVEL SCRIPTS -->
