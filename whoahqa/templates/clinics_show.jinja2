@@ -4,37 +4,45 @@
 {% from 'macros/client_rows.jinja2' import generate_client_rows %}
 {% block title %}{{ clinic.name }} {{ clinic.code }} {% endblock %}
 {% block content %}
+  <div class="row">
+    <div class="col-md-2">
+      <div class="bg-info">Characteristics</div>
+    </div>
+    <div class="col-md-2 pull-right">
+      <div class="bg-info">Relative Score</div>
+    </div>
+  </div>
   <div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped scores-table">
+    <table class="table table-bordered table-hover scores-table">
       {% for characteristic in characteristics %}
         {% set percentage = scores[characteristic.id].totals.total_percentage %}
         <thead>
         <tr>
-          <th class="char-defn">Characteristic</th>
+          <th class="char-defn"></th>
           <th class="char-no center-align">No.</th>
           <th class="char-desc">Description</th>
           <th class="char-cat">Category</th>
           <th class="char-resp"># Respondents</th>
           <th class="min-max">Min - Max</th>
           <th class="char-score">Score</th>
-          <th class="char-rel-score">Relative Score</th>
+          <th class="char-rel-score"></th>
         </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="center-align middle-align">
+            <td class="center-align ">
               
             </td>
-            <td class="center-align middle-align">
-              <h2>{{ loop.index }}</h2>
+            <td class="center-align char-no-vals">
+              {{ loop.index }}
             </td>
-            <td class="middle-align">{{ characteristic.description }}
+            <td class="">{{ characteristic.description }}
             </td>
             <td class="client-tool-table">
               <table class="table table-striped">
                 {{ generate_client_rows(scores, client_tools, characteristic.id, client_property='name', characteristic_id=characteristic.id)}}
                 <tr>
-                  <td class="text-right bold">Absolute total score</td>
+                  <td class="abs-score text-right bold">Absolute total score</td>
                 </tr>
               </table>
             </td>
@@ -61,7 +69,7 @@
                 </tr>
               </table>
             </td>
-            <td>
+            <td class="text-center">
               {{ "%s "| format(percentage|int(0)) }}%
             </td>
           </tr>

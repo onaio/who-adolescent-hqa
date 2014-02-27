@@ -11,8 +11,8 @@
     text-align: right;
 }
 
-.scores-table thead > tr > th, .scores-table > tbody > tr:nth-child(1n+0) {
-    border-bottom: 3px solid #ddd;
+.scores-table thead > tr > th, .scores-table > tbody > tr > td {
+    border: 2px solid #b3c1ea;
 }
 
 .score_summary_header_2{
@@ -28,6 +28,11 @@
     margin-bottom: 0px;
     border-top: 0px;
     border-bottom: 0px;
+}
+
+.scores-table thead {
+    background-color:#1175cb;
+    color: #fff
 }
 
 .scores-table thead > tr > th.char-defn {
@@ -55,6 +60,23 @@
     width: 16%;
 }
 
+.scores-table tbody tr td {
+    background-color: #fff;
+}
+
+.scores-table tbody tr td h2 {
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+.scores-table tbody tr td.char-no-vals {
+    color:#1175cb;
+    font-weight: bold;
+}
+
+.scores-table tbody tr td.abs-score {
+    background-color: #fff;
+}
 
 td.client-tool-table > table > tbody > tr:first-child > td {
     border-top: 0px;
