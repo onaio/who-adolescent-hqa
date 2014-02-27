@@ -99,13 +99,16 @@ class ClinicViews(object):
             self.request.registry.settings['enketo_api_token'])
         xml_instance = '<?xml version=\'1.0\' ?><clinic_registration id=\"clinic_registration\"><formhub><uuid>73242968f5754dc49c38463af658f3d2</uuid></formhub><user_id>{}</user_id><clinic_name></clinic_name><meta><instanceID>uuid:ec5ce15e-5a0a-4246-93fe-acf60ef69bf2</instanceID></meta></clinic_registration>'.format(
             self.request.ona_user.user_id)
+        server_url = self.request.registry.settings['form_server_url']
+        instance_id = uuid.uuid4()
+        return_url = self.request.route_url(
+                'users', traverse=(self.request.ona_user.user_id, 'clinics'))
         edit_url = enketo.get_edit_url(
-            self.request.registry.settings['form_server_url'],
+            server_url,
             constants.CLINIC_REGISTRATION,
             xml_instance,
-            uuid.uuid4(),
-            self.request.route_url(
-                'users', traverse=(self.request.ona_user.user_id, 'clinics'))
+            instance_id,
+            return_url
         )
 
         return HTTPFound(location=edit_url)
