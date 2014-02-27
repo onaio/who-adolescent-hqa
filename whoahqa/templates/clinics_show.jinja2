@@ -5,8 +5,10 @@
 {% block title %}{{ clinic.name }} {{ clinic.code }} {% endblock %}
 {% block content %}
   <div class="table-responsive">
-    <div class="pull-left char-header">Characteristics</div>
-    <div class="pull-right score-header">Relative Score</div>
+    <div class="row">
+      <div class="pull-left char-header">Characteristics</div>
+      <div class="pull-right score-header">Relative Score</div>
+    </div>
     <table class="table table-bordered scores-table">
       {% for characteristic in characteristics %}
         {% set percentage = scores[characteristic.id].totals.total_percentage %}
