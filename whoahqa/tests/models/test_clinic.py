@@ -1,4 +1,5 @@
 import transaction
+import datetime
 
 from whoahqa import constants
 from whoahqa.models import (
@@ -111,3 +112,9 @@ class TestClinic(TestBase):
         self.setup_test_data()
         clinic_b = Clinic.get(Clinic.id == 2)
         self.assertFalse(clinic_b.is_assigned)
+
+    def test_date_created_is_automatically_populated_on_create(self):
+        self.setup_test_data()
+        clinic_a = Clinic.get(Clinic.id == 1)
+        self.assertEquals(clinic_a.date_created.date(), datetime.datetime.today().date())
+

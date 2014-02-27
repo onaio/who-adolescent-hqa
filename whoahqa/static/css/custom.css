@@ -15,6 +15,11 @@
     border-bottom: 3px solid #ddd;
 }
 
+.score_summary_header_2{
+    background-color:#1175cb;
+    color:#ffffff;
+}
+
 .scores-table .client-tool-table {
     padding: 0px;
 }
@@ -57,4 +62,4 @@ td.client-tool-table > table > tbody > tr:first-child > td {
 
 td.client-tool-table > table.respondents > tbody > tr:last-child > td {
     border-bottom: 1px solid #ddd;
-} 
+}
