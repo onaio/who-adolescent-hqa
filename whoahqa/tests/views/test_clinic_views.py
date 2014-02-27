@@ -80,6 +80,7 @@ class TestClinicViews(IntegrationTestBase):
 
     def test_register_clinic(self):
         self.setup_test_data()
+        self.request.ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         response = self.clinic_views.register_clinic()
         self.assertIsInstance(response, HTTPFound)
 

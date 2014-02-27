@@ -33,7 +33,6 @@ class TestUserViews(IntegrationTestBase):
         # we should only have Clinic A in the response
         self.assertEqual(len(response['clinics']), 1)
         self.assertEqual(response['clinics'][0].name, "Clinic A")
-        self.assertIn('edit_url', response)
         self.assertIn('characteristics', response)
         self.assertIn('clinic_scores', response)
 
