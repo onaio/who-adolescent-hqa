@@ -5,25 +5,26 @@ var Custom = function () {
 
     // private functions & variables
 
-    var myFunc = function(text) {
-        alert(text);
-    }
+    var addCheckAllListener = function(text) {
+        $('.group-checkable').change(function () {
+            var set = $(this).attr("data-set");
+            var checked = $(this).is(":checked");
+            $(set).each(function () {
+                if (checked) {
+                    $(this).attr("checked", true);
+                } else {
+                    $(this).attr("checked", false);
+                }
+                $(this).parents('tr').toggleClass("active");
+            });
+            $.uniform.update(set);
 
-    // public functions
-    return {
-
-        //main function
-        init: function () {
-            //initialize here something.            
-        },
-
-        //some helper function
-        doSomeStuff: function () {
-            myFunc();
-        }
-
+        });
     };
 
+    return {
+        addCheckAllListener: addCheckAllListener
+    }
 }();
 
 /***
