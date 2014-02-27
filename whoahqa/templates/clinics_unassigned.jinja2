@@ -16,11 +16,7 @@
     </div>
   </div>
 {% endblock content %}
-{% block footer %}
+{% block page_scripts %}
   <script src="{{ request.static_url('whoahqa:static/scripts/custom.js') }}"></script>
-  <script type="text/javascript">
-    $(function(){
-      Custom.addCheckAllListener();
-    });
-  </script>
+{% endblock %}
 {% endblock %}
