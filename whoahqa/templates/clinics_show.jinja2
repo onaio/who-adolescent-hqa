@@ -2,7 +2,7 @@
 {% from 'macros/score_class.jinja2' import score_class %}
 {% from 'macros/value_or_dash.jinja2' import value_or_dash %}
 {% from 'macros/client_rows.jinja2' import generate_client_rows %}
-{% block title %}{{ clinic.name }} (<span class="bold">{{ clinic.code }}</span>) {% endblock %}
+{% block title %}{{ clinic.name }} {{ clinic.code }} {% endblock %}
 {% block content %}
   <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped scores-table">
