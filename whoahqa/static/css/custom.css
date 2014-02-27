@@ -88,10 +88,6 @@
     font-weight: bold;
 }
 
-.scores-table tbody tr td.abs-score {
-    background-color: #fff;
-}
-
 .scores-table .client-tool-table {
     padding: 0px;
 }
@@ -102,14 +98,18 @@
     border-bottom: 0px;
 }
 
-.scores-table .table-striped>tbody>tr:nth-child(odd)> td, 
-.table-striped>tbody>tr:nth-child(odd)>th {
+.scores-table .table-striped > tbody > tr:nth-child(odd) > td, 
+.table-striped > tbody > tr:nth-child(odd) > th {
     background-color: #fff;
 }
 
-.scores-table .table-striped>tbody>tr:nth-child(even)> td, 
-.table-striped>tbody>tr:nth-child(even)>th {
+.scores-table .table-striped > tbody > tr:nth-child(even) > td, 
+.table-striped > tbody > tr:nth-child(even) > th {
     background-color: #eceff8;
+}
+
+.scores-table .table-striped > tbody > tr:last-child > td {
+    background-color: #fff;
 }
 
 td.client-tool-table > table > tbody > tr:first-child > td {
