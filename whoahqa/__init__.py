@@ -67,5 +67,4 @@ def includeme(config):
                      factory=ClinicFactory)
     config.add_route('submissions', '/submissions/*traverse',
                      factory=SubmissionFactory)
-    config.add_route('register', '/register', view='whoahqa.views.register.register_clinic')
     config.scan()

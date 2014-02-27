@@ -77,6 +77,10 @@ class TestClinicViews(IntegrationTestBase):
         response = self.clinic_views.list()
         self.assertEqual(response.status_code, 302)
 
+    def test_register_clinic(self):
+        self.setup_test_data()
+        response = self.clinic_views.register_clinic()
+        self.assertIsNotNone(response)
 
 class TestClinicViewsFunctional(FunctionalTestBase):
     def test_unassigned_clinics_view_allows_authenticated(self):
