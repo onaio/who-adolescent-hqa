@@ -22,8 +22,8 @@
           <th class="char-no center-align">No.</th>
           <th class="char-desc">Description</th>
           <th class="char-cat">Category</th>
-          <th class="char-resp"># Respondents</th>
           <th class="min-max">Min - Max</th>
+          <th class="char-resp"># Respondents</th>
           <th class="char-score">Score</th>
           <th class="char-rel-score"></th>
         </tr>
@@ -53,19 +53,19 @@
             </td>
             <td class="client-tool-table">
               <table class="table table-striped">
-                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_questions', output_prefix='0 - ', characteristic_id=characteristic.id) }}
+                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
                 <tr>
-                  <td class="text-center bold">
-                    0 - {{ scores[characteristic.id].totals.total_questions }}
-                  </td>
+                  <td class="text-center">0</td>
                 </tr>
               </table>
             </td>
             <td class="client-tool-table">
               <table class="table table-striped">
-                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
+                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_questions', output_prefix='0 - ', characteristic_id=characteristic.id) }}
                 <tr>
-                  <td class="text-center">0</td>
+                  <td class="text-center bold">
+                    0 - {{ scores[characteristic.id].totals.total_questions }}
+                  </td>
                 </tr>
               </table>
             </td>
