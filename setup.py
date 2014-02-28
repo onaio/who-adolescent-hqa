@@ -27,6 +27,8 @@ requires = [
     'hashids',
     'nose',
     'coverage',
+    'pyramid_exclog',
+    'pyenketo'
 ]
 
 setup(name='who-ahqa',

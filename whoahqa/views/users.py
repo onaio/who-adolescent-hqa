@@ -1,12 +1,16 @@
+import uuid
+
 from pyramid.view import (
     view_config,
     view_defaults,
 )
 
+from whoahqa import constants
 from whoahqa.constants import permissions as perms
 from whoahqa.models import (
     User,
 )
+from whoahqa.utils import tuple_to_dict_list
 
 
 @view_defaults(route_name='users')
@@ -21,6 +25,13 @@ class UserViews(object):
     def clinics(self):
         user = self.request.context
         clinics = user.get_clinics()
+        characteristics = tuple_to_dict_list(("id", "description"), constants.CHARACTERISTICS)
+        clinic_scores = {}
+        for clinic in clinics:
+            scores = clinic.get_scores()
+            clinic_scores[clinic.id] = scores
         return {
-            'clinics': clinics
+            'clinics': clinics,
+            'characteristics': characteristics,
+            'clinic_scores': clinic_scores
         }

@@ -18,14 +18,14 @@ OBSERVATION_GUIDE = 'observation_guide_EnSp'
 CLINIC_REGISTRATION = 'clinic_registration'
 
 CLIENT_TOOLS = [
-    (ADOLESCENT_CLIENT, u"AC"),
-    (HEALTH_CARE_PROVIDER, u"HC"),
-    (SUPPORT_STAFF, u"SS"),
-    (HEALTH_FACILITY_MANAGER, u"M"),
-    (OUTREACH_WORKER, u"OW"),
-    (COMMUNITY_MEMBER, u"CM"),
-    (ADOLESCENT_IN_COMMUNITY, u"A in C"),
-    (OBSERVATION_GUIDE, u"OG")
+    (ADOLESCENT_CLIENT, u"Adolescent Client"),
+    (HEALTH_CARE_PROVIDER, u"Health-care Provider"),
+    (SUPPORT_STAFF, u"Support Staff"),
+    (HEALTH_FACILITY_MANAGER, u"Health Facility Manager"),
+    (OUTREACH_WORKER, u"Outreach Worker"),
+    (COMMUNITY_MEMBER, u"Community Member"),
+    (ADOLESCENT_IN_COMMUNITY, u"Adolescent in Community"),
+    (OBSERVATION_GUIDE, u"Observation Guide")
 ]
 
 ONE = 'one'

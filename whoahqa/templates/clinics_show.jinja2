@@ -1,64 +1,70 @@
 {% extends 'base.jinja2' %}
 {% from 'macros/score_class.jinja2' import score_class %}
 {% from 'macros/value_or_dash.jinja2' import value_or_dash %}
-{% block title %}{{ clinic.name }}{% endblock %}
+{% from 'macros/client_rows.jinja2' import generate_client_rows %}
+{% block title %}{{ clinic.name }} (<span class="bold">{{ clinic.code }}</span>) {% endblock %}
 {% block content %}
   <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped scores-table">
-      <thead>
-      <tr>
-        <th width="5%" class="center-align">#</th>
-        <th width="16%">Characteristic</th>
-        <th width="7%" class="center-align">Score</th>
-        <th width="9%">{# breakdown #}</th>
-        {% for client_tool in client_tools %}
-          <th width="7%" class="center-align">{{ client_tool.name }}</th>
-        {% endfor %}
-        <th width="7%" class="center-align">Total</th>
-      </tr>
-      </thead>
-      <tbody>
       {% for characteristic in characteristics %}
         {% set percentage = scores[characteristic.id].totals.total_percentage %}
+        <thead>
         <tr>
-          <td rowspan="3" class="center-align middle-align">
-            <h2>{{ loop.index }}</h2></td>
-          <td rowspan="3"
-              class="middle-align">{{ characteristic.description }}</td>
-          <td rowspan="3" class="center-align middle-align {% if percentage is not none %}{{ score_class(percentage) }}{% endif %}"><h4
-              class="bold">{% if percentage is not none %}{{ "%.1f"|format(percentage) }}%{% else %} - {% endif %}</h4>
-          </td>
-          <td class="bold">Min - Max</td>
-          {% for client_tool in client_tools %}
-            {% set score = scores[characteristic.id] %}
-            <td class="center-align {% if score[client_tool.id] is not defined %}active{% endif %}">
-              {% if score[client_tool.id] is defined %}
-                0 - {{ score[client_tool.id].num_questions }}{% endif %}</td>
-          {% endfor %}
-          <td width="6%" class="bold center-align">0
-            - {{ scores[characteristic.id].totals.total_questions }}</td>
+          <th class="char-defn">Characteristic</th>
+          <th class="char-no center-align">No.</th>
+          <th class="char-desc">Description</th>
+          <th class="char-cat">Category</th>
+          <th class="char-resp"># Respondents</th>
+          <th class="min-max">Min - Max</th>
+          <th class="char-score">Score</th>
+          <th class="char-rel-score">Relative Score</th>
         </tr>
-        <tr>
-          <td class="bold">Aggregate</td>
-          {% for client_tool in client_tools %}
-            {% set score = scores[characteristic.id] %}
-            <td class="center-align {% if not score[client_tool.id] is defined %}active{% endif %}">
-              {%- if score[client_tool.id] is defined -%}
-                {{ value_or_dash(score[client_tool.id].aggregate_score) }}
-              {%- endif %}</td>
-          {% endfor %}
-          <td class="bold center-align">{{ value_or_dash(scores[characteristic.id].totals.total_scores) }}</td>
-        </tr>
-        <tr>
-          <td class="bold"># Respondents</td>
-          {% for client_tool in client_tools %}
-            {% set score = scores[characteristic.id] %}
-            <td class="center-align {% if not score[client_tool.id] is defined %}active{% endif %}">
-              {% if score[client_tool.id] is defined %}
-                {{ score[client_tool.id].num_responses }}{% endif %}</td>
-          {% endfor %}
-          <td class="bold center-align">{{ scores[characteristic.id].totals.total_responses }}</td>
-        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="center-align middle-align">
+              
+            </td>
+            <td class="center-align middle-align">
+              <h2>{{ loop.index }}</h2>
+            </td>
+            <td class="middle-align">{{ characteristic.description }}
+            </td>
+            <td class="client-tool-table">
+              <table class="table table-striped">
+                {{ generate_client_rows(scores, client_tools, characteristic.id, client_property='name', characteristic_id=characteristic.id)}}
+                <tr>
+                  <td class="text-right bold">Absolute total score</td>
+                </tr>
+              </table>
+            </td>
+            <td class="client-tool-table">
+              <table class="table table-striped respondents">
+                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_responses', characteristic_id=characteristic.id) }}
+              </table>
+            </td>
+            <td class="client-tool-table">
+              <table class="table table-striped">
+                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_questions', output_prefix='0 - ', characteristic_id=characteristic.id) }}
+                <tr>
+                  <td class="text-center bold">
+                    0 - {{ scores[characteristic.id].totals.total_questions }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td class="client-tool-table">
+              <table class="table table-striped">
+                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
+                <tr>
+                  <td class="text-center">0</td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              {{ "%s "| format(percentage|int(0)) }}%
+            </td>
+          </tr>
       {% endfor %}
       </tbody>
     </table>
