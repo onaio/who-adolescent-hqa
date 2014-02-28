@@ -45,27 +45,14 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
 			<span>Quality Assessment Tool: Assessing Health Services for Adolescent Clients</span>
          </a>
          <!-- END LOGO -->
-         
-         <!-- BEGIN RESPONSIVE MENU TOGGLER --> 
 
-         <!-- END RESPONSIVE MENU TOGGLER -->
-         <!-- BEGIN TOP NAVIGATION MENU -->
+        <!-- BEGIN USER LOGIN DROPDOWN -->
          <ul class="nav navbar-nav pull-right">
-            <!-- BEGIN NOTIFICATION DROPDOWN -->
-
-            <!-- END NOTIFICATION DROPDOWN -->
-            <!-- BEGIN INBOX DROPDOWN -->
-
-            <!-- END INBOX DROPDOWN -->
-            <!-- BEGIN TODO DROPDOWN -->
-
-            <!-- END TODO DROPDOWN -->
-            <!--<li class="devider">&nbsp;</li>-->
-            <!-- BEGIN USER LOGIN DROPDOWN -->
             <li class="dropdown user">
-            	<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-				<span class="glyphicon glyphicon-user"></span> &nbsp;Signed in as 
-               <span class="username">Nick (Logout)</span> 
+            	<a href="{{ request.route_url('auth', action='logout') }}" class="dropdown-toggle">
+				<span class="glyphicon glyphicon-user"></span> &nbsp;Signed in as
+                <span class="bold">{{ request.ona_user.username }}</span>
+                <span class="username"> (Logout)</span>
                </a>
 
             </li>
@@ -99,7 +86,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                <div class="clearfix"></div>
                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
             </li>
-            <li class="active ">
+            <li class="active last">
                <a href="javascript:;">
                <i class="icon-user-md"></i>
                <span class="title">Clinics</span>
@@ -123,12 +110,6 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                 </li>
               </ul>
             </li>
-           <li class="last ">
-             <a href="{{ request.route_url('auth', action='logout') }}">
-               <i class="icon-signout"></i>
-               <span class="title">Logout ({{ request.ona_user.username }})</span>
-             </a>
-           </li>
          </ul>
          <!-- END SIDEBAR MENU -->
       </div>
