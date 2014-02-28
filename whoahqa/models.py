@@ -307,6 +307,9 @@ class Clinic(Base):
                     'aggregate_score': aggregate_score,
                     'num_responses': num_responses,
                     'num_questions': len(questions),
+                    'num_pending_responses': 
+                        constants.RECOMMENDED_SAMPLE_FRAME[client_tool_id]
+                        - num_responses
                 }
                 scores[characteristic][client_tool_id] = stats
 
