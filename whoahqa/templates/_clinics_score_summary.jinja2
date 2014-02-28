@@ -7,7 +7,7 @@
       <thead>
       <tr role="row" class="score_summary_header_1">
             <th colspan=2> Characteristics</th>
-            <th colspan=2> Scores</th>
+            <th colspan={{ clinics|length }}> Scores</th>
       </tr>
       <tr role="row" class="score_summary_header_2">
         <th class="sorting" role="columnheader" tabindex="0"
@@ -44,7 +44,6 @@
             <td class="center">
               {% if clinic_scores[clinic.id][characteristic.id]['total_percentage'] %}
                     {{clinic_scores[clinic.id][characteristic.id]['total_percentage'] }} %
-                    {{ clinic_scores[clinic.id][characteristic.id]['total_scores'] }}
                {% else %}
                     0 %
                 {% endif%}
