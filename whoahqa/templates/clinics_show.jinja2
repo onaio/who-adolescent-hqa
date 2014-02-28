@@ -60,13 +60,15 @@
                     <tr>
                         <td>
                         {% set responses = score[client_tool.id]['num_responses']|int(0) %}
+                        {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
                         {% if responses %}
                           {% for response in range(responses) %}
                             <i class="icon-blue icon-circle"></i>
                           {% endfor %}
-                        {% else %}
-                          <i class="icon-grey icon-circle"></i>
                         {% endif %}
+                        {% for response in range(pending_responses) %}
+                          <i class="icon-grey icon-circle"></i>
+                        {% endfor %}
                         <i class="pull-right icon-blue icon-plus-sign"></i>
                         </td>
                     </tr>
