@@ -2,7 +2,9 @@ from webob.multidict import MultiDict
 from pyramid import testing
 from pyramid.httpexceptions import (
     HTTPBadRequest,
+    HTTPFound
 )
+from httmock import urlmatch, HTTMock
 
 from whoahqa import constants
 from whoahqa.utils import tuple_to_dict_list
@@ -16,6 +18,15 @@ from whoahqa.views import (
     ClinicViews,
 )
 from whoahqa.tests import (IntegrationTestBase, FunctionalTestBase,)
+
+
+@urlmatch(netloc='test.enketo.org', path='/api_v1/instance')
+def enketo_edit_url_mock(url, request):
+    return {
+        'status_code': 201,
+        'content':
+        '{"code": 201, "edit_url": "http://test.enketo.org/edit?id=1"}'
+    }
 
 
 class TestClinicViews(IntegrationTestBase):
@@ -76,6 +87,13 @@ class TestClinicViews(IntegrationTestBase):
             userid=2, permissive=False)
         response = self.clinic_views.list()
         self.assertEqual(response.status_code, 302)
+
+    def test_register_clinic(self):
+        self.setup_test_data()
+        self.request.ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+        with HTTMock(enketo_edit_url_mock):
+            response = self.clinic_views.register_clinic()
+        self.assertIsInstance(response, HTTPFound)
 
 
 class TestClinicViewsFunctional(FunctionalTestBase):
