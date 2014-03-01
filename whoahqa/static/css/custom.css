@@ -15,6 +15,38 @@
     border-bottom: 3px solid #ddd;
 }
 
+#header-top{
+	color:#333333!important;
+	height:0!important;
+	min-height:40px!important;
+}
+.header.navbar{
+	background:#EFEFEF;
+	border-bottom:1px solid #D7D7D7;
+}
+.glyphicon .glyphicon-user{
+	color:#999999;
+}
+#header-top .navbar-brand{
+	color:#333333;
+	font-size:1.12em;
+	padding:.6em 0 0 1.7em;
+	width:60%;
+}
+#header-top .dropdown-toggle{
+	padding-top:0.8em;
+	padding-bottom:0.7em;
+}
+
+.underline{ text-decoration:underline; }
+
+.page-container{
+	padding-top:3em!important;
+}
+.page-sidebar{
+	padding-top:4.85em!important;
+}
+
 .score_summary_header_2{
     background-color:#1175cb;
     color:#ffffff;
