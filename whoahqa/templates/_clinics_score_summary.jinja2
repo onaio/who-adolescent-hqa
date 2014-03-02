@@ -1,3 +1,4 @@
+{% from 'macros/score_class.jinja2' import score_class %}
 <div id="sample_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
     <div class="row">
       <div class="score-summary-table1 col-md-7">
@@ -65,13 +66,10 @@
           {% for characteristic in characteristics %}
             <tr class="gradeX odd ssdata">
                {% for clinic in clinics %}
-                <td class="center">
-                  {% if clinic_scores[clinic.id][characteristic.id]['total_percentage'] %}
-                        {{clinic_scores[clinic.id][characteristic.id]['total_percentage'] }} %
-                   {% else %}
-                        0 %
-                    {% endif%}
-                </td>
+                    <td class="center">
+
+                          {{score_class(80, score_limits)}}
+                    </td>
                {% endfor %}
             </tr>
           {% endfor %}
