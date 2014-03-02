@@ -15,7 +15,30 @@
     border-bottom: 3px solid #ddd;
 }
 
-.score_summary_header_2{
+.score-summary-table2 {
+    margin-left:20px;
+    width:435px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.score-summary-table2 .table{
+    table-layout:fixed;
+    border-left: none;
+}
+
+.score-summary-table2 .table > tbody > tr > td{
+    border: none;
+}
+
+.ssdata{
+    height:60px;
+
+}
+
+.score-summary-table1 .table .score_summary_header_2,
+.score-summary-table2 .table .score_summary_header_2
+{
     background-color:#1175cb;
     color:#ffffff;
 }
