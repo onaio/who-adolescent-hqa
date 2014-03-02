@@ -501,3 +501,8 @@ CHARACTERISTIC_MAPPING = {
         }
     }
 }
+
+SCORE_RANGE_LIMITS = {
+    'warning': 80,
+    'danger': 60
+}
