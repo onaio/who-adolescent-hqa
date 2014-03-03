@@ -1,3 +1,4 @@
+from httmock import urlmatch, HTTMock
 from webob.multidict import MultiDict
 from pyramid import testing
 from pyramid.httpexceptions import (
@@ -17,6 +18,13 @@ from whoahqa.views import (
 )
 from whoahqa.tests import (IntegrationTestBase, FunctionalTestBase,)
 
+WEBFOR_URL = 'https://iyt3v.enketo.org/webform'
+@urlmatch(netloc=r'(.*\.)?test.enketo\.org$')
+def fetch_survey_form_url(url, request):
+    return {
+        'status_code': 200,
+        'content': '{"url": "%s"}' % (WEBFOR_URL)
+    }
 
 class TestClinicViews(IntegrationTestBase):
     def setUp(self):
@@ -76,6 +84,16 @@ class TestClinicViews(IntegrationTestBase):
             userid=2, permissive=False)
         response = self.clinic_views.list()
         self.assertEqual(response.status_code, 302)
+
+    def test_show_form(self):
+        self.setup_test_data()
+        params = MultiDict({'form':constants.ADOLESCENT_CLIENT})
+        self.request.GET = params
+        with HTTMock(fetch_survey_form_url):
+            response = self.clinic_views.show_form()
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.location, WEBFOR_URL)
 
 
 class TestClinicViewsFunctional(FunctionalTestBase):
