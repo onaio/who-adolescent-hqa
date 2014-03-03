@@ -1,5 +1,6 @@
 {% extends "base.jinja2" %}
 {% block title %}My Clinics{% endblock %}
+{% block page_title %} {{ self.title() }} {% endblock %}
 {% block content %}
   <div class="row">
     <div class="col-md-12">
@@ -12,7 +13,7 @@
         <div class="panel-body">
             <div class="table-toolbar">
                 <div class="btn-group">
-                    <a id="sample_editable_1_new" class="btn btn-primary" href="{{ edit_url }}">
+                    <a id="sample_editable_1_new" class="btn btn-primary" href="{{ request.route_url('clinics',  traverse=('register')) }}">
                         Register a Clinic <i class="icon-plus"></i>
                     </a>
                 </div>
