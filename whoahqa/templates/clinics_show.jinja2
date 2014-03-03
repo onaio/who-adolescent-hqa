@@ -90,8 +90,9 @@
                 </tr>
               </table>
             </td>
-            <td class="text-center">
-              {{ "%s "| format(percentage|int(0)) }}%
+            <td class="text-center relative-score">
+              <i class="big icon-medkit"></i>
+              {{ "%s"| format(percentage|int(0)) }}%
             </td>
           </tr>
       {% endfor %}
