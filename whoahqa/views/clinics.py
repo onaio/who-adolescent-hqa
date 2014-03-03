@@ -92,9 +92,7 @@ class ClinicViews(object):
         }
 
     @view_config(name='show_form',
-                 request_method='GET',
-                 context=Clinic,
-                 permission=perms.SHOW)
+                 request_method='GET')
     def show_form(self):
         # redirects to the survey form for specified survey
         survey_form = self.request.GET.get('form')
@@ -107,6 +105,7 @@ class ClinicViews(object):
             survey_url = enketo.get_survey_url(
                 self.request.registry.settings['form_server_url'], 
                 survey_form)
+
         except Http404:
             # Since enketo doesn't have the specified form throw a 
             # bad request
