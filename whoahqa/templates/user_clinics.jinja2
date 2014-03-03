@@ -18,7 +18,7 @@
                 </div>
             </div>
             {% for clinic in clinics %}
-                <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-lg">{{ clinic.name }} &nbsp;&nbsp; Code: {{ clinic.code }}</a>
+                <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-lg clinic-button">{{ clinic.name }} &nbsp;&nbsp; Code: {{ clinic.code }}</a>
             {% endfor %}
             <br>
             <br>
@@ -39,3 +39,10 @@
     </div>
   </div>
 {% endblock content %}
+        {% block page_scripts %}
+  <script src="{{ request.static_url('whoahqa:static/scripts/custom.js') }}"></script>
+{% endblock %}
+{% block jquery_ready %}
+  {{ super() }}
+  Custom.enablefloatThead();
+{% endblock %}
