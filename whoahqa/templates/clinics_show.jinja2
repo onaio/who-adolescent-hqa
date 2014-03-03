@@ -2,33 +2,38 @@
 {% from 'macros/score_class.jinja2' import score_class %}
 {% from 'macros/value_or_dash.jinja2' import value_or_dash %}
 {% from 'macros/client_rows.jinja2' import generate_client_rows %}
-{% block title %}{{ clinic.name }} (<span class="bold">{{ clinic.code }}</span>) {% endblock %}
+{% block title %}{{ clinic.name }} {% endblock %}
+{% block page_title %}{{ self.title() }} <span class="bold">{{ clinic.code }}</span> {% endblock %}
 {% block content %}
   <div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped scores-table">
+    <div class="row">
+      <div class="pull-left char-header">Characteristics</div>
+      <div class="pull-right score-header">Relative Score</div>
+    </div>
+    <table class="table table-bordered scores-table">
       {% for characteristic in characteristics %}
         {% set percentage = scores[characteristic.id].totals.total_percentage %}
         <thead>
         <tr>
-          <th class="char-defn">Characteristic</th>
+          <th class="char-defn"></th>
           <th class="char-no center-align">No.</th>
           <th class="char-desc">Description</th>
           <th class="char-cat">Category</th>
-          <th class="char-resp"># Respondents</th>
           <th class="min-max">Min - Max</th>
+          <th class="char-resp"># Respondents</th>
           <th class="char-score">Score</th>
-          <th class="char-rel-score">Relative Score</th>
+          <th class="char-rel-score"></th>
         </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="center-align middle-align">
+            <td class="center-align ">
               
             </td>
-            <td class="center-align middle-align">
-              <h2>{{ loop.index }}</h2>
+            <td class="center-align char-no-vals">
+              {{ loop.index }}
             </td>
-            <td class="middle-align">{{ characteristic.description }}
+            <td class="">{{ characteristic.description }}
             </td>
             <td class="client-tool-table">
               <table class="table table-striped">
@@ -36,11 +41,6 @@
                 <tr>
                   <td class="text-right bold">Absolute total score</td>
                 </tr>
-              </table>
-            </td>
-            <td class="client-tool-table">
-              <table class="table table-striped respondents">
-                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_responses', characteristic_id=characteristic.id) }}
               </table>
             </td>
             <td class="client-tool-table">
@@ -54,6 +54,35 @@
               </table>
             </td>
             <td class="client-tool-table">
+              <table class="table table-striped respondents">
+              {% for client_tool in client_tools %}
+                {% set score = scores[characteristic.id] %}
+                {% if score[client_tool.id] is defined %}
+                    <tr>
+                        <td>
+                        {% set responses = score[client_tool.id]['num_responses']|int(0) %}
+                        {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
+                        {% if responses %}
+                          {% for response in range(responses) %}
+                            <i class="icon-blue icon-circle"></i>
+                          {% endfor %}
+                        {% endif %}
+                        {% for response in range(pending_responses) %}
+                          <i class="icon-grey icon-circle"></i>
+                        {% endfor %}
+                        <a href="{{ request.route_url('clinics', traverse=('show_form'), _query=(('form', client_tool.id),)) }}">
+                          <i class="pull-right icon-blue icon-plus-sign"></i>
+                        </a>
+                        </td>
+                    </tr>
+                {% endif %}
+              {% endfor %}
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+            <td class="client-tool-table">
               <table class="table table-striped">
                 {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
                 <tr>
@@ -61,7 +90,7 @@
                 </tr>
               </table>
             </td>
-            <td>
+            <td class="text-center">
               {{ "%s "| format(percentage|int(0)) }}%
             </td>
           </tr>

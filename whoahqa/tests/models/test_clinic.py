@@ -59,11 +59,13 @@ class TestClinic(TestBase):
             'aggregate_score': 1.5,
             'num_questions': 2,
             'num_responses': 2,
+            'num_pending_responses': 4,
         })
         self.assertEqual(scores_1[constants.HEALTH_CARE_PROVIDER], {
             'aggregate_score': 1,
             'num_questions': 1,
             'num_responses': 1,
+            'num_pending_responses': 4,
         })
 
         self.assertEqual(scores_1['totals'], {
@@ -85,6 +87,7 @@ class TestClinic(TestBase):
             'aggregate_score': None,
             'num_questions': 4,
             'num_responses': 0,
+            'num_pending_responses': 6,
         })
 
         self.assertEqual(scores_10['totals'], {
