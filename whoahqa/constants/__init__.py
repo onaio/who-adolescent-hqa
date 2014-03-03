@@ -503,8 +503,13 @@ CHARACTERISTIC_MAPPING = {
     }
 }
 
-#Client Tool Recommended sample frame
+# Score ranges
+SCORE_RANGE_LIMITS = {
+    'warning': 80,
+    'danger': 60
+}
 
+#Client Tool Recommended sample frame
 RECOMMENDED_SAMPLE_FRAME = {
     ADOLESCENT_CLIENT: 6,
     HEALTH_CARE_PROVIDER: 5,

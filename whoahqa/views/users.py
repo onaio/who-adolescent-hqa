@@ -33,5 +33,6 @@ class UserViews(object):
         return {
             'clinics': clinics,
             'characteristics': characteristics,
-            'clinic_scores': clinic_scores
+            'clinic_scores': clinic_scores,
+            'score_limits': constants.SCORE_RANGE_LIMITS
         }
