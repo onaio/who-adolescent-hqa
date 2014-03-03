@@ -1,7 +1,7 @@
 {% from 'macros/score_class.jinja2' import score_class %}
 <div id="sample_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
     <div class="row">
-      <div class="score-summary-table1 col-md-7">
+      <div class="score-summary-table1 col-md-5">
         <table
             class="table characteristics table-hover"
             id="score_summary" aria-describedby="sample_1_info">
@@ -29,7 +29,7 @@
                   {{loop.index }}
               </td>
               </td>
-              <td class=" " style=""><div style="width:600px;">{{ characteristic.description }}</div></td>
+              <td class=" " style=""><div style="width:420px;">{{ characteristic.description }}</div></td>
 
             </tr>
           {% endfor %}
@@ -41,7 +41,7 @@
             class="table score_indicators table-hover"
             id="score_indicators" aria-describedby="sample_1_info">
            {% for clinic in clinics %}
-                <col width="60px" />
+                <col width="86px" />
             {% endfor %}
           <thead>
           <tr role="row" class="score_summary_header_1">
@@ -50,8 +50,10 @@
           <tr role="row" class="score_summary_header_2">
             {% for clinic in clinics %}
                 <th class="sorting_disabled ssdata" role="columnheader" rowspan="1"
-                colspan="1" aria-label="Clinic Name" style="width:40px;, height:37px;">
-                {{ clinic.name }}
+                colspan="1" aria-label="Clinic Name">
+                <div style="width:70px">
+                    {{ clinic.name }}
+                </div>
                 </th>
             {% endfor %}
           </tr>
@@ -60,7 +62,7 @@
           {% for characteristic in characteristics %}
             <tr class="gradeX odd ssdata">
                {% for clinic in clinics %}
-                    <td class="center">
+                    <td>
                           {{score_class(clinic_scores[clinic.id][characteristic.id]['total_percentage'], score_limits)}}
                     </td>
                {% endfor %}

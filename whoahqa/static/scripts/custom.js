@@ -57,9 +57,9 @@ var Custom = function () {
        $(".score_indicators").fixheader();
 
        var leftInit = $(".fixed").offset().left;
-       var initialLeftint = 926;
+       var initialLeftint = $(".score-summary-table2").offset().left +2;
 
-       var top = $('.fixed').offset().top - parseFloat($('.fixed').css('margin-top').replace(/auto/, 0));
+      // var top = $('.score-summary-table2 .fixed').offset().top - parseFloat($('.fixed').css('margin-top').replace(/auto/, 0));
 
        $('.score-summary-table2').scroll(function(event) {
             var x = initialLeftint - $(this).scrollLeft();
@@ -68,13 +68,13 @@ var Custom = function () {
             // whether that's below the form
             if (y >= top) {
                 // if so, ad the fixed class
-               $('.fixed').addClass('.fixed');
+               $('.score-summary-table2 .fixed').addClass('.fixed');
             } else {
                 // otherwise remove it
-                $('.fixed').removeClass('.fixed');
+                $('.score-summary-table2 .fixed').removeClass('.fixed');
             }
 
-            $(".fixed").offset({
+            $(".score-summary-table2 .fixed").offset({
                 left: x + leftInit
             });
         });
