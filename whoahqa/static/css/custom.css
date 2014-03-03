@@ -11,6 +11,15 @@
     text-align: right;
 }
 
+#assign-new {
+    margin-top: 1em;
+    font-weight: bold;
+}
+
+#assign-new span.glyphicon {
+    width: 1.25em;
+}
+
 .char-header, .score-header {
     font-size: 18px;
     color: #1175cb;
