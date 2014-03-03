@@ -1,3 +1,25 @@
-{% macro score_class(value) -%}
-  {% if value <= 30 %} danger {% elif value < 60 %} warning {% else %} success {% endif %}
+{% macro score_class(value, score_limits) -%}
+  {% if value %}
+    {% if value <= score_limits.danger %}
+        <div>
+            <div class="indicator danger" style="float:left;"> </div>
+            <div style="float:left;"> {{value}} % </div>
+        </div>
+    {% elif value < score_limits.warning %}
+        <div>
+            <div class="indicator warning" style="float:left;"> </div>
+            <div style="float:left;"> {{value}} % </div>
+        </div>
+    {% else %}
+        <div>
+            <div class="indicator success" style="float:left;"> </div>
+            <div style="float:left;">  {{value}} % </div>
+        </div>
+    {% endif %}
+  {% else %}
+        <div>
+            <div class="indicator danger" style="float:left;"> </div>
+            <div style="float:left;"> 0 % </div>
+        </div>
+  {% endif %}
 {%- endmacro %}
