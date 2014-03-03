@@ -19,10 +19,11 @@
 *Scores summary clinic table
 */
 .score-summary-table2 {
-    margin-left:22px;
-    width:430px;
-    overflow-x: scroll;
+    margin-left:52px;
+    width:550px;
+    overflow-x: auto;
     overflow-y: hidden;
+    padding-left:0px;
 }
 
 .score-summary-table2 .table{
@@ -35,8 +36,7 @@
 }
 
 .ssdata{
-    height:60px;
-
+    height:70px;
 }
 
 .score-summary-table1 .table .score_summary_header_2,
@@ -76,6 +76,11 @@
 {
     border-right:2px solid #cde3f4;
 }
+
+.score-summary-table2 .container{
+    padding-left:2px;
+}
+
 .fixed{
   top:0;
   position:fixed;
@@ -94,7 +99,7 @@
 */
 .indicator{
     border-radius: 50%;
-    width:10px;height:10px;
+    width:12px;height:12px;
     margin-top:5px;
     margin-right:5px;
     border:2px solid;
