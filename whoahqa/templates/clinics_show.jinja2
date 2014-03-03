@@ -69,7 +69,9 @@
                         {% for response in range(pending_responses) %}
                           <i class="icon-grey icon-circle"></i>
                         {% endfor %}
-                        <i class="pull-right icon-blue icon-plus-sign"></i>
+                        <a href="{{ request.route_url('clinics', traverse=('show_form'), _query=(('form', client_tool.id),)) }}">
+                          <i class="pull-right icon-blue icon-plus-sign"></i>
+                        </a>
                         </td>
                     </tr>
                 {% endif %}
