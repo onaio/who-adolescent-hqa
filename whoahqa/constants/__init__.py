@@ -17,6 +17,7 @@ OBSERVATION_GUIDE = 'observation_guide_EnSp'
 # Clinic registration
 CLINIC_REGISTRATION = 'clinic_registration'
 
+
 CLIENT_TOOLS = [
     (ADOLESCENT_CLIENT, u"Adolescent Client"),
     (HEALTH_CARE_PROVIDER, u"Health-care Provider"),
@@ -500,4 +501,22 @@ CHARACTERISTIC_MAPPING = {
             'characteristic_twenty/ch20_q2'
         }
     }
+}
+
+# Score ranges
+SCORE_RANGE_LIMITS = {
+    'warning': 80,
+    'danger': 60
+}
+
+#Client Tool Recommended sample frame
+RECOMMENDED_SAMPLE_FRAME = {
+    ADOLESCENT_CLIENT: 6,
+    HEALTH_CARE_PROVIDER: 5,
+    SUPPORT_STAFF: 3,
+    HEALTH_FACILITY_MANAGER: 1,
+    OUTREACH_WORKER: 5,
+    COMMUNITY_MEMBER: 2,
+    ADOLESCENT_IN_COMMUNITY: 5,
+    OBSERVATION_GUIDE: 3 
 }

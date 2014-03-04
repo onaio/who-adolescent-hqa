@@ -87,11 +87,111 @@
 	padding-top:4.85em!important;
 }
 
-.score_summary_header_2{
+/*
+*Scores summary clinic table
+*/
+.score-summary-table2 {
+    margin-left:52px;
+    width:550px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-left:0px;
+}
+
+.score-summary-table2 .table{
+    table-layout:fixed;
+    border-left: none;
+}
+
+.score-summary-table2 .table > tbody > tr > td{
+    border: none;
+}
+
+.ssdata{
+    height:70px;
+}
+
+.score-summary-table1 .table .score_summary_header_2,
+.score-summary-table2 .table .score_summary_header_2
+{
     background-color:#1175cb;
     color:#ffffff;
 }
 
+.score-summary-table1 .table .score_summary_header_1,
+.score-summary-table2 .table .score_summary_header_1
+{
+    font-size: 18px;
+    color: #1175cb;
+    width: 16%;
+    padding-left: 10px;
+    background: #cde3f4; /* Old browsers */
+    background: -moz-linear-gradient(left, #cde3f4 0%, #ffffff 97%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#cde3f4), color-stop(97%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #cde3f4 0%,#ffffff 97%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #cde3f4 0%,#ffffff 97%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #cde3f4 0%,#ffffff 97%); /* IE10+ */
+    background: linear-gradient(to right, #cde3f4 0%,#ffffff 97%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3c1ea', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
+
+}
+.score-summary-table2 .score_summary_header_2 > th{
+    border:none;
+}
+
+.score-summary-table1 .table > tbody > tr > td{
+    border:none;
+}
+
+.score-summary-table1 .table > tbody > tr > td,
+.score-summary-table1 .table > thead > tr > th
+{
+    border-right:2px solid #cde3f4;
+}
+
+.score-summary-table2 .container{
+    padding-left:2px;
+}
+
+.fixed{
+  top:0;
+  position:fixed;
+  width:auto;
+  display:none;
+  border:none;
+}
+
+.clinic-button{
+    margin-top:10px;
+    margin-right:5px;
+}
+
+/*
+*Score indicators on score summary table
+*/
+.indicator{
+    border-radius: 50%;
+    width:12px;height:12px;
+    margin-top:5px;
+    margin-right:5px;
+    border:2px solid;
+}
+.danger{
+   background-color: #e49b9f;/*fill color*/
+   border-color: #dd3850;/*stroke color*/
+}
+.warning{
+   background-color: #fbd6ab;/*fill color*/
+   border-color: #ffa735;/*stroke color*/
+}
+.success{
+   background-color: #aad8b9;/*fill color*/
+   border-color: #20a25c;/*stroke color*/
+}
+
+.scores-table .client-tool-table {
+    padding: 0px;
+}
 
 .scores-table thead {
     background-color:#1175cb;
@@ -179,4 +279,13 @@ td.client-tool-table > table.respondents > tbody > tr > td > i.icon-blue.icon-pl
 
 td.client-tool-table > table.respondents > tbody > tr > td > i.icon-grey {
     color: #ccc;
+}
+
+td.relative-score {
+    font-size: 16px;
+}
+
+td.relative-score i.icon-medkit {
+    margin-right: 5px;
+    color: #FFDC00;
 }
