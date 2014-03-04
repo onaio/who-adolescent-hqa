@@ -10,7 +10,10 @@ from pyramid.httpexceptions import (
 )
 from pyramid.view import (
     view_config,
+    forbidden_view_config,
+    render_view,
 )
+from pyramid.response import Response
 
 from requests_oauthlib import OAuth2Session
 
@@ -18,6 +21,17 @@ from whoahqa.models import (
     DBSession,
     OnaUser,
 )
+
+
+@forbidden_view_config()
+def forbidden(context, request):
+    # if not authenticated, show login screen
+    if not request.ona_user:
+        return Response(
+            render_view(
+                context, request, 'login', secure=False), status=401)
+    # otherwise, raise HTTPUnauthorized
+    return HTTPForbidden()
 
 
 @view_config(route_name='auth',
