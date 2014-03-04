@@ -153,14 +153,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                      <a href="{{ request.route_url('default')}}">Home</a>
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li>
-                     <a href="{{ request.route_url('clinics',traverse=(''))}}">Clinics</a>
-                     <i class="icon-angle-right"></i>
-                  </li>
-                  <li>
-                     <a href="{{ request.url }}">{{ self.page_title() }}</a>
-                  </li>
-                  <li><a href="#"> </a></li>
+                  {% block breadcrumbs %}{% endblock %}
                </ul>
                <!-- END PAGE TITLE & BREADCRUMB-->
             </div>
