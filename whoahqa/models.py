@@ -22,7 +22,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql.expression import desc
 from sqlalchemy.sql import select, and_
-
+from sqlalchemy.schema import PrimaryKeyConstraint
 from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
@@ -121,7 +121,8 @@ user_clinics = Table(
     'user_clinics',
     Base.metadata,
     Column('user_id', Integer, ForeignKey('users.id')),
-    Column('clinic_id', Integer, ForeignKey('clinics.id'))
+    Column('clinic_id', Integer, ForeignKey('clinics.id')),
+    PrimaryKeyConstraint('user_id', 'clinic_id')
 )
 
 
@@ -129,7 +130,8 @@ user_groups = Table(
     'user_groups',
     Base.metadata,
     Column('user_id', Integer, ForeignKey('users.id')),
-    Column('group_id', Integer, ForeignKey('groups.id'))
+    Column('group_id', Integer, ForeignKey('groups.id')),
+    PrimaryKeyConstraint('user_id', 'group_id')
 )
 
 
@@ -199,7 +201,8 @@ class Clinic(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String(100), nullable=False, unique=True)
     name = Column(String(255), nullable=False)
-    date_created = Column(DateTime, server_default=func.now())
+    date_created = Column(DateTime(timezone=True),
+                          server_default=func.now(), nullable=False)
     user = relationship("User", secondary=user_clinics, uselist=False)
 
     @property
