@@ -20,6 +20,14 @@
     width: 1.25em;
 }
 
+#clinic-name {
+    margin-right: 3em;
+}
+
+#clinic-code {
+    opacity: 0.7;
+}
+
 .char-header, .score-header {
     font-size: 18px;
     color: #1175cb;
