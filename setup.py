@@ -29,10 +29,12 @@ requires = [
     'coverage',
     'pyramid_exclog',
     'pyenketo',
-    'Babel'
+    'Babel',
+    'lingua'
 ]
 
 extractors = {'.': [
+      ('**.py', 'lingua_python', None ),
       ('templates/**.jinja',   'jinja2', None ),
     ]
 }
