@@ -19,7 +19,10 @@
                 </div>
             </div>
             {% for clinic in clinics %}
-                <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-lg">{{ clinic.name }} &nbsp;&nbsp; Code: {{ clinic.code }}</a>
+                <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-sm">
+                    <span class="text-left" id="clinic-name">{{ clinic.name }}</span>
+                    <span class="text-right" id="clinic-code">Code: {{ clinic.code }}</span>
+                </a>
             {% endfor %}
             <div id="assign-new">
                 <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
