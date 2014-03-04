@@ -10,6 +10,11 @@ from pyramid.view import (
     view_defaults,
 )
 
+from pyenketo import (
+    Enketo,
+    Http404,
+)
+
 from whoahqa import constants
 from whoahqa.constants import permissions as perms
 from whoahqa.utils import tuple_to_dict_list
@@ -88,11 +93,32 @@ class ClinicViews(object):
             'scores': scores
         }
 
+    @view_config(name='show_form',
+                 request_method='GET')
+    def show_form(self):
+        # redirects to the survey form for specified survey
+        survey_form = self.request.GET.get('form')
+        # get enketo edit url
+        enketo = Enketo()
+        enketo.configure(
+            self.request.registry.settings['enketo_url'],
+            self.request.registry.settings['enketo_api_token'])
+        try:
+            survey_url = enketo.get_survey_url(
+                self.request.registry.settings['form_server_url'],
+                survey_form)
+
+        except Http404:
+            # Since enketo doesn't have the specified form throw a
+            # bad request
+            raise HTTPBadRequest("Survey Form not found")
+
+        return HTTPFound(location=survey_url)
+
     @view_config(name='register',
                  context=ClinicFactory
                 )
     def register_clinic(self):
-        # get enketo edit url
         enketo = Enketo()
         enketo.configure(
             self.request.registry.settings['enketo_url'],

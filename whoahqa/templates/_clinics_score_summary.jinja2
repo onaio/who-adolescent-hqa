@@ -1,58 +1,75 @@
-<div id="sample_1_wrapper" class="dataTables_wrapper form-inline"
-     role="grid">
-  <div class="table-responsive">
-    <table
-        class="table table-striped table-bordered table-hover"
-        id="sample_1" aria-describedby="sample_1_info">
-      <thead>
-      <tr role="row" class="score_summary_header_1">
-            <th colspan=2> Characteristics</th>
-            <th colspan=2> Scores</th>
-      </tr>
-      <tr role="row" class="score_summary_header_2">
-        <th class="sorting" role="columnheader" tabindex="0"
-            aria-controls="sample_1" rowspan="1" colspan="1"
-            aria-label="No."
-            style="width: 30px;">
-            No.
-        </th>
-
-        <th class="sorting_disabled" role="columnheader" rowspan="1"
-            colspan="1" aria-label="Description" style="width: 46px;">
-            Description
-        </th>
-
-        {% for clinic in clinics %}
-            <th class="sorting_disabled" role="columnheader" rowspan="1"
-            colspan="1" aria-label="Clinic Name" style="width: 186px;">
-            {{ clinic.name }}
+{% from 'macros/score_class.jinja2' import score_class %}
+<div id="sample_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+    <div class="row">
+      <div class="score-summary-table1 col-md-5">
+        <table
+            class="table characteristics table-hover"
+            id="score_summary" aria-describedby="sample_1_info">
+          <thead>
+          <tr role="row" class="score_summary_header_1">
+                <th colspan=2> Characteristics</th>
+          </tr>
+          <tr role="row" class="score_summary_header_2">
+            <th class="sorting ssdata" role="columnheader" tabindex="0"
+                aria-controls="sample_1" rowspan="1" colspan="1"
+                aria-label="No."
+                style="width: 30px;">
+                No.
             </th>
-        {% endfor %}
+            <th class="sorting_disabled ssdata" role="columneader" rowspan="1"
+                colspan="1" aria-label="Description" style="width: 46px;">
+                Description
+            </th>
+          </tr>
+          </thead>
+          <tbody role="alert" aria-live="polite" aria-relevant="all">
+          {% for characteristic in characteristics %}
+            <tr class="gradeX odd ssdata">
+              <td class="">
+                  {{loop.index }}
+              </td>
+              </td>
+              <td class=" " style=""><div style="width:420px;">{{ characteristic.description }}</div></td>
 
-      </tr>
-      </thead>
-
-      <tbody role="alert" aria-live="polite" aria-relevant="all">
-      {% for characteristic in characteristics %}
-        <tr class="gradeX odd">
-          <td class=" ">
-              {{loop.index }}
-          </td>
-          </td>
-          <td class=" " style="word-wrap: break-word">{{ characteristic.description }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class=" col-md-4 score-summary-table2">
+        <table
+            class="table score_indicators table-hover"
+            id="score_indicators" aria-describedby="sample_1_info">
            {% for clinic in clinics %}
-            <td class="center">
-              {% if clinic_scores[clinic.id][characteristic.id]['total_percentage'] %}
-                    {{clinic_scores[clinic.id][characteristic.id]['total_percentage'] }} %
-                    {{ clinic_scores[clinic.id][characteristic.id]['total_scores'] }}
-               {% else %}
-                    0 %
-                {% endif%}
-            </td>
-           {% endfor %}
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-  </div>
+                <col width="86px" />
+            {% endfor %}
+          <thead>
+          <tr role="row" class="score_summary_header_1">
+                <th colspan={{ clinics|length }}> Scores</th>
+          </tr>
+          <tr role="row" class="score_summary_header_2">
+            {% for clinic in clinics %}
+                <th class="sorting_disabled ssdata" role="columnheader" rowspan="1"
+                colspan="1" aria-label="Clinic Name">
+                <div style="width:70px">
+                    {{ clinic.name }}
+                </div>
+                </th>
+            {% endfor %}
+          </tr>
+          </thead>
+          <tbody role="alert" aria-live="polite" aria-relevant="all">
+          {% for characteristic in characteristics %}
+            <tr class="gradeX odd ssdata">
+               {% for clinic in clinics %}
+                    <td>
+                          {{score_class(clinic_scores[clinic.id][characteristic.id]['total_percentage'], score_limits)}}
+                    </td>
+               {% endfor %}
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
 </div>

@@ -46,3 +46,10 @@
     </div>
   </div>
 {% endblock content %}
+        {% block page_scripts %}
+  <script src="{{ request.static_url('whoahqa:static/scripts/custom.js') }}"></script>
+{% endblock %}
+{% block jquery_ready %}
+  {{ super() }}
+  Custom.enablefloatThead();
+{% endblock %}
