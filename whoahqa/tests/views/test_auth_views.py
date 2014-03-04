@@ -3,11 +3,16 @@ import urlparse
 from webob.multidict import MultiDict
 from pyramid import testing
 from httmock import urlmatch, HTTMock
+from pyramid.httpexceptions import HTTPFound
 
 from whoahqa.models import OnaUser
 from whoahqa.views import (
     oauth_authorize,
     oauth_callback,
+)
+from whoahqa.views.auth import logout
+from whoahqa.models import (
+    Clinic,
 )
 from whoahqa.tests import (settings, IntegrationTestBase, FunctionalTestBase,)
 
@@ -60,6 +65,30 @@ class TestAuth(IntegrationTestBase):
             response.headers['Location'],
             request.route_url('auth', action='login'))
 
+    def test_logout(self):
+        request = testing.DummyRequest()
+        response = logout(request)
+        self.assertIsInstance(response, HTTPFound)
+        self.assertEqual(
+            response.location, request.route_url('auth', action='login'))
+
+
+class TestForbiddenViewFunctional(FunctionalTestBase):
+    def test_render_login_when_forbidden_and_not_authenticated(self):
+        url = self.request.route_url('default')
+        response = self.testapp.get(url, status=401)
+        self.assertEqual(response.status_code, 401)
+        response.mustcontain('<title>Login')
+
+    def test_render_unauthorized_when_forbidden_and_authenticated(self):
+        # TODO: move setup_test_data call to setUp
+        self.setup_test_data()
+        clinic = Clinic.get(Clinic.name == "Clinic A")
+        url = self.request.route_url('clinics', traverse=(clinic.id,))
+        headers = self._login_user('manager_b')
+        response = self.testapp.get(url, headers=headers, status=403)
+        self.assertEqual(response.status_code, 403)
+
 
 class TestAuthFunctional(FunctionalTestBase):
     @staticmethod
@@ -78,7 +107,7 @@ class TestAuthFunctional(FunctionalTestBase):
             'content': '[{"username": "user_one", "first_name": "", "last_name": ""}]'
         }
 
-    def test_login_response(self):
+    def test_oauth_login_response(self):
         url = self.request.route_url('auth', action='login')
         response = self.testapp.get(url)
         self.assertEqual(response.status_code, 200)
@@ -105,3 +134,4 @@ class TestAuthFunctional(FunctionalTestBase):
 
         # check that we set the login header
         self.assertIn('Set-Cookie', response.headers)
+
