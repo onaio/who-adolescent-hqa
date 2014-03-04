@@ -1,6 +1,9 @@
 {% extends "base.jinja2" %}
 {% block title %}My Clinics{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
+{% block breadcrumbs %}
+  <li>My Clinics</li>
+{% endblock %}
 {% block content %}
   <div class="row">
     <div class="col-md-12">
