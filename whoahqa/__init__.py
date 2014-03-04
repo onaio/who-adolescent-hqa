@@ -48,10 +48,14 @@ def main(global_config, **settings):
     # setup the hashid salt
     hashid._salt = settings['hashid_salt']
 
+    # add locale directory to project configuration
+    config.add_translation_dirs('whoahqa:locale')
+
     logging.config.fileConfig(
         settings['logging.config'], disable_existing_loggers=False)
 
     includeme(config)
+    
     return config.make_wsgi_app()
 
 

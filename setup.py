@@ -28,8 +28,14 @@ requires = [
     'nose',
     'coverage',
     'pyramid_exclog',
-    'pyenketo'
+    'pyenketo',
+    'Babel'
 ]
+
+extractors = {'.': [
+      ('templates/**.jinja',   'jinja2', None ),
+    ]
+}
 
 setup(name='who-ahqa',
       version='0.0',
@@ -56,4 +62,5 @@ setup(name='who-ahqa',
       [console_scripts]
       initialize_who-ahqa_db = whoahqa.scripts.initializedb:main
       """,
+      message_extractors = extractors
       )
