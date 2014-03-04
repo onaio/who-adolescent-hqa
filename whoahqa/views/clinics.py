@@ -1,3 +1,5 @@
+import uuid
+
 from pyramid.security import (
     has_permission,
 )
@@ -21,8 +23,6 @@ from whoahqa.models import (
     ClinicFactory,
     Clinic,
 )
-import uuid
-from pyenketo import Enketo
 
 
 @view_defaults(route_name='clinics')
