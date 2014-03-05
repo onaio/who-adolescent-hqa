@@ -1,6 +1,5 @@
 import json
 import random
-import datetime
 
 from pyramid.security import (
     Allow,
