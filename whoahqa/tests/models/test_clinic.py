@@ -34,6 +34,12 @@ class TestClinic(TestBase):
         self.assertEqual(len(clinics), 1)
         self.assertEqual(clinics[0].name, "Clinic B")
 
+    def test_filter_clinics(self):
+        self.setup_test_data()
+
+        clinics = Clinic.filter_clinics("Clinic")
+        self.assertGreater(len(clinics), 0)
+
     def test_calculate_score_works(self):
         self.setup_test_data()
         self.create_submissions()
