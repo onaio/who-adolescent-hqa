@@ -33,9 +33,10 @@ requires = [
     'lingua'
 ]
 
-extractors = {'.': [
-      ('**.py', 'lingua_python', None ),
-      ('**.jinja2',   'jinja2', None ),
+extractors = {
+    'whoahqa': [
+        ('**.py', 'lingua_python', None),
+        ('**.jinja2', 'jinja2', None)
     ]
 }
 
@@ -64,5 +65,5 @@ setup(name='who-ahqa',
       [console_scripts]
       initialize_who-ahqa_db = whoahqa.scripts.initializedb:main
       """,
-      message_extractors = extractors
+      message_extractors=extractors
       )
