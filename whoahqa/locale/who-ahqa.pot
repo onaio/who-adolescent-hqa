@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-05 17:28+0300\n"
+"POT-Creation-Date: 2014-03-05 18:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,5 +116,21 @@ msgstr ""
 
 #: whoahqa/templates/login.jinja2:79
 msgid "Create an account "
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:17
+msgid "Register a Clinic"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:22
+msgid "Code:"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:27
+msgid "<b>Assign a new clinic to myself</b>"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:35
+msgid "Score Summary "
 msgstr ""
 
