@@ -64,19 +64,20 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
 <!-- BEGIN LOGIN -->
 <div class="content">
   <!-- BEGIN LOGIN FORM -->
-  <h3 class="form-title">Login to your account</h3>
+  <h3 class="form-title">{% trans %}Login to your account {% endtrans %}</h3>
   {% include "_alerts.jinja2" %}
   <div class="form-actions">
 
     <a class="btn btn-info" href="{{ request.route_url('auth', action='authorize') }}">
-      Login with your Ona Account
+    {% trans %}  Login with your Ona Account {% endtrans %}
     </a>
   </div>
   <div class="create-account">
     <p>
-      Don't have an account yet ?&nbsp;
-      <a href="https://ona.io/accounts/register/" id="register-btn">Create an
-        account</a>
+      {% trans %}Don't have an account yet ?&nbsp; {% endtrans %}
+      <a href="https://ona.io/accounts/register/" id="register-btn">
+        {% trans %}Create an account {% endtrans %}
+      </a>
     </p>
   </div>
   <!-- END LOGIN FORM -->
