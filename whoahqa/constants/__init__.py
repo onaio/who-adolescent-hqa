@@ -1,3 +1,6 @@
+from pyramid.i18n import TranslationStringFactory
+_ = TranslationStringFactory('whoahqa')
+
 CLINIC_IDENTIFIER = 'facility_info/clinic_id'
 CHARACTERISTIC = 'facility_info/HS_char'
 XFORM_ID = '_xform_id_string'
@@ -19,14 +22,14 @@ CLINIC_REGISTRATION = 'clinic_registration'
 
 
 CLIENT_TOOLS = [
-    (ADOLESCENT_CLIENT, u"Adolescent Client"),
-    (HEALTH_CARE_PROVIDER, u"Health-care Provider"),
-    (SUPPORT_STAFF, u"Support Staff"),
-    (HEALTH_FACILITY_MANAGER, u"Health Facility Manager"),
-    (OUTREACH_WORKER, u"Outreach Worker"),
-    (COMMUNITY_MEMBER, u"Community Member"),
-    (ADOLESCENT_IN_COMMUNITY, u"Adolescent in Community"),
-    (OBSERVATION_GUIDE, u"Observation Guide")
+    (ADOLESCENT_CLIENT, _("Adolescent Client")),
+    (HEALTH_CARE_PROVIDER, _("Health-care Provider")),
+    (SUPPORT_STAFF, _("Support Staff")),
+    (HEALTH_FACILITY_MANAGER, _("Health Facility Manager")),
+    (OUTREACH_WORKER, _("Outreach Worker")),
+    (COMMUNITY_MEMBER, _("Community Member")),
+    (ADOLESCENT_IN_COMMUNITY, _("Adolescent in Community")),
+    (OBSERVATION_GUIDE, _("Observation Guide"))
 ]
 
 ONE = 'one'
