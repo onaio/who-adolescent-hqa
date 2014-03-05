@@ -7,17 +7,44 @@ from pyramid.security import (
 from pyramid.httpexceptions import (
     HTTPFound,
     HTTPForbidden,
+    HTTPBadRequest,
 )
 from pyramid.view import (
     view_config,
+    forbidden_view_config,
+    render_view,
 )
-
+from pyramid.response import Response
 from requests_oauthlib import OAuth2Session
+from sqlalchemy.orm.exc import NoResultFound
 
 from whoahqa.models import (
     DBSession,
+    UserProfile,
     OnaUser,
 )
+
+
+def check_post_csrf(func):
+    def inner(context, request):
+        if request.method == "POST":
+            if request.session.get_csrf_token()\
+                    != request.POST.get('csrf_token'):
+                return HTTPBadRequest("Bad csrf token")
+        # fall through if not POST or token is valid
+        return func.__call__(context, request)
+    return inner
+
+
+@forbidden_view_config()
+def forbidden(context, request):
+    # if not authenticated, show login screen with unauthorized status code
+    if not request.ona_user:
+        return Response(
+            render_view(
+                context, request, 'login', secure=False), status=401)
+    # otherwise, raise HTTPForbidden
+    return HTTPForbidden()
 
 
 @view_config(route_name='auth',
@@ -30,6 +57,32 @@ from whoahqa.models import (
              renderer='login.jinja2')
 def login(request):
     return {}
+
+
+@view_config(route_name='auth',
+             match_param='action=password-login',
+             permission=NO_PERMISSION_REQUIRED,
+             renderer='password_login.jinja2',
+             decorator=check_post_csrf)
+def password_login(context, request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        try:
+            user_profile = UserProfile.get(UserProfile.username == username)
+        except NoResultFound:
+            pass
+        else:
+            if user_profile.check_password(password):
+                headers = remember(request, user_profile.user_id)
+                return HTTPFound(request.route_url('default'), headers=headers)
+
+        # we're still here set the error message
+        request.session.flash(
+            u"Invalid username or password", 'error')
+
+    return {}
+
 
 
 @view_config(
