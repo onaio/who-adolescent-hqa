@@ -26,6 +26,7 @@ from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
     relationship,
+    synonym,
 )
 
 from zope.sqlalchemy import ZopeTransactionExtension
@@ -33,6 +34,7 @@ from zope.sqlalchemy import ZopeTransactionExtension
 from whoahqa import constants
 from whoahqa.utils import hashid
 from whoahqa.constants import permissions as perms
+from whoahqa.security import pwd_context
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 random.seed()
@@ -119,8 +121,8 @@ class SubmissionFactory(BaseModelFactory):
 user_clinics = Table(
     'user_clinics',
     Base.metadata,
-    Column('user_id', Integer, ForeignKey('users.id')),
-    Column('clinic_id', Integer, ForeignKey('clinics.id')),
+    Column('user_id', Integer, ForeignKey('users.id'), nullable=False),
+    Column('clinic_id', Integer, ForeignKey('clinics.id'), nullable=False),
     PrimaryKeyConstraint('user_id', 'clinic_id')
 )
 
@@ -128,8 +130,8 @@ user_clinics = Table(
 user_groups = Table(
     'user_groups',
     Base.metadata,
-    Column('user_id', Integer, ForeignKey('users.id')),
-    Column('group_id', Integer, ForeignKey('groups.id')),
+    Column('user_id', Integer, ForeignKey('users.id'), nullable=False),
+    Column('group_id', Integer, ForeignKey('groups.id'), nullable=False),
     PrimaryKeyConstraint('user_id', 'group_id')
 )
 
@@ -150,6 +152,33 @@ class User(Base):
         return [
             (Allow, "u:{}".format(self.id), ALL_PERMISSIONS),
         ]
+
+
+class UserProfile(Base):
+    __tablename__ = 'user_profiles'
+    user_id = Column(Integer, ForeignKey('users.id'), primary_key=True,
+                     autoincrement=False)
+    username = Column(String(100), nullable=False, unique=True)
+    pwd = Column(String(255), nullable=False)
+    user = relationship('User')
+
+    def check_password(self, password):
+        # always return false if password is greater than 255 to avoid
+        # spoofing attacks
+        if len(password) > 255:
+            return False
+        return pwd_context.verify(password, self.pwd)
+
+    @property
+    def password(self):
+        return self._password
+
+    @password.setter
+    def password(self, value):
+        from .security import pwd_context
+        self.pwd = pwd_context.encrypt(value)
+
+    password = synonym('_password', descriptor=password)
 
 
 class Group(Base):
