@@ -28,7 +28,8 @@ requires = [
     'nose',
     'coverage',
     'pyramid_exclog',
-    'pyenketo'
+    'pyenketo',
+    'passlib'
 ]
 
 setup(name='who-ahqa',
@@ -55,5 +56,6 @@ setup(name='who-ahqa',
       main = whoahqa:main
       [console_scripts]
       initialize_who-ahqa_db = whoahqa.scripts.initializedb:main
+      create_whoahqa_user = whoahqa.scripts.create_user:main
       """,
       )
