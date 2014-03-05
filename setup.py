@@ -35,7 +35,7 @@ requires = [
 
 extractors = {'.': [
       ('**.py', 'lingua_python', None ),
-      ('templates/**.jinja',   'jinja2', None ),
+      ('**.jinja2',   'jinja2', None ),
     ]
 }
 
