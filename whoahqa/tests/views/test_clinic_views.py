@@ -117,10 +117,13 @@ class TestClinicViews(IntegrationTestBase):
         self.setup_test_data()
         self.request.ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         self.request.method = 'POST'
-        self.request.POST['st'] = "Clinic"
+        self.request.POST['st'] = "Clinic B"
+        self.request.POST['all_clinics'] = "true"
 
         response = self.clinic_views.filter_clinics()
         self.assertGreater(len(response['clinics']), 0)
+        self.assertIsNotNone(response['search_term'])
+
 
 class TestClinicViewsFunctional(FunctionalTestBase):
     def test_unassigned_clinics_view_allows_authenticated(self):
