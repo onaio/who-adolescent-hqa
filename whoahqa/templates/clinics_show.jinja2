@@ -7,7 +7,7 @@
 {% block content %}
   <div class="table-responsive">
     <div class="row">
-      <div class="pull-left char-header">Characteristics</div>
+      <div class="pull-left char-header">{% trans %}Characteristics{% endtrans %}</div>
       <div class="pull-right score-header">Relative Score</div>
     </div>
     <table class="table table-bordered scores-table">
@@ -16,12 +16,12 @@
         <thead>
         <tr>
           <th class="char-defn"></th>
-          <th class="char-no center-align">No.</th>
-          <th class="char-desc">Description</th>
-          <th class="char-cat">Category</th>
-          <th class="min-max">Min - Max</th>
-          <th class="char-resp"># Respondents</th>
-          <th class="char-score">Score</th>
+          <th class="char-no center-align">{% trans %}No.{% endtrans %}</th>
+          <th class="char-desc">{% trans %}Description{% endtrans %}</th>
+          <th class="char-cat">{% trans %}Category{% endtrans %}</th>
+          <th class="min-max">{% trans %}Min - Max{% endtrans %}</th>
+          <th class="char-resp">{% trans %}# Respondents{% endtrans %}</th>
+          <th class="char-score">{% trans %}Score{% endtrans %}</th>
           <th class="char-rel-score"></th>
         </tr>
         </thead>

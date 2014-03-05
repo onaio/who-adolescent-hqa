@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-05 17:18+0300\n"
+"POT-Creation-Date: 2014-03-05 17:28+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,6 +50,7 @@ msgid "Observation Guide"
 msgstr ""
 
 #: whoahqa/templates/_clinics_score_summary.jinja2:10
+#: whoahqa/templates/clinics_show.jinja2:10
 msgid "Characteristics"
 msgstr ""
 
@@ -71,6 +72,30 @@ msgstr ""
 
 #: whoahqa/templates/_clinics_table.jinja2:12
 msgid "Created"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:19
+msgid "No."
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:20
+msgid "Description"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:21
+msgid "Category"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:22
+msgid "Min - Max"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:23
+msgid "# Respondents"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:24
+msgid "Score"
 msgstr ""
 
 #: whoahqa/templates/login.jinja2:16
