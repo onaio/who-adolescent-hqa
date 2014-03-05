@@ -79,7 +79,7 @@ def password_login(request):
 
         # we're still here set the error message
         request.session.flash(
-                u"Invalid username or password", 'error')
+            u"Invalid username or password", 'error')
 
     return {}
 
