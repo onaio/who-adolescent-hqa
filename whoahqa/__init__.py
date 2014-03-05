@@ -54,7 +54,7 @@ def main(global_config, **settings):
         settings['enketo_api_token'])
 
     logging.config.fileConfig(
-        settings['logging.config'], disable_existing_loggers=False)
+        global_config['__file__'], disable_existing_loggers=False)
 
     # configure password context
     pwd_context.load_path(global_config['__file__'])
