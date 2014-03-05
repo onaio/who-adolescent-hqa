@@ -81,14 +81,14 @@ var Custom = function () {
 
     };
 
-    var filterClinicTable = function() {
+    var filterClinicTable = function(all) {
         $("#search_term").keypress(function(e) {
             if(e.which == 13) {
                 search_term = $("#search_term").val();
                 $.ajax({
                     type: "POST",
                     url: "/clinics/filterclinics",
-                    data: {st: search_term }
+                    data: {st: search_term, all_clinics: all }
                 })
                 .done(function( msg ) {
                     $(".clinics_table").html(msg);

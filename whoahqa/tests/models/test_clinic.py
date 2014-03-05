@@ -37,7 +37,7 @@ class TestClinic(TestBase):
     def test_filter_clinics(self):
         self.setup_test_data()
 
-        clinics = Clinic.filter_clinics("Clinic")
+        clinics = Clinic.filter_clinics("Clinic B", True)
         self.assertGreater(len(clinics), 0)
 
     def test_calculate_score_works(self):

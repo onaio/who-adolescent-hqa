@@ -146,7 +146,12 @@ class ClinicViews(object):
     def filter_clinics(self):
         #filter list clinics by search term
         search_term = self.request.POST['st']
-        s_clinics = Clinic.filter_clinics(search_term)
+        all_clinics = self.request.POST['all_clinics']
+        if all_clinics == 'true':
+            all_clinics = True
+        else:
+            all_clinics = False
+        s_clinics = Clinic.filter_clinics(search_term, all_clinics)
         return{
             'clinics': s_clinics,
             'search_term': search_term
