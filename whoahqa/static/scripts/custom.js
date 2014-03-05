@@ -81,14 +81,19 @@ var Custom = function () {
 
     };
 
+    ENTER_KEY_CODE = 13
     var filterClinicTable = function(all) {
         $("#search_term").keypress(function(e) {
-            if(e.which == 13) {
+            if (e.which == ENTER_KEY_CODE) {
                 search_term = $("#search_term").val();
+                if (all) {
+                    filter_url = "?search="+search_term
+                } else {
+                    filter_url="?search="+search_term
+                }
                 $.ajax({
-                    type: "POST",
-                    url: "/clinics/filterclinics",
-                    data: {st: search_term, all_clinics: all }
+                    type: "GET",
+                    url: filter_url
                 })
                 .done(function( msg ) {
                     $(".clinics_table").html(msg);
