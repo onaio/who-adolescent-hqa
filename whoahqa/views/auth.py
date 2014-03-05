@@ -32,7 +32,7 @@ def check_post_csrf(func):
                     != request.POST.get('csrf_token'):
                 return HTTPBadRequest("Bad csrf token")
         # fall through if not POST or token is valid
-        return func.__call__(request)
+        return func.__call__(context, request)
     return inner
 
 
@@ -62,9 +62,9 @@ def login(request):
 @view_config(route_name='auth',
              match_param='action=password-login',
              permission=NO_PERMISSION_REQUIRED,
-             renderer='password_login.jinja2')
-@check_post_csrf
-def password_login(request):
+             renderer='password_login.jinja2',
+             decorator=check_post_csrf)
+def password_login(context, request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
