@@ -5,12 +5,12 @@ from pyramid import testing
 from httmock import urlmatch, HTTMock
 from pyramid.httpexceptions import HTTPFound
 
-from whoahqa.models import OnaUser
-from whoahqa.views import (
+from whoahqa.models import DBSession, User, OnaUser, UserProfile
+from whoahqa.views.auth import (
     oauth_authorize,
     oauth_callback,
-)
-from whoahqa.views.auth import logout
+    logout,
+    password_login,)
 from whoahqa.models import (
     Clinic,
 )
@@ -71,6 +71,41 @@ class TestAuth(IntegrationTestBase):
         self.assertIsInstance(response, HTTPFound)
         self.assertEqual(
             response.location, request.route_url('auth', action='login'))
+
+    def test_password_login(self):
+        # create the user profile
+        profile = UserProfile(user=User(), username="admin", password="admin")
+        DBSession.add(profile)
+        payload = MultiDict([
+            ('username', 'admin'),
+            ('password', 'admin')
+        ])
+        request = testing.DummyRequest(post=payload)
+        response = password_login(request)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.location, request.route_url('default'))
+
+    def test_password_login_with_bad_username(self):
+        payload = MultiDict([
+            ('username', 'random_user'),
+            ('password', 'passw0rd')
+        ])
+        request = testing.DummyRequest(post=payload)
+        response = password_login(request)
+        self.assertIsInstance(response, dict)
+        self.assertTrue(len(request.session.peek_flash('error')) > 0)
+
+    def test_password_login_with_bad_password(self):
+        profile = UserProfile(user=User(), username="admin", password="admin")
+        DBSession.add(profile)
+        payload = MultiDict([
+            ('username', 'admin'),
+            ('password', 'adminn0t')
+        ])
+        request = testing.DummyRequest(post=payload)
+        response = password_login(request)
+        self.assertIsInstance(response, dict)
+        self.assertTrue(len(request.session.peek_flash('error')) > 0)
 
 
 class TestForbiddenViewFunctional(FunctionalTestBase):
@@ -135,3 +170,7 @@ class TestAuthFunctional(FunctionalTestBase):
         # check that we set the login header
         self.assertIn('Set-Cookie', response.headers)
 
+    def test_get_password_login_response(self):
+        url = self.request.route_url('auth', action='password-login')
+        response = self.testapp.get(url)
+        self.assertEqual(response.status_code, 200)
