@@ -81,7 +81,7 @@ class TestAuth(IntegrationTestBase):
             ('password', 'admin')
         ])
         request = testing.DummyRequest(post=payload)
-        response = password_login(request)
+        response = password_login(None, request)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.location, request.route_url('default'))
 
@@ -91,7 +91,7 @@ class TestAuth(IntegrationTestBase):
             ('password', 'passw0rd')
         ])
         request = testing.DummyRequest(post=payload)
-        response = password_login(request)
+        response = password_login(None, request)
         self.assertIsInstance(response, dict)
         self.assertTrue(len(request.session.peek_flash('error')) > 0)
 
@@ -103,7 +103,7 @@ class TestAuth(IntegrationTestBase):
             ('password', 'adminn0t')
         ])
         request = testing.DummyRequest(post=payload)
-        response = password_login(request)
+        response = password_login(None, request)
         self.assertIsInstance(response, dict)
         self.assertTrue(len(request.session.peek_flash('error')) > 0)
 

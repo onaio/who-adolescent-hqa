@@ -11,7 +11,7 @@ from whoahqa.tests import (settings, IntegrationTestBase, FunctionalTestBase,)
 
 class TestCheckPostCSRF(IntegrationTestBase):
     @staticmethod
-    def func(request):
+    def func(context, request):
             return Response("Valid")
 
     def test_get_request_runs_func(self):
