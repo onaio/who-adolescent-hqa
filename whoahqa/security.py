@@ -1,19 +1,12 @@
 from sqlalchemy.orm.exc import NoResultFound
+from passlib.context import CryptContext
 
-from whoahqa.models import User
 
-
-USERS = {
-    1: 'admin',
-    2: 'user1'
-}
-GROUPS = {
-    1: ['g:su', 'u:1'],
-    2: ['g:supervisors', 'u:2']
-}
+pwd_context = CryptContext()
 
 
 def group_finder(userid, request):
+    from whoahqa.models import User
     try:
         user = User.get(User.id == userid)
     except NoResultFound:

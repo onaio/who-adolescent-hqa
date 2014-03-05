@@ -1,3 +1,4 @@
+import os
 import unittest
 import transaction
 
@@ -11,6 +12,7 @@ from sqlalchemy import engine_from_config
 from webtest import TestApp
 
 from whoahqa import main
+from whoahqa.security import pwd_context
 from whoahqa.models import (
     DBSession,
     Base,
@@ -21,7 +23,8 @@ from whoahqa.models import (
 )
 
 
-settings = get_appsettings('test.ini')
+SETTINGS_FILE = 'test.ini'
+settings = get_appsettings(SETTINGS_FILE)
 engine = engine_from_config(settings, 'sqlalchemy.')
 
 
@@ -93,6 +96,7 @@ class TestBase(unittest.TestCase):
 class IntegrationTestBase(TestBase):
     def setUp(self):
         super(IntegrationTestBase, self).setUp()
+        pwd_context.load_path('test.ini')
         self.config.include('whoahqa')
 
 
@@ -108,7 +112,13 @@ class FunctionalTestBase(IntegrationTestBase):
 
     def setUp(self):
         super(FunctionalTestBase, self).setUp()
-        app = main({}, **settings)
+        current_dir = os.getcwd()
+        app = main(
+            {
+                '__file__': os.path.join(current_dir, SETTINGS_FILE),
+                'here': current_dir
+            },
+            **settings)
         self.testapp = TestApp(app, extra_environ={
             'HTTP_HOST': 'example.com'
         })
