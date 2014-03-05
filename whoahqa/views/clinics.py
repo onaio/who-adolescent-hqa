@@ -138,3 +138,16 @@ class ClinicViews(object):
         )
 
         return HTTPFound(location=edit_url)
+
+    @view_config(name='filterclinics',
+                 request_method='POST',
+                 check_csrf=False,
+                 renderer='_clinics_table.jinja2')
+    def filter_clinics(self):
+        #filter list clinics by search term
+        search_term = self.request.POST['st']
+        s_clinics = Clinic.filter_clinics(search_term)
+        return{
+            'clinics': s_clinics,
+            'search_term': search_term
+        }

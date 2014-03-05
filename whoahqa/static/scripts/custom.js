@@ -81,9 +81,25 @@ var Custom = function () {
 
     };
 
+    var filterClinicTable = function() {
+        $("#search_term").keypress(function(e) {
+            if(e.which == 13) {
+                search_term = $("#search_term").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/clinics/filterclinics",
+                    data: {st: search_term }
+                })
+                .done(function( msg ) {
+                    $(".clinics_table").html(msg);
+                });
+            }
+        });
+    }
     return {
         addCheckAllListener: addCheckAllListener,
-        enablefloatThead: enablefloatThead
+        enablefloatThead: enablefloatThead,
+        filterClinicTable:filterClinicTable
     }
 }();
 
