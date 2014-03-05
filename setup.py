@@ -28,7 +28,8 @@ requires = [
     'nose',
     'coverage',
     'pyramid_exclog',
-    'pyenketo'
+    'pyenketo',
+    'passlib'
 ]
 
 setup(name='who-ahqa',
