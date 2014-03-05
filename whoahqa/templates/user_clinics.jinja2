@@ -1,13 +1,16 @@
 {% extends "base.jinja2" %}
 {% block title %}My Clinics{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
+{% block breadcrumbs %}
+  <li>My Clinics</li>
+{% endblock %}
 {% block content %}
   <div class="row">
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
-                <span class="glyphicon glyphicon-globe"></span> My Clinics
+                <i class="icon-user-md"></i> My Clinics
             </h3>
         </div>
         <div class="panel-body">
@@ -19,18 +22,24 @@
                 </div>
             </div>
             {% for clinic in clinics %}
-                <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-lg clinic-button">{{ clinic.name }} &nbsp;&nbsp; Code: {{ clinic.code }}</a>
+                <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-sm">
+                    <span class="text-left" id="clinic-name">{{ clinic.name }}</span>
+                    <span class="text-right" id="clinic-code">Code: {{ clinic.code }}</span>
+                </a>
             {% endfor %}
-            <br>
-            <br>
-            <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}"><span class="glyphicon glyphicon-home"></span> <b>Assign a new clinic to myself</b></a>
+            <div id="assign-new">
+                <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
+                    <span class="glyphicon glyphicon-home"></span> 
+                    Assign a new clinic to myself
+                </a>
+            </div>
 
         </div>
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
-                <span class="glyphicon glyphicon-globe"></span> Score Summary
+                <i class="icon-plus-sign-alt"></i> Score Summary
             </h3>
         </div>
         <div class="panel-body">
