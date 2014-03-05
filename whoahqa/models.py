@@ -226,13 +226,12 @@ class Clinic(Base):
     @classmethod
     def filter_clinics(cls, search_term, all_clinics):
         if all_clinics:
-             #filter all clinics
-            clinics = DBSession.query(Clinic).filter(
-              Clinic.name.like('%'+search_term+'%')).all()
+            #filter all clinics
+            clinics = DBSession.query(Clinic).filter(Clinic.name.like('%'+search_term+'%')).all()
         else:
             #filter unassigned clinics
-             clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
-              user_clinics.columns.clinic_id == None, Clinic.name.like('%'+search_term+'%')).all()
+            clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
+                user_clinics.columns.clinic_id == None, Clinic.name.like('%'+search_term+'%')).all()
         return clinics
 
     def calculate_score(self, characteristic, xform_id):
