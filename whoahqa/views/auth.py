@@ -7,6 +7,7 @@ from pyramid.security import (
 from pyramid.httpexceptions import (
     HTTPFound,
     HTTPForbidden,
+    HTTPBadRequest,
 )
 from pyramid.view import (
     view_config,
@@ -21,6 +22,17 @@ from whoahqa.models import (
     DBSession,
     OnaUser,
 )
+
+
+def check_post_csrf(func):
+    def inner(context, request):
+        if request.method == "POST":
+            if request.session.get_csrf_token()\
+                    != request.POST.get('csrf_token'):
+                return HTTPBadRequest("Bad csrf token")
+        # fall through if not POST or token is valid
+        return func.__call__(request)
+    return inner
 
 
 @forbidden_view_config()
