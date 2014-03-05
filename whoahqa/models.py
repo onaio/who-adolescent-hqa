@@ -223,6 +223,12 @@ class Clinic(Base):
             user_clinics.columns.clinic_id == None).all()
         return clinics
 
+    @classmethod
+    def filter_clinics(cls, search_term):
+        clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
+              user_clinics.columns.clinic_id == None, Clinic.name.like('%'+search_term+'%') ).all()
+        return clinics
+
     def calculate_score(self, characteristic, xform_id):
         """
         Calculate the aggregate score and the no. of respondents for the
