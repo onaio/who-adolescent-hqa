@@ -8,7 +8,7 @@ from sqlalchemy import engine_from_config
 
 from whoahqa.constants import permissions as perms
 from utils import hashid, enketo
-from whoahqa.security import group_finder
+from whoahqa.security import group_finder, pwd_context
 from whoahqa.models import (
     DBSession,
     Base,
@@ -55,6 +55,9 @@ def main(global_config, **settings):
 
     logging.config.fileConfig(
         settings['logging.config'], disable_existing_loggers=False)
+
+    # configure password context
+    pwd_context.load_path(global_config['__file__'])
 
     includeme(config)
     return config.make_wsgi_app()
