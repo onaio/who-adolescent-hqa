@@ -51,11 +51,6 @@ def main(global_config, **settings):
     # add locale directory to project configuration
     config.add_translation_dirs('whoahqa:locale')
 
-    config.add_subscriber('whoahqa.i18n.add_renderer_globals',
-                      'pyramid.events.BeforeRender')
-    config.add_subscriber('whoahqa.i18n.add_localizer',
-                      'pyramid.events.NewRequest')
-
     logging.config.fileConfig(
         settings['logging.config'], disable_existing_loggers=False)
 
