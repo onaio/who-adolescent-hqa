@@ -51,6 +51,14 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(len(response['clinics']), 1)
         self.assertEqual(response['clinics'][0].name, "Clinic B")
 
+        #test when filter is done
+        params = MultiDict({'search': 'Clinic B'})
+        self.request.GET = params
+        response = self.clinic_views.unassigned()
+        self.assertEqual(len(response['clinics']), 1)
+        self.assertEqual(response['clinics'][0].name, "Clinic B")
+        self.assertEqual(response['search_term'], "Clinic B")
+
     def test_assign_view(self):
         self.setup_test_data()
         count = DBSession.query(user_clinics).count()
@@ -96,6 +104,14 @@ class TestClinicViews(IntegrationTestBase):
         response = self.clinic_views.list()
         self.assertEqual(response.status_code, 302)
 
+        #test when filter is done
+        params = MultiDict({'search': 'Clinic B'})
+        self.request.GET = params
+        response = self.clinic_views.unassigned()
+        self.assertEqual(len(response['clinics']), 1)
+        self.assertEqual(response['clinics'][0].name, "Clinic B")
+        self.assertEqual(response['search_term'], "Clinic B")
+
     def test_show_form(self):
         self.setup_test_data()
         params = MultiDict({'form':constants.ADOLESCENT_CLIENT})
@@ -112,17 +128,6 @@ class TestClinicViews(IntegrationTestBase):
         with HTTMock(enketo_edit_url_mock):
             response = self.clinic_views.register_clinic()
         self.assertIsInstance(response, HTTPFound)
-
-    def test_filter_clinic(self):
-        self.setup_test_data()
-        self.request.ona_user = OnaUser.get(OnaUser.username == 'manager_a')
-        self.request.method = 'POST'
-        self.request.POST['st'] = "Clinic B"
-        self.request.POST['all_clinics'] = "true"
-
-        response = self.clinic_views.filter_clinics()
-        self.assertGreater(len(response['clinics']), 0)
-        self.assertIsNotNone(response['search_term'])
 
 
 class TestClinicViewsFunctional(FunctionalTestBase):
