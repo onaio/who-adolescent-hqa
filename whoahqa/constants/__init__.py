@@ -56,8 +56,8 @@ TWENTY = 'twenty'
 CHARACTERISTICS = [
     (ONE, _("Policies and procedures are in place that do not restrict the"
            " provision of health services on any terms")),
-    (TWO, _"Health-care providers treat all adolescent clients with equal"
-           " care and respect, regardless of status"),
+    (TWO, _("Health-care providers treat all adolescent clients with equal"
+           " care and respect, regardless of status")),
     (THREE, _("Support staff treat all adolescent clients with equal care"
             " and respect, regardless of status")),
     (FOUR, _("Policies and procedures are in place that ensure that health"
@@ -65,11 +65,11 @@ CHARACTERISTICS = [
     (FIVE, _("The point of health service delivery has convenient hours of"
            " operation")),
     (SIX, _("Adolescents are well-informed about the range of available"
-           " reproductive health services and how to obtain them"),
+           " reproductive health services and how to obtain them")),
     (SEVEN, _("Community members understand the benefits that adolescents"
             " will gain by obtaining the health services they need,"
             " and support their provision")),
-    (EIGHT, _"Some health services and health-related commodities are"
+    (EIGHT, _("Some health services and health-related commodities are"
             " provided to adolescents in the community by selected"
             " community members, outreach workers and adolescents"
             " themselves")),
