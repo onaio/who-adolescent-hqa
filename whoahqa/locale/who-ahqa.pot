@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-05 18:08+0300\n"
+"POT-Creation-Date: 2014-03-06 09:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,6 +47,106 @@ msgstr ""
 
 #: whoahqa/constants/__init__.py:32
 msgid "Observation Guide"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:57
+msgid ""
+"Policies and procedures are in place that do not restrict the provision of "
+"health services on any terms"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:61
+msgid ""
+"Support staff treat all adolescent clients with equal care and respect, "
+"regardless of status"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:63
+msgid ""
+"Policies and procedures are in place that ensure that health services are "
+"either free or affordable to adolescents"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:65
+msgid "The point of health service delivery has convenient hours of operation"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:67
+msgid ""
+"Adolescents are well-informed about the range of available reproductive "
+"health services and how to obtain them"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:69
+msgid ""
+"Community members understand the benefits that adolescents will gain by "
+"obtaining the health services they need, and support their provision"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:76
+msgid "Policies and procedures are in place that guarantee client confidentiality"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:78
+msgid "The point of health service delivery ensures privacy"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:79
+msgid "Health-care providers are non-judgemental, considerate and easy to relate to"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:81
+msgid ""
+"The point of health service delivery ensures consultations occur in a short "
+"waiting time. with or without an appointment, and (where necessary) with "
+"referral"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:84
+msgid "The point of health service delivery has an appealing and clean environment"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:86
+msgid ""
+"The point of health service delivery provides information and education "
+"through a variety of channels"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:88
+msgid ""
+"Adolescents are actively involved in designing, assessing and providing "
+"health services"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:90
+msgid ""
+"The required package of health care is provided to fulfil the needs of all "
+"adolescents either at the point of health service delivery or through "
+"referral linkages"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:93
+msgid ""
+"Health-care providers have the required competencies to work with adolescents"
+" and to provide them with the required health services"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:96
+msgid ""
+"Health-care providers use evidence-based protocols and guidelines to provide "
+"health services"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:98
+msgid ""
+"Health-care providers are able to dedicate sufficient time to work "
+"effectively with their adolescent clients"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:100
+msgid ""
+"The point of health service delivery has the required equipment, supplies and"
+" basic services necessary to deliver the required health services"
 msgstr ""
 
 #: whoahqa/templates/_clinics_score_summary.jinja2:10
