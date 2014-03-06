@@ -1,5 +1,5 @@
 from pyramid.i18n import TranslationStringFactory
-_ = TranslationStringFactory('whoahqa')
+_ = TranslationStringFactory('who-ahqa')
 
 CLINIC_IDENTIFIER = 'facility_info/clinic_id'
 CHARACTERISTIC = 'facility_info/HS_char'

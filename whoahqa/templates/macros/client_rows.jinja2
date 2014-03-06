@@ -8,7 +8,7 @@
                 {{ kwargs['output_prefix'] }}{{ score[client_tool.id][kwargs['score_property']]|int(0) }}
             </td>
           {% elif kwargs['client_property'] %}
-            <td>{{ client_tool[kwargs['client_property']] }}</td>
+            <td>{{ gettext(client_tool[kwargs['client_property']]) }}</td>
           {% else %}
             <td>{{ kwargs['default_value'] }}</td>
           {% endif %}
