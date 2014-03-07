@@ -7,8 +7,8 @@ from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from sqlalchemy import engine_from_config
 
 from whoahqa.constants import permissions as perms
-from utils import hashid
-from whoahqa.security import group_finder
+from utils import hashid, enketo
+from whoahqa.security import group_finder, pwd_context
 from whoahqa.models import (
     DBSession,
     Base,
@@ -51,8 +51,16 @@ def main(global_config, **settings):
     # add locale directory to project configuration
     config.add_translation_dirs('whoahqa:locale')
 
+    # configure enketo
+    enketo.configure(
+        settings['enketo_url'],
+        settings['enketo_api_token'])
+
     logging.config.fileConfig(
-        settings['logging.config'], disable_existing_loggers=False)
+        global_config['__file__'], disable_existing_loggers=False)
+
+    # configure password context
+    pwd_context.load_path(global_config['__file__'])
 
     includeme(config)
     

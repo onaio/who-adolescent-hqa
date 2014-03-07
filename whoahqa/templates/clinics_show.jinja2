@@ -3,7 +3,15 @@
 {% from 'macros/value_or_dash.jinja2' import value_or_dash %}
 {% from 'macros/client_rows.jinja2' import generate_client_rows %}
 {% block title %}{{ clinic.name }} {% endblock %}
-{% block page_title %}{{ self.title() }} <span class="bold">{{ clinic.code }}</span> {% endblock %}
+{% block page_title %}{{ self.title() }} <span class="bold">({{ clinic.code }})</span> {% endblock %}
+{% block breadcrumbs %}
+  <li>
+    <a href="{{ request.route_url('clinics',traverse=('')) }}">Clinics</a>
+    <i class="icon-angle-right"></i>
+  </li>
+  <li>{{ self.page_title() }}</li>
+  <li><a href="#"> </a></li>
+{% endblock %}
 {% block content %}
   <div class="table-responsive">
     <div class="row">

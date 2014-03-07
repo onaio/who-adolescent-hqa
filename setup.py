@@ -30,7 +30,8 @@ requires = [
     'pyramid_exclog',
     'pyenketo',
     'Babel',
-    'lingua'
+    'lingua',
+    'passlib'
 ]
 
 extractors = {
@@ -64,6 +65,7 @@ setup(name='who-ahqa',
       main = whoahqa:main
       [console_scripts]
       initialize_who-ahqa_db = whoahqa.scripts.initializedb:main
+      create_whoahqa_user = whoahqa.scripts.create_user:main
       """,
       message_extractors=extractors
       )
