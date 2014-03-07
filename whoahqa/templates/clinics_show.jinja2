@@ -13,6 +13,7 @@
   <li><a href="#"> </a></li>
 {% endblock %}
 {% block content %}
+{% include 'clinic_tool_table.jinja2' %}
   <div class="table-responsive">
     <div class="row">
       <div class="pull-left char-header">Characteristics</div>
@@ -78,9 +79,6 @@
                         {% for response in range(pending_responses) %}
                           <i class="icon-grey icon-circle"></i>
                         {% endfor %}
-                        <a href="{{ request.route_url('clinics', traverse=('show_form'), _query=(('form', client_tool.id),)) }}">
-                          <i class="pull-right icon-blue icon-plus-sign"></i>
-                        </a>
                         </td>
                     </tr>
                 {% endif %}
