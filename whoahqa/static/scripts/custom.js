@@ -31,6 +31,8 @@ var Custom = function () {
  		                    "bPaginate": false,
  		                    "bInfo":false,
                             "bFilter": false,
+                            "bSortable":false,
+                            "aaSorting": []
 
  	                        } );
  	        new FixedColumns( oTable, {
