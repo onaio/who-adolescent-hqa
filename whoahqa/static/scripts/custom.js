@@ -22,9 +22,9 @@ var Custom = function () {
         });
     };
 
-    var enablefloatThead = function() {
-        $(document).ready(function() {
-            var oTable = $('#score_summary').dataTable( {
+    var enableDatatables = function() {
+		$(document).ready(function() {
+            var oTable = $('#score_summary_compare').dataTable( {
  	                        "sScrollX": "100%",
                             "sScrollY": "300px",
  		                    "bScrollCollapse": true,
@@ -33,18 +33,18 @@ var Custom = function () {
                             "bFilter": false,
                             "bSortable":false,
                             "aaSorting": []
-
  	                        } );
  	        new FixedColumns( oTable, {
  		            "iLeftColumns": 2,
-		            "iLeftWidth": 500
+		            "iLeftWidth": 300
  	        } );
-		} );
-    };
 
+            $('.score').tooltip()
+		} )
+    };
     return {
         addCheckAllListener: addCheckAllListener,
-        enablefloatThead: enablefloatThead
+        enableDatatables: enableDatatables
     }
 }();
 
