@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-06 09:55+0300\n"
+"POT-Creation-Date: 2014-03-07 13:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,6 +55,12 @@ msgid ""
 "health services on any terms"
 msgstr ""
 
+#: whoahqa/constants/__init__.py:59
+msgid ""
+"Health-care providers treat all adolescent clients with equal care and "
+"respect, regardless of status"
+msgstr ""
+
 #: whoahqa/constants/__init__.py:61
 msgid ""
 "Support staff treat all adolescent clients with equal care and respect, "
@@ -81,6 +87,13 @@ msgstr ""
 msgid ""
 "Community members understand the benefits that adolescents will gain by "
 "obtaining the health services they need, and support their provision"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:72
+msgid ""
+"Some health services and health-related commodities are provided to "
+"adolescents in the community by selected community members, outreach workers "
+"and adolescents themselves"
 msgstr ""
 
 #: whoahqa/constants/__init__.py:76
@@ -150,16 +163,17 @@ msgid ""
 msgstr ""
 
 #: whoahqa/templates/_clinics_score_summary.jinja2:10
-#: whoahqa/templates/clinics_show.jinja2:10
+#: whoahqa/templates/clinics_show.jinja2:18
 msgid "Characteristics"
 msgstr ""
 
 #: whoahqa/templates/_clinics_score_summary.jinja2:17
-msgid "No. "
+#: whoahqa/templates/clinics_show.jinja2:27
+msgid "No."
 msgstr ""
 
 #: whoahqa/templates/_clinics_score_summary.jinja2:21
-msgid "Description "
+msgid "Description"
 msgstr ""
 
 #: whoahqa/templates/_clinics_table.jinja2:10
@@ -174,28 +188,56 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
+#: whoahqa/templates/base.jinja2:45
+msgid "Quality Assessment Tool: Assessing Health Services for Adolescent Clients"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:92
+msgid "Clinics"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:100
+msgid "All Clinics"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:106
+msgid "My Clinics"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:111
+msgid "Unassigned Clinics"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:156
+msgid "Home"
+msgstr ""
+
 #: whoahqa/templates/clinics_show.jinja2:19
-msgid "No."
+msgid "Relative Score"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:20
-msgid "Description"
+#: whoahqa/templates/clinics_show.jinja2:28
+msgid "Description "
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:21
+#: whoahqa/templates/clinics_show.jinja2:29
 msgid "Category"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:22
+#: whoahqa/templates/clinics_show.jinja2:30
 msgid "Min - Max"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:23
+#: whoahqa/templates/clinics_show.jinja2:31
 msgid "# Respondents"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:24
+#: whoahqa/templates/clinics_show.jinja2:32
 msgid "Score"
+msgstr ""
+
+#: whoahqa/templates/clinics_unassigned.jinja2:15
+msgid "Assign Selected to Myself"
 msgstr ""
 
 #: whoahqa/templates/login.jinja2:16
@@ -203,34 +245,34 @@ msgid "Login | WHO Adolescent Health Quality Assessment"
 msgstr ""
 
 #: whoahqa/templates/login.jinja2:67
-msgid "Login to your account "
+msgid "Login to your account"
 msgstr ""
 
 #: whoahqa/templates/login.jinja2:72
-msgid "  Login with your Ona Account "
+msgid "Login with your Ona Account"
 msgstr ""
 
 #: whoahqa/templates/login.jinja2:77
-msgid "Don't have an account yet ?&nbsp; "
+msgid "Don't have an account yet?"
 msgstr ""
 
 #: whoahqa/templates/login.jinja2:79
-msgid "Create an account "
+msgid "Create an account"
 msgstr ""
 
-#: whoahqa/templates/user_clinics.jinja2:17
+#: whoahqa/templates/user_clinics.jinja2:20
 msgid "Register a Clinic"
 msgstr ""
 
-#: whoahqa/templates/user_clinics.jinja2:22
+#: whoahqa/templates/user_clinics.jinja2:27
 msgid "Code:"
 msgstr ""
 
-#: whoahqa/templates/user_clinics.jinja2:27
-msgid "<b>Assign a new clinic to myself</b>"
+#: whoahqa/templates/user_clinics.jinja2:33
+msgid "Assign a new clinic to myself"
 msgstr ""
 
-#: whoahqa/templates/user_clinics.jinja2:35
-msgid "Score Summary "
+#: whoahqa/templates/user_clinics.jinja2:42
+msgid "Score Summary"
 msgstr ""
 
