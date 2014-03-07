@@ -90,36 +90,29 @@
 /*
 *Scores summary clinic table
 */
-.score-summary-table2 {
-    margin-left:52px;
-    width:550px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-left:0px;
-}
-
-.score-summary-table2 .table{
-    table-layout:fixed;
-    border-left: none;
-}
-
-.score-summary-table2 .table > tbody > tr > td{
+.score-summary-table .table > tbody > tr > td{
     border: none;
+}
+
+.score-summary-table .score_summary_header_2 > th{
+    border:none;
+}
+
+.score-summary-table .table{
+    margin-bottom:-0px;
 }
 
 .ssdata{
     height:70px;
 }
 
-.score-summary-table1 .table .score_summary_header_2,
-.score-summary-table2 .table .score_summary_header_2
+.score-summary-table .table .score_summary_header_2
 {
     background-color:#1175cb;
     color:#ffffff;
 }
 
-.score-summary-table1 .table .score_summary_header_1,
-.score-summary-table2 .table .score_summary_header_1
+.score-summary-table .table .score_summary_header_1
 {
     font-size: 18px;
     color: #1175cb;
@@ -133,32 +126,22 @@
     background: -ms-linear-gradient(left, #cde3f4 0%,#ffffff 97%); /* IE10+ */
     background: linear-gradient(to right, #cde3f4 0%,#ffffff 97%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3c1ea', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
-
 }
-.score-summary-table2 .score_summary_header_2 > th{
+
+.score-summary-table .table > tbody > tr > td{
     border:none;
 }
 
-.score-summary-table1 .table > tbody > tr > td{
-    border:none;
-}
-
-.score-summary-table1 .table > tbody > tr > td,
-.score-summary-table1 .table > thead > tr > th
+.score-summary-table .table > tbody > tr > td.lasttd,
+.score-summary-table .table > thead > tr > th.lasttd
 {
     border-right:2px solid #cde3f4;
 }
 
-.score-summary-table2 .container{
-    padding-left:2px;
-}
-
-.fixed{
-  top:0;
-  position:fixed;
-  width:auto;
-  display:none;
-  border:none;
+.td-scores{
+    padding-top: 20px;
+    padding-left: 20px;
+    width:94px;
 }
 
 .clinic-button{

@@ -1,9 +1,9 @@
 {% from 'macros/score_class.jinja2' import score_class %}
 <div id="sample_1_wrapper" class="" role="grid">
     <div class="row">
-      <div class="score-summary-table1">
+      <div class="score-summary-table">
         <table
-            class="table characteristics table-hover"
+            class="table table-hover"
             id="score_summary" aria-describedby="sample_1_info">
           <thead>
           <tr role="row" class="score_summary_header_1">
@@ -11,18 +11,17 @@
                 <th colspan={{ clinics|length }}> Scores</th>
           </tr>
           <tr role="row" class="score_summary_header_2">
-            <th class="sorting ssdat" role="columnheader" tabindex="0"
+            <th class="sorting lasttd" role="columnheader" tabindex="0"
                 aria-controls="sample_1" rowspan="1" colspan="1"
-                aria-label="No."
-                style="width: 30px;">
+                aria-label="No.">
                 No.
             </th>
-            <th class="sorting_disabled ssdat" role="columneader" rowspan="1"
-                colspan="1" aria-label="Description" style="width: 46px;">
+            <th class="sorting_disabled lasttd" role="columneader" rowspan="1"
+                colspan="1" aria-label="Description">
                 Description
             </th>
              {% for clinic in clinics %}
-                <th class="sorting_disabled ssdat" role="columnheader" rowspan="1"
+                <th class="sorting_disabled" role="columnheader" rowspan="1"
                 colspan="1" aria-label="Clinic Name">
                 <div style="width:84px">
                     {{ clinic.name }}
@@ -34,15 +33,17 @@
           <tbody role="alert" aria-live="polite" aria-relevant="all">
           {% for characteristic in characteristics %}
             <tr class="gradeX odd ssdata">
-              <td class="">
-                  {{loop.index }}
+              <td class="lasttd">
+                  <div style="width:51px">
+                    {{loop.index }}
+                  </div>
               </td>
               </td>
-              <td class=" " style=""><div style="width:430px;">{{ characteristic.description }}</div></td>
+              <td class="lasttd" style=""><div style="width:379px;">{{ characteristic.description }}</div></td>
               {% for clinic in clinics %}
                 <td>
-                    <div style="width:90px">
-                    {{score_class(clinic_scores[clinic.id][characteristic.id]['total_percentage'], score_limits)}}
+                    <div class="td-scores">
+                        {{score_class(clinic_scores[clinic.id][characteristic.id]['total_percentage'], score_limits)}}
                     </div>
                 </td>
               {% endfor %}
