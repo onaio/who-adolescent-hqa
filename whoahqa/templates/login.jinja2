@@ -13,7 +13,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
 <!-- BEGIN HEAD -->
 <head>
   <meta charset="utf-8"/>
-  <title>{% trans %}Login | WHO Adolescent Health Quality Assessment{% endtrans %}</title>
+  <title>{{ gettext('Login | WHO Adolescent Health Quality Assessment') }}</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <meta content="" name="description"/>
@@ -64,19 +64,19 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
 <!-- BEGIN LOGIN -->
 <div class="content">
   <!-- BEGIN LOGIN FORM -->
-  <h3 class="form-title">{% trans %}Login to your account {% endtrans %}</h3>
+  <h3 class="form-title">{{ gettext('Login to your account') }}</h3>
   {% include "_alerts.jinja2" %}
   <div class="form-actions">
 
     <a class="btn btn-info" href="{{ request.route_url('auth', action='authorize') }}">
-    {% trans %}  Login with your Ona Account {% endtrans %}
+    {{ gettext('Login with your Ona Account') }}
     </a>
   </div>
   <div class="create-account">
     <p>
-      {% trans %}Don't have an account yet ?&nbsp; {% endtrans %}
+      {{ gettext("Don't have an account yet?") }}
       <a href="https://ona.io/accounts/register/" id="register-btn">
-        {% trans %}Create an account {% endtrans %}
+        {{ gettext('Create an account') }}
       </a>
     </p>
   </div>

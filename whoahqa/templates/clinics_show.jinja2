@@ -7,8 +7,8 @@
 {% block content %}
   <div class="table-responsive">
     <div class="row">
-      <div class="pull-left char-header">{% trans %}Characteristics{% endtrans %}</div>
-      <div class="pull-right score-header">Relative Score</div>
+      <div class="pull-left char-header">{{ gettext('Characteristics') }}</div>
+      <div class="pull-right score-header">{{ gettext('Relative Score') }}</div>
     </div>
     <table class="table table-bordered scores-table">
       {% for characteristic in characteristics %}
@@ -16,12 +16,12 @@
         <thead>
         <tr>
           <th class="char-defn"></th>
-          <th class="char-no center-align">{% trans %}No.{% endtrans %}</th>
+          <th class="char-no center-align">{{ gettext('No.') }}</th>
           <th class="char-desc">{{ gettext('Description ') }}</th>
-          <th class="char-cat">{% trans %}Category{% endtrans %}</th>
-          <th class="min-max">{% trans %}Min - Max{% endtrans %}</th>
-          <th class="char-resp">{% trans %}# Respondents{% endtrans %}</th>
-          <th class="char-score">{% trans %}Score{% endtrans %}</th>
+          <th class="char-cat">{{ gettext('Category') }}</th>
+          <th class="min-max">{{ gettext('Min - Max') }}</th>
+          <th class="char-resp">{{ gettext('# Respondents') }}</th>
+          <th class="char-score">{{ gettext('Score') }}</th>
           <th class="char-rel-score"></th>
         </tr>
         </thead>

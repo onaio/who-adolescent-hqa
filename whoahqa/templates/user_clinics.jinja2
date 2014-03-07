@@ -14,17 +14,17 @@
             <div class="table-toolbar">
                 <div class="btn-group">
                     <a id="sample_editable_1_new" class="btn btn-primary" href="{{ request.route_url('clinics',  traverse=('register')) }}">
-                        {% trans %}Register a Clinic{% endtrans %}<i class="icon-plus"></i>
+                        {{ gettext('Register a Clinic') }}<i class="icon-plus"></i>
                     </a>
                 </div>
             </div>
             {% for clinic in clinics %}
-                <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-lg clinic-button">{{ clinic.name }} &nbsp;&nbsp; {% trans %}Code:{% endtrans %} {{ clinic.code }}</a>
+                <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-lg clinic-button">{{ clinic.name }} &nbsp;&nbsp; {{ gettext('Code:') }} {{ clinic.code }}</a>
             {% endfor %}
             <br>
             <br>
             <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}"><span class="glyphicon glyphicon-home"></span> 
-              {% trans %}<b>Assign a new clinic to myself</b>{% endtrans %}
+              {{ gettext('Assign a new clinic to myself') }}
             </a>
 
         </div>
@@ -32,7 +32,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
-                <span class="glyphicon glyphicon-globe"></span> {% trans %}Score Summary {% endtrans %}
+                <span class="glyphicon glyphicon-globe"></span> {{ gettext('Score Summary') }}
             </h3>
         </div>
         <div class="panel-body">
