@@ -11,7 +11,7 @@ from whoahqa.tests import (IntegrationTestBase, FunctionalTestBase,)
 
 
 @urlmatch(netloc=r'(.*\.)?test.enketo\.org$', path='/api_v1/instance')
-def get_edit_url_mock(url, request):
+def get_edit_url_mock(url, request):  # pragma: no cover
     return {
         'status_code': 201,
         'content': '{"code": "201", "edit_url": "https://cz2pj-0.enketo.org/webform/edit?instance_id=2"}'

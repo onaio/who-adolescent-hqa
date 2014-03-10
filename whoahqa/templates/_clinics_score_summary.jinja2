@@ -7,18 +7,20 @@
             id="score_summary" aria-describedby="sample_1_info">
           <thead>
           <tr role="row" class="score_summary_header_1">
-                <th colspan=2> Characteristics</th>
-                <th colspan={{ clinics|length }}> Scores</th>
+                <th colspan=2> {{ gettext('Characteristics') }}</th>
+                <th colspan={{ clinics|length }}> gettext('Scores')</th>
           </tr>
           <tr role="row" class="score_summary_header_2">
             <th class="sorting lasttd" role="columnheader" tabindex="0"
                 aria-controls="sample_1" rowspan="1" colspan="1"
-                aria-label="No.">
-                No.
+
+                aria-label="No."
+                style="width: 30px;">
+                {{ gettext('No.') }}
             </th>
-            <th class="sorting_disabled lasttd" role="columneader" rowspan="1"
-                colspan="1" aria-label="Description">
-                Description
+            <th class="sorting_disabled ssdata" role="columneader" rowspan="1"
+                colspan="1" aria-label="Description" style="width: 46px;">
+                {{ gettext('Description') }}
             </th>
              {% for clinic in clinics %}
                 <th class="sorting_disabled" role="columnheader" rowspan="1"

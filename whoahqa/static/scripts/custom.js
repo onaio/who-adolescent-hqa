@@ -42,9 +42,26 @@ var Custom = function () {
             $('.score').tooltip()
 		} )
     };
+    ENTER_KEY_CODE = 13
+    var filterClinicTable = function() {
+        $("#search_term").keypress(function(e) {
+            if (e.which == ENTER_KEY_CODE) {
+                search_term = $("#search_term").val();
+                filter_url = "?search="+search_term
+                $.ajax({
+                    type: "GET",
+                    url: filter_url
+                })
+                .done(function( msg ) {
+                    $(".clinics_table").html(msg);
+                });
+            }
+        });
+    }
     return {
         addCheckAllListener: addCheckAllListener,
-        enableDatatables: enableDatatables
+        enableDatatables: enableDatatables,
+        filterClinicTable:filterClinicTable
     }
 }();
 

@@ -48,6 +48,9 @@ def main(global_config, **settings):
     # setup the hashid salt
     hashid._salt = settings['hashid_salt']
 
+    # add locale directory to project configuration
+    config.add_translation_dirs('whoahqa:locale')
+
     # configure enketo
     enketo.configure(
         settings['enketo_url'],
@@ -60,6 +63,7 @@ def main(global_config, **settings):
     pwd_context.load_path(global_config['__file__'])
 
     includeme(config)
+    
     return config.make_wsgi_app()
 
 
