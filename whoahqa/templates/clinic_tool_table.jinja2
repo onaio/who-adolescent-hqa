@@ -1,30 +1,40 @@
-<div class="table-responsive">
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th class="col-md-6">{{ gettext('Data Collection Instrument') }}</th>
-                <th class="col-md-4">{{ gettext('Recommended Sample frame')}}</th>
-                <th class="col-md-2">{{ gettext('Survey Form') }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for client_tool in client_tools %}
-                <tr>
-                    <td>
-                        {{ gettext(client_tool.name) }}
-                    </td>
-                    <td>
-                        {% for response in range(recommended_sample_frame[client_tool.id]) %}
-                          <i class="icon-grey icon-circle"></i>
-                        {% endfor %}
-                    </td>
-                    <td>
-                        <a href="{{ request.route_url('clinics', traverse=('show_form'), _query=(('form', client_tool.id),)) }}">
-                            <i class="pull-left icon-blue icon-plus-sign"></i>
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="portlet">
+    <div class="portlet-title">
+        {{ gettext('Data Collection Instruments') }}
+        <div class="tools">
+            <a class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-md-6">{{ gettext('Data Collection Instrument') }}</th>
+                        <th class="col-md-4">{{ gettext('Recommended Sample frame')}}</th>
+                        <th class="col-md-2">{{ gettext('Survey Form') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client_tool in client_tools %}
+                        <tr>
+                            <td>
+                                {{ gettext(client_tool.name) }}
+                            </td>
+                            <td>
+                                {% for response in range(recommended_sample_frame[client_tool.id]) %}
+                                  <i class="icon-grey icon-circle"></i>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a href="{{ request.route_url('clinics', traverse=('show_form'), _query=(('form', client_tool.id),)) }}">
+                                    <i class="pull-left icon-blue icon-plus-sign"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
