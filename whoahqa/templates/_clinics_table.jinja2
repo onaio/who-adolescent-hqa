@@ -37,4 +37,9 @@
       </tbody>
     </table>
   </div>
+  <div>
+   {%if clinics|length == 0 %}
+    {{search_term}} Not found.
+  {% endif%}
+  </div>
 </div>
