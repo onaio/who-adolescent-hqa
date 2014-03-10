@@ -1,5 +1,4 @@
-from pyramid.i18n import TranslationStringFactory
-_ = TranslationStringFactory('who-ahqa')
+from whoahqa.utils import translation_string_factory as _
 
 CLINIC_IDENTIFIER = 'facility_info/clinic_id'
 CHARACTERISTIC = 'facility_info/HS_char'

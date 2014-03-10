@@ -1,7 +1,10 @@
 from hashids import Hashids
 from pyenketo import Enketo
 
+from pyramid.i18n import TranslationStringFactory
 
+
+translation_string_factory = TranslationStringFactory('who-ahqa')
 hashid = Hashids(min_length=4, alphabet='abcdefghijklmnpqrstuvwxyz123456789')
 enketo = Enketo()
 
