@@ -277,7 +277,7 @@ td.client-tool-table > table.respondents > tbody > tr > td > i.icon-blue.icon-pl
     color: #1175cb;
 }
 
-td.client-tool-table > table.respondents > tbody > tr > td > i.icon-grey {
+i.icon-grey {
     color: #ccc;
 }
 
