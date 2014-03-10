@@ -122,8 +122,9 @@ class SubmissionFactory(BaseModelFactory):
 class ReportingPeriodFactory(BaseModelFactory):
     def __getitem__(self, item):
         try:
-            period = ReportingPeriod.get(ReportingPeriod.slug == item)
-        except NoResultFound:
+            period_id = int(item)
+            period = ReportingPeriod.get(ReportingPeriod.id == period_id)
+        except (ValueError, NoResultFound):
             raise KeyError
         else:
             period.__parent__ = self
