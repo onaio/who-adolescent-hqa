@@ -10,13 +10,19 @@
         <tbody>
             {% for client_tool in client_tools %}
                 <tr>
-                  <td>{{ gettext(client_tool.name) }}</td>
-                  <td>{{ recommended_sample_frame[client_tool.id]}}</td>
-                  <td>
-                    <a href="{{ request.route_url('clinics', traverse=('show_form'), _query=(('form', client_tool.id),)) }}">
-                      <i class="pull-left icon-blue icon-plus-sign"></i>
-                    </a>
-                  </td>
+                    <td>
+                        {{ gettext(client_tool.name) }}
+                    </td>
+                    <td>
+                        {% for response in range(recommended_sample_frame[client_tool.id]) %}
+                          <i class="icon-grey icon-circle"></i>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{ request.route_url('clinics', traverse=('show_form'), _query=(('form', client_tool.id),)) }}">
+                            <i class="pull-left icon-blue icon-plus-sign"></i>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
