@@ -100,6 +100,11 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
               <ul class="sub-menu">
                 {% if request.can_list_clinics %}
                   <li>
+                    <a href="{{ request.route_url('periods', traverse=()) }}">
+                      {{ gettext('Reporting Periods') }}
+                    </a>
+                  </li>
+                  <li>
                      <a href="{{ request.route_url('clinics', traverse=()) }}">
                         {{ gettext('All Clinics') }}
                      </a>
