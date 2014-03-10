@@ -45,7 +45,7 @@ class ClinicViews(object):
 
         # otherwise, list all clinics
         # TODO: paginate
-
+        # TODO: change renderer only if its an xhr request
         search_term = self.request.GET.get('search')
         if search_term is not None:
             clinics = Clinic.filter_clinics(search_term, True)
