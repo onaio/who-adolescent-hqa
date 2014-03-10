@@ -118,6 +118,18 @@ class SubmissionFactory(BaseModelFactory):
         raise NotImplementedError
 
 
+class ReportingPeriodFactory(BaseModelFactory):
+    def __getitem__(self, item):
+        try:
+            period = ReportingPeriod.get(ReportingPeriod.slug == item)
+        except NoResultFound:
+            raise KeyError
+        else:
+            period.__parent__ = self
+            period.__name__ = item
+            return period
+
+
 user_clinics = Table(
     'user_clinics',
     Base.metadata,
@@ -496,3 +508,12 @@ class Submission(Base):
             submission, cls.HANDLER_TO_XFORMS_MAPPING)
         handler_class(submission).handle_submission()
         return submission
+
+
+class ReportingPeriod(Base):
+    __tablename__ = 'reporting_periods'
+    id = Column(Integer, primary_key=True)
+    title = Column(String(100), nullable=False)
+    slug = Column(String(100), nullable=False, unique=True)
+    start_date = Column(DateTime(), nullable=False)
+    end_date = Column(DateTime(), nullable=False)
