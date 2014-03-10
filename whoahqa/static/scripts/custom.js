@@ -61,7 +61,7 @@ var Custom = function () {
     }
     return {
         addCheckAllListener: addCheckAllListener,
-        enablefloatThead: enablefloatThead,
+        enableDatatables: enableDatatables,
         filterClinicTable:filterClinicTable
     }
 }();
