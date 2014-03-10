@@ -1,0 +1,78 @@
+{% extends "base.jinja2" %}
+{% block page_styles %}
+  <link rel="stylesheet" type="text/css" href="{{ request.static_url('whoahqa:static/plugins/bootstrap-datepicker/css/datepicker.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ request.static_url('whoahqa:static/plugins/bootstrap-timepicker/compiled/timepicker.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ request.static_url('whoahqa:static/plugins/bootstrap-colorpicker/css/colorpicker.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ request.static_url('whoahqa:static/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ request.static_url('whoahqa:static/plugins/bootstrap-datetimepicker/css/datetimepicker.css') }}" />
+{% endblock %}
+{% block title %}{{ gettext("Create Reporting Period") }}{% endblock %}
+{% block page_title %} {{ self.title() }} {% endblock %}
+{% block breadcrumbs %}
+  <li>
+    <a href="{{ request.route_url('periods', traverse=()) }}">{{ gettext("Reporting Periods") }} </a>
+    <i class="icon-angle-right"></i>
+  </li>
+  <li>{{ self.page_title() }}</li>
+  <li><a href="#"> </a></li>
+{% endblock %}
+{% block content %}
+  <div class="portlet ">
+    <div class="portlet-title">
+      <div class="caption">
+        <i class="icon-reorder"></i> {{ self.title() }}
+      </div>
+    </div>
+    <div class="portlet-body form">
+      <form class="form-horizontal" method="post">
+        <div class="form-body">
+          {%  set field = form['title'] %}
+          <div class="form-group {% if field.error %}has-error{% endif %}">
+            <label class="col-md-3 control-label">{{ gettext(field.title) }}</label>
+
+            <div class="col-md-4">
+              {{ field.render() | safe}}
+              <span class="help-block">{{ gettext(field.description) }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-body">
+          <div class="form-group {% if form['start_date'].error or form['end_date'].error %}has-error{% endif %}">
+            {%  set field = form['title'] %}
+            <label class="col-md-3 control-label">{{ gettext(form['start_date'].title) }}</label>
+
+            <div class="col-md-6">
+              <div class="input-group input-large date-picker input-daterange"
+                   data-date="10/11/2012" data-date-format="yyyy-mm-dd">
+                {{ form['start_date'].render() | safe}}
+                <span class="input-group-addon">to</span>
+                {{ form['end_date'].render() | safe}}
+              </div>
+              <!-- /input-group -->
+              <span class="help-block">Select date range</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions fluid">
+          <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a class="btn btn-default" href="{{ request.route_url('periods', traverse=()) }}">Cancel</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+{% block page_scripts %}
+  <script type="text/javascript" src="{{ request.static_url('whoahqa:static/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+  <script type="text/javascript" src="{{ request.static_url('whoahqa:static/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+  <script type="text/javascript" src="{{ request.static_url('whoahqa:static/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
+{% endblock %}
+{% block jquery_ready %}
+  {{ super() }}
+  $('.date-picker').datepicker({
+    rtl: App.isRTL(),
+    autoclose: true
+  });
+  $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
+{% endblock %}
