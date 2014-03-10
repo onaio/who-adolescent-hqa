@@ -14,6 +14,7 @@ from sqlalchemy import (
     String,
     Table,
     DateTime,
+    Date,
     func,
 )
 from sqlalchemy.dialects.postgresql import JSON
@@ -515,5 +516,5 @@ class ReportingPeriod(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(100), nullable=False)
     slug = Column(String(100), nullable=False, unique=True)
-    start_date = Column(DateTime(), nullable=False)
-    end_date = Column(DateTime(), nullable=False)
+    start_date = Column(Date(), nullable=False)
+    end_date = Column(Date(), nullable=False)
