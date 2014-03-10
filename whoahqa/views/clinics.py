@@ -129,3 +129,41 @@ class ClinicViews(object):
         )
 
         return HTTPFound(location=edit_url)
+
+    @view_config(name='characteristics',
+                 request_method='GET',
+                 context=Clinic,
+                 permission=perms.SHOW,
+                 renderer='clinics_characteristics_show.jinja2')
+    def characteristics(self):
+        clinic = self.request.context
+
+        # if clinic is not assigned, throw a bad request
+        if not clinic.is_assigned:
+            raise HTTPBadRequest("The clinic is not yet assigned")
+
+        scores = clinic.get_scores()
+        return {
+            'clinic': clinic,
+            'client_tools': tuple_to_dict_list(
+                ("id", "name"), constants.CLIENT_TOOLS),
+            'characteristics': tuple_to_dict_list(
+                ("id", "description"), constants.CHARACTERISTICS),
+            'scores': scores,
+            'characteristic_types': constants.CHARACTERISTIC_TYPES,
+            'characteristic_type_mapping': constants.CHARACTERISTIC_TYPE_MAPPING
+        }
+
+    @view_config(name='select_characteristics', request_method='POST', check_csrf=False)
+    def select_characteristics(self):
+        user = self.request.ona_user.user
+
+        #get_clinic_id
+        clinic_id = self.request.POST.get('clinic_id')
+        # get the list of selected characteristics
+        selected_characteristic_ids = self.request.POST.getall('characteristic_id')
+
+         # TODO: persist to database
+
+        return HTTPFound(
+            self.request.route_url('clinics', traverse=clinic_id))

@@ -22,10 +22,20 @@
                 </div>
             </div>
             {% for clinic in clinics %}
-                <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-sm">
+                <div class="btn-group clinic-button">
+                  <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-sm">
                     <span class="text-left" id="clinic-name">{{ clinic.name }}</span>
                     <span class="text-right" id="clinic-code">Code: {{ clinic.code }}</span>
-                </a>
+                  </a>
+                  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ request.route_url('clinics', traverse=(clinic.id, 'characteristics')) }}">Select Characteristics </a></li>
+                    <li><a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}">View Report</a></li>
+                  </ul>
+                </div>
             {% endfor %}
             <div id="assign-new">
                 <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
