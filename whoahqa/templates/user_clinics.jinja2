@@ -25,7 +25,7 @@
                 <div class="btn-group clinic-button">
                   <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-sm">
                     <span class="text-left" id="clinic-name">{{ clinic.name }}</span>
-                    <span class="text-right" id="clinic-code">gettext('Code:') {{ clinic.code }}</span>
+                    <span class="text-right" id="clinic-code">{{ gettext('Code:') }} {{ clinic.code }}</span>
                   </a>
                   <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
