@@ -32,7 +32,8 @@ class ClinicViews(object):
 
     @view_config(name='',
                  context=ClinicFactory,
-                 renderer='clinics_list.jinja2')
+                 renderer='clinics_list.jinja2',
+                 request_method='GET')
     def list(self):
         # if the user doesnt have permissions to list all clinics,
         #  redirect to his own clinics
@@ -44,18 +45,37 @@ class ClinicViews(object):
 
         # otherwise, list all clinics
         # TODO: paginate
+        # TODO: change renderer only if its an xhr request
+        search_term = self.request.GET.get('search')
+        if search_term is not None:
+            clinics = Clinic.filter_clinics(search_term, True)
+            self.request.override_renderer = '_clinics_table.jinja2'
+        else:
+            clinics = Clinic.all()
+
         return {
             'can_list_clinics': True,
-            'clinics': Clinic.all()
+            'clinics': clinics,
+            'search_term': search_term
         }
 
     @view_config(name='unassigned',
                  context=ClinicFactory,
-                 renderer='clinics_unassigned.jinja2')
+                 renderer='clinics_unassigned.jinja2',
+                 request_method='GET'
+                 )
     def unassigned(self):
-        clinics = Clinic.get_unassigned()
+
+        search_term = self.request.GET.get('search')
+        if search_term is not None:
+            clinics = Clinic.filter_clinics(search_term, False)
+            self.request.override_renderer = '_clinics_table.jinja2'
+        else:
+            clinics = Clinic.get_unassigned()
+
         return {
-            'clinics': clinics
+            'clinics': clinics,
+            'search_term': search_term
         }
 
     @view_config(name='assign', request_method='POST', check_csrf=False)
@@ -77,7 +97,6 @@ class ClinicViews(object):
                  renderer='clinics_show.jinja2')
     def show(self):
         clinic = self.request.context
-
         # if clinic is not assigned, throw a bad request
         if not clinic.is_assigned:
             raise HTTPBadRequest("The clinic is not yet assigned")
