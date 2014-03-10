@@ -14,7 +14,8 @@ from whoahqa.models import (
     Base,
     UserFactory,
     ClinicFactory,
-    SubmissionFactory
+    SubmissionFactory,
+    ReportingPeriodFactory,
 )
 from whoahqa.views import (
     get_request_user,
@@ -79,4 +80,6 @@ def includeme(config):
                      factory=ClinicFactory)
     config.add_route('submissions', '/submissions/*traverse',
                      factory=SubmissionFactory)
+    config.add_route('periods', '/reporting-periods/*traverse',
+                     factory=ReportingPeriodFactory)
     config.scan()

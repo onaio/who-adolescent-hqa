@@ -14,6 +14,7 @@ from sqlalchemy import (
     String,
     Table,
     DateTime,
+    Date,
     func,
 )
 from sqlalchemy.dialects.postgresql import JSON
@@ -116,6 +117,19 @@ class SubmissionFactory(BaseModelFactory):
 
     def __getitem__(self, item):  # pragma: no cover
         raise NotImplementedError
+
+
+class ReportingPeriodFactory(BaseModelFactory):
+    def __getitem__(self, item):
+        try:
+            period_id = int(item)
+            period = ReportingPeriod.get(ReportingPeriod.id == period_id)
+        except (ValueError, NoResultFound):
+            raise KeyError
+        else:
+            period.__parent__ = self
+            period.__name__ = item
+            return period
 
 
 user_clinics = Table(
@@ -515,3 +529,11 @@ class Submission(Base):
             submission, cls.HANDLER_TO_XFORMS_MAPPING)
         handler_class(submission).handle_submission()
         return submission
+
+
+class ReportingPeriod(Base):
+    __tablename__ = 'reporting_periods'
+    id = Column(Integer, primary_key=True)
+    title = Column(String(100), nullable=False)
+    start_date = Column(Date(), nullable=False)
+    end_date = Column(Date(), nullable=False)
