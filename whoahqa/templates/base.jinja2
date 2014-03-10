@@ -23,6 +23,10 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    <link href="{{ request.static_url('whoahqa:static/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
    <link href="{{ request.static_url('whoahqa:static/plugins/uniform/css/uniform.default.css') }}" rel="stylesheet" type="text/css"/>
    <!-- END GLOBAL MANDATORY STYLES -->
+   <!-- BEGIN PAGE LEVEL STYLES -->
+   {% block page_styles %}
+   {% endblock %}
+   <!-- END PAGE LEVEL STYLES -->
    <!-- BEGIN THEME STYLES --> 
    <link href="{{ request.static_url('whoahqa:static/css/style-conquer.css') }}" rel="stylesheet" type="text/css"/>
    <link href="{{ request.static_url('whoahqa:static/css/style.css') }}" rel="stylesheet" type="text/css"/>
