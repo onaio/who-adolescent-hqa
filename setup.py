@@ -31,7 +31,9 @@ requires = [
     'pyenketo',
     'Babel',
     'lingua',
-    'passlib'
+    'passlib',
+    'colander',
+    'deform'
 ]
 
 extractors = {
