@@ -7,9 +7,9 @@
           <th>
             <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes">
           </th>
-          <th>Name</th>
-          <th>Clinic Code</th>
-          <th>Created</th>
+          <th>{{ gettext('Name') }}</th>
+          <th>{{ gettext('Clinic Code') }}</th>
+          <th>{{ gettext('Created') }}</th>
           <th> </th>
         </tr>
       </thead>
@@ -36,5 +36,10 @@
       {% endfor %}
       </tbody>
     </table>
+  </div>
+  <div>
+   {%if clinics|length == 0 %}
+    {{search_term}} Not found.
+  {% endif%}
   </div>
 </div>

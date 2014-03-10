@@ -114,7 +114,7 @@ class ClinicFactory(BaseModelFactory):
 class SubmissionFactory(BaseModelFactory):
     __acl__ = []
 
-    def __getitem__(self, item):
+    def __getitem__(self, item):  # pragma: no cover
         raise NotImplementedError
 
 
@@ -254,6 +254,17 @@ class Clinic(Base):
             user_clinics.columns.clinic_id == None).all()
         return clinics
 
+    @classmethod
+    def filter_clinics(cls, search_term, all_clinics):
+        if all_clinics:
+            #filter all clinics
+            clinics = DBSession.query(Clinic).filter(Clinic.name.ilike('%'+search_term+'%')).all()
+        else:
+            #filter unassigned clinics
+            clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
+                user_clinics.columns.clinic_id == None, Clinic.name.ilike('%'+search_term+'%')).all()
+        return clinics
+
     def calculate_score(self, characteristic, xform_id):
         """
         Calculate the aggregate score and the no. of respondents for the
@@ -366,6 +377,14 @@ class SubmissionHandlerError(Exception):
     pass
 
 
+class ZeroSubmissionHandlersError(SubmissionHandlerError):
+    pass
+
+
+class MultipleSubmissionHandlersError(SubmissionHandlerError):
+    pass
+
+
 class ClinicNotFound(SubmissionHandlerError):
     pass
 
@@ -378,7 +397,7 @@ class BaseSubmissionHandler(object):
     def __init__(self, submission):
         self.submission = submission
 
-    def handle_submission(self):
+    def handle_submission(self):  # pragma: no cover
         raise NotImplementedError("handle_submission is not implemented")
 
 
@@ -466,10 +485,10 @@ def determine_handler_class(submission, mapping):
         handler_class, xform_ids = handlers[0]
         return handler_class
     elif len(handlers) == 0:
-        raise SubmissionHandlerError(
+        raise ZeroSubmissionHandlersError(
             "No handlers found for '{}'".format(xform_id))
     else:
-        raise SubmissionHandlerError(
+        raise MultipleSubmissionHandlersError(
             "Multiple handlers found for '{}'".format(xform_id))
 
 
