@@ -8,15 +8,20 @@
 {% block content %}
   <div class="row">
     <div class="col-md-12">
+       <div style="margin-right:30px;" class="row col-md-2">
+           <input id="search_term" name="search_term" type="text" class="form-control" placeholder="Search clinics..."/>
+      </div>
       <form method="post" action="{{ request.route_url('clinics', traverse=('assign')) }}">
         <div class="table-toolbar">
           <div class="btn-group">
             <button type="submit" class="btn btn-primary">
-              Assign Selected to Myself <i class="icon-share-alt"></i>
+              {{ gettext('Assign Selected to Myself') }} <i class="icon-share-alt"></i>
             </button>
           </div>
         </div>
-        {% include '_clinics_table.jinja2' %}
+        <div class="clinics_table">
+            {% include '_clinics_table.jinja2' %}
+        </div>
       </form>
     </div>
   </div>
@@ -27,4 +32,5 @@
 {% block jquery_ready %}
   {{ super() }}
   Custom.addCheckAllListener();
+  Custom.filterClinicTable();
 {% endblock %}

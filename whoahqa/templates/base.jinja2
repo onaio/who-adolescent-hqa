@@ -42,7 +42,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
          <a class="navbar-brand" href="index.html">
-			<span>Quality Assessment Tool: Assessing Health Services for Adolescent Clients</span>
+			<span>{{ gettext('Quality Assessment Tool: Assessing Health Services for Adolescent Clients') }}</span>
          </a>
          <!-- END LOGO -->
 
@@ -89,24 +89,27 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
             <li class="active last">
                <a href="javascript:;">
                <i class="icon-user-md"></i>
-               <span class="title">Clinics</span>
+               <span class="title">{{ gettext('Clinics') }}</span>
                <span class="selected"></span>
                <span class="arrow open"></span>
                </a>
               <ul class="sub-menu">
                 {% if request.can_list_clinics %}
                   <li>
-                    <a href="{{ request.route_url('clinics', traverse=()) }}">All
-                      Clinics </a>
+                     <a href="{{ request.route_url('clinics', traverse=()) }}">
+                        {{ gettext('All Clinics') }}
+                     </a>
                   </li>
                 {% endif %}
                 <li>
-                  <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'clinics')) }}">My
-                    Clinics </a>
+                  <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'clinics')) }}">
+                     {{ gettext('My Clinics') }}
+                  </a>
                 </li>
                 <li>
                   <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
-                    Unassigned Clinics</a>
+                    {{ gettext('Unassigned Clinics') }}
+                 </a>
                 </li>
               </ul>
             </li>
@@ -150,7 +153,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                <ul class="page-breadcrumb breadcrumb">
                   <li>
                      <i class="icon-home"></i>
-                     <a href="{{ request.route_url('default')}}">Home</a>
+                     <a href="{{ request.route_url('default')}}">{{ gettext('Home') }}</a>
                      <i class="icon-angle-right"></i>
                   </li>
                   {% block breadcrumbs %}{% endblock %}

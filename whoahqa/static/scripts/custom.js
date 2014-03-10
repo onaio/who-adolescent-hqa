@@ -42,9 +42,27 @@ var Custom = function () {
             $('.score').tooltip()
 		} )
     };
+    var ENTER_KEY_CODE = 13;
+    var filterClinicTable = function() {
+        $("#search_term").keypress(function(e) {
+            var search_term, filter_url;
+            if (e.which == ENTER_KEY_CODE) {
+                search_term = $("#search_term").val();
+                filter_url = "?search="+search_term
+                $.ajax({
+                    type: "GET",
+                    url: filter_url
+                })
+                .done(function( msg ) {
+                    $(".clinics_table").html(msg);
+                });
+            }
+        });
+    }
     return {
         addCheckAllListener: addCheckAllListener,
-        enableDatatables: enableDatatables
+        enablefloatThead: enablefloatThead,
+        filterClinicTable:filterClinicTable
     }
 }();
 
