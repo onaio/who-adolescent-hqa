@@ -29,8 +29,17 @@ requires = [
     'coverage',
     'pyramid_exclog',
     'pyenketo',
+    'Babel',
+    'lingua',
     'passlib'
 ]
+
+extractors = {
+    'whoahqa': [
+        ('**.py', 'lingua_python', None),
+        ('**.jinja2', 'jinja2', None)
+    ]
+}
 
 setup(name='who-ahqa',
       version='0.0',
@@ -58,4 +67,5 @@ setup(name='who-ahqa',
       initialize_who-ahqa_db = whoahqa.scripts.initializedb:main
       create_whoahqa_user = whoahqa.scripts.create_user:main
       """,
+      message_extractors=extractors
       )
