@@ -114,7 +114,7 @@ class ClinicFactory(BaseModelFactory):
 class SubmissionFactory(BaseModelFactory):
     __acl__ = []
 
-    def __getitem__(self, item):
+    def __getitem__(self, item):  # pragma: no cover
         raise NotImplementedError
 
 
@@ -377,6 +377,14 @@ class SubmissionHandlerError(Exception):
     pass
 
 
+class ZeroSubmissionHandlersError(SubmissionHandlerError):
+    pass
+
+
+class MultipleSubmissionHandlersError(SubmissionHandlerError):
+    pass
+
+
 class ClinicNotFound(SubmissionHandlerError):
     pass
 
@@ -389,7 +397,7 @@ class BaseSubmissionHandler(object):
     def __init__(self, submission):
         self.submission = submission
 
-    def handle_submission(self):
+    def handle_submission(self):  # pragma: no cover
         raise NotImplementedError("handle_submission is not implemented")
 
 
@@ -477,10 +485,10 @@ def determine_handler_class(submission, mapping):
         handler_class, xform_ids = handlers[0]
         return handler_class
     elif len(handlers) == 0:
-        raise SubmissionHandlerError(
+        raise ZeroSubmissionHandlersError(
             "No handlers found for '{}'".format(xform_id))
     else:
-        raise SubmissionHandlerError(
+        raise MultipleSubmissionHandlersError(
             "Multiple handlers found for '{}'".format(xform_id))
 
 
