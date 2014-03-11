@@ -164,12 +164,19 @@ class ClinicViews(object):
             raise HTTPBadRequest("The clinic is not yet assigned")
 
         scores = clinic.get_scores()
+        characteristics = tuple_to_dict_list(("id", "description"), constants.CHARACTERISTICS)
+        clinic_characteristics = clinic.get_characteristics()
+        #remove characteristics that have already been selected
+        for clinic_characteristic in clinic_characteristics:
+            for characteristic in characteristics:
+                if characteristic['id'] == clinic_characteristic.characteristic_id:
+                    characteristics.remove(characteristic)
+
         return {
             'clinic': clinic,
             'client_tools': tuple_to_dict_list(
                 ("id", "name"), constants.CLIENT_TOOLS),
-            'characteristics': tuple_to_dict_list(
-                ("id", "description"), constants.CHARACTERISTICS),
+            'characteristics': characteristics,
             'scores': scores,
             'characteristic_types': constants.CHARACTERISTIC_TYPES,
             'characteristic_type_mapping': constants.CHARACTERISTIC_TYPE_MAPPING
