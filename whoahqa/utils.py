@@ -14,6 +14,6 @@ def tuple_to_dict_list(key_tuple, value_tuples):
     return [dict(zip(key_tuple, c)) for c in value_tuples]
 
 
-def format_locale_date(value, format_def, request):
+def format_date_for_locale(value, format_def, request):
     localizer = get_localizer(request)
     return format_date(value, format_def, locale=localizer.locale_name)
