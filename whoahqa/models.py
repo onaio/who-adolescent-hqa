@@ -87,8 +87,9 @@ class UserFactory(BaseModelFactory):
     def __getitem__(self, item):
         # try to retrieve the user whose id matches item
         try:
-            user = DBSession.query(User).filter_by(id=item).one()
-        except NoResultFound:
+            user_id = int(item)
+            user = DBSession.query(User).filter_by(id=user_id).one()
+        except (ValueError, NoResultFound):
             raise KeyError
         else:
             user.__parent__ = self
