@@ -32,7 +32,10 @@ from sqlalchemy.orm import (
 from zope.sqlalchemy import ZopeTransactionExtension
 
 from whoahqa import constants
-from whoahqa.utils import hashid
+from whoahqa.utils import (
+    hashid,
+    tuple_to_dict_list,
+)
 from whoahqa.constants import permissions as perms
 from whoahqa.security import pwd_context
 
@@ -372,7 +375,7 @@ class Clinic(Base):
 
         return scores
 
-    def calculate_key_indicator_scores(self, indicator):
+    def calculate_key_indicator_scores(self, indicator, characteristics_list):
         """
         Calculate the aggregate score for a key indicator eg. 
         equitable = {
@@ -381,9 +384,8 @@ class Clinic(Base):
             'three': z%
         }
         """
-        characteristics_list = constants.KEY_INDICATORS[indicator]
-        key_indicator_scores = {}
-        total_responses = total_scores = total_questions = 0 
+        key_indicator_scores = {}        
+        total_responses = total_scores = total_questions = 0
         for characteristic in characteristics_list:
             mapping = constants.CHARACTERISTIC_MAPPING[characteristic]
             key_indicator_scores[characteristic] = {}
@@ -395,10 +397,22 @@ class Clinic(Base):
                 
                 total_responses += num_responses
                 total_questions += len(questions)
-                key_indicator_scores[characteristic] = None if total_responses == 0 else (
-                    total_scores/float(total_questions) * 100)
+                key_indicator_scores[characteristic] = None\
+                    if total_responses == 0 else (
+                        total_scores/float(total_questions) * 100)
 
         return key_indicator_scores
+
+    def get_all_key_indicator_scores(self):
+        key_indicators = tuple_to_dict_list(
+                ("key", "characteristic_list"), constants.KEY_INDICATORS)
+        all_key_indicator_scores = {}
+        for key_char_pair in key_indicators:
+            all_key_indicator_scores[key_char_pair['key']] = self.\
+                calculate_key_indicator_scores(key_char_pair['key'],
+                    key_char_pair['characteristic_list'])
+
+        return all_key_indicator_scores
 
 
 class SubmissionHandlerError(Exception):
