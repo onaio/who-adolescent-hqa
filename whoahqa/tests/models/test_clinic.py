@@ -127,3 +127,26 @@ class TestClinic(TestBase):
         clinic_a = Clinic.get(Clinic.id == 1)
         self.assertEquals(clinic_a.date_created.date(), datetime.datetime.today().date())
 
+    def test_calculate_key_indicator_scores_when_no_responses_exist(self):
+        # should return None when no responses exist
+        self.setup_test_data()
+        clinic_a = Clinic.get(Clinic.id == 1)
+        key_indicator_scores = clinic_a.calculate_key_indicator_scores(constants.EQUITABLE)
+        self.assertEqual(key_indicator_scores,  {
+            constants.ONE: None,
+            constants.TWO: None,
+            constants.THREE: None
+        })
+
+    def test_calculate_key_indicator_when_responses_exist(self):
+        # should return a valid value when responses exist
+        self.setup_test_data()
+        self.create_submissions()
+        clinic_a = Clinic.get(Clinic.id == 1)
+        key_indicator_scores = clinic_a.calculate_key_indicator_scores(constants.EQUITABLE)
+        self.assertEqual(key_indicator_scores, {
+            'one': 50.0, 
+            'two': 27.77777777777778,
+            'three': 30.0
+        })
+
