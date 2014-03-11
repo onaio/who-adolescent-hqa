@@ -11,7 +11,7 @@ DATE_FORMAT = "%m-%Y"
 
 
 class MonthYearDate(object):
-    """ Custom type that converts between MM-YYYY strings and their integer
+    """ Custom type that converts between MM-YYYY strings and their date
     representation.
     """
     def serialize(self, node, appstruct):
