@@ -37,19 +37,33 @@
           </div>
         </div>
         <div class="form-body">
-          <div class="form-group {% if form['start_date'].error or form['end_date'].error %}has-error{% endif %}">
+          <div class="form-group {% if form.error or form['start_date'].error or form['end_date'].error %}has-error{% endif %}">
             {%  set field = form['title'] %}
-            <label class="col-md-3 control-label">{{ gettext(form['start_date'].title) }}</label>
+            <label class="col-md-3 control-label">{{ gettext("Reporting Period") }}</label>
 
             <div class="col-md-6">
               <div class="input-group input-large date-picker input-daterange"
-                   data-date="10/11/2012" data-date-format="yyyy-mm-dd">
+                   data-date="10/11/2012" data-date-format="yyyy-mm">
                 {{ form['start_date'].render() | safe}}
                 <span class="input-group-addon">to</span>
                 {{ form['end_date'].render() | safe}}
               </div>
               <!-- /input-group -->
-              <span class="help-block">Select date range</span>
+              {% if form.error %}
+                {% for error in form.error.messages() %}
+                  <span class="help-block">{{ gettext(error) }}</span>
+                {% endfor %}
+              {% endif %}
+              {% if form['start_date'].error %}
+                {% for error in form['start_date'].error.messages() %}
+                  <span class="help-block">{{ gettext(error) }}</span>
+                {% endfor %}
+              {% endif %}
+              {% if form['end_date'].error %}
+                {% for error in form['end_date'].error.messages() %}
+                  <span class="help-block">{{ gettext(error) }}</span>
+                {% endfor %}
+              {% endif %}
             </div>
           </div>
         </div>
@@ -72,7 +86,10 @@
   {{ super() }}
   $('.date-picker').datepicker({
     rtl: App.isRTL(),
-    autoclose: true
+    autoclose: true,
+    format: "mm-yyyy",
+    viewMode: "months",
+    minViewMode: "months"
   });
   $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
 {% endblock %}
