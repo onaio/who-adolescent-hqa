@@ -7,7 +7,7 @@ from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from sqlalchemy import engine_from_config
 
 from whoahqa.constants import permissions as perms
-from utils import hashid, enketo, format_locale_date
+from utils import hashid, enketo, format_date_for_locale
 from whoahqa.security import group_finder, pwd_context
 from whoahqa.models import (
     DBSession,
@@ -71,7 +71,7 @@ def main(global_config, **settings):
 def includeme(config):
     config.include('pyramid_jinja2')
     config.add_jinja2_search_path("whoahqa:templates")
-    config.get_jinja2_environment().filters['format_date'] = format_locale_date
+    config.get_jinja2_environment().filters['format_date'] = format_date_for_locale
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('default', '/')
     config.add_route('auth', '/auth/{action}')
