@@ -216,8 +216,13 @@ class OnaUser(Base):
         if len(json_data) != 1:
             raise ValueError("We only know how to handle a single user")
 
-        data = json_data[0]
-        username = data['username']
+        user_data = json_data[0]
+
+        username = user_data.get('username', "")
+        if username is None or (not username.strip()):
+            raise ValueError("Invalid user profile data")
+
+        username = user_data['username']
         try:
             ona_user = OnaUser.get(OnaUser.username == username)
             ona_user.refresh_token = refresh_token
