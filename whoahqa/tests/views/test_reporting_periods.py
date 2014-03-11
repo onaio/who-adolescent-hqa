@@ -17,8 +17,8 @@ class TestReportingPeriods(IntegrationTestBase):
         self.request.method = "POST"
         self.request.POST = MultiDict([
             ('title', "2013/2014"),
-            ('start_date', '2014-02-01'),
-            ('end_date', '2015-02-01')
+            ('start_date', '03-02-2014'),
+            ('end_date', '01-2015')
         ])
         response = self.view.create()
         self.assertEqual(response.status_code, 302)
@@ -30,7 +30,8 @@ class TestReportingPeriods(IntegrationTestBase):
         self.request.method = "POST"
         self.request.POST = MultiDict([
             ('title', "2013/2014"),
-            ('start_date', '2014-02-01'),
+            ('start_date', '02-2014'),
+            ('end_date', '02-2014'),
         ])
         response = self.view.create()
         self.assertIn('form', response)
@@ -57,3 +58,5 @@ class TestReportingPeriodsFunctional(FunctionalTestBase):
         url = self.request.route_path('periods', traverse=())
         response = self.testapp.get(url, headers=headers, status=403)
         self.assertEqual(response.status_code, 403)
+
+    # TODO: test permissions on create view
