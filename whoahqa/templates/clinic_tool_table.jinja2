@@ -1,13 +1,13 @@
-<div class="portlet">
+<div class="portlet" id="sample-frame-portlet">
     <div class="portlet-title">
-        {{ gettext('Data Collection Instruments') }}
+        {{ gettext('Recommended Sample Frame') }}
         <div class="tools">
             <a class="collapse"> </a>
         </div>
     </div>
     <div class="portlet-body">
         <div class="table-responsive">
-            <table class="table table-striped table-bordered">
+            <table class="table table-bordered" id="sample-frame-table">
                 <thead>
                     <tr>
                         <th class="col-md-6">{{ gettext('Data Collection Instrument') }}</th>
@@ -28,7 +28,7 @@
                             </td>
                             <td>
                                 <a href="{{ request.route_url('clinics', traverse=('show_form'), _query=(('form', client_tool.id),)) }}">
-                                    <i class="pull-left icon-blue icon-plus-sign"></i>
+                                    <i class="pull-left icon-blue icon-plus-sign launch-form"></i>
                                 </a>
                             </td>
                         </tr>
