@@ -143,6 +143,14 @@ class TestClinicViews(IntegrationTestBase):
             response = self.clinic_views.register_clinic()
         self.assertIsInstance(response, HTTPFound)
 
+    def test_list_override_renderer_when_search_term_exists(self):
+        self.request.GET = MultiDict([
+            ('search', 'clinic a')
+        ])
+        self.clinic_views.list()
+        self.assertEqual(
+            self.request.override_renderer, '_clinics_table.jinja2')
+
 
 class TestClinicViewsFunctional(FunctionalTestBase):
     def test_unassigned_clinics_view_allows_authenticated(self):
