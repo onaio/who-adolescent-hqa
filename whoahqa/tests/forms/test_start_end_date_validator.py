@@ -11,7 +11,9 @@ class TestStartEndValidator(unittest.TestCase):
         validator = StartEndDateValidator()
         self.assertIsNone(
             validator.__call__(
-                None,
+                {
+                    'start_date': None
+                },
                 {
                     'start_date': datetime(2014, 3, 13),
                     'end_date': datetime(2015, 3, 13)
@@ -24,7 +26,9 @@ class TestStartEndValidator(unittest.TestCase):
         self.assertRaises(
             colander.Invalid,
             validator.__call__,
-            None,
+            {
+                'start_date': None
+            },
             {
                 'start_date': datetime(2014, 3, 1),
                 'end_date': datetime(2014, 3, 1)
