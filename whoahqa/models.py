@@ -372,6 +372,34 @@ class Clinic(Base):
 
         return scores
 
+    def calculate_key_indicator_scores(self, indicator):
+        """
+        Calculate the aggregate score for a key indicator eg. 
+        equitable = {
+            'one': x%,
+            'two': y%,
+            'three': z%
+        }
+        """
+        characteristics_list = constants.KEY_INDICATORS[indicator]
+        key_indicator_scores = {}
+        total_responses = total_scores = total_questions = 0 
+        for characteristic in characteristics_list:
+            mapping = constants.CHARACTERISTIC_MAPPING[characteristic]
+            key_indicator_scores[characteristic] = {}
+            for client_tool_id, questions in mapping.items():
+                aggregate_score, num_responses = self.calculate_score(
+                    characteristic, client_tool_id)
+                if aggregate_score is not None:
+                    total_scores += aggregate_score
+                
+                total_responses += num_responses
+                total_questions += len(questions)
+                key_indicator_scores[characteristic] = None if total_responses == 0 else (
+                    total_scores/float(total_questions) * 100)
+
+        return key_indicator_scores
+
 
 class SubmissionHandlerError(Exception):
     pass
