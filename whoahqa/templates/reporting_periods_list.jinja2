@@ -34,7 +34,7 @@
               </thead>
 
               <tbody role="alert" aria-live="polite" aria-relevant="all">
-              {% for period in periods %}
+              {% for period in periods|sort(reverse=True, attribute='end_date') %}
                 <tr class="gradeX odd">
                   <td>
                     <input type="checkbox" name="clinic_id" class="checkboxes"
