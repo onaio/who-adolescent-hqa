@@ -41,8 +41,8 @@
                            value="{{ period.id }}">
                   </td>
                   <td>{{ period.title }}</td>
-                  <td class=" ">{{ period.start_date }}</td>
-                  <td class="center ">{{ period.end_date }}</td>
+                  <td class=" ">{{ period.start_date|format_date('MMM Y', request) }}</td>
+                  <td class="center ">{{ period.end_date|format_date('MMM Y', request) }}</td>
                 </tr>
               {% endfor %}
               </tbody>
