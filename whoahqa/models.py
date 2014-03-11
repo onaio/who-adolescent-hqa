@@ -408,9 +408,16 @@ class Clinic(Base):
                 ("key", "characteristic_list"), constants.KEY_INDICATORS)
         all_key_indicator_scores = {}
         for key_char_pair in key_indicators:
-            all_key_indicator_scores[key_char_pair['key']] = self.\
-                calculate_key_indicator_scores(key_char_pair['key'],
-                    key_char_pair['characteristic_list'])
+            average_score = 0
+            indicator_score = self.calculate_key_indicator_scores(
+                key_char_pair['key'], key_char_pair['characteristic_list'])
+            for score in indicator_score.itervalues():
+                if score is not None:
+                    average_score += score
+            all_key_indicator_scores[key_char_pair['key']] = indicator_score
+            all_key_indicator_scores[key_char_pair['key']].update(
+                    {'average_score': (average_score/len(indicator_score))
+                })
 
         return all_key_indicator_scores
 
