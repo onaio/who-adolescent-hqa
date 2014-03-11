@@ -1,0 +1,6 @@
+{% macro alert_message(message, type) %}
+  <div class="alert alert-{{ type }}">
+    <button class="close" data-dismiss="alert"></button>
+    <span>{{ message }}</span>
+  </div>
+{% endmacro %}

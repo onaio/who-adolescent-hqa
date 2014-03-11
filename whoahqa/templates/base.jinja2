@@ -23,6 +23,10 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    <link href="{{ request.static_url('whoahqa:static/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
    <link href="{{ request.static_url('whoahqa:static/plugins/uniform/css/uniform.default.css') }}" rel="stylesheet" type="text/css"/>
    <!-- END GLOBAL MANDATORY STYLES -->
+   <!-- BEGIN PAGE LEVEL STYLES -->
+   {% block page_styles %}
+   {% endblock %}
+   <!-- END PAGE LEVEL STYLES -->
    <!-- BEGIN THEME STYLES --> 
    <link href="{{ request.static_url('whoahqa:static/css/style-conquer.css') }}" rel="stylesheet" type="text/css"/>
    <link href="{{ request.static_url('whoahqa:static/css/style.css') }}" rel="stylesheet" type="text/css"/>
@@ -42,7 +46,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
          <a class="navbar-brand" href="index.html">
-			<span>Quality Assessment Tool: Assessing Health Services for Adolescent Clients</span>
+			<span>{{ gettext('Quality Assessment Tool: Assessing Health Services for Adolescent Clients') }}</span>
          </a>
          <!-- END LOGO -->
 
@@ -89,24 +93,32 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
             <li class="active last">
                <a href="javascript:;">
                <i class="icon-user-md"></i>
-               <span class="title">Clinics</span>
+               <span class="title">{{ gettext('Clinics') }}</span>
                <span class="selected"></span>
                <span class="arrow open"></span>
                </a>
               <ul class="sub-menu">
                 {% if request.can_list_clinics %}
                   <li>
-                    <a href="{{ request.route_url('clinics', traverse=()) }}">All
-                      Clinics </a>
+                    <a href="{{ request.route_url('periods', traverse=()) }}">
+                      {{ gettext('Reporting Periods') }}
+                    </a>
+                  </li>
+                  <li>
+                     <a href="{{ request.route_url('clinics', traverse=()) }}">
+                        {{ gettext('All Clinics') }}
+                     </a>
                   </li>
                 {% endif %}
                 <li>
-                  <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'clinics')) }}">My
-                    Clinics </a>
+                  <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'clinics')) }}">
+                     {{ gettext('My Clinics') }}
+                  </a>
                 </li>
                 <li>
                   <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
-                    Unassigned Clinics</a>
+                    {{ gettext('Unassigned Clinics') }}
+                 </a>
                 </li>
               </ul>
             </li>
@@ -150,7 +162,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                <ul class="page-breadcrumb breadcrumb">
                   <li>
                      <i class="icon-home"></i>
-                     <a href="{{ request.route_url('default')}}">Home</a>
+                     <a href="{{ request.route_url('default')}}">{{ gettext('Home') }}</a>
                      <i class="icon-angle-right"></i>
                   </li>
                   {% block breadcrumbs %}{% endblock %}
@@ -160,6 +172,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
          </div>
          <!-- END PAGE HEADER-->
          <!-- BEGIN PAGE CONTENT-->
+      {% include "_alerts.jinja2" %}
          {% block content %}{% endblock %}
          <!-- END PAGE CONTENT-->
       </div>
@@ -194,6 +207,8 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    <script src="{{ request.static_url('whoahqa:static/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
    <script src="{{ request.static_url('whoahqa:static/plugins/jquery.cookie.min.js') }}" type="text/javascript"></script>
    <script src="{{ request.static_url('whoahqa:static/plugins/uniform/jquery.uniform.min.js') }}" type="text/javascript" ></script>
+   <script src="{{ request.static_url('whoahqa:static/plugins/data-tables/jquery.dataTables.js') }}" type="text/javascript" ></script>
+   <script src="{{ request.static_url('whoahqa:static/plugins/data-tables/FixedColumns.js') }}" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
    <script src="{{ request.static_url('whoahqa:static/scripts/app.js') }}"></script>

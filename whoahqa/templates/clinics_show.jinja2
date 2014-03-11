@@ -16,8 +16,8 @@
 {% include 'clinic_tool_table.jinja2' %}
   <div class="table-responsive">
     <div class="row">
-      <div class="pull-left char-header">Characteristics</div>
-      <div class="pull-right score-header">Relative Score</div>
+      <div class="pull-left char-header">{{ gettext('Characteristics') }}</div>
+      <div class="pull-right score-header">{{ gettext('Relative Score') }}</div>
     </div>
     <table class="table table-bordered scores-table">
       {% for characteristic in characteristics %}
@@ -25,19 +25,19 @@
         <thead>
         <tr>
           <th class="char-defn"></th>
-          <th class="char-no center-align">No.</th>
-          <th class="char-desc">Description</th>
-          <th class="char-cat">Category</th>
-          <th class="min-max">Min - Max</th>
-          <th class="char-resp"># Respondents</th>
-          <th class="char-score">Score</th>
+          <th class="char-no center-align">{{ gettext('No.') }}</th>
+          <th class="char-desc">{{ gettext('Description ') }}</th>
+          <th class="char-cat">{{ gettext('Category') }}</th>
+          <th class="min-max">{{ gettext('Min - Max') }}</th>
+          <th class="char-resp">{{ gettext('# Respondents') }}</th>
+          <th class="char-score">{{ gettext('Score') }}</th>
           <th class="char-rel-score"></th>
         </tr>
         </thead>
         <tbody>
           <tr>
             <td class="center-align ">
-              
+              <img src="{{ request.static_url('whoahqa:static/images/char_en/sm/%d.png' % (loop.index)) }}">
             </td>
             <td class="center-align char-no-vals">
               {{ loop.index }}

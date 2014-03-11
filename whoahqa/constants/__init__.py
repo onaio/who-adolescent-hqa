@@ -1,3 +1,5 @@
+from whoahqa.utils import translation_string_factory as _
+
 CLINIC_IDENTIFIER = 'facility_info/clinic_id'
 CHARACTERISTIC = 'facility_info/HS_char'
 XFORM_ID = '_xform_id_string'
@@ -19,14 +21,14 @@ CLINIC_REGISTRATION = 'clinic_registration'
 
 
 CLIENT_TOOLS = [
-    (ADOLESCENT_CLIENT, u"Adolescent Client"),
-    (HEALTH_CARE_PROVIDER, u"Health-care Provider"),
-    (SUPPORT_STAFF, u"Support Staff"),
-    (HEALTH_FACILITY_MANAGER, u"Health Facility Manager"),
-    (OUTREACH_WORKER, u"Outreach Worker"),
-    (COMMUNITY_MEMBER, u"Community Member"),
-    (ADOLESCENT_IN_COMMUNITY, u"Adolescent in Community"),
-    (OBSERVATION_GUIDE, u"Observation Guide")
+    (ADOLESCENT_CLIENT, _("Adolescent Client")),
+    (HEALTH_CARE_PROVIDER, _("Health-care Provider")),
+    (SUPPORT_STAFF, _("Support Staff")),
+    (HEALTH_FACILITY_MANAGER, _("Health Facility Manager")),
+    (OUTREACH_WORKER, _("Outreach Worker")),
+    (COMMUNITY_MEMBER, _("Community Member")),
+    (ADOLESCENT_IN_COMMUNITY, _("Adolescent in Community")),
+    (OBSERVATION_GUIDE, _("Observation Guide"))
 ]
 
 ONE = 'one'
@@ -51,52 +53,52 @@ NINETEEN = 'nineteen'
 TWENTY = 'twenty'
 
 CHARACTERISTICS = [
-    (ONE, u"Policies and procedures are in place that do not restrict the "
-          u" provision of health services on any terms"),
-    (TWO, u"Health-care providers treat all adolescent clients with equal"
-          u" care and respect, regardless of status"),
-    (THREE, u"Support staff treat all adolescent clients with equal care"
-            u" and respect, regardless of status"),
-    (FOUR, u"Policies and procedures are in place that ensure that health"
-           u" services are either free or affordable to adolescents"),
-    (FIVE, u"The point of health service delivery has convenient hours of"
-           u" operation"),
-    (SIX, u"Adolescents are well-informed about the range of available"
-          u" reproductive health services and how to obtain them"),
-    (SEVEN, u"Community members understand the benefits that adolescents"
-            u" will gain by obtaining the health services they need,"
-            u" and support their provision"),
-    (EIGHT, u"Some health services and health-related commodities are"
-            u" provided to adolescents in the community by selected"
-            u" community members, outreach workers and adolescents"
-            u" themselves"),
-    (NINE, u"Policies and procedures are in place that guarantee client"
-           u" confidentiality"),
-    (TEN, u"The point of health service delivery ensures privacy"),
-    (ELEVEN, u"Health-care providers are non-judgemental, considerate and"
-             u" easy to relate to"),
-    (TWELVE, u"The point of health service delivery ensures consultations"
-             u" occur in a short waiting time. with or without an"
-             u" appointment, and (where necessary) with referral"),
-    (THIRTEEN, u"The point of health service delivery has an appealing"
-               u" and clean environment"),
-    (FOURTEEN, u"The point of health service delivery provides information"
-               u" and education through a variety of channels"),
-    (FIFTEEN, u"Adolescents are actively involved in designing, assessing"
-              u" and providing health services"),
-    (SIXTEEN, u"The required package of health care is provided to fulfil"
-              u" the needs of all adolescents either at the point of health"
-              u" service delivery or through referral linkages"),
-    (SEVENTEEN, u"Health-care providers have the required competencies to"
-                u" work with adolescents and to provide them with the"
-                u" required health services"),
-    (EIGHTEEN, u"Health-care providers use evidence-based protocols and"
-               u" guidelines to provide health services"),
-    (NINETEEN, u"Health-care providers are able to dedicate sufficient time"
-               u" to work effectively with their adolescent clients"),
-    (TWENTY, u"The point of health service delivery has the required"
-             u" equipment, supplies and basic services necessary to deliver"
-             u" the required health services")
+    (ONE, _("Policies and procedures are in place that do not restrict the"
+           " provision of health services on any terms")),
+    (TWO, _("Health-care providers treat all adolescent clients with equal"
+           " care and respect, regardless of status")),
+    (THREE, _("Support staff treat all adolescent clients with equal care"
+            " and respect, regardless of status")),
+    (FOUR, _("Policies and procedures are in place that ensure that health"
+           " services are either free or affordable to adolescents")),
+    (FIVE, _("The point of health service delivery has convenient hours of"
+           " operation")),
+    (SIX, _("Adolescents are well-informed about the range of available"
+           " reproductive health services and how to obtain them")),
+    (SEVEN, _("Community members understand the benefits that adolescents"
+            " will gain by obtaining the health services they need,"
+            " and support their provision")),
+    (EIGHT, _("Some health services and health-related commodities are"
+            " provided to adolescents in the community by selected"
+            " community members, outreach workers and adolescents"
+            " themselves")),
+    (NINE, _("Policies and procedures are in place that guarantee client"
+           " confidentiality")),
+    (TEN, _("The point of health service delivery ensures privacy")),
+    (ELEVEN, _("Health-care providers are non-judgemental, considerate and"
+             " easy to relate to")),
+    (TWELVE, _("The point of health service delivery ensures consultations"
+             " occur in a short waiting time. with or without an"
+             " appointment, and (where necessary) with referral")),
+    (THIRTEEN, _("The point of health service delivery has an appealing"
+               " and clean environment")),
+    (FOURTEEN, _("The point of health service delivery provides information"
+               " and education through a variety of channels")),
+    (FIFTEEN, _("Adolescents are actively involved in designing, assessing"
+              " and providing health services")),
+    (SIXTEEN, _("The required package of health care is provided to fulfil"
+              " the needs of all adolescents either at the point of health"
+              " service delivery or through referral linkages")),
+    (SEVENTEEN, _("Health-care providers have the required competencies to"
+                " work with adolescents and to provide them with the"
+                " required health services")),
+    (EIGHTEEN, _("Health-care providers use evidence-based protocols and"
+               " guidelines to provide health services")),
+    (NINETEEN, _("Health-care providers are able to dedicate sufficient time"
+               " to work effectively with their adolescent clients")),
+    (TWENTY, _("The point of health service delivery has the required"
+             " equipment, supplies and basic services necessary to deliver"
+             " the required health services"))
 ]
 
 CHARACTERISTIC_MAPPING = {
