@@ -34,15 +34,15 @@
               </thead>
 
               <tbody role="alert" aria-live="polite" aria-relevant="all">
-              {% for period in periods %}
+              {% for period in periods|sort(reverse=True, attribute='end_date') %}
                 <tr class="gradeX odd">
                   <td>
                     <input type="checkbox" name="clinic_id" class="checkboxes"
                            value="{{ period.id }}">
                   </td>
                   <td>{{ period.title }}</td>
-                  <td class=" ">{{ period.start_date }}</td>
-                  <td class="center ">{{ period.end_date }}</td>
+                  <td class=" ">{{ period.start_date|format_date('MMM Y', request) }}</td>
+                  <td class="center ">{{ period.end_date|format_date('MMM Y', request) }}</td>
                 </tr>
               {% endfor %}
               </tbody>
