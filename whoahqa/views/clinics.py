@@ -102,13 +102,15 @@ class ClinicViews(object):
             raise HTTPBadRequest("The clinic is not yet assigned")
 
         scores = clinic.get_scores()
+        clinic_characteristics = clinic.get_characteristics()
         return {
             'clinic': clinic,
             'client_tools': tuple_to_dict_list(
                 ("id", "name"), constants.CLIENT_TOOLS),
             'characteristics': tuple_to_dict_list(
                 ("id", "description"), constants.CHARACTERISTICS),
-            'scores': scores
+            'scores': scores,
+            'clinic_characteristics': clinic_characteristics
         }
 
     @view_config(name='show_form',
@@ -175,14 +177,13 @@ class ClinicViews(object):
 
     @view_config(name='select_characteristics', request_method='POST', check_csrf=False)
     def select_characteristics(self):
-        user = self.request.ona_user.user
-
         #get_clinic_id
         clinic_id = self.request.POST.get('clinic_id')
         # get the list of selected characteristics
-        selected_characteristic_ids = self.request.POST.getall('characteristic_id')
-
-         # TODO: persist to database
+        characteristic_ids = self.request.POST.getall('characteristic_id')
+        clinic = Clinic.get(Clinic.id == clinic_id)
+        for characteristic_id in characteristic_ids:
+            clinic.select_characteristic(characteristic_id)
 
         return HTTPFound(
             self.request.route_url('clinics', traverse=clinic_id))
