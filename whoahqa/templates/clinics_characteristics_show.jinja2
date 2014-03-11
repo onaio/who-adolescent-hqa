@@ -35,9 +35,12 @@
       </div>
       <div class="table-responsive">
         <div class="row">
-          <div class="pull-left char-header">Characteristics</div>
+          <div class="pull-left char-header">
+              <input type="checkbox" class="group-checkable" data-set="#characteristics .checkboxes" title="Select all characteristics">
+              Characteristics
+          </div>
         </div>
-        <table class="table table-bordered scores-table">
+        <table class="table table-bordered scores-table" id="characteristics">
           {% for characteristic in characteristics %}
             {% set percentage = scores[characteristic.id].totals.total_percentage %}
             <thead>
@@ -58,12 +61,14 @@
                     <input type="checkbox" name="characteristic_id" class="checkboxes" value="{{ characteristic.id }}">
                 </td>
                 <td class="center-align ">
-
+                    <img src="{{ request.static_url('whoahqa:static/images/char_en/sm/%d.png' % (loop.index)) }}">
                 </td>
                 <td class="center-align char-no-vals">
                   {{ loop.index }}
                 </td>
-                <td class="">{{ characteristic.description }} ({{ characteristic_type_mapping[characteristic.id]}})
+                <td class="">
+                    {{ characteristic.description }}<br>
+                    <span class="label label-primary">({{ characteristic_type_mapping[characteristic.id]}})</span>
                 </td>
                 <td class="client-tool-table">
                   <table class="table table-striped">
@@ -116,4 +121,11 @@
       </div>
   </form>
 
+{% endblock %}
+{% block page_scripts %}
+  <script src="{{ request.static_url('whoahqa:static/scripts/custom.js') }}"></script>
+{% endblock %}
+{% block jquery_ready %}
+  {{ super() }}
+  Custom.addCheckAllListener();
 {% endblock %}
