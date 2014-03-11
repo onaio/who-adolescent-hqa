@@ -1,4 +1,3 @@
-import re
 import datetime
 
 import colander

@@ -20,12 +20,19 @@ from whoahqa.views import (
 )
 from whoahqa.tests import (IntegrationTestBase, FunctionalTestBase,)
 
-WEBFOR_URL = 'https://iyt3v.enketo.org/webform'
+WEBFORM_URL = 'https://iyt3v.enketo.org/webform'
 @urlmatch(netloc=r'(.*\.)?test.enketo\.org$')
 def fetch_survey_form_url(url, request):
     return {
         'status_code': 200,
-        'content': '{"url": "%s"}' % (WEBFOR_URL)
+        'content': '{"url": "%s"}' % WEBFORM_URL
+    }
+
+@urlmatch(netloc=r'(.*\.)?test.enketo\.org$')
+def fetch_non_existent_survey_form_url(url, request):
+    return {
+        'status_code': 404,
+        'content': '{"code": 404, "message": "form not found"}'
     }
 
 @urlmatch(netloc='test.enketo.org', path='/api_v1/instance')
@@ -120,7 +127,14 @@ class TestClinicViews(IntegrationTestBase):
             response = self.clinic_views.show_form()
         
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.location, WEBFOR_URL)
+        self.assertEqual(response.location, WEBFORM_URL)
+
+    def test_show_form_raises_bad_request_for_bad_form(self):
+        self.setup_test_data()
+        params = MultiDict({'form': constants.ADOLESCENT_CLIENT})
+        self.request.GET = params
+        with HTTMock(fetch_non_existent_survey_form_url):
+            self.assertRaises(HTTPBadRequest, self.clinic_views.show_form)
 
     def test_register_clinic(self):
         self.setup_test_data()
@@ -128,6 +142,14 @@ class TestClinicViews(IntegrationTestBase):
         with HTTMock(enketo_edit_url_mock):
             response = self.clinic_views.register_clinic()
         self.assertIsInstance(response, HTTPFound)
+
+    def test_list_override_renderer_when_search_term_exists(self):
+        self.request.GET = MultiDict([
+            ('search', 'clinic a')
+        ])
+        self.clinic_views.list()
+        self.assertEqual(
+            self.request.override_renderer, '_clinics_table.jinja2')
 
 
 class TestClinicViewsFunctional(FunctionalTestBase):
