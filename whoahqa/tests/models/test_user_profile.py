@@ -6,9 +6,9 @@ from whoahqa.models import (
 from whoahqa.tests import TestBase
 
 
-class TestUserProfiles(TestBase):
+class TestUserProfile(TestBase):
     def setUp(self):
-        super(TestUserProfiles, self).setUp()
+        super(TestUserProfile, self).setUp()
         pwd_context.load_path('test.ini')
 
     def test_set_password(self):
