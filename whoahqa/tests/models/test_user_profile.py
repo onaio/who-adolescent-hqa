@@ -22,3 +22,7 @@ class TestUserProfile(TestBase):
     def test_check_password_returns_false_if_len_greater_than_255(self):
         profile = UserProfile(user=User(), username="admin", password="admin")
         self.assertFalse(profile.check_password('a' * 256))
+
+    def test_password_property_returns_raw_password(self):
+        profile = UserProfile(user=User(), username="admin", password="admin")
+        self.assertEqual(profile.password, profile.pwd)

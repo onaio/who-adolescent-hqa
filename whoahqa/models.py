@@ -186,7 +186,7 @@ class UserProfile(Base):
 
     @property
     def password(self):
-        return self._password
+        return self.pwd
 
     @password.setter
     def password(self, value):
