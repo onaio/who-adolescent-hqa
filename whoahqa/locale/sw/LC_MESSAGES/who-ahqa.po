@@ -1,0 +1,240 @@
+# Swahili translations for who-ahqa.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the who-ahqa project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: who-ahqa 0.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-03-06 09:55+0300\n"
+"PO-Revision-Date: 2014-03-06 14:17+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: sw <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+#: whoahqa/constants/__init__.py:25
+msgid "Adolescent Client"
+msgstr "Client Kijana"
+
+#: whoahqa/constants/__init__.py:26
+msgid "Health-care Provider"
+msgstr "Daktari"
+
+#: whoahqa/constants/__init__.py:27
+msgid "Support Staff"
+msgstr "Wasaidizi"
+
+#: whoahqa/constants/__init__.py:28
+msgid "Health Facility Manager"
+msgstr "Mkubwa"
+
+#: whoahqa/constants/__init__.py:29
+msgid "Outreach Worker"
+msgstr "Msaidizi wa Wote"
+
+#: whoahqa/constants/__init__.py:30
+msgid "Community Member"
+msgstr "Mweneye Mtaa"
+
+#: whoahqa/constants/__init__.py:31
+msgid "Adolescent in Community"
+msgstr "Vijana wa Mtaa"
+
+#: whoahqa/constants/__init__.py:32
+msgid "Observation Guide"
+msgstr "Kitabu"
+
+#: whoahqa/constants/__init__.py:57
+msgid ""
+"Policies and procedures are in place that do not restrict the provision "
+"of health services on any terms"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:61
+msgid ""
+"Support staff treat all adolescent clients with equal care and respect, "
+"regardless of status"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:63
+msgid ""
+"Policies and procedures are in place that ensure that health services are"
+" either free or affordable to adolescents"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:65
+msgid "The point of health service delivery has convenient hours of operation"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:67
+msgid ""
+"Adolescents are well-informed about the range of available reproductive "
+"health services and how to obtain them"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:69
+msgid ""
+"Community members understand the benefits that adolescents will gain by "
+"obtaining the health services they need, and support their provision"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:76
+msgid "Policies and procedures are in place that guarantee client confidentiality"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:78
+msgid "The point of health service delivery ensures privacy"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:79
+msgid ""
+"Health-care providers are non-judgemental, considerate and easy to relate"
+" to"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:81
+msgid ""
+"The point of health service delivery ensures consultations occur in a "
+"short waiting time. with or without an appointment, and (where necessary)"
+" with referral"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:84
+msgid ""
+"The point of health service delivery has an appealing and clean "
+"environment"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:86
+msgid ""
+"The point of health service delivery provides information and education "
+"through a variety of channels"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:88
+msgid ""
+"Adolescents are actively involved in designing, assessing and providing "
+"health services"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:90
+msgid ""
+"The required package of health care is provided to fulfil the needs of "
+"all adolescents either at the point of health service delivery or through"
+" referral linkages"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:93
+msgid ""
+"Health-care providers have the required competencies to work with "
+"adolescents and to provide them with the required health services"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:96
+msgid ""
+"Health-care providers use evidence-based protocols and guidelines to "
+"provide health services"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:98
+msgid ""
+"Health-care providers are able to dedicate sufficient time to work "
+"effectively with their adolescent clients"
+msgstr ""
+
+#: whoahqa/constants/__init__.py:100
+msgid ""
+"The point of health service delivery has the required equipment, supplies"
+" and basic services necessary to deliver the required health services"
+msgstr ""
+
+#: whoahqa/templates/_clinics_score_summary.jinja2:10
+#: whoahqa/templates/clinics_show.jinja2:10
+msgid "Characteristics"
+msgstr ""
+
+#: whoahqa/templates/_clinics_score_summary.jinja2:17
+msgid "No. "
+msgstr ""
+
+#: whoahqa/templates/_clinics_score_summary.jinja2:21
+msgid "Description "
+msgstr "Maagizo"
+
+#: whoahqa/templates/_clinics_table.jinja2:10
+msgid "Name"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:11
+msgid "Clinic Code"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:12
+msgid "Created"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:19
+msgid "No."
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:20
+msgid "Description"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:21
+msgid "Category"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:22
+msgid "Min - Max"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:23
+msgid "# Respondents"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:24
+msgid "Score"
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:16
+msgid "Login | WHO Adolescent Health Quality Assessment"
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:67
+msgid "Login to your account "
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:72
+msgid "  Login with your Ona Account "
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:77
+msgid "Don't have an account yet ?&nbsp; "
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:79
+msgid "Create an account "
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:17
+msgid "Register a Clinic"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:22
+msgid "Code:"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:27
+msgid "<b>Assign a new clinic to myself</b>"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:35
+msgid "Score Summary "
+msgstr ""
+

@@ -35,6 +35,8 @@ def deploy(deployment="prod", branch="master"):
             run("python setup.py install")
             run("alembic -n {0} upgrade head".format(
                 env.get('alembic_section', 'alembic')))
+            run("python setup.py extract_messages")
+            run("python setup.py compile_catalog")
 
     # Reload uWSGI
     run("/usr/local/bin/uwsgi --reload /var/run/whoahqa.pid")
