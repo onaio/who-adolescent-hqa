@@ -26,6 +26,7 @@ class UserViews(object):
         user = self.request.context
         clinics = user.get_clinics()
         characteristics = tuple_to_dict_list(("id", "description"), constants.CHARACTERISTICS)
+        key_indicators = [i for i,v in constants.KEY_INDICATORS]
         clinic_scores = {}
         for clinic in clinics:
             scores = clinic.get_scores()
@@ -34,5 +35,6 @@ class UserViews(object):
             'clinics': clinics,
             'characteristics': characteristics,
             'clinic_scores': clinic_scores,
-            'score_limits': constants.SCORE_RANGE_LIMITS
+            'score_limits': constants.SCORE_RANGE_LIMITS,
+            'key_indicators': key_indicators
         }

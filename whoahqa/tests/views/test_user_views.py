@@ -35,6 +35,7 @@ class TestUserViews(IntegrationTestBase):
         self.assertEqual(response['clinics'][0].name, "Clinic A")
         self.assertIn('characteristics', response)
         self.assertIn('clinic_scores', response)
+        self.assertIn('key_indicators', response)
 
 
 class TestUserViewsFunctional(FunctionalTestBase):
