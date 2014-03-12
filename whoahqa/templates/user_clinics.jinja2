@@ -17,15 +17,25 @@
             <div class="table-toolbar">
                 <div class="btn-group">
                     <a id="sample_editable_1_new" class="btn btn-primary" href="{{ request.route_url('clinics',  traverse=('register')) }}">
-                        {{ gettext('Register a Clinic') }}<i class="icon-plus"></i>
+                        {{ gettext('Register a Clinic') }} <i class="icon-plus"></i>
                     </a>
                 </div>
             </div>
             {% for clinic in clinics %}
-                <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-sm">
+                <div class="btn-group clinic-button">
+                  <a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}" class="btn btn-primary btn-sm">
                     <span class="text-left" id="clinic-name">{{ clinic.name }}</span>
                     <span class="text-right" id="clinic-code">{{ gettext('Code:') }} {{ clinic.code }}</span>
-                </a>
+                  </a>
+                  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ request.route_url('clinics', traverse=(clinic.id, 'characteristics')) }}">Select Characteristics </a></li>
+                    <li><a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}">View Report</a></li>
+                  </ul>
+                </div>
             {% endfor %}
             <div id="assign-new" class="bold">
                 <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
@@ -56,6 +66,8 @@
 {% endblock content %}
         {% block page_scripts %}
   <script src="{{ request.static_url('whoahqa:static/scripts/custom.js') }}"></script>
+  <script src="{{ request.static_url('whoahqa:static/plugins/data-tables/jquery.dataTables.js') }}" type="text/javascript" ></script>
+  <script src="{{ request.static_url('whoahqa:static/plugins/data-tables/FixedColumns.js') }}" type="text/javascript" ></script>
 {% endblock %}
 {% block jquery_ready %}
   {{ super() }}

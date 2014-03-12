@@ -151,6 +151,32 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(
             self.request.override_renderer, '_clinics_table.jinja2')
 
+    def test_characteristics(self):
+        self.setup_test_data()
+        clinic = Clinic.get(Clinic.id == 1)
+        self.request.context = clinic
+        response = self.clinic_views.characteristics()
+
+        self.assertIsInstance(response['clinic'], Clinic)
+        self.assertEqual(response['clinic'].id, clinic.id)
+        self.assertEqual(response['characteristics'],
+                         tuple_to_dict_list(
+                             ("id", "description"), constants.CHARACTERISTICS)),
+        self.assertEqual(response['characteristic_types'], constants.CHARACTERISTIC_TYPES),
+        self.assertEqual(response['characteristic_type_mapping'], constants.CHARACTERISTIC_TYPE_MAPPING)
+
+    def test_select_characteristics(self):
+        self.setup_test_data()
+        clinic = Clinic.get(Clinic.id == 1)
+        self.request.context = clinic
+        params = MultiDict([('characteristic_id', 'one'), ('characteristic_id', 'one'), ('characteristic_id', 'three')])
+        self.request.POST = params
+        response = self.clinic_views.select_characteristics()
+        self.assertIsInstance(response, HTTPFound)
+
+
+
+
 
 class TestClinicViewsFunctional(FunctionalTestBase):
     def test_unassigned_clinics_view_allows_authenticated(self):

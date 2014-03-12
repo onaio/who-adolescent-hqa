@@ -102,14 +102,17 @@ class ClinicViews(object):
             raise HTTPBadRequest("The clinic is not yet assigned")
 
         scores = clinic.get_scores()
+        clinic_characteristics = clinic.get_active_characteristics()
         return {
             'clinic': clinic,
             'client_tools': tuple_to_dict_list(
                 ("id", "name"), constants.CLIENT_TOOLS),
             'characteristics': tuple_to_dict_list(
-                ("id", "description"), constants.CHARACTERISTICS),
+                ("id", "description", "number"), constants.CHARACTERISTICS),
             'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAME,
-            'scores': scores
+            'scores': scores,
+            'clinic_characteristics': clinic_characteristics
+
         }
 
     @view_config(name='show_form',
@@ -148,3 +151,47 @@ class ClinicViews(object):
         )
 
         return HTTPFound(location=edit_url)
+
+    @view_config(name='characteristics',
+                 request_method='GET',
+                 context=Clinic,
+                 permission=perms.SHOW,
+                 renderer='clinics_characteristics_show.jinja2')
+    def characteristics(self):
+        clinic = self.request.context
+
+        # if clinic is not assigned, throw a bad request
+        if not clinic.is_assigned:
+            raise HTTPBadRequest("The clinic is not yet assigned")
+
+        scores = clinic.get_scores()
+        characteristics = tuple_to_dict_list(
+            ("id", "description", "number"), constants.CHARACTERISTICS)
+        clinic_characteristics = clinic.get_active_characteristics()
+        #remove characteristics that have already been selected
+        for clinic_characteristic in clinic_characteristics:
+            for characteristic in characteristics:
+                if characteristic['id'] == clinic_characteristic.characteristic_id:
+                    characteristics.remove(characteristic)
+
+        return {
+            'clinic': clinic,
+            'client_tools': tuple_to_dict_list(
+                ("id", "name"), constants.CLIENT_TOOLS),
+            'characteristics': characteristics,
+            'scores': scores,
+            'characteristic_types': constants.CHARACTERISTIC_TYPES,
+            'characteristic_type_mapping': constants.CHARACTERISTIC_TYPE_MAPPING
+        }
+
+    @view_config(name='select_characteristics', request_method='POST', check_csrf=False, context=Clinic)
+    def select_characteristics(self):
+        #get_clinic_id
+        clinic = self.request.context
+        # get the list of selected characteristics
+        characteristic_ids = self.request.POST.getall('characteristic_id')
+        for characteristic_id in characteristic_ids:
+            clinic.select_characteristic(characteristic_id)
+
+        return HTTPFound(
+            self.request.route_url('clinics', traverse=clinic.id))

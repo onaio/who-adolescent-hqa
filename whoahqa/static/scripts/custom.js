@@ -42,6 +42,7 @@ var Custom = function () {
             $('.score').tooltip()
 		} )
     };
+
     var ENTER_KEY_CODE = 13;
     var filterClinicTable = function() {
         $("#search_term").keypress(function(e) {

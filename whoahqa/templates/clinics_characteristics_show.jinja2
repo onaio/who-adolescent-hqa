@@ -1,0 +1,134 @@
+{% extends 'base.jinja2' %}
+{% from 'macros/score_class.jinja2' import score_class %}
+{% from 'macros/value_or_dash.jinja2' import value_or_dash %}
+{% from 'macros/client_rows.jinja2' import generate_client_rows %}
+{% block title %}{{ clinic.name }} {% endblock %}
+{% block page_title %}{{ self.title() }} <span class="bold">({{ clinic.code }})</span> {% endblock %}
+{% block breadcrumbs %}
+  <li>
+    <a href="{{ request.route_url('clinics',traverse=('')) }}">Clinics</a>
+    <i class="icon-angle-right"></i>
+  </li>
+  <li>
+    <a href="{{ request.route_url('clinics',traverse=(clinic.id,)) }}">{{ clinic.name }}</a>
+    <i class="icon-angle-right"></i>
+  </li>
+  <li>{{ gettext("Select Characteristics") }}</li>
+  <li><a href="#"> </a></li>
+{% endblock %}
+{% block content %}
+  <form method="post" action="{{ request.route_url('clinics', traverse=(clinic.id, 'select_characteristics')) }}" role="form">
+      <input type="hidden" name="clinic_id" class="checkboxes" value="{{ clinic.id }}">
+      <div class="row col-sm-12">
+          <div class="">
+              <label for="charactersictic_type" class="col-sm-3 control-label">Filter by Characteristic Type: </label>
+              <div class="select_char col-sm-2">
+                  <select id="charactersictic_type" class="form-control">
+                      <option value="All">All</option>
+                      {% for characteristic_type in characteristic_types %}
+                      <option value="{{characteristic_type[loop.index]}}">{{characteristic_type}}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+          </div>
+          <div class="col-sm-2">
+              <button type="submit" class="btn btn-primary">
+                Work on selected <i class="icon-share-alt"></i>
+              </button>
+          </div>
+      </div>
+      <div class="table-responsive">
+        <div class="row">
+          <div class="pull-left char-header">
+              Characteristics
+          </div>
+        </div>
+        <table class="table table-bordered scores-table" id="characteristics">
+          {% for characteristic in characteristics %}
+            {% set percentage = scores[characteristic.id].totals.total_percentage %}
+            <thead>
+            <tr>
+              <th class="char-sel"></th>
+              <th class="char-defn"></th>
+              <th class="char-no center-align">No.</th>
+              <th class="char-desc">Description</th>
+              <th class="char-cat">Category</th>
+              <th class="min-max">Min - Max</th>
+              <th class="char-resp"># Respondents</th>
+
+            </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="">
+                    <input type="checkbox" name="characteristic_id" class="checkboxes" value="{{ characteristic.id }}">
+                </td>
+                <td class="center-align ">
+                    <img src="{{ request.static_url('whoahqa:static/images/char_en/sm/%d.png' % (characteristic.number)) }}">
+                </td>
+                <td class="center-align char-no-vals">
+                  {{ characteristic.number }}
+                </td>
+                <td class="">
+                    <p>{{ characteristic.description }}</p>
+                    <span class="label label-info bold">{{ characteristic_type_mapping[characteristic.id] }}</span>
+                </td>
+                <td class="client-tool-table">
+                  <table class="table table-striped">
+                    {{ generate_client_rows(scores, client_tools, characteristic.id, client_property='name', characteristic_id=characteristic.id)}}
+                    <tr>
+                      <td class="text-right bold">Absolute total score</td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="client-tool-table">
+                  <table class="table table-striped">
+                    {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_questions', output_prefix='0 - ', characteristic_id=characteristic.id) }}
+                    <tr>
+                      <td class="text-center bold">
+                        0 - {{ scores[characteristic.id].totals.total_questions }}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="client-tool-table">
+                  <table class="table table-striped respondents">
+                  {% for client_tool in client_tools %}
+                    {% set score = scores[characteristic.id] %}
+                    {% if score[client_tool.id] is defined %}
+                        <tr>
+                            <td>
+                            {% set responses = score[client_tool.id]['num_responses']|int(0) %}
+                            {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
+                            {% if responses %}
+                              {% for response in range(responses) %}
+                                <i class="icon-blue icon-circle"></i>
+                              {% endfor %}
+                            {% endif %}
+                            {% for response in range(pending_responses) %}
+                              <i class="icon-grey icon-circle"></i>
+                            {% endfor %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                  {% endfor %}
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+  </form>
+
+{% endblock %}
+{% block page_scripts %}
+  <script src="{{ request.static_url('whoahqa:static/scripts/custom.js') }}"></script>
+{% endblock %}
+{% block jquery_ready %}
+  {{ super() }}
+  Custom.addCheckAllListener();
+{% endblock %}
