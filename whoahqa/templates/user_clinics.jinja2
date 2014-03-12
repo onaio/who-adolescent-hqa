@@ -27,23 +27,28 @@
                     <span class="text-right" id="clinic-code">{{ gettext('Code:') }} {{ clinic.code }}</span>
                 </a>
             {% endfor %}
-            <div id="assign-new">
+            <div id="assign-new" class="bold">
                 <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
                     <span class="glyphicon glyphicon-home"></span> 
                     {{ gettext('Assign a new clinic to myself') }}
                 </a>
             </div>
-
+            <div class="bold">
+                <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'summary')) }}">
+                  <i class="icon-table"></i> 
+                    {{ gettext('View Clinics Score Summary') }}
+                </a>
+            </div>
         </div>
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
-                <i class="icon-plus-sign-alt"></i> {{ gettext('Score Summary') }}
+                <i class="icon-plus-sign-alt"></i> {{ gettext('Characteristics Summary') }}
             </h3>
         </div>
         <div class="panel-body">
-            {% include '_clinics_score_summary_comparison.jinja2' %}
+            {% include '_clinics_key_indicators.jinja2' %}
         </div>
       </div>
     </div>
