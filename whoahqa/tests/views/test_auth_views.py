@@ -13,6 +13,7 @@ from whoahqa.views.auth import (
     password_login,)
 from whoahqa.models import (
     Clinic,
+    ReportingPeriod,
 )
 from whoahqa.tests import settings, IntegrationTestBase, FunctionalTestBase
 
@@ -173,7 +174,9 @@ class TestForbiddenViewFunctional(FunctionalTestBase):
         # TODO: move setup_test_data call to setUp
         self.setup_test_data()
         clinic = Clinic.get(Clinic.name == "Clinic A")
-        url = self.request.route_url('clinics', traverse=(clinic.id,))
+        period = ReportingPeriod.get(ReportingPeriod.title == "Period 1")
+        url = self.request.route_url(
+            'clinics', traverse=(clinic.id, period.id))
         headers = self._login_user('manager_b')
         response = self.testapp.get(url, headers=headers, status=403)
         self.assertEqual(response.status_code, 403)
