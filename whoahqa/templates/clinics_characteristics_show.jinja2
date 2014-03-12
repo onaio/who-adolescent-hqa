@@ -9,7 +9,11 @@
     <a href="{{ request.route_url('clinics',traverse=('')) }}">Clinics</a>
     <i class="icon-angle-right"></i>
   </li>
-  <li>{{ self.page_title() }}</li>
+  <li>
+    <a href="{{ request.route_url('clinics',traverse=(clinic.id,)) }}">{{ clinic.name }}</a>
+    <i class="icon-angle-right"></i>
+  </li>
+  <li>{{ gettext("Select Characteristics") }}</li>
   <li><a href="#"> </a></li>
 {% endblock %}
 {% block content %}
@@ -60,10 +64,10 @@
                     <input type="checkbox" name="characteristic_id" class="checkboxes" value="{{ characteristic.id }}">
                 </td>
                 <td class="center-align ">
-                    <img src="{{ request.static_url('whoahqa:static/images/char_en/sm/%d.png' % (loop.index)) }}">
+                    <img src="{{ request.static_url('whoahqa:static/images/char_en/sm/%d.png' % (characteristic.number)) }}">
                 </td>
                 <td class="center-align char-no-vals">
-                  {{ loop.index }}
+                  {{ characteristic.number }}
                 </td>
                 <td class="">
                     <p>{{ characteristic.description }}</p>
