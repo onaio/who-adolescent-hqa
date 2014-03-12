@@ -2,8 +2,13 @@
 {% block title %}My Clinics{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
-  <li>My Clinics</li>
-  <li>Score Summary</li>
+  <li>
+    <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'clinics')) }}">
+       {{ gettext('My Clinics') }}
+    </a>
+  </li>
+  <i class="icon-angle-right"></i>
+  <li>{{ gettext('Score Summary') }}</li>
 {% endblock %}
 {% block content %}
 {% from 'macros/score_class.jinja2' import score_class %}
