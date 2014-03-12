@@ -33,7 +33,10 @@ from sqlalchemy.orm import (
 from zope.sqlalchemy import ZopeTransactionExtension
 
 from whoahqa import constants
-from whoahqa.utils import hashid
+from whoahqa.utils import (
+    hashid,
+    tuple_to_dict_list,
+)
 from whoahqa.constants import permissions as perms
 from whoahqa.security import pwd_context
 
@@ -286,11 +289,17 @@ class Clinic(Base):
     def filter_clinics(cls, search_term, all_clinics):
         if all_clinics:
             #filter all clinics
-            clinics = DBSession.query(Clinic).filter(Clinic.name.ilike('%'+search_term+'%')).all()
+            clinics = DBSession\
+                .query(Clinic)\
+                .filter(Clinic.name.ilike('%'+search_term+'%')).all()
         else:
             #filter unassigned clinics
-            clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
-                user_clinics.columns.clinic_id == None, Clinic.name.ilike('%'+search_term+'%')).all()
+            clinics = DBSession\
+                .query(Clinic)\
+                .outerjoin(user_clinics)\
+                .filter(
+                    user_clinics.columns.clinic_id == None,
+                    Clinic.name.ilike('%'+search_term+'%')).all()
         return clinics
 
     def calculate_score(self, characteristic, xform_id):
@@ -401,7 +410,8 @@ class Clinic(Base):
         return scores
 
     def select_characteristic(self, characteristic_id):
-        clinic_characteristic = ClinicCharacteristics(clinic_id=self.id, characteristic_id=characteristic_id)
+        clinic_characteristic = ClinicCharacteristics(
+            clinic_id=self.id, characteristic_id=characteristic_id)
         DBSession.add(clinic_characteristic)
 
     def get_active_characteristics(self):
@@ -409,6 +419,67 @@ class Clinic(Base):
             ClinicCharacteristics).filter(
                 ClinicCharacteristics.clinic_id == self.id).all()
         return clinic_characteristics
+
+    def calculate_key_indicator_scores(self, indicator, characteristics_list):
+        """
+        Calculate the aggregate score for a key indicator eg. 
+        equitable = {
+            'one': x%,
+            'two': y%,
+            'three': z%
+        }
+        """
+        key_indicator_scores = {}        
+        total_responses = total_scores = total_questions = 0
+        for characteristic in characteristics_list:
+            mapping = constants.CHARACTERISTIC_MAPPING[characteristic]
+            key_indicator_scores[characteristic] = {}
+            for client_tool_id, questions in mapping.items():
+                aggregate_score, num_responses = self.calculate_score(
+                    characteristic, client_tool_id)
+                if aggregate_score is not None:
+                    total_scores += aggregate_score
+                
+                total_responses += num_responses
+                total_questions += len(questions)
+                key_indicator_scores[characteristic] = None\
+                    if total_responses == 0 else (
+                        total_scores/float(total_questions) * 100)
+
+        return key_indicator_scores
+
+    def get_all_key_indicator_scores(self):
+        """
+        key_indicator_scores = { 
+            equitable = {
+                'one': x%,
+                'two': y%,
+                'three': z%,
+                'average_score': xyz/3%
+                },
+            acceptable = {
+                'sixteen': z%,
+                'average_score': z%
+            },
+            ...
+        }
+        """
+        key_indicators = tuple_to_dict_list(
+                ("key", "characteristic_list"), constants.KEY_INDICATORS)
+        all_key_indicator_scores = {}
+        for key_char_pair in key_indicators:
+            average_score = 0
+            indicator_score = self.calculate_key_indicator_scores(
+                key_char_pair['key'], key_char_pair['characteristic_list'])
+            for score in indicator_score.itervalues():
+                if score is not None:
+                    average_score += score
+            all_key_indicator_scores[key_char_pair['key']] = indicator_score
+            all_key_indicator_scores[key_char_pair['key']].update(
+                    {'average_score': (average_score/len(indicator_score))
+                })
+
+        return all_key_indicator_scores
 
 
 class SubmissionHandlerError(Exception):

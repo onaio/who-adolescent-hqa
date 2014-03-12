@@ -13,11 +13,6 @@
 
 #assign-new {
     margin-top: 1em;
-    font-weight: bold;
-}
-
-#assign-new span.glyphicon {
-    width: 1.25em;
 }
 
 #clinic-name {
@@ -318,4 +313,25 @@ td.relative-score i.icon-medkit {
 
 i.launch-form {
     font-size: 2em;
+}
+
+table tbody > tr > td.enclosed-table {
+    padding: 0px;
+}
+
+td.enclosed-table table tr:first-child td {
+    border-top: none;
+}
+
+.table_header {
+    background-color:#1175cb;
+    color:#ffffff;
+}
+
+.table_left_bordered {
+    border-left: 2px solid #cde3f4;
+}
+
+.table_bottom_bordered {
+    border-bottom: 2px solid #cde3f4;
 }
