@@ -13,6 +13,7 @@
   <li><a href="#"> </a></li>
 {% endblock %}
 {% block content %}
+{% include 'clinic_tool_table.jinja2' %}
   <div class="table-responsive">
     <div class="row">
       <div class="pull-left char-header">{{ gettext('Characteristics') }}</div>
@@ -86,27 +87,31 @@
                                 </td>
                             </tr>
                         {% endif %}
-                      {% endfor %}
-                        <tr>
-                          <td>&nbsp;</td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td class="client-tool-table">
-                      <table class="table table-striped">
-                        {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
-                        <tr>
-                          <td class="text-center">0</td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td class="text-center relative-score">
-                      <i class="big icon-medkit"></i>
-                      {{ "%s"| format(percentage|int(0)) }}%
-                    </td>
-                  </tr>
-            {% endif %}
-        {% endfor %}
+                        {% for response in range(pending_responses) %}
+                          <i class="icon-grey icon-circle"></i>
+                        {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+              {% endfor %}
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+            <td class="client-tool-table">
+              <table class="table table-striped">
+                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
+                <tr>
+                  <td class="text-center">0</td>
+                </tr>
+              </table>
+            </td>
+            <td class="text-center relative-score">
+              <i class="big icon-medkit"></i>
+              {{ "%s"| format(percentage|int(0)) }}%
+            </td>
+          </tr>
       {% endfor %}
       {% if not clinic_characteristics %}
             <tr>

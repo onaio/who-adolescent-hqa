@@ -8,23 +8,22 @@
           <thead>
           <tr role="row" class="score_summary_header_1">
                 <th colspan=2> {{ gettext('Characteristics') }}</th>
-                <th colspan={{ clinics|length }}> gettext('Scores')</th>
+                <th colspan={{ clinics|length }}> {{ gettext("Scores") }}</th>
           </tr>
           <tr role="row" class="score_summary_header_2">
             <th class="sorting lasttd" role="columnheader" tabindex="0"
                 aria-controls="sample_1" rowspan="1" colspan="1"
-
                 aria-label="No."
                 style="width: 30px;">
                 {{ gettext('No.') }}
             </th>
             <th class="sorting_disabled ssdata" role="columneader" rowspan="1"
-                colspan="1" aria-label="Description" style="width: 46px;">
+                colspan="1" aria-label="{{ gettext('Description') }}" style="width: 46px;">
                 {{ gettext('Description') }}
             </th>
              {% for clinic in clinics %}
                 <th class="sorting_disabled" role="columnheader" rowspan="1"
-                colspan="1" aria-label="Clinic Name">
+                colspan="1" aria-label="{{ gettext("Clinic Name") }}">
                 <div style="width:84px">
                     {{ clinic.name }}
                 </div>

@@ -38,7 +38,8 @@ class TestOnaUser(TestBase):
         self.assertIsInstance(ona_user.user, User)
         self.assertEqual(ona_user.refresh_token, new_refresh_token)
 
-    def test_get_or_create_from_api_data_raises_value_error_if_bad_json(self):
+    def test_get_or_create_from_api_data_raises_value_error_if_bad_user_len(
+            self):
         user_data = [
             {
                 'username': u"user_one",
@@ -46,6 +47,35 @@ class TestOnaUser(TestBase):
                 'last_name': u""
             }, {
                 'username': u"user_one",
+                'first_name': u"",
+                'last_name': u""
+            }]
+        refresh_token = 'a123f4'
+        self.assertRaises(
+            ValueError,
+            OnaUser.get_or_create_from_api_data,
+            user_data,
+            refresh_token)
+
+    def test_get_or_create_from_api_data_raises_value_error_if_no_username(
+            self):
+        user_data = [
+            {
+                'first_name': u"",
+                'last_name': u""
+            }]
+        refresh_token = 'a123f4'
+        self.assertRaises(
+            ValueError,
+            OnaUser.get_or_create_from_api_data,
+            user_data,
+            refresh_token)
+
+    def test_get_or_create_from_api_data_raises_value_error_if_blank_username(
+            self):
+        user_data = [
+            {
+                'username': u"",
                 'first_name': u"",
                 'last_name': u""
             }]

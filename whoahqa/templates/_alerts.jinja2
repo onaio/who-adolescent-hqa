@@ -1,6 +1,13 @@
+{% from 'macros/alert_message.jinja2' import alert_message %}
 {% for message in request.session.pop_flash('error') %}
-  <div class="alert alert-danger">
-    <button class="close" data-dismiss="alert"></button>
-    <span>{{ message }}</span>
-  </div>
+  {{ alert_message(message, 'danger') }}
+{% endfor %}
+{% for message in request.session.pop_flash('info') %}
+  {{ alert_message(message, 'info') }}
+{% endfor %}
+{% for message in request.session.pop_flash('success') %}
+  {{ alert_message(message, 'success') }}
+{% endfor %}
+{% for message in request.session.pop_flash('warning') %}
+  {{ alert_message(message, 'warning') }}
 {% endfor %}
