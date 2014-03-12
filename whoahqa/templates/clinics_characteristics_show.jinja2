@@ -67,8 +67,8 @@
                   {{ loop.index }}
                 </td>
                 <td class="">
-                    {{ characteristic.description }}<br>
-                    <span class="label label-primary">({{ characteristic_type_mapping[characteristic.id]}})</span>
+                    <p>{{ characteristic.description }}</p>
+                    <span class="label label-info bold">{{ characteristic_type_mapping[characteristic.id] }}</span>
                 </td>
                 <td class="client-tool-table">
                   <table class="table table-striped">
