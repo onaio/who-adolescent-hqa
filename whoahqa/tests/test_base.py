@@ -12,6 +12,7 @@ from sqlalchemy import engine_from_config
 from webtest import TestApp
 
 from whoahqa import main
+from whoahqa.utils import enketo
 from whoahqa.security import pwd_context
 from whoahqa.models import (
     DBSession,
@@ -97,6 +98,8 @@ class IntegrationTestBase(TestBase):
     def setUp(self):
         super(IntegrationTestBase, self).setUp()
         pwd_context.load_path('test.ini')
+        # configure enketo
+        enketo.configure(settings['enketo_url'], settings['enketo_api_token'])
         self.config.include('whoahqa')
 
 

@@ -14,6 +14,7 @@ from sqlalchemy import (
     String,
     Table,
     DateTime,
+    Date,
     func,
 )
 from sqlalchemy.dialects.postgresql import JSON
@@ -86,8 +87,9 @@ class UserFactory(BaseModelFactory):
     def __getitem__(self, item):
         # try to retrieve the user whose id matches item
         try:
-            user = DBSession.query(User).filter_by(id=item).one()
-        except NoResultFound:
+            user_id = int(item)
+            user = DBSession.query(User).filter_by(id=user_id).one()
+        except (ValueError, NoResultFound):
             raise KeyError
         else:
             user.__parent__ = self
@@ -116,6 +118,19 @@ class SubmissionFactory(BaseModelFactory):
 
     def __getitem__(self, item):  # pragma: no cover
         raise NotImplementedError
+
+
+class ReportingPeriodFactory(BaseModelFactory):
+    def __getitem__(self, item):
+        try:
+            period_id = int(item)
+            period = ReportingPeriod.get(ReportingPeriod.id == period_id)
+        except (ValueError, NoResultFound):
+            raise KeyError
+        else:
+            period.__parent__ = self
+            period.__name__ = item
+            return period
 
 
 user_clinics = Table(
@@ -171,7 +186,7 @@ class UserProfile(Base):
 
     @property
     def password(self):
-        return self._password
+        return self.pwd
 
     @password.setter
     def password(self, value):
@@ -201,8 +216,13 @@ class OnaUser(Base):
         if len(json_data) != 1:
             raise ValueError("We only know how to handle a single user")
 
-        data = json_data[0]
-        username = data['username']
+        user_data = json_data[0]
+
+        username = user_data.get('username', "")
+        if username is None or (not username.strip()):
+            raise ValueError("Invalid user profile data")
+
+        username = user_data['username']
         try:
             ona_user = OnaUser.get(OnaUser.username == username)
             ona_user.refresh_token = refresh_token
@@ -532,3 +552,11 @@ class Submission(Base):
             submission, cls.HANDLER_TO_XFORMS_MAPPING)
         handler_class(submission).handle_submission()
         return submission
+
+
+class ReportingPeriod(Base):
+    __tablename__ = 'reporting_periods'
+    id = Column(Integer, primary_key=True)
+    title = Column(String(100), nullable=False)
+    start_date = Column(Date(), nullable=False)
+    end_date = Column(Date(), nullable=False)

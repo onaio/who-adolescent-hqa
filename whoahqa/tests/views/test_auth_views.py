@@ -14,7 +14,39 @@ from whoahqa.views.auth import (
 from whoahqa.models import (
     Clinic,
 )
-from whoahqa.tests import (settings, IntegrationTestBase, FunctionalTestBase,)
+from whoahqa.tests import settings, IntegrationTestBase, FunctionalTestBase
+
+
+@urlmatch(netloc='accounts.example.com', path='/o/token')
+def oauth_token_mock(url, request):
+    return {
+        'status_code': 200,
+        'content': '{"access_token":"1/fFAGRNJru1FTz70BzhT3Zg", "expires_in":3920, "token_type":"Bearer", "refresh_token":"1/f4YTbBjMoBbXfg7oFh_FKg6r3r6bh8M9Y-0"}'
+    }
+
+
+@urlmatch(netloc='accounts.example.com', path='/api/v1/users')
+def oauth_users_mock(url, request):
+    return {
+        'status_code': 200,
+        'content': '[{"username": "user_one", "first_name": "", "last_name": ""}]'
+    }
+
+
+@urlmatch(netloc='accounts.example.com', path='/api/v1/users')
+def oauth_users_empty_response_mock(url, request):
+    return {
+        'status_code': 200,
+        'content': ''
+    }
+
+
+@urlmatch(netloc='accounts.example.com', path='/api/v1/users')
+def oauth_users_bad_response_mock(url, request):
+    return {
+        'status_code': 200,
+        'content': '[]'
+    }
 
 
 class TestAuth(IntegrationTestBase):
@@ -64,6 +96,28 @@ class TestAuth(IntegrationTestBase):
         self.assertEqual(
             response.headers['Location'],
             request.route_url('auth', action='login'))
+
+    def test_oauth_callback_redirects_when_invalid_json_response(self):
+        request = testing.DummyRequest()
+        request.GET = MultiDict([
+            ('code', '1234'),
+            ('state', 'a123f4')
+        ])
+        with HTTMock(oauth_token_mock,
+                     oauth_users_empty_response_mock):
+            response = oauth_callback(request)
+        self.assertEqual(response.status_code, 302)
+
+    def test_oauth_callback_redirects_when_response_missing_username(self):
+        request = testing.DummyRequest()
+        request.GET = MultiDict([
+            ('code', '1234'),
+            ('state', 'a123f4')
+        ])
+        with HTTMock(oauth_token_mock,
+                     oauth_users_bad_response_mock):
+            response = oauth_callback(request)
+        self.assertEqual(response.status_code, 302)
 
     def test_logout(self):
         request = testing.DummyRequest()
@@ -126,22 +180,6 @@ class TestForbiddenViewFunctional(FunctionalTestBase):
 
 
 class TestAuthFunctional(FunctionalTestBase):
-    @staticmethod
-    @urlmatch(netloc='accounts.example.com', path='/o/token')
-    def oauth_token_mock(url, request):
-        return {
-            'status_code': 200,
-            'content': '{"access_token":"1/fFAGRNJru1FTz70BzhT3Zg", "expires_in":3920, "token_type":"Bearer", "refresh_token":"1/f4YTbBjMoBbXfg7oFh_FKg6r3r6bh8M9Y-0"}'
-        }
-
-    @staticmethod
-    @urlmatch(netloc='accounts.example.com', path='/api/v1/users')
-    def oauth_users_mock(url, request):
-        return {
-            'status_code': 200,
-            'content': '[{"username": "user_one", "first_name": "", "last_name": ""}]'
-        }
-
     def test_oauth_login_response(self):
         url = self.request.route_url('auth', action='login')
         response = self.testapp.get(url)
@@ -151,8 +189,8 @@ class TestAuthFunctional(FunctionalTestBase):
         state = 'a123f4'
         code = 'f27299'
         url = self.request.route_path('auth', action='callback')
-        with HTTMock(TestAuthFunctional.oauth_token_mock,
-                     TestAuthFunctional.oauth_users_mock):
+        with HTTMock(oauth_token_mock,
+                     oauth_users_mock):
             response = self.testapp.get(url, params={
                 'state': state,
                 'code': code

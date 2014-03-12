@@ -7,14 +7,15 @@ from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from sqlalchemy import engine_from_config
 
 from whoahqa.constants import permissions as perms
-from utils import hashid, enketo
+from utils import hashid, enketo, format_date_for_locale
 from whoahqa.security import group_finder, pwd_context
 from whoahqa.models import (
     DBSession,
     Base,
     UserFactory,
     ClinicFactory,
-    SubmissionFactory
+    SubmissionFactory,
+    ReportingPeriodFactory,
 )
 from whoahqa.views import (
     get_request_user,
@@ -70,6 +71,7 @@ def main(global_config, **settings):
 def includeme(config):
     config.include('pyramid_jinja2')
     config.add_jinja2_search_path("whoahqa:templates")
+    config.get_jinja2_environment().filters['format_date'] = format_date_for_locale
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('default', '/')
     config.add_route('auth', '/auth/{action}')
@@ -79,4 +81,6 @@ def includeme(config):
                      factory=ClinicFactory)
     config.add_route('submissions', '/submissions/*traverse',
                      factory=SubmissionFactory)
+    config.add_route('periods', '/reporting-periods/*traverse',
+                     factory=ReportingPeriodFactory)
     config.scan()

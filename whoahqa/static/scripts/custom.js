@@ -42,9 +42,11 @@ var Custom = function () {
             $('.score').tooltip()
 		} )
     };
-    ENTER_KEY_CODE = 13
+
+    var ENTER_KEY_CODE = 13;
     var filterClinicTable = function() {
         $("#search_term").keypress(function(e) {
+            var search_term, filter_url;
             if (e.which == ENTER_KEY_CODE) {
                 search_term = $("#search_term").val();
                 filter_url = "?search="+search_term

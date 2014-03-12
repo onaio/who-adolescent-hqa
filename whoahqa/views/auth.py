@@ -154,25 +154,33 @@ def oauth_callback(request):
         base_url=base_url,
         path=request.registry.settings['oauth_user_api_path'])
     response = session.request('GET', user_api_url)
-    user_data = json.loads(response.text)
-    refresh_token = token['refresh_token']
-
     try:
-        ona_user = OnaUser.get_or_create_from_api_data(
-            user_data, refresh_token)
+        user_data = json.loads(response.text)
     except ValueError:
-        request.session.flash(
-            u"Failed to login, please try again", 'error')
+        # couldn't decode json
+        pass
     else:
-        request.session['oauth_token'] = json.dumps(token)
-        # flash to get the auto-inc id
-        DBSession.flush()
-        user_id = ona_user.user.id
+        refresh_token = token['refresh_token']
+        try:
+            ona_user = OnaUser.get_or_create_from_api_data(
+                user_data, refresh_token)
+        except ValueError:
+            pass
+        else:
+            request.session['oauth_token'] = json.dumps(token)
+            # flash to get the auto-inc id
+            DBSession.flush()
+            user_id = ona_user.user.id
 
-        # login user
-        headers = remember(request, user_id)
+            # login user
+            headers = remember(request, user_id)
 
-        # TODO: redirect to `came_from` url
-        return HTTPFound(
-            request.route_url('users', traverse=(user_id, 'clinics')),
-            headers=headers)
+            # TODO: redirect to `came_from` url
+            return HTTPFound(
+                request.route_url('users', traverse=(user_id, 'clinics')),
+                headers=headers)
+
+    request.session.flash(
+        u"Failed to login, please try again", 'error')
+    return HTTPFound(
+        request.route_url('auth', action='login'))
