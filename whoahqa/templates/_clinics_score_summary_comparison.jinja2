@@ -1,0 +1,62 @@
+{% from 'macros/score_class.jinja2' import score_class %}
+<div id="sample_1_wrapper" class="" role="grid">
+    <div class="row">
+      <div class="score-summary-table">
+        <table
+            class="table"
+            id="score_summary_compare" aria-describedby="sample_1_info">
+          <thead>
+          <tr role="row" class="score_summary_header_1">
+                <th colspan=2> Clinics</th>
+                <th colspan={{ characteristics|length }}> Characteristic Scores</th>
+          </tr>
+          <tr role="row" class="score_summary_header_2">
+            <th class="sorting lasttd" role="columnheader" tabindex="0"
+                aria-controls="sample_1" rowspan="1" colspan="1"
+                aria-label="No." style="padding-left:3px;padding-right:3px;">
+                    No.
+            </th>
+            <th class="sorting lasttd" role="columneader" rowspan="1"
+                colspan="1" aria-label="Clinic Name" style="padding-right:0px;">
+                <div style="width:150px">
+                    Clinic Name
+                </div>
+            </th>
+             {% for characteristic in characteristics %}
+                <th class="sorting_disabled score" role="columnheader" rowspan="1"
+                colspan="1" aria-label="Characteristic" data-toggle="tooltip" data-placement="right"
+                title="{{ characteristic.description}}">
+                <div style="width:40px">
+                    {{ loop.index }}
+                </div>
+                </th>
+            {% endfor %}
+          </tr>
+          </thead>
+          <tbody role="alert" aria-live="polite" aria-relevant="all">
+
+           {% for clinic in clinics %}
+             <tr class="gradeX odd ssdata">
+                <td class="lasttd">
+                        {{loop.index }}
+                </td>
+                <td class="lasttd">
+                    <div style="width:170px">
+                        {{ clinic.name }}
+                    </div>
+                </td>
+                {% for characteristic in characteristics %}
+                <td>
+                    <div style="width:50px;" class="score" data-toggle="tooltip" data-placement="top"
+                        title="{{ characteristic.description}}">
+                        {{score_class(clinic_scores[clinic.id][characteristic.id]['total_percentage'], score_limits)}}
+                    </div>
+                </td>
+                {% endfor %}
+             </tr>
+           {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>

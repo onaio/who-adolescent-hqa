@@ -108,6 +108,7 @@ class ClinicViews(object):
                 ("id", "name"), constants.CLIENT_TOOLS),
             'characteristics': tuple_to_dict_list(
                 ("id", "description"), constants.CHARACTERISTICS),
+            'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAME,
             'scores': scores
         }
 
@@ -121,7 +122,6 @@ class ClinicViews(object):
             survey_url = enketo.get_survey_url(
                 self.request.registry.settings['form_server_url'],
                 survey_form)
-
         except Http404:
             # Since enketo doesn't have the specified form throw a
             # bad request
