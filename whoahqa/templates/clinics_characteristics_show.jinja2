@@ -36,7 +36,6 @@
       <div class="table-responsive">
         <div class="row">
           <div class="pull-left char-header">
-              <input type="checkbox" class="group-checkable" data-set="#characteristics .checkboxes" title="Select all characteristics">
               Characteristics
           </div>
         </div>
@@ -45,7 +44,7 @@
             {% set percentage = scores[characteristic.id].totals.total_percentage %}
             <thead>
             <tr>
-              <th class="center-align "></th>
+              <th class="char-sel"></th>
               <th class="char-defn"></th>
               <th class="char-no center-align">No.</th>
               <th class="char-desc">Description</th>
@@ -57,7 +56,7 @@
             </thead>
             <tbody>
               <tr>
-                <td class="center-align ">
+                <td class="">
                     <input type="checkbox" name="characteristic_id" class="checkboxes" value="{{ characteristic.id }}">
                 </td>
                 <td class="center-align ">

@@ -220,6 +220,9 @@
     color: #fff
 }
 
+.scores-table thead > tr > th.char-sel {
+    width: 2%;
+}
 .scores-table thead > tr > th.char-defn {
     width: 16%;
 }
