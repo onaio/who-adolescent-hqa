@@ -110,8 +110,8 @@
       {% if not clinic_characteristics %}
             <tr>
                 <td>No Characteristics selected. <br>
-                    <a href="{{ request.route_url('clinics', traverse=(clinic.id, 'characteristics')) }}"
-                       class="btn btn-primary btn-sm">Select Characteristics </a>
+                    <a href="{{ request.route_url('clinics', traverse=(clinic.id, period.id, 'characteristics')) }}"
+                       class="btn btn-primary btn-sm">{{ gettext('Select Characteristics') }} </a>
                 </td>
             </tr>
       {% endif %}

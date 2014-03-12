@@ -90,8 +90,10 @@ class TestClinicViews(IntegrationTestBase):
 
     def test_show(self):
         self.setup_test_data()
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.id == 1)
-        self.request.context = clinic
+        period.__parent__ = clinic
+        self.request.context = period
         response = self.clinic_views.show()
         self.assertIsInstance(response['clinic'], Clinic)
         self.assertEqual(response['clinic'].id, clinic.id)
@@ -102,8 +104,10 @@ class TestClinicViews(IntegrationTestBase):
 
     def test_show_raises_bad_request_if_clinic_is_not_assigned(self):
         self.setup_test_data()
-        clinic = Clinic.get(Clinic.id == 2)
-        self.request.context = clinic
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
+        clinic = Clinic.get(Clinic.name == "Clinic B")
+        period.__parent__ = clinic
+        self.request.context = period
         self.assertRaises(HTTPBadRequest, self.clinic_views.show)
 
     def test_list_redirects_when_user_has_no_permissions(self):
@@ -156,7 +160,6 @@ class TestClinicViews(IntegrationTestBase):
 
     def test_characteristics(self):
         self.setup_test_data()
-
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.id == 1)
         period.__parent__ = clinic
@@ -191,6 +194,8 @@ class TestClinicViews(IntegrationTestBase):
         self.request.POST = params
         response = self.clinic_views.select_characteristics()
         self.assertIsInstance(response, HTTPFound)
+        self.assertEqual(response.location, self.request.route_url(
+            'clinics', traverse=(clinic.id, period.id)))
 
 
 class TestClinicViewsFunctional(FunctionalTestBase):
@@ -215,8 +220,10 @@ class TestClinicViewsFunctional(FunctionalTestBase):
 
     def test_clinic_show_allows_owner(self):
         self.setup_test_data()
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.name == "Clinic A")
-        url = self.request.route_path('clinics', traverse=(clinic.id,))
+        url = self.request.route_path(
+            'clinics', traverse=(clinic.id, period.id))
         headers = self._login_user('manager_a')
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)

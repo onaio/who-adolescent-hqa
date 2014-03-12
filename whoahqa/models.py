@@ -421,10 +421,11 @@ class Clinic(Base):
             period_id=period_id)
         DBSession.add(clinic_characteristic)
 
-    def get_active_characteristics(self):
+    def get_active_characteristics(self, period):
         clinic_characteristics = DBSession.query(
             ClinicCharacteristics).filter(
-                ClinicCharacteristics.clinic_id == self.id).all()
+                ClinicCharacteristics.clinic_id == self.id,
+                ClinicCharacteristics.period_id == period.id).all()
         return clinic_characteristics
 
 

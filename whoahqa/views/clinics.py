@@ -93,18 +93,20 @@ class ClinicViews(object):
 
     @view_config(name='',
                  request_method='GET',
-                 context=Clinic,
+                 context=ReportingPeriod,
                  permission=perms.SHOW,
                  renderer='clinics_show.jinja2')
     def show(self):
-        clinic = self.request.context
+        period = self.request.context
+        clinic = period.__parent__
         # if clinic is not assigned, throw a bad request
         if not clinic.is_assigned:
             raise HTTPBadRequest("The clinic is not yet assigned")
 
         scores = clinic.get_scores()
-        clinic_characteristics = clinic.get_active_characteristics()
+        clinic_characteristics = clinic.get_active_characteristics(period)
         return {
+            'period': period,
             'clinic': clinic,
             'client_tools': tuple_to_dict_list(
                 ("id", "name"), constants.CLIENT_TOOLS),
@@ -170,7 +172,7 @@ class ClinicViews(object):
         scores = clinic.get_scores()
         characteristics = tuple_to_dict_list(
             ("id", "description", "number"), constants.CHARACTERISTICS)
-        clinic_characteristics = clinic.get_active_characteristics()
+        clinic_characteristics = clinic.get_active_characteristics(period)
         #remove characteristics that have already been selected
         for clinic_characteristic in clinic_characteristics:
             for characteristic in characteristics:
@@ -204,4 +206,4 @@ class ClinicViews(object):
             clinic.select_characteristic(characteristic_id, period.id)
 
         return HTTPFound(
-            self.request.route_url('clinics', traverse=clinic.id))
+            self.request.route_url('clinics', traverse=(clinic.id, period.id)))
