@@ -366,7 +366,7 @@ class Clinic(Base):
         """
         scores = {}
 
-        for characteristic, label in constants.CHARACTERISTICS:
+        for characteristic, label, number in constants.CHARACTERISTICS:
             scores[characteristic] = {}
             total_scores = total_questions = total_responses = 0
             mapping = constants.CHARACTERISTIC_MAPPING[characteristic]
@@ -404,9 +404,10 @@ class Clinic(Base):
         clinic_characteristic = ClinicCharacteristics(clinic_id=self.id, characteristic_id=characteristic_id)
         DBSession.add(clinic_characteristic)
 
-    def get_characteristics(self):
-        clinic_characteristics = DBSession.query(ClinicCharacteristics).filter(
-            ClinicCharacteristics.clinic_id == self.id).all()
+    def get_active_characteristics(self):
+        clinic_characteristics = DBSession.query(
+            ClinicCharacteristics).filter(
+                ClinicCharacteristics.clinic_id == self.id).all()
         return clinic_characteristics
 
 
