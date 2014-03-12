@@ -1,3 +1,4 @@
+{% from 'macros/value_or_dash.jinja2' import value_or_dash %}
 <div id="sample_1_wrapper" class="" role="grid">
     <div class="row">
       <div class="indicator-summary-table">
@@ -39,7 +40,7 @@
                                     {{ char }}
                                   </td>
                                   <td class="">
-                                    {{ clinic.get_all_key_indicator_scores()[indicator][char] }}
+                                    {{ value_or_dash(clinic.get_all_key_indicator_scores()[indicator][char]) }}
                                   </td>
                                 </tr>
                               {% endfor%}
