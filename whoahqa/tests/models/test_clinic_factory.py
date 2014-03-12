@@ -23,3 +23,11 @@ class TestClinicFactory(TestBase):
         request = testing.DummyRequest()
         self.assertRaises(KeyError,
                           ClinicFactory(request).__getitem__, clinic_id)
+
+    def test_get_item_raises_key_error_if_bad_int(self):
+        # invalid user id
+        clinic_id = "abc"
+
+        request = testing.DummyRequest()
+        self.assertRaises(KeyError,
+                          ClinicFactory(request).__getitem__, clinic_id)
