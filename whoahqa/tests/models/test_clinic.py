@@ -2,6 +2,7 @@ import transaction
 import datetime
 
 from whoahqa import constants
+from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
     DBSession,
     OnaUser,
@@ -129,6 +130,73 @@ class TestClinic(TestBase):
         clinic_a = Clinic.get(Clinic.id == 1)
         self.assertEquals(
             clinic_a.date_created.date(), datetime.datetime.today().date())
+
+    def test_calculate_key_indicator_scores_when_no_responses_exist(self):
+        '''
+        should return None when no responses exist
+        '''
+        self.setup_test_data()
+        clinic_a = Clinic.get(Clinic.id == 1)
+        key_indicator_scores = clinic_a.calculate_key_indicator_scores(
+            constants.EQUITABLE, 
+            (constants.ONE, constants.TWO, constants.THREE))
+        self.assertEqual(key_indicator_scores,  {
+            constants.ONE: None,
+            constants.TWO: None,
+            constants.THREE: None
+        })
+
+    def test_calculate_key_indicator_when_responses_exist(self):
+        ''' 
+        should return a valid value when responses exist
+        '''
+        self.setup_test_data()
+        self.create_submissions()
+        clinic_a = Clinic.get(Clinic.id == 1)
+        key_indicator_scores = clinic_a.calculate_key_indicator_scores(
+            constants.EQUITABLE, (constants.ONE, constants.TWO, constants.THREE))
+        self.assertEqual(key_indicator_scores, {
+            constants.ONE: 50.0, 
+            constants.TWO: 27.77777777777778,
+            constants.THREE: 30.0
+        })
+
+    def test_get_all_key_indicator_scores_when_no_responses_exist(self):
+        '''
+        Should return list containing None values for each characteristic
+        '''
+        self.setup_test_data()
+        clinic_a = Clinic.get(Clinic.id == 1)
+        key_indicator_scores = clinic_a.get_all_key_indicator_scores()
+        self.assertEqual(key_indicator_scores[constants.EQUITABLE],  {
+            constants.ONE: None,
+            constants.TWO: None,
+            constants.THREE: None,
+            'average_score': 0
+        })
+        self.assertEqual(key_indicator_scores[constants.APPROPRIATE],  {
+            constants.SIXTEEN: None,
+            'average_score': 0
+        })
+
+    def test_get_all_key_indicator_scores_when_responses_exist(self):
+        '''
+        Should list containing values for each characteristic
+        '''
+        self.setup_test_data()
+        self.create_submissions()
+        clinic_a = Clinic.get(Clinic.id == 1)
+        key_indicator_scores = clinic_a.get_all_key_indicator_scores()
+        self.assertEqual(key_indicator_scores[constants.EQUITABLE],  {
+            constants.ONE: 50.0,
+            constants.TWO: 27.77777777777778,
+            constants.THREE: 30.0,
+            'average_score': 35.925925925925924
+        })
+        self.assertEqual(key_indicator_scores[constants.APPROPRIATE],  {
+            constants.SIXTEEN: None,
+            'average_score': 0
+        })
 
     def test_get_item_returns_reporting_period(self):
         self.setup_test_data()

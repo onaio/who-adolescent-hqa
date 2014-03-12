@@ -36,7 +36,7 @@ class TestSubmissionViews(IntegrationTestBase):
     def test_json_post_with_invalid_clinic_id(self):
         clinic = Clinic(code='1A2B', name="Clinic A")
         DBSession.add(clinic)
-        response = self.post_json(self.submissions[1])
+        response = self.post_json(self.submissions[6])
 
         #should return a 202 response code
         self.assertEqual(response.status_code, 202)
