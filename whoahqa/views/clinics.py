@@ -156,6 +156,7 @@ class ClinicViews(object):
     @view_config(name='characteristics',
                  request_method='GET',
                  permission=perms.SHOW,
+                 context=ReportingPeriod,
                  renderer='clinics_characteristics_show.jinja2')
     def characteristics(self):
         # get the reporting period from the GET params
@@ -177,6 +178,7 @@ class ClinicViews(object):
                     characteristics.remove(characteristic)
 
         return {
+            'period':  period,
             'clinic': clinic,
             'client_tools': tuple_to_dict_list(
                 ("id", "name"), constants.CLIENT_TOOLS),
@@ -186,14 +188,20 @@ class ClinicViews(object):
             'characteristic_type_mapping': constants.CHARACTERISTIC_TYPE_MAPPING
         }
 
-    @view_config(name='select_characteristics', request_method='POST', check_csrf=False, context=Clinic)
+    @view_config(
+        name='select_characteristics',
+        context=ReportingPeriod,
+        request_method='POST',
+        check_csrf=False)
     def select_characteristics(self):
+
+        period = self.request.context
+        clinic = period.__parent__
         #get_clinic_id
-        clinic = self.request.context
         # get the list of selected characteristics
         characteristic_ids = self.request.POST.getall('characteristic_id')
         for characteristic_id in characteristic_ids:
-            clinic.select_characteristic(characteristic_id)
+            clinic.select_characteristic(characteristic_id, period.id)
 
         return HTTPFound(
             self.request.route_url('clinics', traverse=clinic.id))

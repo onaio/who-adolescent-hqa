@@ -1,6 +1,7 @@
 import os
 import unittest
 import transaction
+import datetime
 
 from pyramid.registry import Registry
 from pyramid import testing
@@ -21,6 +22,7 @@ from whoahqa.models import (
     Group,
     OnaUser,
     Clinic,
+    ReportingPeriod
 )
 
 
@@ -88,10 +90,15 @@ class TestBase(unittest.TestCase):
         # leave clinic 2 unassigned
         clinic2 = Clinic(id=2, name="Clinic B", code="3E4G")
 
+        reporting_period = ReportingPeriod(
+            title='Period 1',
+            start_date=datetime.datetime(2014, 3, 1),
+            end_date=datetime.datetime(2015, 3, 1))
+
         with transaction.manager:
             DBSession.add_all(
                 [su_ona_user, manager_a_ona_user, manager_b_ona_user,
-                 clinic1, clinic2])
+                 clinic1, clinic2, reporting_period])
 
 
 class IntegrationTestBase(TestBase):

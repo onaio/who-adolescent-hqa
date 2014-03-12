@@ -248,7 +248,10 @@ class ClinicCharacteristics(Base):
     __tablename__ = 'clinic_characteristics'
     clinic_id = Column(Integer, ForeignKey('clinics.id'), primary_key=True)
     characteristic_id = Column(String(100), nullable=False, primary_key=True)
-    pk_clinic_characteristic = PrimaryKeyConstraint(clinic_id, characteristic_id)
+    period_id = Column(Integer, ForeignKey('reporting_periods.id'),
+                       nullable=False, primary_key=True)
+    pk_clinic_characteristic = PrimaryKeyConstraint(
+        clinic_id, characteristic_id, period_id)
     clinic_characteristic = relationship("Clinic")
 
 
@@ -412,8 +415,10 @@ class Clinic(Base):
 
         return scores
 
-    def select_characteristic(self, characteristic_id):
-        clinic_characteristic = ClinicCharacteristics(clinic_id=self.id, characteristic_id=characteristic_id)
+    def select_characteristic(self, characteristic_id, period_id):
+        clinic_characteristic = ClinicCharacteristics(
+            clinic_id=self.id, characteristic_id=characteristic_id,
+            period_id=period_id)
         DBSession.add(clinic_characteristic)
 
     def get_active_characteristics(self):

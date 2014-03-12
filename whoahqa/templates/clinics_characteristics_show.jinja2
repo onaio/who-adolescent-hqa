@@ -17,7 +17,7 @@
   <li><a href="#"> </a></li>
 {% endblock %}
 {% block content %}
-  <form method="post" action="{{ request.route_url('clinics', traverse=(clinic.id, 'select_characteristics')) }}" role="form">
+  <form method="post" action="{{ request.route_url('clinics', traverse=(clinic.id, period.id, 'select_characteristics')) }}" role="form">
       <input type="hidden" name="clinic_id" class="checkboxes" value="{{ clinic.id }}">
       <div class="row col-sm-12">
           <div class="">
