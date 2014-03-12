@@ -39,6 +39,16 @@
       <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
+                <i class="icon-plus-sign-alt"></i> {{ gettext('Characteristics Summary') }}
+            </h3>
+        </div>
+        <div class="panel-body">
+            {% include '_clinics_key_indicators.jinja2' %}
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
                 <i class="icon-plus-sign-alt"></i> {{ gettext('Score Summary') }}
             </h3>
         </div>

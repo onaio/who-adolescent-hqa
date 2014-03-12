@@ -36,6 +36,7 @@ class TestUserViews(IntegrationTestBase):
         self.assertIn('characteristics', response)
         self.assertIn('clinic_scores', response)
         self.assertIn('key_indicators', response)
+        self.assertIn('key_indicator_char_map', response)
 
 
 class TestUserViewsFunctional(FunctionalTestBase):
