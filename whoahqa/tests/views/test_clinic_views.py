@@ -1,4 +1,6 @@
-from httmock import urlmatch, HTTMock
+import datetime
+import transaction
+
 from webob.multidict import MultiDict
 from pyramid import testing
 from pyramid.httpexceptions import (
@@ -14,6 +16,7 @@ from whoahqa.models import (
     user_clinics,
     OnaUser,
     Clinic,
+    ReportingPeriod,
 )
 from whoahqa.views import (
     ClinicViews,
@@ -175,9 +178,6 @@ class TestClinicViews(IntegrationTestBase):
         self.assertIsInstance(response, HTTPFound)
 
 
-
-
-
 class TestClinicViewsFunctional(FunctionalTestBase):
     def test_unassigned_clinics_view_allows_authenticated(self):
         self.setup_test_data()
@@ -209,6 +209,22 @@ class TestClinicViewsFunctional(FunctionalTestBase):
     def test_clinic_list_allows_super_user(self):
         self.setup_test_data()
         url = self.request.route_path('clinics', traverse=())
+        headers = self._login_user('super')
+        response = self.testapp.get(url, headers=headers)
+        self.assertEqual(response.status_code, 200)
+
+    def test_characteristics_returns_200(self):
+        self.setup_test_data()
+        period = ReportingPeriod(
+            title="2013/2014",
+            start_date=datetime.datetime(2013, 3, 13),
+            end_date=datetime.datetime(2014, 3, 13))
+        with transaction.manager:
+            DBSession.add(period)
+        clinic = Clinic.get(Clinic.name == "Clinic A")
+        period = ReportingPeriod.newest()
+        url = self.request.route_path(
+            'clinics', traverse=(clinic.id, period.id, 'characteristics'))
         headers = self._login_user('super')
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
