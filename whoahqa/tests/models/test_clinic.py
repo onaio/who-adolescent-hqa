@@ -7,6 +7,7 @@ from whoahqa.models import (
     OnaUser,
     Clinic,
     Submission,
+    ReportingPeriod,
 )
 from whoahqa.tests import TestBase
 
@@ -125,5 +126,24 @@ class TestClinic(TestBase):
     def test_date_created_is_automatically_populated_on_create(self):
         self.setup_test_data()
         clinic_a = Clinic.get(Clinic.id == 1)
-        self.assertEquals(clinic_a.date_created.date(), datetime.datetime.today().date())
+        self.assertEquals(
+            clinic_a.date_created.date(), datetime.datetime.today().date())
 
+    def test_get_item_returns_reporting_period(self):
+        self.setup_test_data()
+        period = ReportingPeriod(
+            title="2013/2014",
+            start_date=datetime.datetime(2013, 3, 13),
+            end_date=datetime.datetime(2014, 3, 13))
+        DBSession.add(period)
+        DBSession.flush()
+        period = ReportingPeriod.newest()
+        clinic = Clinic.newest()
+        selected_period = clinic.__getitem__(period.id)
+        self.assertIsInstance(selected_period, ReportingPeriod)
+        self.assertEqual(selected_period, period)
+
+    def test_raise_key_error_when_invalid_period_id(self):
+        self.setup_test_data()
+        clinic = Clinic.newest()
+        self.assertRaises(KeyError, clinic.__getitem__, "abc")

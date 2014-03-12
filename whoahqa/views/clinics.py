@@ -22,6 +22,7 @@ from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
     ClinicFactory,
     Clinic,
+    ReportingPeriod,
 )
 
 
@@ -154,11 +155,12 @@ class ClinicViews(object):
 
     @view_config(name='characteristics',
                  request_method='GET',
-                 context=Clinic,
                  permission=perms.SHOW,
                  renderer='clinics_characteristics_show.jinja2')
     def characteristics(self):
-        clinic = self.request.context
+        # get the reporting period from the GET params
+        period = self.request.context
+        clinic = period.__parent__
 
         # if clinic is not assigned, throw a bad request
         if not clinic.is_assigned:
