@@ -319,3 +319,7 @@ td.relative-score i.icon-medkit {
 i.launch-form {
     font-size: 2em;
 }
+
+.dropdown-menu li > a {
+    padding-right: 10px;
+}
