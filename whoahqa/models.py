@@ -424,6 +424,21 @@ class Clinic(Base):
         return key_indicator_scores
 
     def get_all_key_indicator_scores(self):
+        """
+        key_indicator_scores = { 
+            equitable = {
+                'one': x%,
+                'two': y%,
+                'three': z%,
+                'average_score': xyz/3%
+                },
+            acceptable = {
+                'sixteen': z%,
+                'average_score': z%
+            },
+            ...
+        }
+        """
         key_indicators = tuple_to_dict_list(
                 ("key", "characteristic_list"), constants.KEY_INDICATORS)
         all_key_indicator_scores = {}
