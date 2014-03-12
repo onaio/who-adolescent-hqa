@@ -1,0 +1,66 @@
+{% from 'macros/value_or_dash.jinja2' import value_or_dash %}
+<div id="sample_1_wrapper" class="" role="grid">
+    <div class="row">
+      <div class="indicator-summary-table">
+        <table
+            class="table scores-table">
+          <thead>
+          <tr role="row" class="score_summary_header_1">
+                <th colspan='2' class="score-header"> {{ gettext('Clinics') }}</th>
+                <th colspan='5' class="score-header"> {{ gettext('Aggregate Scores') }}</th>
+          </tr>
+          <tr>
+              <th class="table_header">{{ gettext('No.') }}</th> 
+              <th class="table_header table_left_bordered">{{ gettext('Clinic Name') }}</th>
+              {% for indicator in key_indicators %}
+                <th class="table_header table_left_bordered">{{ indicator }}</th>
+              {% endfor %}
+          </tr>
+          </thead>
+          <tbody>
+
+           {% for clinic in clinics %}
+             <tr>
+                <td class="" rowspan='{{ key_indicators|length }}'>
+                        {{ loop.index }}
+                </td>
+                <td class="table_left_bordered" rowspan='{{ key_indicators|length }}'>
+                    <div style="width:170px">
+                        {{ clinic.name }}
+                    </div>
+                </td>
+                  {% for indicator in key_indicators %}
+                    <td class="enclosed-table">
+                        <table class="table table-striped">
+                          <tbody>
+                            {% for key_char in key_indicator_char_map if key_char['id'] == indicator %}
+                              {% for char in key_char['characteristics'] %}
+                                <tr>
+                                  <td class="">
+                                    {{ char }}
+                                  </td>
+                                  <td class="">
+                                    {{ value_or_dash(clinic.get_all_key_indicator_scores()[indicator][char]) }}
+                                  </td>
+                                </tr>
+                              {% endfor%}
+                            {% endfor %}
+                            <tr>
+                              <td class="text-right bold">
+                                {{ gettext('Average Score') }}
+                              </td>
+                              <td class="">
+                                {{ clinic.get_all_key_indicator_scores()[indicator]['average_score'] }}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </td>
+                  {% endfor %}
+             </tr>
+           {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
