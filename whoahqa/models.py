@@ -247,6 +247,14 @@ class ClinicSubmission(Base):
     submission = relationship("Submission")
 
 
+class ClinicCharacteristics(Base):
+    __tablename__ = 'clinic_characteristics'
+    clinic_id = Column(Integer, ForeignKey('clinics.id'), primary_key=True)
+    characteristic_id = Column(String(100), nullable=False, primary_key=True)
+    pk_clinic_characteristic = PrimaryKeyConstraint(clinic_id, characteristic_id)
+    clinic_characteristic = relationship("Clinic")
+
+
 class Clinic(Base):
     __tablename__ = 'clinics'
     id = Column(Integer, primary_key=True)
@@ -281,11 +289,17 @@ class Clinic(Base):
     def filter_clinics(cls, search_term, all_clinics):
         if all_clinics:
             #filter all clinics
-            clinics = DBSession.query(Clinic).filter(Clinic.name.ilike('%'+search_term+'%')).all()
+            clinics = DBSession\
+                .query(Clinic)\
+                .filter(Clinic.name.ilike('%'+search_term+'%')).all()
         else:
             #filter unassigned clinics
-            clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
-                user_clinics.columns.clinic_id == None, Clinic.name.ilike('%'+search_term+'%')).all()
+            clinics = DBSession\
+                .query(Clinic)\
+                .outerjoin(user_clinics)\
+                .filter(
+                    user_clinics.columns.clinic_id == None,
+                    Clinic.name.ilike('%'+search_term+'%')).all()
         return clinics
 
     def calculate_score(self, characteristic, xform_id):
@@ -361,7 +375,7 @@ class Clinic(Base):
         """
         scores = {}
 
-        for characteristic, label in constants.CHARACTERISTICS:
+        for characteristic, label, number in constants.CHARACTERISTICS:
             scores[characteristic] = {}
             total_scores = total_questions = total_responses = 0
             mapping = constants.CHARACTERISTIC_MAPPING[characteristic]
@@ -394,6 +408,17 @@ class Clinic(Base):
             }
 
         return scores
+
+    def select_characteristic(self, characteristic_id):
+        clinic_characteristic = ClinicCharacteristics(
+            clinic_id=self.id, characteristic_id=characteristic_id)
+        DBSession.add(clinic_characteristic)
+
+    def get_active_characteristics(self):
+        clinic_characteristics = DBSession.query(
+            ClinicCharacteristics).filter(
+                ClinicCharacteristics.clinic_id == self.id).all()
+        return clinic_characteristics
 
     def calculate_key_indicator_scores(self, indicator, characteristics_list):
         """

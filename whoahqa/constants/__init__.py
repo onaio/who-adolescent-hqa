@@ -54,51 +54,51 @@ TWENTY = 'twenty'
 
 CHARACTERISTICS = [
     (ONE, _("Policies and procedures are in place that do not restrict the"
-           " provision of health services on any terms")),
+           " provision of health services on any terms"), 1),
     (TWO, _("Health-care providers treat all adolescent clients with equal"
-           " care and respect, regardless of status")),
+           " care and respect, regardless of status"), 2),
     (THREE, _("Support staff treat all adolescent clients with equal care"
-            " and respect, regardless of status")),
+            " and respect, regardless of status"), 3),
     (FOUR, _("Policies and procedures are in place that ensure that health"
-           " services are either free or affordable to adolescents")),
+           " services are either free or affordable to adolescents"), 4),
     (FIVE, _("The point of health service delivery has convenient hours of"
-           " operation")),
+           " operation"), 5),
     (SIX, _("Adolescents are well-informed about the range of available"
-           " reproductive health services and how to obtain them")),
+           " reproductive health services and how to obtain them"), 6),
     (SEVEN, _("Community members understand the benefits that adolescents"
             " will gain by obtaining the health services they need,"
-            " and support their provision")),
+            " and support their provision"), 7),
     (EIGHT, _("Some health services and health-related commodities are"
             " provided to adolescents in the community by selected"
             " community members, outreach workers and adolescents"
-            " themselves")),
+            " themselves"), 8),
     (NINE, _("Policies and procedures are in place that guarantee client"
-           " confidentiality")),
-    (TEN, _("The point of health service delivery ensures privacy")),
+           " confidentiality"), 9),
+    (TEN, _("The point of health service delivery ensures privacy"), 10),
     (ELEVEN, _("Health-care providers are non-judgemental, considerate and"
-             " easy to relate to")),
+             " easy to relate to"), 11),
     (TWELVE, _("The point of health service delivery ensures consultations"
              " occur in a short waiting time. with or without an"
-             " appointment, and (where necessary) with referral")),
+             " appointment, and (where necessary) with referral"), 12),
     (THIRTEEN, _("The point of health service delivery has an appealing"
-               " and clean environment")),
+               " and clean environment"), 13),
     (FOURTEEN, _("The point of health service delivery provides information"
-               " and education through a variety of channels")),
+               " and education through a variety of channels"), 14),
     (FIFTEEN, _("Adolescents are actively involved in designing, assessing"
-              " and providing health services")),
+              " and providing health services"), 15),
     (SIXTEEN, _("The required package of health care is provided to fulfil"
               " the needs of all adolescents either at the point of health"
-              " service delivery or through referral linkages")),
+              " service delivery or through referral linkages"), 16),
     (SEVENTEEN, _("Health-care providers have the required competencies to"
                 " work with adolescents and to provide them with the"
-                " required health services")),
+                " required health services"), 17),
     (EIGHTEEN, _("Health-care providers use evidence-based protocols and"
-               " guidelines to provide health services")),
+               " guidelines to provide health services"), 18),
     (NINETEEN, _("Health-care providers are able to dedicate sufficient time"
-               " to work effectively with their adolescent clients")),
+               " to work effectively with their adolescent clients"), 19),
     (TWENTY, _("The point of health service delivery has the required"
              " equipment, supplies and basic services necessary to deliver"
-             " the required health services"))
+             " the required health services"), 20)
 ]
 
 CHARACTERISTIC_MAPPING = {
@@ -503,6 +503,44 @@ CHARACTERISTIC_MAPPING = {
             'characteristic_twenty/ch20_q2'
         }
     }
+}
+
+#Characteristic type mapping
+EQUITABLE = 'EQUITABLE'
+ACCESSIBLE = 'ACCESSIBLE'
+ACCEPTABLE = 'ACCEPTABLE'
+APPROPRIATE = 'APPROPRIATE'
+EFFECTIVE = 'EFFECTIVE'
+
+CHARACTERISTIC_TYPES = {
+    EQUITABLE,
+    ACCESSIBLE,
+    ACCEPTABLE,
+    APPROPRIATE,
+    EFFECTIVE
+}
+
+CHARACTERISTIC_TYPE_MAPPING = {
+    ONE: EQUITABLE,
+    TWO: EQUITABLE,
+    THREE: EQUITABLE,
+    FOUR: ACCESSIBLE,
+    FIVE: ACCESSIBLE,
+    SIX: ACCESSIBLE,
+    SEVEN: ACCESSIBLE,
+    EIGHT: ACCESSIBLE,
+    NINE: ACCEPTABLE,
+    TEN: ACCEPTABLE,
+    ELEVEN: ACCEPTABLE,
+    TWELVE: ACCEPTABLE,
+    THIRTEEN: ACCEPTABLE,
+    FOURTEEN: ACCEPTABLE,
+    FIFTEEN: ACCEPTABLE,
+    SIXTEEN: APPROPRIATE,
+    SEVENTEEN: EFFECTIVE,
+    EIGHTEEN: EFFECTIVE,
+    NINETEEN: EFFECTIVE,
+    TWENTY: EFFECTIVE
 }
 
 # Score ranges

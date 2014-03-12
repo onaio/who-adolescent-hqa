@@ -21,87 +21,100 @@
     </div>
     <table class="table table-bordered scores-table">
       {% for characteristic in characteristics %}
-        {% set percentage = scores[characteristic.id].totals.total_percentage %}
-        <thead>
-        <tr>
-          <th class="char-defn"></th>
-          <th class="char-no center-align">{{ gettext('No.') }}</th>
-          <th class="char-desc">{{ gettext('Description ') }}</th>
-          <th class="char-cat">{{ gettext('Category') }}</th>
-          <th class="min-max">{{ gettext('Min - Max') }}</th>
-          <th class="char-resp">{{ gettext('# Respondents') }}</th>
-          <th class="char-score">{{ gettext('Score') }}</th>
-          <th class="char-rel-score"></th>
-        </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="center-align ">
-              <img src="{{ request.static_url('whoahqa:static/images/char_en/sm/%d.png' % (loop.index)) }}">
-            </td>
-            <td class="center-align char-no-vals">
-              {{ loop.index }}
-            </td>
-            <td class="">{{ characteristic.description }}
-            </td>
-            <td class="client-tool-table">
-              <table class="table table-striped">
-                {{ generate_client_rows(scores, client_tools, characteristic.id, client_property='name', characteristic_id=characteristic.id)}}
+        {% for clinic_characteristic in clinic_characteristics %}
+            {% if clinic_characteristic.characteristic_id == characteristic.id %}
+                {% set percentage = scores[characteristic.id].totals.total_percentage %}
+                <thead>
                 <tr>
-                  <td class="text-right bold">Absolute total score</td>
+                  <th class="char-defn"></th>
+                  <th class="char-no center-align">{{ gettext('No.') }}</th>
+                  <th class="char-desc">{{ gettext('Description ') }}</th>
+                  <th class="char-cat">{{ gettext('Category') }}</th>
+                  <th class="min-max">{{ gettext('Min - Max') }}</th>
+                  <th class="char-resp">{{ gettext('# Respondents') }}</th>
+                  <th class="char-score">{{ gettext('Score') }}</th>
+                  <th class="char-rel-score"></th>
                 </tr>
-              </table>
-            </td>
-            <td class="client-tool-table">
-              <table class="table table-striped">
-                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_questions', output_prefix='0 - ', characteristic_id=characteristic.id) }}
-                <tr>
-                  <td class="text-center bold">
-                    0 - {{ scores[characteristic.id].totals.total_questions }}
-                  </td>
-                </tr>
-              </table>
-            </td>
-            <td class="client-tool-table">
-              <table class="table table-striped respondents">
-              {% for client_tool in client_tools %}
-                {% set score = scores[characteristic.id] %}
-                {% if score[client_tool.id] is defined %}
-                    <tr>
-                        <td>
-                        {% set responses = score[client_tool.id]['num_responses']|int(0) %}
-                        {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
-                        {% if responses %}
-                          {% for response in range(responses) %}
-                            <i class="icon-blue icon-circle"></i>
-                          {% endfor %}
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="center-align ">
+                      <img src="{{ request.static_url('whoahqa:static/images/char_en/sm/%d.png' % characteristic.number) }}">
+                    </td>
+                    <td class="center-align char-no-vals">
+                      {{ characteristic.number }}
+                    </td>
+                    <td class="">{{ characteristic.description }}
+                    </td>
+                    <td class="client-tool-table">
+                      <table class="table table-striped">
+                        {{ generate_client_rows(scores, client_tools, characteristic.id, client_property='name', characteristic_id=characteristic.id)}}
+                        <tr>
+                          <td class="text-right bold">Absolute total score</td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td class="client-tool-table">
+                      <table class="table table-striped">
+                        {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_questions', output_prefix='0 - ', characteristic_id=characteristic.id) }}
+                        <tr>
+                          <td class="text-center bold">
+                            0 - {{ scores[characteristic.id].totals.total_questions }}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td class="client-tool-table">
+                      <table class="table table-striped respondents">
+                      {% for client_tool in client_tools %}
+                        {% set score = scores[characteristic.id] %}
+                        {% if score[client_tool.id] is defined %}
+                            <tr>
+                                <td>
+                                {% set responses = score[client_tool.id]['num_responses']|int(0) %}
+                                {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
+                                {% if responses %}
+                                  {% for response in range(responses) %}
+                                    <i class="icon-blue icon-circle"></i>
+                                  {% endfor %}
+                                {% endif %}
+                                {% for response in range(pending_responses) %}
+                                  <i class="icon-grey icon-circle"></i>
+                                {% endfor %}
+                                </td>
+                            </tr>
                         {% endif %}
-                        {% for response in range(pending_responses) %}
-                          <i class="icon-grey icon-circle"></i>
-                        {% endfor %}
-                        </td>
-                    </tr>
-                {% endif %}
-              {% endfor %}
-                <tr>
-                  <td>&nbsp;</td>
-                </tr>
-              </table>
-            </td>
-            <td class="client-tool-table">
-              <table class="table table-striped">
-                {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
-                <tr>
-                  <td class="text-center">0</td>
-                </tr>
-              </table>
-            </td>
-            <td class="text-center relative-score">
-              <i class="big icon-medkit"></i>
-              {{ "%s"| format(percentage|int(0)) }}%
-            </td>
-          </tr>
+
+                      {% endfor %}
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td class="client-tool-table">
+                        <table class="table table-striped">
+                            {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
+                        <tr>
+                            <td class="text-center">0</td>
+                        </tr>
+                        </table>
+                    </td>
+                    <td class="text-center relative-score">
+                        <i class="big icon-medkit"></i>
+                        {{ "%s"| format(percentage|int(0)) }}%
+                    </td>
+                  </tr>
+            {% endif %}
+        {% endfor %}
       {% endfor %}
+      {% if not clinic_characteristics %}
+            <tr>
+                <td>No Characteristics selected. <br>
+                    <a href="{{ request.route_url('clinics', traverse=(clinic.id, 'characteristics')) }}"
+                       class="btn btn-primary btn-sm">Select Characteristics </a>
+                </td>
+            </tr>
+      {% endif %}
       </tbody>
     </table>
   </div>
