@@ -110,7 +110,8 @@ class ClinicViews(object):
             'characteristics': tuple_to_dict_list(
                 ("id", "description"), constants.CHARACTERISTICS),
             'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAME,
-            'scores': scores
+            'scores': scores,
+            'clinic_characteristics': clinic_characteristics
 
         }
 

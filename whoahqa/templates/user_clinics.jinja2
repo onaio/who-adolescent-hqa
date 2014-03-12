@@ -61,6 +61,8 @@
 {% endblock content %}
         {% block page_scripts %}
   <script src="{{ request.static_url('whoahqa:static/scripts/custom.js') }}"></script>
+  <script src="{{ request.static_url('whoahqa:static/plugins/data-tables/jquery.dataTables.js') }}" type="text/javascript" ></script>
+  <script src="{{ request.static_url('whoahqa:static/plugins/data-tables/FixedColumns.js') }}" type="text/javascript" ></script>
 {% endblock %}
 {% block jquery_ready %}
   {{ super() }}
