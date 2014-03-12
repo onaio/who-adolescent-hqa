@@ -182,15 +182,14 @@ class ClinicViews(object):
             'characteristic_type_mapping': constants.CHARACTERISTIC_TYPE_MAPPING
         }
 
-    @view_config(name='select_characteristics', request_method='POST', check_csrf=False)
+    @view_config(name='select_characteristics', request_method='POST', check_csrf=False, context=Clinic)
     def select_characteristics(self):
         #get_clinic_id
-        clinic_id = self.request.POST.get('clinic_id')
+        clinic = self.request.context
         # get the list of selected characteristics
         characteristic_ids = self.request.POST.getall('characteristic_id')
-        clinic = Clinic.get(Clinic.id == clinic_id)
         for characteristic_id in characteristic_ids:
             clinic.select_characteristic(characteristic_id)
 
         return HTTPFound(
-            self.request.route_url('clinics', traverse=clinic_id))
+            self.request.route_url('clinics', traverse=clinic.id))
