@@ -25,9 +25,27 @@ class UserViews(object):
     def clinics(self):
         user = self.request.context
         clinics = user.get_clinics()
-        characteristics = tuple_to_dict_list(("id", "description"), constants.CHARACTERISTICS)
+        
         key_indicators = [i for i,v in constants.KEY_INDICATORS]
         key_indicator_char_map = tuple_to_dict_list(("id", "characteristics"), constants.KEY_INDICATORS)
+        clinic_scores = {}
+        for clinic in clinics:
+            scores = clinic.get_scores()
+            clinic_scores[clinic.id] = scores
+        return {
+            'clinics': clinics,
+            'key_indicators': key_indicators,
+            'key_indicator_char_map': key_indicator_char_map
+        }
+
+    @view_config(name='summary',
+                 renderer='clinics_score_summary.jinja2',
+                 permission=perms.LIST_USER_CLINICS,
+                 context=User)
+    def clinics_score_summary(self):
+        user = self.request.context
+        clinics = user.get_clinics()
+        characteristics = tuple_to_dict_list(("id", "description"), constants.CHARACTERISTICS)
         clinic_scores = {}
         for clinic in clinics:
             scores = clinic.get_scores()
@@ -37,6 +55,4 @@ class UserViews(object):
             'characteristics': characteristics,
             'clinic_scores': clinic_scores,
             'score_limits': constants.SCORE_RANGE_LIMITS,
-            'key_indicators': key_indicators,
-            'key_indicator_char_map': key_indicator_char_map
         }
