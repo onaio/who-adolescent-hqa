@@ -18,7 +18,7 @@ from pyenketo import (
 from whoahqa.utils import enketo
 from whoahqa import constants
 from whoahqa.constants import permissions as perms
-from whoahqa.utils import tuple_to_dict_list
+from whoahqa.utils import tuple_to_dict_list, filter_dict_list_by_attr
 from whoahqa.models import (
     ClinicFactory,
     Clinic,
@@ -159,8 +159,8 @@ class ClinicViews(object):
                  request_method='GET',
                  permission=perms.SHOW,
                  context=ReportingPeriod,
-                 renderer='clinics_characteristics_show.jinja2')
-    def characteristics(self):
+                 renderer='clinics_characteristics_list.jinja2')
+    def characteristics_list(self):
         # get the reporting period from the GET params
         period = self.request.context
         clinic = period.__parent__
@@ -173,21 +173,23 @@ class ClinicViews(object):
         characteristics = tuple_to_dict_list(
             ("id", "description", "number"), constants.CHARACTERISTICS)
         clinic_characteristics = clinic.get_active_characteristics(period)
-        #remove characteristics that have already been selected
-        for clinic_characteristic in clinic_characteristics:
-            for characteristic in characteristics:
-                if characteristic['id'] == clinic_characteristic.characteristic_id:
-                    characteristics.remove(characteristic)
+
+        # filter out active characteristics
+        active_characteristic_ids = [c.characteristic_id for c
+                                     in clinic_characteristics]
+        inactive_characteristics = filter_dict_list_by_attr(
+            active_characteristic_ids, characteristics, 'id', invert=True)
 
         return {
             'period':  period,
             'clinic': clinic,
             'client_tools': tuple_to_dict_list(
                 ("id", "name"), constants.CLIENT_TOOLS),
-            'characteristics': characteristics,
+            'characteristics': inactive_characteristics,
             'scores': scores,
-            'characteristic_types': constants.CHARACTERISTIC_TYPES,
-            'characteristic_type_mapping': constants.CHARACTERISTIC_TYPE_MAPPING
+            'indicator_labels': dict(constants.INDICATOR_LABELS),
+            'characteristic_indicator_mapping':
+            constants.CHARACTERISTIC_INDICATOR_MAPPING
         }
 
     @view_config(

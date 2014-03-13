@@ -505,21 +505,23 @@ CHARACTERISTIC_MAPPING = {
     }
 }
 
-# key indicators
+
+# Key indicators
 EQUITABLE = 'equitable'
 ACCESSIBLE = 'accessible'
 ACCEPTABLE = 'acceptable'
 APPROPRIATE = 'appropriate'
 EFFECTIVE = 'effective'
 
+
 #Characteristic types
-CHARACTERISTIC_TYPES = {
-    EQUITABLE,
-    ACCESSIBLE,
-    ACCEPTABLE,
-    APPROPRIATE,
-    EFFECTIVE
-}
+INDICATOR_LABELS = [
+    (EQUITABLE, _(u"Equitable")),
+    (ACCESSIBLE, _(u"Accessible")),
+    (ACCEPTABLE, _(u"Acceptable")),
+    (APPROPRIATE, _(u"Appropriate")),
+    (EFFECTIVE, _(u"Effective"))
+]
 
 # Score ranges
 SCORE_RANGE_LIMITS = {
@@ -542,7 +544,8 @@ RECOMMENDED_SAMPLE_FRAME = {
 KEY_INDICATORS = [
     (EQUITABLE, (ONE, TWO, THREE)),
     (ACCESSIBLE, (FOUR, FIVE, SIX, SEVEN, EIGHT)),
-    (ACCEPTABLE, (NINE, TEN, ELEVEN, TWELVE, THIRTEEN, FOURTEEN, FIFTEEN)),
+    (ACCEPTABLE, (NINE, TEN, ELEVEN, TWELVE, THIRTEEN, FOURTEEN,
+                  FIFTEEN)),
     (APPROPRIATE, (SIXTEEN, )),
     (EFFECTIVE, (SEVENTEEN, EIGHTEEN, NINETEEN, TWENTY))
 ]
