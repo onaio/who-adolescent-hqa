@@ -158,14 +158,14 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(
             self.request.override_renderer, '_clinics_table.jinja2')
 
-    def test_characteristics(self):
+    def test_characteristics_list(self):
         self.setup_test_data()
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.id == 1)
         period.__parent__ = clinic
 
         self.request.context = period
-        response = self.clinic_views.characteristics()
+        response = self.clinic_views.characteristics_list()
 
         self.assertIsInstance(response['period'], ReportingPeriod)
         self.assertIsInstance(response['clinic'], Clinic)
@@ -174,10 +174,10 @@ class TestClinicViews(IntegrationTestBase):
                          tuple_to_dict_list(
                              ("id", "description", "number"),
                              constants.CHARACTERISTICS)),
-        self.assertEqual(response['characteristic_types'],
-                         constants.CHARACTERISTIC_TYPES),
-        self.assertEqual(response['characteristic_type_mapping'],
-                         constants.CHARACTERISTIC_TYPE_MAPPING)
+        self.assertEqual(response['indicator_labels'],
+                         dict(constants.INDICATOR_LABELS)),
+        self.assertEqual(response['characteristic_indicator_mapping'],
+                         constants.CHARACTERISTIC_INDICATOR_MAPPING)
 
     def test_select_characteristics(self):
         self.setup_test_data()

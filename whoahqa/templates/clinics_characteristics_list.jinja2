@@ -21,14 +21,15 @@
       <input type="hidden" name="clinic_id" class="checkboxes" value="{{ clinic.id }}">
       <div class="row col-sm-12">
           <div class="">
-              <label for="charactersictic_type" class="col-sm-3 control-label">Filter by Characteristic Type: </label>
+              <label for="charactersictic_type" class="col-sm-3 control-label">{% trans %}Filter by Characteristic Type{% endtrans %}: </label>
               <div class="select_char col-sm-2">
-                  <select id="charactersictic_type" class="form-control">
-                      <option value="All">All</option>
-                      {% for characteristic_type in characteristic_types %}
-                      <option value="{{characteristic_type[loop.index]}}">{{characteristic_type}}</option>
-                      {% endfor %}
-                  </select>
+                <select id="charactersictic_type" class="form-control">
+                  <option value="All">{{ gettext("All") }}</option>
+                  {% for id, label in indicator_labels.iteritems() %}
+                    <option
+                        value="{{ id }}">{{ gettext(label) }}</option>
+                  {% endfor %}
+                </select>
               </div>
           </div>
           <div class="col-sm-2">
@@ -50,11 +51,11 @@
             <tr>
               <th class="char-sel"></th>
               <th class="char-defn"></th>
-              <th class="char-no center-align">No.</th>
-              <th class="char-desc">Description</th>
-              <th class="char-cat">Category</th>
-              <th class="min-max">Min - Max</th>
-              <th class="char-resp"># Respondents</th>
+              <th class="char-no center-align">{{ gettext("No.") }}</th>
+              <th class="char-desc">{{ gettext("Description") }}</th>
+              <th class="char-cat">{{ gettext("Category") }}</th>
+              <th class="min-max">{{ gettext("Min - Max") }}</th>
+              <th class="char-resp">{{ gettext("# Respondents") }}</th>
 
             </tr>
             </thead>
@@ -71,13 +72,13 @@
                 </td>
                 <td class="">
                     <p>{{ characteristic.description }}</p>
-                    <span class="label label-info bold">{{ characteristic_type_mapping[characteristic.id] }}</span>
+                    <span class="label label-info bold">{{ gettext(indicator_labels[characteristic_indicator_mapping[characteristic.id]]) }}</span>
                 </td>
                 <td class="client-tool-table">
                   <table class="table table-striped">
                     {{ generate_client_rows(scores, client_tools, characteristic.id, client_property='name', characteristic_id=characteristic.id)}}
                     <tr>
-                      <td class="text-right bold">Absolute total score</td>
+                      <td class="text-right bold">{% trans %}Absolute total score{% endtrans %}</td>
                     </tr>
                   </table>
                 </td>
