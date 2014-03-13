@@ -33,7 +33,8 @@ requires = [
     'lingua',
     'passlib',
     'colander',
-    'deform'
+    'deform',
+    'flake8'
 ]
 
 extractors = {
