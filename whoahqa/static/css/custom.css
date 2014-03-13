@@ -315,6 +315,10 @@ i.launch-form {
     font-size: 2em;
 }
 
+.dropdown-menu li > a {
+    padding-right: 10px;
+}
+
 table tbody > tr > td.enclosed-table {
     padding: 0px;
 }
