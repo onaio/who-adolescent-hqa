@@ -1,4 +1,6 @@
-from httmock import urlmatch, HTTMock
+import datetime
+import transaction
+
 from webob.multidict import MultiDict
 from pyramid import testing
 from pyramid.httpexceptions import (
@@ -14,6 +16,7 @@ from whoahqa.models import (
     user_clinics,
     OnaUser,
     Clinic,
+    ReportingPeriod,
 )
 from whoahqa.views import (
     ClinicViews,
@@ -87,20 +90,24 @@ class TestClinicViews(IntegrationTestBase):
 
     def test_show(self):
         self.setup_test_data()
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.id == 1)
-        self.request.context = clinic
+        period.__parent__ = clinic
+        self.request.context = period
         response = self.clinic_views.show()
         self.assertIsInstance(response['clinic'], Clinic)
         self.assertEqual(response['clinic'].id, clinic.id)
         self.assertEqual(
             response['characteristics'],
             tuple_to_dict_list(
-                ("id", "description"), constants.CHARACTERISTICS))
+                ("id", "description", "number"), constants.CHARACTERISTICS))
 
     def test_show_raises_bad_request_if_clinic_is_not_assigned(self):
         self.setup_test_data()
-        clinic = Clinic.get(Clinic.id == 2)
-        self.request.context = clinic
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
+        clinic = Clinic.get(Clinic.name == "Clinic B")
+        period.__parent__ = clinic
+        self.request.context = period
         self.assertRaises(HTTPBadRequest, self.clinic_views.show)
 
     def test_list_redirects_when_user_has_no_permissions(self):
@@ -153,29 +160,42 @@ class TestClinicViews(IntegrationTestBase):
 
     def test_characteristics(self):
         self.setup_test_data()
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.id == 1)
-        self.request.context = clinic
+        period.__parent__ = clinic
+
+        self.request.context = period
         response = self.clinic_views.characteristics()
 
+        self.assertIsInstance(response['period'], ReportingPeriod)
         self.assertIsInstance(response['clinic'], Clinic)
         self.assertEqual(response['clinic'].id, clinic.id)
         self.assertEqual(response['characteristics'],
                          tuple_to_dict_list(
-                             ("id", "description"), constants.CHARACTERISTICS)),
-        self.assertEqual(response['characteristic_types'], constants.CHARACTERISTIC_TYPES),
-        self.assertEqual(response['characteristic_type_mapping'], constants.CHARACTERISTIC_TYPE_MAPPING)
+                             ("id", "description", "number"),
+                             constants.CHARACTERISTICS)),
+        self.assertEqual(response['characteristic_types'],
+                         constants.CHARACTERISTIC_TYPES),
+        self.assertEqual(response['characteristic_type_mapping'],
+                         constants.CHARACTERISTIC_TYPE_MAPPING)
 
     def test_select_characteristics(self):
         self.setup_test_data()
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.id == 1)
-        self.request.context = clinic
-        params = MultiDict([('characteristic_id', 'one'), ('characteristic_id', 'one'), ('characteristic_id', 'three')])
+        period.__parent__ = clinic
+
+        self.request.context = period
+        params = MultiDict([
+            ('characteristic_id', 'one'),
+            ('characteristic_id', 'two'),
+            ('characteristic_id', 'three')])
+
         self.request.POST = params
         response = self.clinic_views.select_characteristics()
         self.assertIsInstance(response, HTTPFound)
-
-
-
+        self.assertEqual(response.location, self.request.route_url(
+            'clinics', traverse=(clinic.id, period.id)))
 
 
 class TestClinicViewsFunctional(FunctionalTestBase):
@@ -200,8 +220,10 @@ class TestClinicViewsFunctional(FunctionalTestBase):
 
     def test_clinic_show_allows_owner(self):
         self.setup_test_data()
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.name == "Clinic A")
-        url = self.request.route_path('clinics', traverse=(clinic.id,))
+        url = self.request.route_path(
+            'clinics', traverse=(clinic.id, period.id))
         headers = self._login_user('manager_a')
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
@@ -209,6 +231,16 @@ class TestClinicViewsFunctional(FunctionalTestBase):
     def test_clinic_list_allows_super_user(self):
         self.setup_test_data()
         url = self.request.route_path('clinics', traverse=())
+        headers = self._login_user('super')
+        response = self.testapp.get(url, headers=headers)
+        self.assertEqual(response.status_code, 200)
+
+    def test_characteristics_returns_200(self):
+        self.setup_test_data()
+        clinic = Clinic.get(Clinic.name == "Clinic A")
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
+        url = self.request.route_path(
+            'clinics', traverse=(clinic.id, period.id, 'characteristics'))
         headers = self._login_user('super')
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)

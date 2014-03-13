@@ -8,6 +8,8 @@ from whoahqa.models import (
     OnaUser,
     Clinic,
     Submission,
+    ReportingPeriod,
+    ClinicCharacteristics
 )
 from whoahqa.tests import TestBase
 
@@ -126,8 +128,8 @@ class TestClinic(TestBase):
     def test_date_created_is_automatically_populated_on_create(self):
         self.setup_test_data()
         clinic_a = Clinic.get(Clinic.id == 1)
-        self.assertEquals(clinic_a.date_created.date(), 
-                          datetime.datetime.today().date())
+        self.assertEquals(
+            clinic_a.date_created.date(), datetime.datetime.today().date())
 
     def test_calculate_key_indicator_scores_when_no_responses_exist(self):
         '''
@@ -196,4 +198,48 @@ class TestClinic(TestBase):
             'average_score': 0
         })
 
+    def test_get_item_returns_reporting_period(self):
+        self.setup_test_data()
+        period = ReportingPeriod(
+            title="2013/2014",
+            start_date=datetime.datetime(2013, 3, 13),
+            end_date=datetime.datetime(2014, 3, 13))
+        DBSession.add(period)
+        DBSession.flush()
+        period = ReportingPeriod.newest()
+        clinic = Clinic.newest()
+        selected_period = clinic.__getitem__(period.id)
+        self.assertIsInstance(selected_period, ReportingPeriod)
+        self.assertEqual(selected_period, period)
 
+    def test_raise_key_error_when_invalid_period_id(self):
+        self.setup_test_data()
+        clinic = Clinic.newest()
+        self.assertRaises(KeyError, clinic.__getitem__, "abc")
+
+    def test_get_active_characteristics_filters_by_period(self):
+        self.setup_test_data()
+        period1 = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
+        clinicA = Clinic.get(Clinic.name == 'Clinic A')
+        period2 = ReportingPeriod(
+            title='Period 2',
+            start_date=datetime.datetime(2014, 1, 1),
+            end_date=datetime.datetime(2014, 1, 1))
+
+        DBSession.add(period2)
+        DBSession.flush()
+        clinic_char1 = ClinicCharacteristics(
+            clinic_id=clinicA.id,
+            characteristic_id='one',
+            period_id=period1.id)
+
+        clinic_char2 = ClinicCharacteristics(
+            clinic_id=clinicA.id,
+            characteristic_id='one',
+            period_id=period2.id)
+
+        DBSession.add_all([clinic_char1, clinic_char2])
+
+        characteristics = clinicA.get_active_characteristics(period1)
+
+        self.assertEqual(len(characteristics), 1)
