@@ -1,0 +1,33 @@
+{% extends "base.jinja2" %}
+{% block title %}My Clinics{% endblock %}
+{% block page_title %} {{ self.title() }} {% endblock %}
+{% block breadcrumbs %}
+  <li>My Clinics <i class="icon-angle-right"></i> Select Reporting Period</li>
+{% endblock %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <i class="icon-calendar"></i>  {{ gettext('Select Reporting Period') }}
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+            {% for period in periods|sort(reverse=True, attribute='end_date') %}
+            <a href="{{request.route_url('users', traverse=(user.id, period.id, 'clinics'))}}"
+               class="list-group-item bg-red">
+               <h4 class="list-group-item-heading">{{ period.title }}</h4>
+               <p class="list-group-item-text">
+                   <span class="label label-info">{{ gettext('Start Date:') }} {{period.start_date}}</span>
+                   <span class="label label-info">{{ gettext('End Date:') }} {{period.end_date}}</span>
+               </p>
+            </a>
+            {% endfor %}
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

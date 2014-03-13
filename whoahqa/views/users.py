@@ -9,6 +9,7 @@ from whoahqa import constants
 from whoahqa.constants import permissions as perms
 from whoahqa.models import (
     User,
+    ReportingPeriod
 )
 from whoahqa.utils import tuple_to_dict_list
 
@@ -21,18 +22,16 @@ class UserViews(object):
     @view_config(name='clinics',
                  renderer='user_clinics.jinja2',
                  permission=perms.LIST_USER_CLINICS,
-                 context=User)
+                 context=ReportingPeriod)
     def clinics(self):
-        user = self.request.context
+        period = self.request.context
+        user = period.__parent__
         clinics = user.get_clinics()
         
-        key_indicators = [i for i,v in constants.KEY_INDICATORS]
+        key_indicators = [i for i, v in constants.KEY_INDICATORS]
         key_indicator_char_map = tuple_to_dict_list(("id", "characteristics"), constants.KEY_INDICATORS)
-        clinic_scores = {}
-        for clinic in clinics:
-            scores = clinic.get_scores()
-            clinic_scores[clinic.id] = scores
         return {
+            'period': period,
             'clinics': clinics,
             'key_indicators': key_indicators,
             'key_indicator_char_map': key_indicator_char_map
@@ -56,3 +55,12 @@ class UserViews(object):
             'clinic_scores': clinic_scores,
             'score_limits': constants.SCORE_RANGE_LIMITS,
         }
+
+    @view_config(name='select-period',
+                 renderer='reporting_period_select.jinja2',
+                 permission=perms.LIST_USER_CLINICS,
+                 context=User)
+    def select_reporting_period(self):
+        user = self.request.context
+        periods = ReportingPeriod.all()
+        return {'periods': periods, 'user':user}
