@@ -66,4 +66,6 @@ class UserViews(object):
     def select_reporting_period(self):
         user = self.request.context
         periods = ReportingPeriod.all()
-        return {'periods': periods, 'user': user}
+        came_from = self.request.GET.get('came_from')
+        url_target = 'clinics' if came_from == 'clinics' else 'users'
+        return {'periods': periods, 'user': user, 'url_target': url_target}
