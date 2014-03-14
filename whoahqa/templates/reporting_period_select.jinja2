@@ -2,7 +2,7 @@
 {% block title %}My Clinics{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
-  <li>My Clinics <i class="icon-angle-right"></i> Select Reporting Period</li>
+  <li>My Clinics <i class="icon-angle-right"></i> {% trans %}Select Reporting Period{% endtrans %}</li>
 {% endblock %}
 {% block content %}
   <div class="row">
@@ -10,7 +10,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
-                <i class="icon-calendar"></i>  {{ gettext('Select Reporting Period') }}
+                <i class="icon-calendar"></i> {% trans %}Select Reporting Period{% endtrans %}
             </h3>
         </div>
         <div class="panel-body">
@@ -18,10 +18,9 @@
             {% for period in periods|sort(reverse=True, attribute='end_date') %}
             <a href="{{request.route_url('users', traverse=(user.id, period.id, 'clinics'))}}"
                class="list-group-item bg-red">
-               <h4 class="list-group-item-heading">{{ period.title }}</h4>
+               <h4 class="list-group-item-heading bold">{{ period.title }}</h4>
                <p class="list-group-item-text">
-                   <span class="label label-info">{{ gettext('Start Date:') }} {{period.start_date}}</span>
-                   <span class="label label-info">{{ gettext('End Date:') }} {{period.end_date}}</span>
+                   {{ period.start_date|format_date('MMM YY', request) }} - {{ period.end_date|format_date('MMM YY', request) }}
                </p>
             </a>
             {% endfor %}
