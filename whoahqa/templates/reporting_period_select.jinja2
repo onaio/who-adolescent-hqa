@@ -16,13 +16,17 @@
         <div class="panel-body">
             <div class="list-group">
             {% for period in periods|sort(reverse=True, attribute='end_date') %}
-            <a href="{{request.route_url('users', traverse=(user.id, period.id, 'clinics'))}}"
-               class="list-group-item bg-red">
-               <h4 class="list-group-item-heading bold">{{ period.title }}</h4>
-               <p class="list-group-item-text">
-                   {{ period.start_date|format_date('MMM YY', request) }} - {{ period.end_date|format_date('MMM YY', request) }}
-               </p>
-            </a>
+                {% if url_target == 'users' %}
+                    {% set url = request.route_url(url_target, traverse=(user.id, period.id, 'clinics')) %}
+                {% else %}
+                     {% set url = request.route_url(url_target, traverse=(period.id)) %}
+                {% endif %}
+                <a href="{{url}}" class="list-group-item bg-red">
+                   <h4 class="list-group-item-heading bold">{{ period.title }}</h4>
+                   <p class="list-group-item-text">
+                       {{ period.start_date|format_date('MMM YY', request) }} - {{ period.end_date|format_date('MMM YY', request) }}
+                   </p>
+                </a>
             {% endfor %}
             </div>
         </div>
