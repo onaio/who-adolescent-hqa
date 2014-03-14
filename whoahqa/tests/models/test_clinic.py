@@ -53,6 +53,33 @@ class TestClinic(TestBase):
         self.assertEqual(score, (1.5, 2))
 
     def test_get_scores_works(self):
+    def test_get_num_responses_per_characteristic_xform_id(self):
+        self.setup_test_data()
+        self.create_submissions()
+        clinic_a = Clinic.get(Clinic.name == 'Clinic A')
+        result = clinic_a.get_num_responses_per_characteristic_xform_id()
+        self.assertEqual(len(result), 5)
+        self.assertIn(
+            {'count': 1, 'characteristic': constants.TWENTY,
+             'xform_id': constants.HEALTH_FACILITY_MANAGER},
+            result)
+        self.assertIn(
+            {'count': 1, 'characteristic': constants.THREE,
+             'xform_id': constants.HEALTH_CARE_PROVIDER},
+            result)
+        self.assertIn(
+            {'count': 2, 'characteristic': constants.THREE,
+             'xform_id': constants.ADOLESCENT_CLIENT},
+            result)
+        self.assertIn(
+            {'count': 1, 'characteristic': constants.ONE,
+             'xform_id': constants.HEALTH_CARE_PROVIDER},
+            result)
+        self.assertIn(
+            {'count': 2, 'characteristic': constants.ONE,
+             'xform_id': constants.ADOLESCENT_CLIENT},
+            result)
+
         """
         Test scores calculation for all characteristic and tool pairs per
         clinic
