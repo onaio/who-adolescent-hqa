@@ -2,7 +2,8 @@
 {% block title %}My Clinics{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
-  <li>My Clinics <i class="icon-angle-right"></i> {{period.title}}</li>
+  <li><a href="{{ request.route_url('users', traverse=(user.id, 'select-period')) }}">{% trans %}Reporting Periods{% endtrans %}</a> <i class="icon-angle-right"></i></li>
+  <li>{% trans %}My Clinics{% endtrans %}</li>
 {% endblock %}
 {% block content %}
   <div class="row">
