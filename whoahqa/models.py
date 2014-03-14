@@ -329,6 +329,24 @@ class Clinic(Base):
                     Clinic.name.ilike('%'+search_term+'%')).all()
         return clinics
 
+    def get_num_responses_per_characteristic_xform_id(self):
+        clinic_submissions_table = Base.metadata.tables['clinic_submissions']
+        result = DBSession.execute(
+            select([
+                'COUNT(*)',
+                clinic_submissions_table.c.characteristic,
+                clinic_submissions_table.c.xform_id])
+            .select_from(clinic_submissions_table)
+            .where(
+                clinic_submissions_table.c.clinic_id == self.id)
+            .group_by(
+                clinic_submissions_table.c.characteristic,
+                clinic_submissions_table.c.xform_id)
+        ).fetchall()
+        return tuple_to_dict_list(
+            ('count', 'characteristic', 'xform_id'),
+            result)
+
     def calculate_score(self, characteristic, xform_id):
         """
         Calculate the aggregate score and the no. of respondents for the
