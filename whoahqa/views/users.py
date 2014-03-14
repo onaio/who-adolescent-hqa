@@ -27,9 +27,10 @@ class UserViews(object):
         period = self.request.context
         user = period.__parent__
         clinics = user.get_clinics()
-        
+
         key_indicators = [i for i, v in constants.KEY_INDICATORS]
-        key_indicator_char_map = tuple_to_dict_list(("id", "characteristics"), constants.KEY_INDICATORS)
+        key_indicator_char_map = tuple_to_dict_list(
+            ("id", "characteristics"), constants.KEY_INDICATORS)
         return {
             'period': period,
             'clinics': clinics,
@@ -44,7 +45,8 @@ class UserViews(object):
     def clinics_score_summary(self):
         user = self.request.context
         clinics = user.get_clinics()
-        characteristics = tuple_to_dict_list(("id", "description"), constants.CHARACTERISTICS)
+        characteristics = tuple_to_dict_list(
+            ("id", "description"), constants.CHARACTERISTICS)
         clinic_scores = {}
         for clinic in clinics:
             scores = clinic.get_scores()
