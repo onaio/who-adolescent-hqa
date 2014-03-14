@@ -505,43 +505,23 @@ CHARACTERISTIC_MAPPING = {
     }
 }
 
-#Characteristic type mapping
-EQUITABLE = 'EQUITABLE'
-ACCESSIBLE = 'ACCESSIBLE'
-ACCEPTABLE = 'ACCEPTABLE'
-APPROPRIATE = 'APPROPRIATE'
-EFFECTIVE = 'EFFECTIVE'
 
-CHARACTERISTIC_TYPES = {
-    EQUITABLE,
-    ACCESSIBLE,
-    ACCEPTABLE,
-    APPROPRIATE,
-    EFFECTIVE
-}
+# Key indicators
+EQUITABLE = 'equitable'
+ACCESSIBLE = 'accessible'
+ACCEPTABLE = 'acceptable'
+APPROPRIATE = 'appropriate'
+EFFECTIVE = 'effective'
 
-CHARACTERISTIC_TYPE_MAPPING = {
-    ONE: EQUITABLE,
-    TWO: EQUITABLE,
-    THREE: EQUITABLE,
-    FOUR: ACCESSIBLE,
-    FIVE: ACCESSIBLE,
-    SIX: ACCESSIBLE,
-    SEVEN: ACCESSIBLE,
-    EIGHT: ACCESSIBLE,
-    NINE: ACCEPTABLE,
-    TEN: ACCEPTABLE,
-    ELEVEN: ACCEPTABLE,
-    TWELVE: ACCEPTABLE,
-    THIRTEEN: ACCEPTABLE,
-    FOURTEEN: ACCEPTABLE,
-    FIFTEEN: ACCEPTABLE,
-    SIXTEEN: APPROPRIATE,
-    SEVENTEEN: EFFECTIVE,
-    EIGHTEEN: EFFECTIVE,
-    NINETEEN: EFFECTIVE,
-    TWENTY: EFFECTIVE
-}
+
+#Characteristic types
+INDICATOR_LABELS = [
+    (EQUITABLE, _(u"Equitable")),
+    (ACCESSIBLE, _(u"Accessible")),
+    (ACCEPTABLE, _(u"Acceptable")),
+    (APPROPRIATE, _(u"Appropriate")),
+    (EFFECTIVE, _(u"Effective"))
+]
 
 # Score ranges
 SCORE_RANGE_LIMITS = {
@@ -561,17 +541,19 @@ RECOMMENDED_SAMPLE_FRAME = {
     OBSERVATION_GUIDE: 3 
 }
 
-# key indicators
-EQUITABLE = 'equitable'
-ACCESSIBLE = 'accessible'
-ACCEPTABLE = 'acceptable'
-APPROPRIATE = 'appropriate'
-EFFECTIVE = 'effective'
-
 KEY_INDICATORS = [
     (EQUITABLE, (ONE, TWO, THREE)),
     (ACCESSIBLE, (FOUR, FIVE, SIX, SEVEN, EIGHT)),
-    (ACCEPTABLE, (NINE, TEN, ELEVEN, TWELVE, THIRTEEN, FOURTEEN, FIFTEEN)),
+    (ACCEPTABLE, (NINE, TEN, ELEVEN, TWELVE, THIRTEEN, FOURTEEN,
+                  FIFTEEN)),
     (APPROPRIATE, (SIXTEEN, )),
     (EFFECTIVE, (SEVENTEEN, EIGHTEEN, NINETEEN, TWENTY))
 ]
+
+CHARACTERISTIC_INDICATOR_MAPPING = dict()
+
+for indicator, characteristics in KEY_INDICATORS:
+    CHARACTERISTIC_INDICATOR_MAPPING.update(
+        dict([
+            (characteristic, indicator)
+            for characteristic in characteristics]))

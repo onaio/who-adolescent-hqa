@@ -17,3 +17,9 @@ def tuple_to_dict_list(key_tuple, value_tuples):
 def format_date_for_locale(value, format_def, request):
     localizer = get_localizer(request)
     return format_date(value, format_def, locale=localizer.locale_name)
+
+
+def filter_dict_list_by_attr(
+        active_ids, characteristic_list, attribute, invert=False):
+    return [c for c in characteristic_list
+            if (c.get(attribute) in active_ids) != invert]
