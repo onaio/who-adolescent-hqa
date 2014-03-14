@@ -3,6 +3,7 @@ from pyramid import testing
 
 from whoahqa.models import (
     OnaUser,
+    ReportingPeriod
 )
 from whoahqa.views import (
     UserViews,
@@ -23,7 +24,9 @@ class TestUserViews(IntegrationTestBase):
         self.setup_test_data()
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         request = testing.DummyRequest()
-        request.context = ona_user.user
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
+        period.__parent__ = ona_user.user
+        request.context = period
         request.ona_user = ona_user
         user_views = UserViews(request)
 
@@ -31,6 +34,7 @@ class TestUserViews(IntegrationTestBase):
             response = user_views.clinics()
 
         # we should only have Clinic A in the response
+        self.assertIsInstance(response['period'], ReportingPeriod)
         self.assertEqual(len(response['clinics']), 1)
         self.assertEqual(response['clinics'][0].name, "Clinic A")
         self.assertIn('key_indicators', response)
@@ -53,13 +57,28 @@ class TestUserViews(IntegrationTestBase):
         self.assertIn('characteristics', response)
         self.assertIn('clinic_scores', response)
 
+    def select_reporting_period(self):
+        self.setup_test_data()
+        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+        request = testing.DummyRequest()
+        request.context = ona_user.user
+        request.ona_user = ona_user
+        user_views = UserViews(request)
+
+        with HTTMock(get_edit_url_mock):
+            response = user_views.select_reporting_period()
+
+        self.assertGreater(len(response['periods']), 0)
+        self.assertEquals(response['user'], ona_user.user)
+
 
 class TestUserViewsFunctional(FunctionalTestBase):
     def test_user_clinics_view_allows_owner(self):
         self.setup_test_data()
         # get the manager user
         user = OnaUser.get(OnaUser.username == "manager_a").user
-        url = self.request.route_path('users', traverse=(user.id, 'clinics'))
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
+        url = self.request.route_path('users', traverse=(user.id, period.id,  'clinics'))
         headers = self._login_user('manager_a')
         with HTTMock(get_edit_url_mock):
             response = self.testapp.get(url, headers=headers)
@@ -70,7 +89,8 @@ class TestUserViewsFunctional(FunctionalTestBase):
         headers = self._login_user('super')
         # get the manager user
         user = OnaUser.get(OnaUser.username == "manager_a").user
-        url = self.request.route_path('users', traverse=(user.id, 'clinics'))
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
+        url = self.request.route_path('users', traverse=(user.id, period.id, 'clinics'))
         with HTTMock(get_edit_url_mock):
             response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)

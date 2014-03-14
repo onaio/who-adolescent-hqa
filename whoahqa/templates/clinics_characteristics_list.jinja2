@@ -10,11 +10,16 @@
     <i class="icon-angle-right"></i>
   </li>
   <li>
-    <a href="{{ request.route_url('clinics',traverse=(clinic.id,)) }}">{{ clinic.name }}</a>
+    <a href="{{ request.route_url('clinics',traverse=(clinic.id, period.id)) }}">{{ clinic.name }}</a>
     <i class="icon-angle-right"></i>
   </li>
-  <li>{{ gettext("Select Characteristics") }}</li>
-  <li><a href="#"> </a></li>
+  <li>
+      {{ gettext("Select Characteristics") }}
+       <i class="icon-angle-right"></i>
+  </li>
+  </li>
+    {{period.title}}
+  </li>
 {% endblock %}
 {% block content %}
   <form method="post" action="{{ request.route_url('clinics', traverse=(clinic.id, period.id, 'select_characteristics')) }}" role="form">
