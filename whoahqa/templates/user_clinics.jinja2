@@ -2,7 +2,8 @@
 {% block title %}My Clinics{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
-  <li>My Clinics</li>
+  <li><a href="{{ request.route_url('users', traverse=(user.id, 'select-period')) }}">{% trans %}Reporting Periods{% endtrans %}</a> <i class="icon-angle-right"></i></li>
+  <li>{% trans %}My Clinics{% endtrans %}</li>
 {% endblock %}
 {% block content %}
   <div class="row">
@@ -32,8 +33,8 @@
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ request.route_url('clinics', traverse=(clinic.id, 'characteristics')) }}">Select Characteristics </a></li>
-                    <li><a href="{{ request.route_url('clinics', traverse=(clinic.id)) }}">View Report</a></li>
+                    <li><a href="{{ request.route_url('clinics', traverse=(clinic.id, period.id, 'characteristics')) }}">Select Characteristics </a></li>
+                    <li><a href="{{ request.route_url('clinics', traverse=(clinic.id, period.id)) }}">View Report</a></li>
                   </ul>
                 </div>
             {% endfor %}

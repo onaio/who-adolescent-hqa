@@ -171,6 +171,18 @@ class User(Base):
             (Allow, "u:{}".format(self.id), ALL_PERMISSIONS),
         ]
 
+    def __getitem__(self, item):
+        # retrieve the reporting period
+        try:
+            period_id = int(item)
+            period = ReportingPeriod.get(ReportingPeriod.id == period_id)
+        except (ValueError, NoResultFound):
+            raise KeyError
+        else:
+            period.__parent__ = self
+            period.__name__ = item
+            return period
+
 
 class UserProfile(Base):
     __tablename__ = 'user_profiles'
