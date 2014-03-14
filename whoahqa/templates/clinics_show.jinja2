@@ -9,8 +9,12 @@
     <a href="{{ request.route_url('clinics',traverse=('')) }}">Clinics</a>
     <i class="icon-angle-right"></i>
   </li>
-  <li>{{ self.page_title() }}</li>
-  <li><a href="#"> </a></li>
+  <li>
+    {{ self.page_title() }}
+    <i class="icon-angle-right"></i>
+  <li>
+    {{period.title}}
+  </li>
 {% endblock %}
 {% block content %}
 {% include 'clinic_tool_table.jinja2' %}
