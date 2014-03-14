@@ -177,8 +177,20 @@ class ClinicViews(object):
         # filter out active characteristics
         active_characteristic_ids = [c.characteristic_id for c
                                      in clinic_characteristics]
+        #filter out
+        char_type = self.request.GET.get('char_type')
+        filtered_characteristic_ids = []
+        if char_type is not None and char_type != 'All':
+            for key_char in tuple_to_dict_list(("id", "characteristics"), constants.KEY_INDICATORS):
+                if key_char['id'] != char_type:
+                    for char in key_char['characteristics']:
+                        filtered_characteristic_ids.append(char)
+
+        #merge active characteristics and characteristics to be removed after filter
+        merged_filter_list = active_characteristic_ids + filtered_characteristic_ids
+
         inactive_characteristics = filter_dict_list_by_attr(
-            active_characteristic_ids, characteristics, 'id', invert=True)
+            merged_filter_list, characteristics, 'id', invert=True)
 
         return {
             'period':  period,

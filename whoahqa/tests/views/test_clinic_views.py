@@ -197,6 +197,26 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(response.location, self.request.route_url(
             'clinics', traverse=(clinic.id, period.id)))
 
+    def test_characteristics_list_with_characteristic_type_filter(self):
+        self.setup_test_data()
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
+        clinic = Clinic.get(Clinic.id == 1)
+        period.__parent__ = clinic
+        self.request.context = period
+        params = MultiDict({'char_type': 'equitable'})
+        self.request.GET = params
+
+        response = self.clinic_views.characteristics_list()
+
+        self.assertIsInstance(response['period'], ReportingPeriod)
+        self.assertIsInstance(response['clinic'], Clinic)
+        self.assertEqual(response['clinic'].id, clinic.id)
+        self.assertEqual(len(response['characteristics']), 3),
+        self.assertEqual(response['indicator_labels'],
+                         dict(constants.INDICATOR_LABELS)),
+        self.assertEqual(response['characteristic_indicator_mapping'],
+                         constants.CHARACTERISTIC_INDICATOR_MAPPING)
+
 
 class TestClinicViewsFunctional(FunctionalTestBase):
     def test_unassigned_clinics_view_allows_authenticated(self):
