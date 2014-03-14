@@ -32,6 +32,7 @@ class UserViews(object):
         key_indicator_char_map = tuple_to_dict_list(
             ("id", "characteristics"), constants.KEY_INDICATORS)
         return {
+            'user': user,
             'period': period,
             'clinics': clinics,
             'key_indicators': key_indicators,
@@ -65,4 +66,4 @@ class UserViews(object):
     def select_reporting_period(self):
         user = self.request.context
         periods = ReportingPeriod.all()
-        return {'periods': periods, 'user':user}
+        return {'periods': periods, 'user': user}
