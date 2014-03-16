@@ -164,6 +164,7 @@ class ClinicViews(object):
         # get the reporting period from the GET params
         period = self.request.context
         clinic = period.__parent__
+        user = clinic.user
 
         # if clinic is not assigned, throw a bad request
         if not clinic.is_assigned:
@@ -195,6 +196,7 @@ class ClinicViews(object):
         return {
             'period':  period,
             'clinic': clinic,
+            'user': user,
             'client_tools': tuple_to_dict_list(
                 ("id", "name"), constants.CLIENT_TOOLS),
             'characteristics': inactive_characteristics,
@@ -217,7 +219,7 @@ class ClinicViews(object):
         # get the list of selected characteristics
         characteristic_ids = self.request.POST.getall('characteristic_id')
         for characteristic_id in characteristic_ids:
-            clinic.select_characteristic(characteristic_id, period.id)
+            clinic.activate_characteristic(characteristic_id, period.id)
 
         return HTTPFound(
             self.request.route_url('clinics', traverse=(clinic.id, period.id)))
