@@ -472,7 +472,7 @@ class Clinic(Base):
 
         return scores
 
-    def select_characteristic(self, characteristic_id, period_id):
+    def activate_characteristic(self, characteristic_id, period_id):
         clinic_characteristic = ClinicCharacteristics(
             clinic_id=self.id, characteristic_id=characteristic_id,
             period_id=period_id)
@@ -496,7 +496,7 @@ class Clinic(Base):
         """
         # get the number of responses per characteristic and xform_id pair for
         # this clinic
-        characteristic_xforms =\
+        characteristic_xforms_responses =\
             self.get_num_responses_per_characteristic_xform_id(self.id)
 
         # get all submissions for this clinic and specified period
@@ -510,17 +510,15 @@ class Clinic(Base):
             for client_tool_id, xpaths in mapping.items():
                 # filter this clinics submissions to this characteristic and
                 # this client_tool
-                submission_jsons = [s.raw_data for c, s in
-                                              submissions
-                                              if c.characteristic ==
-                                              characteristic and
-                                              c.xform_id == client_tool_id]
+                submission_jsons = [s.raw_data for c, s in submissions
+                                    if c.characteristic == characteristic and
+                                    c.xform_id == client_tool_id]
 
                 # get the number of responses for this characteristic/xform_id
                 current_characteristic_xforms = filter(
                     lambda c: c['characteristic'] == characteristic
                     and c['xform_id'] == client_tool_id,
-                    characteristic_xforms)
+                    characteristic_xforms_responses)
 
                 num_responses = 0
                 if len(current_characteristic_xforms) > 0:

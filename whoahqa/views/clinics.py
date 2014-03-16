@@ -217,7 +217,7 @@ class ClinicViews(object):
         # get the list of selected characteristics
         characteristic_ids = self.request.POST.getall('characteristic_id')
         for characteristic_id in characteristic_ids:
-            clinic.select_characteristic(characteristic_id, period.id)
+            clinic.activate_characteristic(characteristic_id, period.id)
 
         return HTTPFound(
             self.request.route_url('clinics', traverse=(clinic.id, period.id)))
