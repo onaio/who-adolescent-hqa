@@ -6,20 +6,15 @@
 {% block page_title %}{{ self.title() }} <span class="bold">({{ clinic.code }})</span> {% endblock %}
 {% block breadcrumbs %}
   <li>
-    <a href="{{ request.route_url('clinics',traverse=('')) }}">Clinics</a>
+    <a href="{{ request.route_url('users', traverse=(user.id, 'select-period'), _query={'came_from': 'users'}) }}">
+      {% trans %}Reporting Periods{% endtrans %}</a>
     <i class="icon-angle-right"></i>
   </li>
   <li>
-    <a href="{{ request.route_url('clinics',traverse=(clinic.id, period.id)) }}">{{ clinic.name }}</a>
+    <a href="{{ request.route_url('users', traverse=(user.id, period.id, 'clinics')) }}">{{ period.title }}</a>
     <i class="icon-angle-right"></i>
   </li>
-  <li>
-      {{ gettext("Select Characteristics") }}
-       <i class="icon-angle-right"></i>
-  </li>
-  </li>
-    {{period.title}}
-  </li>
+  <li>{% trans %}Select Characteristics{% endtrans %}</li>
 {% endblock %}
 {% block content %}
   <form method="post" action="{{ request.route_url('clinics', traverse=(clinic.id, period.id, 'select_characteristics')) }}" role="form">

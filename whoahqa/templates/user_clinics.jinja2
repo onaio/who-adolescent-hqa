@@ -2,7 +2,10 @@
 {% block title %}My Clinics{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
-  <li><a href="{{ request.route_url('users', traverse=(user.id, 'select-period')) }}">{% trans %}Reporting Periods{% endtrans %}</a> <i class="icon-angle-right"></i></li>
+  <li>
+    <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'select-period'), _query={'came_from': request.route_path('users', traverse=(user.id, '{period_id}', 'clinics'))}) }}">
+      {% trans %}Reporting Periods{% endtrans %}
+    </a> <i class="icon-angle-right"></i></li>
   <li>{% trans %}My Clinics{% endtrans %}</li>
 {% endblock %}
 {% block content %}

@@ -1,3 +1,5 @@
+import urlparse
+
 from pyramid.security import (
     NO_PERMISSION_REQUIRED,
 )
@@ -55,3 +57,11 @@ class ReportingPeriodViews(BaseClassViews):
 
         # render form
         return {'form': form}
+
+    @view_config(name='redirect',
+                 context=ReportingPeriod)
+    def redirect(self):
+        period = self.request.context
+        came_from = self.request.GET.get('came_from')
+        target_url = urlparse.unquote(came_from).format(period_id=period.id)
+        return HTTPFound(target_url)
