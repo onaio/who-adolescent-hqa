@@ -444,6 +444,8 @@ class Clinic(Base):
                 if num_responses > 0:
                     aggregate_score = Clinic.calculate_aggregate_scores(
                         xpaths, num_responses, submission_jsons)
+                    # increment total if value is not None
+                    total_scores += aggregate_score
 
                 stats = {
                     'aggregate_score': aggregate_score,
@@ -454,10 +456,6 @@ class Clinic(Base):
                     - num_responses
                 }
                 scores[characteristic][client_tool_id] = stats
-
-                # increment total if value is not None
-                if aggregate_score is not None:
-                    total_scores += aggregate_score
 
                 total_questions += len(xpaths)
                 total_responses += num_responses
