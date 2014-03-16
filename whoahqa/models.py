@@ -425,11 +425,9 @@ class Clinic(Base):
             for client_tool_id, xpaths in mapping.items():
                 # filter this clinics submissions to this characteristic and
                 # this client_tool
-                characteristic_submissions = [s.raw_data for c, s in
-                                              submissions
-                                              if c.characteristic ==
-                                              characteristic and
-                                              c.xform_id == client_tool_id]
+                submission_jsons = [s.raw_data for c, s in submissions
+                                    if c.characteristic == characteristic and
+                                    c.xform_id == client_tool_id]
 
                 # get the number of responses for this characteristic/xform_id
                 current_characteristic_xforms = filter(
@@ -445,7 +443,7 @@ class Clinic(Base):
                 aggregate_score = None
                 if num_responses > 0:
                     aggregate_score = Clinic.calculate_aggregate_scores(
-                        xpaths, num_responses, characteristic_submissions)
+                        xpaths, num_responses, submission_jsons)
 
                 stats = {
                     'aggregate_score': aggregate_score,
@@ -487,7 +485,7 @@ class Clinic(Base):
                 ClinicCharacteristics.period_id == period.id).all()
         return clinic_characteristics
 
-    def calculate_key_indicator_scores(self, indicator, characteristics_list):
+    def calculate_key_indicator_scores(self, characteristics_list):
         """
         Calculate the aggregate score for a key indicator eg. 
         equitable = {
@@ -496,19 +494,49 @@ class Clinic(Base):
             'three': z%
         }
         """
+        # get the number of responses per characteristic and xform_id pair for
+        # this clinic
+        characteristic_xforms =\
+            self.get_num_responses_per_characteristic_xform_id(self.id)
+
+        # get all submissions for this clinic and specified period
+        submissions = self.get_period_clinic_submissions()
+
         key_indicator_scores = {}        
         total_responses = total_scores = total_questions = 0
         for characteristic in characteristics_list:
             mapping = constants.CHARACTERISTIC_MAPPING[characteristic]
             key_indicator_scores[characteristic] = {}
-            for client_tool_id, questions in mapping.items():
-                aggregate_score, num_responses = self.calculate_score(
-                    characteristic, client_tool_id)
+            for client_tool_id, xpaths in mapping.items():
+                # filter this clinics submissions to this characteristic and
+                # this client_tool
+                submission_jsons = [s.raw_data for c, s in
+                                              submissions
+                                              if c.characteristic ==
+                                              characteristic and
+                                              c.xform_id == client_tool_id]
+
+                # get the number of responses for this characteristic/xform_id
+                current_characteristic_xforms = filter(
+                    lambda c: c['characteristic'] == characteristic
+                    and c['xform_id'] == client_tool_id,
+                    characteristic_xforms)
+
+                num_responses = 0
+                if len(current_characteristic_xforms) > 0:
+                    # we have responses for this combination
+                    num_responses = current_characteristic_xforms[0]['count']
+
+                aggregate_score = None
+                if num_responses > 0:
+                    aggregate_score = Clinic.calculate_aggregate_scores(
+                        xpaths, num_responses, submission_jsons)
+
                 if aggregate_score is not None:
                     total_scores += aggregate_score
                 
                 total_responses += num_responses
-                total_questions += len(questions)
+                total_questions += len(xpaths)
                 key_indicator_scores[characteristic] = None\
                     if total_responses == 0 else (
                         total_scores/float(total_questions) * 100)
@@ -532,19 +560,21 @@ class Clinic(Base):
         }
         """
         key_indicators = tuple_to_dict_list(
-                ("key", "characteristic_list"), constants.KEY_INDICATORS)
+            ("key", "characteristic_list"), constants.KEY_INDICATORS)
         all_key_indicator_scores = {}
         for key_char_pair in key_indicators:
             average_score = 0
             indicator_score = self.calculate_key_indicator_scores(
-                key_char_pair['key'], key_char_pair['characteristic_list'])
+                key_char_pair['characteristic_list'])
             for score in indicator_score.itervalues():
                 if score is not None:
                     average_score += score
             all_key_indicator_scores[key_char_pair['key']] = indicator_score
             all_key_indicator_scores[key_char_pair['key']].update(
-                    {'average_score': (average_score/len(indicator_score))
-                })
+                {
+                    'average_score': (average_score/len(indicator_score))
+                }
+            )
 
         return all_key_indicator_scores
 
