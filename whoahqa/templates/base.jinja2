@@ -105,13 +105,13 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                     </a>
                   </li>
                   <li>
-                     <a href="{{ request.route_url('clinics', traverse=()) }}">
+                     <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'select-period')) }}?came_from=clinics">
                         {{ gettext('All Clinics') }}
                      </a>
                   </li>
                 {% endif %}
                 <li>
-                  <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'select-period')) }}">
+                  <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'select-period')) }}?came_from=users">
                      {{ gettext('My Clinics') }}
                   </a>
                 </li>
