@@ -1,5 +1,6 @@
 import transaction
 import datetime
+import json
 
 from whoahqa import constants
 from whoahqa.utils import tuple_to_dict_list
@@ -43,16 +44,62 @@ class TestClinic(TestBase):
         clinics = Clinic.filter_clinics("Clinic B", True)
         self.assertGreater(len(clinics), 0)
 
-    def test_calculate_score_works(self):
+    def test_get_num_responses_per_characteristic_xform_id(self):
         self.setup_test_data()
         self.create_submissions()
+        clinic_a = Clinic.get(Clinic.name == 'Clinic A')
+        result = clinic_a.get_num_responses_per_characteristic_xform_id(
+            clinic_a.id)
+        self.assertEqual(len(result), 5)
+        self.assertIn(
+            {'count': 1, 'characteristic': constants.TWENTY,
+             'xform_id': constants.HEALTH_FACILITY_MANAGER},
+            result)
+        self.assertIn(
+            {'count': 1, 'characteristic': constants.THREE,
+             'xform_id': constants.HEALTH_CARE_PROVIDER},
+            result)
+        self.assertIn(
+            {'count': 2, 'characteristic': constants.THREE,
+             'xform_id': constants.ADOLESCENT_CLIENT},
+            result)
+        self.assertIn(
+            {'count': 1, 'characteristic': constants.ONE,
+             'xform_id': constants.HEALTH_CARE_PROVIDER},
+            result)
+        self.assertIn(
+            {'count': 2, 'characteristic': constants.ONE,
+             'xform_id': constants.ADOLESCENT_CLIENT},
+            result)
 
-        clinic = Clinic.get(Clinic.id == 1)
-        score = clinic.calculate_score(
-            constants.ONE, constants.ADOLESCENT_CLIENT)
-        self.assertEqual(score, (1.5, 2))
+    def test_calculate_aggregate_scores(self):
+        xpaths = constants.CHARACTERISTIC_MAPPING[
+            constants.ONE][constants.ADOLESCENT_CLIENT]
+        num_responses = 3
+        submissions = [json.loads(s) for s in self.submissions[1: 4]]
+        scores = Clinic.calculate_aggregate_scores(
+            xpaths, num_responses, submissions)
+        self.assertIsInstance(scores, float)
+        self.assertEqual(scores, 1.3333333333333333)
 
-    def test_get_scores_works(self):
+    def test_calculate_aggregate_scores_raises_value_error_for_0_submissions(
+            self):
+        xpaths = constants.CHARACTERISTIC_MAPPING[
+            constants.ONE][constants.ADOLESCENT_CLIENT]
+        num_responses = 0
+        submissions = [json.loads(s) for s in self.submissions[1: 4]]
+        self.assertRaises(
+            ValueError, Clinic.calculate_aggregate_scores, xpaths,
+            num_responses, submissions)
+
+    def test_get_period_submissions(self):
+        self.setup_test_data()
+        self.create_submissions()
+        clinic = Clinic.get(Clinic.name == 'Clinic A')
+        submissions = clinic.get_period_clinic_submissions()
+        self.assertEqual(len(submissions), 7)
+
+    def test_get_scores(self):
         """
         Test scores calculation for all characteristic and tool pairs per
         clinic
@@ -106,15 +153,6 @@ class TestClinic(TestBase):
             'total_percentage': None
         })
 
-    def test_calculate_score_when_no_responses_returns_none(self):
-        self.setup_test_data()
-        self.create_submissions()
-
-        clinic = Clinic.get(Clinic.id == 1)
-        score = clinic.calculate_score(
-            constants.TWO, constants.HEALTH_CARE_PROVIDER)
-        self.assertEqual(score, (None, 0))
-
     def test_is_assigned_returns_true_if_assigned(self):
         self.setup_test_data()
         clinic_a = Clinic.get(Clinic.id == 1)
@@ -132,14 +170,12 @@ class TestClinic(TestBase):
             clinic_a.date_created.date(), datetime.datetime.today().date())
 
     def test_calculate_key_indicator_scores_when_no_responses_exist(self):
-        '''
-        should return None when no responses exist
-        '''
+        """ should return None when no responses exist
+        """
         self.setup_test_data()
         clinic_a = Clinic.get(Clinic.id == 1)
         key_indicator_scores = clinic_a.calculate_key_indicator_scores(
-            constants.EQUITABLE, 
-            (constants.ONE, constants.TWO, constants.THREE))
+             (constants.ONE, constants.TWO, constants.THREE))
         self.assertEqual(key_indicator_scores,  {
             constants.ONE: None,
             constants.TWO: None,
@@ -147,14 +183,13 @@ class TestClinic(TestBase):
         })
 
     def test_calculate_key_indicator_when_responses_exist(self):
-        ''' 
-        should return a valid value when responses exist
-        '''
+        """ should return a valid value when responses exist
+        """
         self.setup_test_data()
         self.create_submissions()
         clinic_a = Clinic.get(Clinic.id == 1)
         key_indicator_scores = clinic_a.calculate_key_indicator_scores(
-            constants.EQUITABLE, (constants.ONE, constants.TWO, constants.THREE))
+            (constants.ONE, constants.TWO, constants.THREE))
         self.assertEqual(key_indicator_scores, {
             constants.ONE: 50.0, 
             constants.TWO: 27.77777777777778,
@@ -162,9 +197,8 @@ class TestClinic(TestBase):
         })
 
     def test_get_all_key_indicator_scores_when_no_responses_exist(self):
-        '''
-        Should return list containing None values for each characteristic
-        '''
+        """ Should return list containing None values for each characteristic
+        """
         self.setup_test_data()
         clinic_a = Clinic.get(Clinic.id == 1)
         key_indicator_scores = clinic_a.get_all_key_indicator_scores()
@@ -180,9 +214,8 @@ class TestClinic(TestBase):
         })
 
     def test_get_all_key_indicator_scores_when_responses_exist(self):
-        '''
-        Should list containing values for each characteristic
-        '''
+        """ Should list containing values for each characteristic
+        """
         self.setup_test_data()
         self.create_submissions()
         clinic_a = Clinic.get(Clinic.id == 1)
@@ -219,8 +252,8 @@ class TestClinic(TestBase):
 
     def test_get_active_characteristics_filters_by_period(self):
         self.setup_test_data()
-        period1 = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
-        clinicA = Clinic.get(Clinic.name == 'Clinic A')
+        period_1 = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
+        clinic_a = Clinic.get(Clinic.name == 'Clinic A')
         period2 = ReportingPeriod(
             title='Period 2',
             start_date=datetime.datetime(2014, 1, 1),
@@ -229,17 +262,17 @@ class TestClinic(TestBase):
         DBSession.add(period2)
         DBSession.flush()
         clinic_char1 = ClinicCharacteristics(
-            clinic_id=clinicA.id,
+            clinic_id=clinic_a.id,
             characteristic_id='one',
-            period_id=period1.id)
+            period_id=period_1.id)
 
         clinic_char2 = ClinicCharacteristics(
-            clinic_id=clinicA.id,
+            clinic_id=clinic_a.id,
             characteristic_id='one',
             period_id=period2.id)
 
         DBSession.add_all([clinic_char1, clinic_char2])
 
-        characteristics = clinicA.get_active_characteristics(period1)
+        characteristics = clinic_a.get_active_characteristics(period_1)
 
         self.assertEqual(len(characteristics), 1)
