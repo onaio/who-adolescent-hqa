@@ -60,10 +60,29 @@ var Custom = function () {
             }
         });
     }
+
+    var getParameterByName = function (name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    var filterCharacteristics = function () {
+        var type_value = location.search.replace('?', '').split('=')[1]
+        $('#charactersictic_type').on('change', function (e) {
+            var valueSelected = this.value;
+            window.location = '?char_type=' + valueSelected;
+        });
+        var type_value = getParameterByName('char_type')
+        $('#charactersictic_type').val(type_value)
+
+    }
     return {
         addCheckAllListener: addCheckAllListener,
         enableDatatables: enableDatatables,
-        filterClinicTable:filterClinicTable
+        filterClinicTable:filterClinicTable,
+        filterCharacteristics: filterCharacteristics
     }
 }();
 
