@@ -175,8 +175,7 @@ class TestClinic(TestBase):
         self.setup_test_data()
         clinic_a = Clinic.get(Clinic.id == 1)
         key_indicator_scores = clinic_a.calculate_key_indicator_scores(
-            constants.EQUITABLE, 
-            (constants.ONE, constants.TWO, constants.THREE))
+             (constants.ONE, constants.TWO, constants.THREE))
         self.assertEqual(key_indicator_scores,  {
             constants.ONE: None,
             constants.TWO: None,
@@ -190,7 +189,7 @@ class TestClinic(TestBase):
         self.create_submissions()
         clinic_a = Clinic.get(Clinic.id == 1)
         key_indicator_scores = clinic_a.calculate_key_indicator_scores(
-            constants.EQUITABLE, (constants.ONE, constants.TWO, constants.THREE))
+            (constants.ONE, constants.TWO, constants.THREE))
         self.assertEqual(key_indicator_scores, {
             constants.ONE: 50.0, 
             constants.TWO: 27.77777777777778,
