@@ -19,4 +19,12 @@ from submissions import SubmissionViews
 
 @view_config(route_name='default')
 def default(request):
-    return HTTPFound(request.route_url('clinics', traverse=()))
+    ona_user = request.ona_user
+    return HTTPFound(
+        request.route_url(
+            'users',
+            traverse=(ona_user.user.id, 'select-period'),
+            _query={
+                'came_from': request.route_path(
+                'users', traverse=(
+                    ona_user.user.id, '{period_id}', 'clinics'))}))
