@@ -177,7 +177,13 @@ def oauth_callback(request):
 
             # TODO: redirect to `came_from` url
             return HTTPFound(
-                request.route_url('users', traverse=(user_id, 'clinics')),
+                request.route_url(
+                    'users',
+                    traverse=(ona_user.user.id, 'select-period'),
+                    _query={
+                        'came_from': request.route_path(
+                        'users', traverse=(
+                            ona_user.user.id, '{period_id}', 'clinics'))}),
                 headers=headers)
 
     request.session.flash(
