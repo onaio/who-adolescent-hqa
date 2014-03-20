@@ -206,7 +206,13 @@ class TestAuthFunctional(FunctionalTestBase):
         self.assertEqual(
             response.location,
             self.request.route_url(
-                'users', traverse=(ona_user.user.id, 'clinics')))
+                'users',
+                traverse=(ona_user.user.id, 'select-period'),
+                _query={
+                    'came_from': self.request.route_path(
+                        'users', traverse=(
+                            ona_user.user.id, '{period_id}', 'clinics'))}))
+        response.follow()
 
         # check that we set the login header
         self.assertIn('Set-Cookie', response.headers)
