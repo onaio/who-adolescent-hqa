@@ -1,5 +1,4 @@
-import uuid
-
+from pyramid.httpexceptions import HTTPFound
 from pyramid.view import (
     view_config,
     view_defaults,
@@ -59,6 +58,20 @@ class UserViews(object):
             'score_limits': constants.SCORE_RANGE_LIMITS,
         }
 
+    @view_config(name='clinics',
+                 permission=perms.LIST_USER_CLINICS,
+                 context=User)
+    def reporting_period_redirect(self):
+        user = self.request.context
+        return HTTPFound(
+            self.request.route_url(
+                'users',
+                traverse=(user.id, 'select-period'),
+                _query={
+                    'came_from': self.request.route_path(
+                    'users', traverse=(user.id, '{period_id}', 'clinics'))
+                }))
+
     @view_config(name='select-period',
                  renderer='reporting_period_select.jinja2',
                  permission=perms.LIST_USER_CLINICS,
@@ -66,5 +79,5 @@ class UserViews(object):
     def select_reporting_period(self):
         user = self.request.context
         periods = ReportingPeriod.all()
-        url_target = self.request.GET.get('came_from', 'users')
+        url_target = self.request.GET.get('came_from')
         return {'periods': periods, 'user': user, 'url_target': url_target}

@@ -20,18 +20,20 @@ def get_edit_url_mock(url, request):  # pragma: no cover
 
 
 class TestUserViews(IntegrationTestBase):
+    def setUp(self):
+        super(TestUserViews, self).setUp()
+        self.request = testing.DummyRequest()
+        self.user_views = UserViews(self.request)
+
     def test_user_clinics_view(self):
         self.setup_test_data()
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
-        request = testing.DummyRequest()
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         period.__parent__ = ona_user.user
-        request.context = period
-        request.ona_user = ona_user
-        user_views = UserViews(request)
+        self.request.context = period
+        self.request.ona_user = ona_user
 
-        with HTTMock(get_edit_url_mock):
-            response = user_views.clinics()
+        response = self.user_views.clinics()
 
         # we should only have Clinic A in the response
         self.assertIsInstance(response['period'], ReportingPeriod)
@@ -71,6 +73,18 @@ class TestUserViews(IntegrationTestBase):
         self.assertGreater(len(response['periods']), 0)
         self.assertEquals(response['user'], ona_user.user)
 
+    def test_reporting_period_redirect(self):
+        self.setup_test_data()
+        user = OnaUser.get(OnaUser.username == 'manager_a').user
+        self.request.context = user
+        response = self.user_views.reporting_period_redirect()
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.location, self.request.route_url(
+            'users', traverse=(user.id, 'select-period'), _query={
+                'came_from': self.request.route_path(
+                    'users', traverse=(user.id, '{period_id}', 'clinics'))
+            }))
+
 
 class TestUserViewsFunctional(FunctionalTestBase):
     def test_user_clinics_view_allows_owner(self):
@@ -78,7 +92,8 @@ class TestUserViewsFunctional(FunctionalTestBase):
         # get the manager user
         user = OnaUser.get(OnaUser.username == "manager_a").user
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
-        url = self.request.route_path('users', traverse=(user.id, period.id,  'clinics'))
+        url = self.request.route_path(
+            'users', traverse=(user.id, period.id,  'clinics'))
         headers = self._login_user('manager_a')
         with HTTMock(get_edit_url_mock):
             response = self.testapp.get(url, headers=headers)

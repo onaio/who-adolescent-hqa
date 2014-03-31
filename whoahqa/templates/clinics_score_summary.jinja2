@@ -4,10 +4,10 @@
 {% block breadcrumbs %}
   <li>
     <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'clinics')) }}">
-       {{ gettext('My Clinics') }}
+       {% trans %}My Clinics{% endtrans %}
     </a>
-  </li>
   <i class="icon-angle-right"></i>
+  </li>
   <li>{{ gettext('Score Summary') }}</li>
 {% endblock %}
 {% block content %}
