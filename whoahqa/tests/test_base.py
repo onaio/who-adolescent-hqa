@@ -98,10 +98,11 @@ class TestBase(unittest.TestCase):
             start_date=datetime.datetime(2014, 3, 1),
             end_date=datetime.datetime(2015, 3, 1))
 
-        with transaction.manager:
-            DBSession.add_all(
-                [su_ona_user, manager_a_ona_user, manager_b_ona_user,
-                 clinic1, clinic2, reporting_period])
+        DBSession.add_all(
+            [su_ona_user, manager_a_ona_user, manager_b_ona_user,
+             clinic1, clinic2, reporting_period])
+
+        transaction.commit()
 
 
 class IntegrationTestBase(TestBase):
