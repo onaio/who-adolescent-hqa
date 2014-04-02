@@ -1,3 +1,4 @@
+import operator
 from whoahqa.utils import translation_string_factory as _
 
 CLINIC_IDENTIFIER = 'facility_info/clinic_id'
@@ -523,14 +524,41 @@ INDICATOR_LABELS = [
     (EFFECTIVE, _(u"Effective"))
 ]
 
+# Score classifications
+GREAT = 'great'
+GOOD = 'good'
+BAD = 'bad'
+
 # Score ranges
-SCORE_RANGE_LIMITS = {
-    'warning': 80,
-    'danger': 60
-}
+SCORE_RANGE_LIMITS = (
+    (operator.ge, 80, GREAT),
+    (operator.ge, 60, GOOD),
+    (operator.lt, 60,  BAD),
+)
+
+
+def get_score_classification(value, classification_range_def=None):
+    if classification_range_def is None:
+        classification_range_def = SCORE_RANGE_LIMITS
+
+    if value is None:
+        return None
+
+    classification = None
+    for op, operand2, v in classification_range_def:
+        if op(value, operand2) is True:
+            classification = v
+            break
+
+    if classification is None:
+        raise ValueError(
+            "The SCORE_RANGE_LIMITS definition could not return a "
+            "classification for {}".format(value))
+    else:
+        return classification
 
 #Client Tool Recommended sample frame
-RECOMMENDED_SAMPLE_FRAME = {
+RECOMMENDED_SAMPLE_FRAMES = {
     ADOLESCENT_CLIENT: 6,
     HEALTH_CARE_PROVIDER: 5,
     SUPPORT_STAFF: 3,

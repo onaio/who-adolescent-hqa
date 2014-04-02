@@ -302,13 +302,24 @@ i.icon-grey {
     color: #ccc;
 }
 
+i.icon-red {
+    color: #cc000b;
+}
+
+i.icon-orange {
+    color: #FFDC00;
+}
+
+i.icon-green {
+    color: #35cc03;
+}
+
 td.relative-score {
     font-size: 16px;
 }
 
 td.relative-score i.icon-medkit {
     margin-right: 5px;
-    color: #FFDC00;
 }
 
 i.launch-form {

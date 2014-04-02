@@ -27,7 +27,9 @@
       {% for characteristic in characteristics %}
         {% for clinic_characteristic in clinic_characteristics %}
             {% if clinic_characteristic.characteristic_id == characteristic.id %}
+                {% set total_responses = scores[characteristic.id].totals.total_responses %}
                 {% set percentage = scores[characteristic.id].totals.total_percentage %}
+                {% set meets_threshold = scores[characteristic.id].totals.meets_threshold %}
                 <thead>
                 <tr>
                   <th class="char-defn"></th>
@@ -104,8 +106,22 @@
                         </table>
                     </td>
                     <td class="text-center relative-score">
-                        <i class="big icon-medkit"></i>
-                        {{ "%s"| format(percentage|int(0)) }}%
+                        {% if total_responses == 0 %}
+                          -
+                        {% else %}
+                          {% set class_name = "icon-grey" %}
+                          {% if meets_threshold %}
+                            {% if score_classification == 'great' %}
+                              {% set class_name = "icon-green" %}
+                            {% elif score_classification == 'good' %}
+                              {% set class_name = "icon-orange" %}
+                            {% else %}
+                              {% set class_name = "icon-red" %}
+                            {% endif %}
+                          {% endif %}
+                          <i class="big icon-medkit {{ class_name }}"></i>
+                          {{ "%s"| format(percentage|int(0)) }}%
+                        {% endif %}
                     </td>
                   </tr>
             {% endif %}

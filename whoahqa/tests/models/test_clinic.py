@@ -128,7 +128,8 @@ class TestClinic(TestBase):
             'total_scores': 2.5,
             'total_questions': 5,
             'total_responses': 3,
-            'total_percentage': 50.0
+            'total_percentage': 50.0,
+            'meets_threshold': False
         })
 
     def test_get_scores_when_no_responses_sets_totals_to_none(self):
@@ -150,7 +151,8 @@ class TestClinic(TestBase):
             'total_scores': None,
             'total_questions': 10,
             'total_responses': 0,
-            'total_percentage': None
+            'total_percentage': None,
+            'meets_threshold': False
         })
 
     def test_is_assigned_returns_true_if_assigned(self):
