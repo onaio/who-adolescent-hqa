@@ -106,7 +106,22 @@
                         </table>
                     </td>
                     <td class="text-center relative-score">
-                        
+                        {% if total_responses == 0 %}
+                          -
+                        {% else %}
+                          {% set class_name = "icon-grey" %}
+                          {% if meets_threshold %}
+                            {% if score_classification == 'great' %}
+                              {% set class_name = "icon-green" %}
+                            {% elif score_classification == 'good' %}
+                              {% set class_name = "icon-orange" %}
+                            {% else %}
+                              {% set class_name = "icon-red" %}
+                            {% endif %}
+                          {% endif %}
+                          <i class="big icon-medkit {{ class_name }}"></i>
+                          {{ "%s"| format(percentage|int(0)) }}%
+                        {% endif %}
                     </td>
                   </tr>
             {% endif %}
