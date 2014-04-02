@@ -404,6 +404,10 @@ class Clinic(Base):
                 'totals': {
                     'total_scores': 3
                     'total_questions': 5,
+                    'total_responses': 4,
+                    'total_percentage': 100,
+                    'meets_threshold': True|False,
+                    'score_classification': great|good|bad
                 }
             }
         }
@@ -422,12 +426,15 @@ class Clinic(Base):
             scores[characteristic] = {}
             total_scores = total_questions = total_responses = 0
             mapping = constants.CHARACTERISTIC_MAPPING[characteristic]
+            meets_threshold = True
             for client_tool_id, xpaths in mapping.items():
                 # filter this clinics submissions to this characteristic and
                 # this client_tool
                 submission_jsons = [s.raw_data for c, s in submissions
                                     if c.characteristic == characteristic and
                                     c.xform_id == client_tool_id]
+                recommended_sample_frame =\
+                    constants.RECOMMENDED_SAMPLE_FRAMES[client_tool_id]
 
                 # get the number of responses for this characteristic/xform_id
                 current_characteristic_xforms = filter(
@@ -439,6 +446,10 @@ class Clinic(Base):
                 if len(current_characteristic_xforms) > 0:
                     # we have responses for this combination
                     num_responses = current_characteristic_xforms[0]['count']
+
+                # check if the number of submissions meets the threshold
+                if num_responses < recommended_sample_frame:
+                    meets_threshold = False
 
                 aggregate_score = None
                 if num_responses > 0:
@@ -452,20 +463,23 @@ class Clinic(Base):
                     'num_responses': num_responses,
                     'num_questions': len(xpaths),
                     'num_pending_responses':
-                    constants.RECOMMENDED_SAMPLE_FRAME[client_tool_id]
-                    - num_responses
+                    recommended_sample_frame - num_responses
                 }
                 scores[characteristic][client_tool_id] = stats
 
                 total_questions += len(xpaths)
                 total_responses += num_responses
 
+            total_percentage = None if total_responses == 0 else (
+                total_scores/float(total_questions) * 100)
             scores[characteristic]['totals'] = {
                 'total_scores': None if total_scores == 0 else total_scores,
                 'total_questions': total_questions,
                 'total_responses': total_responses,
-                'total_percentage': None if total_responses == 0 else (
-                    total_scores/float(total_questions) * 100)
+                'total_percentage': total_percentage,
+                'meets_threshold': meets_threshold,
+                'score_classification': constants.get_score_classification(
+                    total_percentage)
             }
 
         return scores
