@@ -36,6 +36,7 @@ from whoahqa import constants
 from whoahqa.utils import (
     hashid,
     tuple_to_dict_list,
+    check_meets_threshold,
 )
 from whoahqa.constants import permissions as perms
 from whoahqa.security import pwd_context
@@ -405,7 +406,7 @@ class Clinic(Base):
                     'total_scores': 3
                     'total_questions': 5,
                     'total_responses': 4,
-                    'total_percentage': 100,
+                    'total_percentage': [0-100],
                     'meets_threshold': True|False,
                     'score_classification': great|good|bad
                 }
@@ -448,7 +449,10 @@ class Clinic(Base):
                     num_responses = current_characteristic_xforms[0]['count']
 
                 # check if the number of submissions meets the threshold
-                if num_responses < recommended_sample_frame:
+                if not check_meets_threshold(
+                        num_responses,
+                        recommended_sample_frame,
+                        constants.MINIMUM_SAMPLE_FRAME_RATIO):
                     meets_threshold = False
 
                 aggregate_score = None
@@ -481,7 +485,6 @@ class Clinic(Base):
                 'score_classification': constants.get_score_classification(
                     total_percentage)
             }
-
         return scores
 
     def activate_characteristic(self, characteristic_id, period_id):
@@ -544,7 +547,7 @@ class Clinic(Base):
 
                 if aggregate_score is not None:
                     total_scores += aggregate_score
-                
+
                 total_responses += num_responses
                 total_questions += len(xpaths)
                 key_indicator_scores[characteristic] = None\

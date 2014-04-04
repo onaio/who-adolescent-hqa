@@ -23,3 +23,7 @@ def filter_dict_list_by_attr(
         active_ids, characteristic_list, attribute, invert=False):
     return [c for c in characteristic_list
             if (c.get(attribute) in active_ids) != invert]
+
+
+def check_meets_threshold(num_responses, recommended_sample_frame, ratio):
+    return num_responses >= round(recommended_sample_frame * ratio)
