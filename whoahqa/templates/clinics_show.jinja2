@@ -28,6 +28,7 @@
         {% for clinic_characteristic in clinic_characteristics %}
             {% if clinic_characteristic.characteristic_id == characteristic.id %}
                 {% set total_responses = scores[characteristic.id].totals.total_responses %}
+                {% set total_scores = scores[characteristic.id].totals.total_scores %}
                 {% set percentage = scores[characteristic.id].totals.total_percentage %}
                 {% set meets_threshold = scores[characteristic.id].totals.meets_threshold %}
                 <thead>
@@ -101,7 +102,7 @@
                         <table class="table table-striped">
                             {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
                         <tr>
-                            <td class="text-center">0</td>
+                            <td class="text-center">{{ total_scores|int }}</td>
                         </tr>
                         </table>
                     </td>
