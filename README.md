@@ -87,7 +87,26 @@ Deploy with [Vagrant](http://www.vagrantup.com/)
 
 2. Download Install [Vagrant](http://www.vagrantup.com/downloads.html)
 
-3. Install Ansible. Preferably [from source](http://docs.ansible.com/intro_installation.html#running-from-source)
+3. Install Ansible, preferably [from source](http://docs.ansible.com/intro_installation.html#running-from-source)
+
+    ```
+    cd ~/
+    git clone git://github.com/ansible/ansible.git
+    cd ./ansible
+    source ./hacking/env-setup
+    ```
+    
+    If you don’t have pip installed in your version of Python, install pip (No harm running it if its aready installed):
+    
+    ```
+    sudo easy_install pip
+    ```
+    
+    Install Ansible's requirements
+    
+    ```
+    sudo pip install paramiko PyYAML jinja2 httplib2
+    ```
 
 4. Load your `terminal` and change into this project's directory
 
