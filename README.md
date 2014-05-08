@@ -96,7 +96,7 @@ Deploy with [Vagrant](http://www.vagrantup.com/)
     source ./hacking/env-setup
     ```
     
-    If you don’t have pip installed in your version of Python, install pip (No harm running it if its aready installed):
+    If you don’t have pip installed in your version of Python, install pip (No harm running it if its already installed):
     
     ```
     sudo easy_install pip
@@ -116,12 +116,12 @@ Deploy with [Vagrant](http://www.vagrantup.com/)
 
 5. Clone the Ona playbooks repo to a different directory
     ```
-    git clone git@github.com:onaio/playbooks.git /some/other/directory/playbooks
+    git clone git@github.com:onaio/playbooks.git ~/playbooks
     ```
 
 6. Make a symbolic link to the playbooks directory
     ```
-    ln -s /some/other/directory/playbooks ansible
+    ln -s ~/playbooks ansible
     ```
 
 7. Bring up the virtual machine with Vagrant
