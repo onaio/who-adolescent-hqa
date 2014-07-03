@@ -31,8 +31,8 @@ def deploy(deployment="prod", branch="master"):
         run("git checkout {branch}".format(branch=branch))
         run("git pull origin {branch}".format(branch=branch))
 
-        with prefix(test_virtual_env_command):
-            run("python setup.py test -q")
+        #with prefix(test_virtual_env_command):
+        #    run("python setup.py test -q")
 
         with prefix(virtual_env_command):
             run("python setup.py install")
@@ -41,5 +41,5 @@ def deploy(deployment="prod", branch="master"):
                 env.get('alembic_section', 'alembic')))
             run("python setup.py compile_catalog")
 
-    # Reload uWSGI
-    run("/usr/local/bin/uwsgi --reload /var/run/whoahqa.pid")
+            # Reload uWSGI
+            run("uwsgi --reload /var/run/whoahqa.pid")
