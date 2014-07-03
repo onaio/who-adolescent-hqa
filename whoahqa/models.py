@@ -227,13 +227,7 @@ class OnaUser(Base):
     user = relationship('User')
 
     @classmethod
-    def get_or_create_from_api_data(cls, json_data, refresh_token):
-        # check that data has length of 1 and raise ValueError otherwise
-        if len(json_data) != 1:
-            raise ValueError("We only know how to handle a single user")
-
-        user_data = json_data[0]
-
+    def get_or_create_from_api_data(cls, user_data, refresh_token):
         username = user_data.get('username', "")
         if username is None or (not username.strip()):
             raise ValueError("Invalid user profile data")
