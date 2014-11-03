@@ -60,7 +60,7 @@ def login(request):
 
 
 @view_config(route_name='auth',
-             match_param='action=password-login',
+             match_param='action=sign-in',
              permission=NO_PERMISSION_REQUIRED,
              renderer='password_login.jinja2',
              decorator=check_post_csrf)
@@ -82,7 +82,6 @@ def password_login(context, request):
             u"Invalid username or password", 'error')
 
     return {}
-
 
 
 @view_config(
@@ -182,8 +181,8 @@ def oauth_callback(request):
                     traverse=(ona_user.user.id, 'select-period'),
                     _query={
                         'came_from': request.route_path(
-                        'users', traverse=(
-                            ona_user.user.id, '{period_id}', 'clinics'))}),
+                            'users', traverse=(
+                                ona_user.user.id, '{period_id}', 'clinics'))}),
                 headers=headers)
 
     request.session.flash(
