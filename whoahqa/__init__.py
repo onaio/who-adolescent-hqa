@@ -64,14 +64,17 @@ def main(global_config, **settings):
     pwd_context.load_path(global_config['__file__'])
 
     includeme(config)
-    
+
     return config.make_wsgi_app()
 
 
 def includeme(config):
     config.include('pyramid_jinja2')
+    config.commit()
+
     config.add_jinja2_search_path("whoahqa:templates")
-    config.get_jinja2_environment().filters['format_date'] = format_date_for_locale
+    config.get_jinja2_environment().filters['format_date'] = \
+        format_date_for_locale
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('default', '/')
     config.add_route('auth', '/auth/{action}')
