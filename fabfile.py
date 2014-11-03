@@ -1,5 +1,5 @@
 import os
-from fabric.api import local, cd, run, settings, env, prefix
+from fabric.api import cd, run, env, prefix
 
 DEPLOYMENTS = {
     'prod': {
@@ -30,9 +30,10 @@ def deploy(deployment="prod", branch="master"):
     with cd(env.project_dir):
         run("git checkout {branch}".format(branch=branch))
         run("git pull origin {branch}".format(branch=branch))
+        run('find . -name "*.pyc" -exec rm -rf {} \;')
 
-        #with prefix(test_virtual_env_command):
-        #    run("python setup.py test -q")
+        with prefix(test_virtual_env_command):
+            run("python setup.py test -q")
 
         with prefix(virtual_env_command):
             run("python setup.py install")
