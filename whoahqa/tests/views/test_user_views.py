@@ -15,7 +15,7 @@ from whoahqa.tests import (IntegrationTestBase, FunctionalTestBase,)
 def get_edit_url_mock(url, request):  # pragma: no cover
     return {
         'status_code': 201,
-        'content': '{"code": "201", "edit_url": "https://cz2pj-0.enketo.org/webform/edit?instance_id=2"}'
+        'content': '{"code": "201", "edit_url": "https://cz2pj-0.enketo.org/webform/edit?instance_id=2"}'  # noqa
     }
 
 
@@ -93,7 +93,7 @@ class TestUserViewsFunctional(FunctionalTestBase):
         user = OnaUser.get(OnaUser.username == "manager_a").user
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         url = self.request.route_path(
-            'users', traverse=(user.id, period.id,  'clinics'))
+            'users', traverse=(user.id, period.id, 'clinics'))
         headers = self._login_user('manager_a')
         with HTTMock(get_edit_url_mock):
             response = self.testapp.get(url, headers=headers)
@@ -105,7 +105,8 @@ class TestUserViewsFunctional(FunctionalTestBase):
         # get the manager user
         user = OnaUser.get(OnaUser.username == "manager_a").user
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
-        url = self.request.route_path('users', traverse=(user.id, period.id, 'clinics'))
+        url = self.request.route_path(
+            'users', traverse=(user.id, period.id, 'clinics'))
         with HTTMock(get_edit_url_mock):
             response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)

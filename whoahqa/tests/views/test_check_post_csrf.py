@@ -1,12 +1,10 @@
-import urlparse
-
 from webob.multidict import MultiDict
 from pyramid.httpexceptions import HTTPBadRequest
 from pyramid.response import Response
 from pyramid import testing
 
 from whoahqa.views.auth import check_post_csrf
-from whoahqa.tests import (settings, IntegrationTestBase, FunctionalTestBase,)
+from whoahqa.tests import IntegrationTestBase
 
 
 class TestCheckPostCSRF(IntegrationTestBase):

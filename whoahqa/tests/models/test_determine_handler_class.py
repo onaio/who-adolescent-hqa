@@ -3,7 +3,6 @@ import json
 from whoahqa import constants
 from whoahqa.models import (
     Submission,
-    SubmissionHandlerError,
     ZeroSubmissionHandlersError,
     MultipleSubmissionHandlersError,
     ClinicReportHandler,

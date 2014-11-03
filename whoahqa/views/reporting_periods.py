@@ -1,12 +1,6 @@
 import urlparse
 
-from pyramid.security import (
-    NO_PERMISSION_REQUIRED,
-)
-from pyramid.httpexceptions import (
-    HTTPFound,
-    HTTPBadRequest,
-)
+from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config, view_defaults
 from deform import Form, ValidationFailure
 
@@ -14,6 +8,7 @@ from whoahqa.utils import translation_string_factory as _
 from whoahqa.models import DBSession, ReportingPeriod
 from whoahqa.forms import ReportingPeriodForm
 from whoahqa.views.base import BaseClassViews
+
 
 @view_defaults(route_name='periods')
 class ReportingPeriodViews(BaseClassViews):
@@ -39,7 +34,7 @@ class ReportingPeriodViews(BaseClassViews):
             post = self.request.POST.items()
             try:
                 payload = form.validate(post)
-            except ValidationFailure as e:
+            except ValidationFailure:
                 self.request.session.flash(
                     _(u"Please fix the errors indicated below."), 'error')
             else:

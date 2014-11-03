@@ -37,7 +37,7 @@ class ClinicViews(object):
                  request_method='GET')
     def list(self):
         # if the user doesnt have permissions to list all clinics,
-        #  redirect to his own clinics
+        # redirect to his own clinics
         if not has_permission(perms.LIST, self.request.context, self.request):
             return HTTPFound(
                 self.request.route_url(
@@ -136,15 +136,14 @@ class ClinicViews(object):
         return HTTPFound(location=survey_url)
 
     @view_config(name='register',
-                 context=ClinicFactory
-                )
+                 context=ClinicFactory)
     def register_clinic(self):
-        xml_instance = '<?xml version=\'1.0\' ?><clinic_registration id=\"clinic_registration\"><formhub><uuid>73242968f5754dc49c38463af658f3d2</uuid></formhub><user_id>{}</user_id><clinic_name></clinic_name><meta><instanceID>uuid:ec5ce15e-5a0a-4246-93fe-acf60ef69bf2</instanceID></meta></clinic_registration>'.format(
+        xml_instance = '<?xml version=\'1.0\' ?><clinic_registration id=\"clinic_registration\"><formhub><uuid>73242968f5754dc49c38463af658f3d2</uuid></formhub><user_id>{}</user_id><clinic_name></clinic_name><meta><instanceID>uuid:ec5ce15e-5a0a-4246-93fe-acf60ef69bf2</instanceID></meta></clinic_registration>'.format(   # noqa
             self.request.ona_user.user_id)
         server_url = self.request.registry.settings['form_server_url']
         instance_id = uuid.uuid4()
         return_url = self.request.route_url(
-                'users', traverse=(self.request.ona_user.user_id, 'clinics'))
+            'users', traverse=(self.request.ona_user.user_id, 'clinics'))
         edit_url = enketo.get_edit_url(
             server_url,
             constants.CLINIC_REGISTRATION,
@@ -178,23 +177,26 @@ class ClinicViews(object):
         # filter out active characteristics
         active_characteristic_ids = [c.characteristic_id for c
                                      in clinic_characteristics]
-        #filter out
+        # filter out
         char_type = self.request.GET.get('char_type')
         filtered_characteristic_ids = []
         if char_type is not None and char_type != 'All':
-            for key_char in tuple_to_dict_list(("id", "characteristics"), constants.KEY_INDICATORS):
+            for key_char in tuple_to_dict_list(
+                    ("id", "characteristics"), constants.KEY_INDICATORS):
                 if key_char['id'] != char_type:
                     for char in key_char['characteristics']:
                         filtered_characteristic_ids.append(char)
 
-        #merge active characteristics and characteristics to be removed after filter
-        merged_filter_list = active_characteristic_ids + filtered_characteristic_ids
+        # merge active characteristics and characteristics to be removed
+        # after filter
+        merged_filter_list = \
+            active_characteristic_ids + filtered_characteristic_ids
 
         inactive_characteristics = filter_dict_list_by_attr(
             merged_filter_list, characteristics, 'id', invert=True)
 
         return {
-            'period':  period,
+            'period': period,
             'clinic': clinic,
             'user': user,
             'client_tools': tuple_to_dict_list(
@@ -215,7 +217,7 @@ class ClinicViews(object):
 
         period = self.request.context
         clinic = period.__parent__
-        #get_clinic_id
+        # get_clinic_id
         # get the list of selected characteristics
         characteristic_ids = self.request.POST.getall('characteristic_id')
         for characteristic_id in characteristic_ids:

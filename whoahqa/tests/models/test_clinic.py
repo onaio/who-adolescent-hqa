@@ -3,7 +3,6 @@ import datetime
 import json
 
 from whoahqa import constants
-from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
     DBSession,
     OnaUser,
@@ -16,6 +15,7 @@ from whoahqa.tests import TestBase
 
 
 class TestClinic(TestBase):
+
     def create_submissions(self):
         # make submissions
         for i in range(6):
@@ -179,8 +179,8 @@ class TestClinic(TestBase):
         self.setup_test_data()
         clinic_a = Clinic.get(Clinic.id == 1)
         key_indicator_scores = clinic_a.calculate_key_indicator_scores(
-             (constants.ONE, constants.TWO, constants.THREE))
-        self.assertEqual(key_indicator_scores,  {
+            (constants.ONE, constants.TWO, constants.THREE))
+        self.assertEqual(key_indicator_scores, {
             constants.ONE: None,
             constants.TWO: None,
             constants.THREE: None
@@ -195,7 +195,7 @@ class TestClinic(TestBase):
         key_indicator_scores = clinic_a.calculate_key_indicator_scores(
             (constants.ONE, constants.TWO, constants.THREE))
         self.assertEqual(key_indicator_scores, {
-            constants.ONE: 50.0, 
+            constants.ONE: 50.0,
             constants.TWO: 27.77777777777778,
             constants.THREE: 30.0
         })
@@ -206,13 +206,13 @@ class TestClinic(TestBase):
         self.setup_test_data()
         clinic_a = Clinic.get(Clinic.id == 1)
         key_indicator_scores = clinic_a.get_all_key_indicator_scores()
-        self.assertEqual(key_indicator_scores[constants.EQUITABLE],  {
+        self.assertEqual(key_indicator_scores[constants.EQUITABLE], {
             constants.ONE: None,
             constants.TWO: None,
             constants.THREE: None,
             'average_score': 0
         })
-        self.assertEqual(key_indicator_scores[constants.APPROPRIATE],  {
+        self.assertEqual(key_indicator_scores[constants.APPROPRIATE], {
             constants.SIXTEEN: None,
             'average_score': 0
         })
@@ -224,13 +224,13 @@ class TestClinic(TestBase):
         self.create_submissions()
         clinic_a = Clinic.get(Clinic.id == 1)
         key_indicator_scores = clinic_a.get_all_key_indicator_scores()
-        self.assertEqual(key_indicator_scores[constants.EQUITABLE],  {
+        self.assertEqual(key_indicator_scores[constants.EQUITABLE], {
             constants.ONE: 50.0,
             constants.TWO: 27.77777777777778,
             constants.THREE: 30.0,
             'average_score': 35.925925925925924
         })
-        self.assertEqual(key_indicator_scores[constants.APPROPRIATE],  {
+        self.assertEqual(key_indicator_scores[constants.APPROPRIATE], {
             constants.SIXTEEN: None,
             'average_score': 0
         })

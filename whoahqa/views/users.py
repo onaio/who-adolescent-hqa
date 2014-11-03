@@ -69,7 +69,7 @@ class UserViews(object):
                 traverse=(user.id, 'select-period'),
                 _query={
                     'came_from': self.request.route_path(
-                    'users', traverse=(user.id, '{period_id}', 'clinics'))
+                        'users', traverse=(user.id, '{period_id}', 'clinics'))
                 }))
 
     @view_config(name='select-period',

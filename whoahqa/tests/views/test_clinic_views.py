@@ -1,6 +1,3 @@
-import datetime
-import transaction
-
 from webob.multidict import MultiDict
 from pyramid import testing
 from pyramid.httpexceptions import (
@@ -24,6 +21,8 @@ from whoahqa.views import (
 from whoahqa.tests import (IntegrationTestBase, FunctionalTestBase,)
 
 WEBFORM_URL = 'https://iyt3v.enketo.org/webform'
+
+
 @urlmatch(netloc=r'(.*\.)?test.enketo\.org$')
 def fetch_survey_form_url(url, request):
     return {
@@ -31,12 +30,14 @@ def fetch_survey_form_url(url, request):
         'content': '{"url": "%s"}' % WEBFORM_URL
     }
 
+
 @urlmatch(netloc=r'(.*\.)?test.enketo\.org$')
 def fetch_non_existent_survey_form_url(url, request):
     return {
         'status_code': 404,
         'content': '{"code": 404, "message": "form not found"}'
     }
+
 
 @urlmatch(netloc='test.enketo.org', path='/api_v1/instance')
 def enketo_edit_url_mock(url, request):
@@ -61,7 +62,7 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(len(response['clinics']), 1)
         self.assertEqual(response['clinics'][0].name, "Clinic B")
 
-        #test when filter is done
+        # test when filter is done
         params = MultiDict({'search': 'Clinic B'})
         self.request.GET = params
         response = self.clinic_views.unassigned()
@@ -118,7 +119,7 @@ class TestClinicViews(IntegrationTestBase):
         response = self.clinic_views.list()
         self.assertEqual(response.status_code, 302)
 
-        #test when filter is done
+        # test when filter is done
         params = MultiDict({'search': 'Clinic B'})
         self.request.GET = params
         response = self.clinic_views.unassigned()
@@ -128,11 +129,11 @@ class TestClinicViews(IntegrationTestBase):
 
     def test_show_form(self):
         self.setup_test_data()
-        params = MultiDict({'form':constants.ADOLESCENT_CLIENT})
+        params = MultiDict({'form': constants.ADOLESCENT_CLIENT})
         self.request.GET = params
         with HTTMock(fetch_survey_form_url):
             response = self.clinic_views.show_form()
-        
+
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.location, WEBFORM_URL)
 

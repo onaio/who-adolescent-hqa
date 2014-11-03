@@ -4,7 +4,6 @@ from pyramid import testing
 
 from whoahqa.models import (
     DBSession,
-    RootFactory,
     ReportingPeriodFactory,
     ReportingPeriod,)
 from whoahqa.tests.test_base import TestBase
@@ -31,4 +30,3 @@ class TestReportingPeriodFactory(TestBase):
         factory = ReportingPeriodFactory(
             testing.DummyRequest())
         self.assertRaises(KeyError, factory.__getitem__, '0')
-

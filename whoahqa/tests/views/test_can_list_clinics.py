@@ -1,8 +1,5 @@
 from pyramid import testing
 
-from whoahqa.models import (
-    User,
-)
 from whoahqa.views import (
     can_list_clinics,
 )

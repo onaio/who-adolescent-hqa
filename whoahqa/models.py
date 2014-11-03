@@ -21,7 +21,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql.expression import desc
-from sqlalchemy.sql import select, and_
+from sqlalchemy.sql import select
 from sqlalchemy.schema import PrimaryKeyConstraint
 from sqlalchemy.orm import (
     scoped_session,
@@ -46,6 +46,7 @@ random.seed()
 
 
 class BaseModel(object):
+
     @classmethod
     def newest(cls):
         return DBSession.query(cls).order_by(desc(cls.id)).first()
@@ -76,6 +77,7 @@ class RootFactory(object):
 
 
 class BaseModelFactory(object):
+
     def __init__(self, request):
         self.request = request
 
@@ -125,6 +127,7 @@ class SubmissionFactory(BaseModelFactory):
 
 
 class ReportingPeriodFactory(BaseModelFactory):
+
     def __getitem__(self, item):
         try:
             period_id = int(item)
@@ -304,24 +307,24 @@ class Clinic(Base):
     @classmethod
     def get_unassigned(cls):
         clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
-            user_clinics.columns.clinic_id == None).all()
+            user_clinics.columns.clinic_id.is_(None)).all()
         return clinics
 
     @classmethod
     def filter_clinics(cls, search_term, all_clinics):
         if all_clinics:
-            #filter all clinics
+            # filter all clinics
             clinics = DBSession\
                 .query(Clinic)\
-                .filter(Clinic.name.ilike('%'+search_term+'%')).all()
+                .filter(Clinic.name.ilike('%' + search_term + '%')).all()
         else:
-            #filter unassigned clinics
+            # filter unassigned clinics
             clinics = DBSession\
                 .query(Clinic)\
                 .outerjoin(user_clinics)\
                 .filter(
-                    user_clinics.columns.clinic_id == None,
-                    Clinic.name.ilike('%'+search_term+'%')).all()
+                    user_clinics.columns.clinic_id.is_(None),
+                    Clinic.name.ilike('%' + search_term + '%')).all()
         return clinics
 
     @classmethod
@@ -342,7 +345,8 @@ class Clinic(Base):
         return tuple_to_dict_list(
             ('count', 'characteristic', 'xform_id'), result)
 
-    def get_period_clinic_submissions(self):  # TODO: factor in reporting period
+    # TODO: factor in reporting period
+    def get_period_clinic_submissions(self):
         return DBSession\
             .query(ClinicSubmission, Submission)\
             .outerjoin(Submission)\
@@ -383,10 +387,10 @@ class Clinic(Base):
             num_1s = float(
                 len(filter(
                     lambda s: s.get(xpath, '0') == '1', submission_jsons)))
-            aggregate_score += num_1s/denominator
+            aggregate_score += num_1s / denominator
         return aggregate_score
 
-    def get_scores(self):  #, period):
+    def get_scores(self):  # , period):
         """
         scores = {
             'one': {
@@ -469,7 +473,7 @@ class Clinic(Base):
                 total_responses += num_responses
 
             total_percentage = None if total_responses == 0 else (
-                total_scores/float(total_questions) * 100)
+                total_scores / float(total_questions) * 100)
             scores[characteristic]['totals'] = {
                 'total_scores': None if total_scores == 0 else total_scores,
                 'total_questions': total_questions,
@@ -488,15 +492,15 @@ class Clinic(Base):
         DBSession.add(clinic_characteristic)
 
     def get_active_characteristics(self, period):
-        clinic_characteristics = DBSession.query(
-            ClinicCharacteristics).filter(
+        clinic_characteristics = DBSession.query(ClinicCharacteristics)\
+            .filter(
                 ClinicCharacteristics.clinic_id == self.id,
                 ClinicCharacteristics.period_id == period.id).all()
         return clinic_characteristics
 
     def calculate_key_indicator_scores(self, characteristics_list):
         """
-        Calculate the aggregate score for a key indicator eg. 
+        Calculate the aggregate score for a key indicator eg.
         equitable = {
             'one': x%,
             'two': y%,
@@ -511,7 +515,7 @@ class Clinic(Base):
         # get all submissions for this clinic and specified period
         submissions = self.get_period_clinic_submissions()
 
-        key_indicator_scores = {}        
+        key_indicator_scores = {}
         total_responses = total_scores = total_questions = 0
         for characteristic in characteristics_list:
             mapping = constants.CHARACTERISTIC_MAPPING[characteristic]
@@ -546,13 +550,13 @@ class Clinic(Base):
                 total_questions += len(xpaths)
                 key_indicator_scores[characteristic] = None\
                     if total_responses == 0 else (
-                        total_scores/float(total_questions) * 100)
+                        total_scores / float(total_questions) * 100)
 
         return key_indicator_scores
 
     def get_all_key_indicator_scores(self):
         """
-        key_indicator_scores = { 
+        key_indicator_scores = {
             equitable = {
                 'one': x%,
                 'two': y%,
@@ -579,7 +583,7 @@ class Clinic(Base):
             all_key_indicator_scores[key_char_pair['key']] = indicator_score
             all_key_indicator_scores[key_char_pair['key']].update(
                 {
-                    'average_score': (average_score/len(indicator_score))
+                    'average_score': (average_score / len(indicator_score))
                 }
             )
 
@@ -607,6 +611,7 @@ class UserNotFound(SubmissionHandlerError):
 
 
 class BaseSubmissionHandler(object):
+
     def __init__(self, submission):
         self.submission = submission
 
@@ -615,6 +620,7 @@ class BaseSubmissionHandler(object):
 
 
 class ClinicReportHandler(BaseSubmissionHandler):
+
     @classmethod
     def parse_data(cls, raw_data):
         # split characteristic on [space] for multiple characteristic
@@ -646,6 +652,7 @@ class ClinicReportHandler(BaseSubmissionHandler):
 
 
 class ClinicRegistrationHandler(BaseSubmissionHandler):
+
     @classmethod
     def parse_data(cls, raw_data):
         """
