@@ -24,7 +24,7 @@ class TestSubmissionViews(IntegrationTestBase):
         DBSession.add(clinic)
         response = self.post_json(self.submissions[0])
 
-        #should return a 201 response code
+        # should return a 201 response code
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.body, 'Saved')
 
@@ -38,7 +38,7 @@ class TestSubmissionViews(IntegrationTestBase):
         DBSession.add(clinic)
         response = self.post_json(self.submissions[6])
 
-        #should return a 202 response code
+        # should return a 202 response code
         self.assertEqual(response.status_code, 202)
         self.assertEqual(response.body,
                          'Accepted pending manual matching process')
@@ -46,7 +46,7 @@ class TestSubmissionViews(IntegrationTestBase):
     def test_json_post_without_clinic_id(self):
         response = self.post_json('{"test":"1234"}')
 
-        #should return a 202 response code
+        # should return a 202 response code
         self.assertEqual(response.status_code, 202)
         self.assertEqual(response.body,
                          'Accepted pending manual matching process')

@@ -1,1 +1,1 @@
-from reporting_period import ReportingPeriodForm
+from reporting_period import ReportingPeriodForm  # noqa

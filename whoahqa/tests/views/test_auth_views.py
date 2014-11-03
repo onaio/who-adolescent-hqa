@@ -22,7 +22,7 @@ from whoahqa.tests import settings, IntegrationTestBase, FunctionalTestBase
 def oauth_token_mock(url, request):
     return {
         'status_code': 200,
-        'content': '{"access_token":"1/fFAGRNJru1FTz70BzhT3Zg", "expires_in":3920, "token_type":"Bearer", "refresh_token":"1/f4YTbBjMoBbXfg7oFh_FKg6r3r6bh8M9Y-0"}'
+        'content': '{"access_token":"1/fFAGRNJru1FTz70BzhT3Zg", "expires_in":3920, "token_type":"Bearer", "refresh_token":"1/f4YTbBjMoBbXfg7oFh_FKg6r3r6bh8M9Y-0"}'  # noqa
     }
 
 
@@ -30,7 +30,7 @@ def oauth_token_mock(url, request):
 def oauth_users_mock(url, request):
     return {
         'status_code': 200,
-        'content': '[{"username": "user_one", "first_name": "", "last_name": ""}]'
+        'content': '{"username": "user_one", "first_name": "", "last_name": ""}'  # noqa
     }
 
 
@@ -46,7 +46,7 @@ def oauth_users_empty_response_mock(url, request):
 def oauth_users_bad_response_mock(url, request):
     return {
         'status_code': 200,
-        'content': '[]'
+        'content': '{}'
     }
 
 
@@ -219,6 +219,6 @@ class TestAuthFunctional(FunctionalTestBase):
         self.assertIn('Set-Cookie', response.headers)
 
     def test_get_password_login_response(self):
-        url = self.request.route_url('auth', action='password-login')
+        url = self.request.route_url('auth', action='sign-in')
         response = self.testapp.get(url)
         self.assertEqual(response.status_code, 200)
