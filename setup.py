@@ -45,7 +45,7 @@ extractors = {
 }
 
 setup(name='who-ahqa',
-      version='0.0',
+      version='0.1a',
       description='WHO Adolescent Health Quality Assessment',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
