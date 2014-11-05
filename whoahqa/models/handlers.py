@@ -81,9 +81,7 @@ class ClinicRegistrationHandler(BaseSubmissionHandler):
         else:
             clinic.user = user
         finally:
-            DBSession.add(clinic)
-            # flush to get the clinic's id
-            DBSession.flush()
+            clinic.save()
             clinic.code = hashid.encrypt(clinic.id)
 
         # if no user, raise UserNotFound

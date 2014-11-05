@@ -8,8 +8,9 @@ from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
 )
-from sqlalchemy.sql.expression import desc
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.sql.expression import desc
 
 from whoahqa.constants import permissions as perms
 
@@ -35,6 +36,24 @@ class BaseModel(object):
     @classmethod
     def count(cls, *criterion):
         return DBSession.query(cls).filter(*criterion).count()
+
+    def save(self):
+        DBSession.add(self)
+        DBSession.flush()
+
+    @classmethod
+    def delete(cls, *criterion):
+        return DBSession.query(cls).filter(*criterion).delete()
+
+    @classmethod
+    def get_or_create(cls, *criterion, **kwargs):
+        try:
+            instance = cls.get(*criterion)
+        except NoResultFound:
+            instance = cls(**kwargs)
+            instance.save()
+
+        return instance
 
 Base = declarative_base(cls=BaseModel)
 
