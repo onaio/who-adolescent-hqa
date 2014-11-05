@@ -26,21 +26,19 @@ def get_virtual_env_command(virtual_env_path):
 def deploy(deployment="prod", branch="master"):
     env.update(DEPLOYMENTS[deployment])
     virtual_env_command = get_virtual_env_command(env.virtual_env)
-    test_virtual_env_command = get_virtual_env_command(env.test_virtual_env)
     with cd(env.project_dir):
         run("git checkout {branch}".format(branch=branch))
         run("git pull origin {branch}".format(branch=branch))
         run('find . -name "*.pyc" -exec rm -rf {} \;')
 
-        with prefix(test_virtual_env_command):
-            run("python setup.py test -q")
-
         with prefix(virtual_env_command):
+            run('pip install -r requirements.txt --allow-all-external')
+            run("python setup.py test -q")
             run("python setup.py install")
+            run("rm -rf build")
             # run migrations
             run("alembic -n {0} upgrade head".format(
                 env.get('alembic_section', 'alembic')))
             run("python setup.py compile_catalog")
 
-            # Reload uWSGI
             run("uwsgi --reload /var/run/whoahqa.pid")
