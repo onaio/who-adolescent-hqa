@@ -69,8 +69,12 @@
         </div>
         <div class="form-actions fluid">
           <div class="col-md-offset-3 col-md-9">
-            <button type="submit" class="btn btn-primary">Create</button>
-            <a class="btn btn-default" href="{{ request.route_url('periods', traverse=()) }}">Cancel</a>
+            <button type="submit" class="btn btn-primary">
+              {{ gettext("Create")}}
+            </button>
+            <a class="btn btn-default" href="{{ request.route_url('periods', traverse=()) }}">
+              {{ gettext("Cancel")}}
+            </a>
           </div>
         </div>
       </form>

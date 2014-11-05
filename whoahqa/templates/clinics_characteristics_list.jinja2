@@ -7,21 +7,25 @@
 {% block breadcrumbs %}
   <li>
     <a href="{{ request.route_url('users', traverse=(user.id, 'select-period'), _query={'came_from': 'users'}) }}">
-      {% trans %}Reporting Periods{% endtrans %}</a>
+      {{ gettext("Reporting Periods") }}
     <i class="icon-angle-right"></i>
   </li>
   <li>
     <a href="{{ request.route_url('users', traverse=(user.id, period.id, 'clinics')) }}">{{ period.title }}</a>
     <i class="icon-angle-right"></i>
   </li>
-  <li>{% trans %}Select Characteristics{% endtrans %}</li>
+  <li>
+    {{ gettext("Select Characteristics") }}
+  </li>
 {% endblock %}
 {% block content %}
   <form method="post" action="{{ request.route_url('clinics', traverse=(clinic.id, period.id, 'select_characteristics')) }}" role="form">
       <input type="hidden" name="clinic_id" class="checkboxes" value="{{ clinic.id }}">
       <div class="row col-sm-12">
           <div class="">
-              <label for="charactersictic_type" class="col-sm-3 control-label">{% trans %}Filter by Characteristic Type{% endtrans %}: </label>
+              <label for="charactersictic_type" class="col-sm-3 control-label">
+                {{ gettext("Filter by Characteristic Type") }}
+              </label>
               <div class="select_char col-sm-2">
                 <select id="charactersictic_type" class="form-control">
                   <option value="All">{{ gettext("All") }}</option>
@@ -34,14 +38,15 @@
           </div>
           <div class="col-sm-2">
               <button type="submit" class="btn btn-primary">
-                Work on selected <i class="icon-share-alt"></i>
+                {{ gettext("Work on selected") }}
+                <i class="icon-share-alt"></i>
               </button>
           </div>
       </div>
       <div class="table-responsive">
         <div class="row">
           <div class="pull-left char-header">
-              Characteristics
+              {{ gettext("Characteristics") }}
           </div>
         </div>
         <table class="table table-bordered scores-table" id="characteristics">
@@ -78,7 +83,9 @@
                   <table class="table table-striped">
                     {{ generate_client_rows(scores, client_tools, characteristic.id, client_property='name', characteristic_id=characteristic.id)}}
                     <tr>
-                      <td class="text-right bold">{% trans %}Absolute total score{% endtrans %}</td>
+                      <td class="text-right bold">
+                        {{ gettext("Absolute total score") }}
+                      </td>
                     </tr>
                   </table>
                 </td>

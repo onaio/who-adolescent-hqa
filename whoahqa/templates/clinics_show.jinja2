@@ -6,7 +6,9 @@
 {% block page_title %}{{ self.title() }} <span class="bold">({{ clinic.code }})</span> {% endblock %}
 {% block breadcrumbs %}
   <li>
-    <a href="{{ request.route_url('clinics',traverse=('')) }}">Clinics</a>
+    <a href="{{ request.route_url('clinics',traverse=('')) }}">
+      {{ gettext("Clinics") }}
+    </a>
     <i class="icon-angle-right"></i>
   </li>
   <li>
@@ -55,7 +57,9 @@
                 <table class="table table-striped">
                   {{ generate_client_rows(scores, client_tools, characteristic.id, client_property='name', characteristic_id=characteristic.id)}}
                   <tr>
-                    <td class="text-right bold">Absolute total score</td>
+                    <td class="text-right bold">
+                      {{ gettext("Absolute total score") }}
+                    </td>
                   </tr>
                 </table>
               </td>

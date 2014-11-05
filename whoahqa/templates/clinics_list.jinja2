@@ -1,5 +1,5 @@
 {% extends "base.jinja2" %}
-{% block title %}All Clinics{% endblock %}
+{% block title %}{{ gettext("All Clinics") }}{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
   <li>{{ self.page_title() }}</li>
