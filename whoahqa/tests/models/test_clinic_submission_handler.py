@@ -58,4 +58,4 @@ class TestClinicSubmissionHandler(TestBase):
         # mapping of client tools to form ids)
         self.assertEqual(
             parsed_data,
-            ("1A2B", ["twenty"], "health_facility_manager_interview_EnSp",))
+            ("1A2B", ["twenty"], "health_facility_manager_interview",))
