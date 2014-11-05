@@ -8,14 +8,14 @@ USER_ID = 'user_id'
 CLINIC_NAME = 'clinic_name'
 
 # Client Tool Constants
-ADOLESCENT_CLIENT = 'adolescent_quality_assessmentEnSp'
-HEALTH_CARE_PROVIDER = 'health_care_provider_interview_EnSp'
-SUPPORT_STAFF = 'support_staff_interview_EnSp'
-HEALTH_FACILITY_MANAGER = 'health_facility_manager_interview_EnSp'
-OUTREACH_WORKER = 'outreach_worker_interview_EnSp'
-COMMUNITY_MEMBER = 'community_member_interview_EnSp'
-ADOLESCENT_IN_COMMUNITY = 'adolescent_in_community_tool_EnSp'
-OBSERVATION_GUIDE = 'observation_guide_EnSp'
+ADOLESCENT_CLIENT = 'adolescent_client_interview'
+HEALTH_CARE_PROVIDER = 'health_care_provider_interview'
+SUPPORT_STAFF = 'support_staff_interview'
+HEALTH_FACILITY_MANAGER = 'health_facility_manager_interview'
+OUTREACH_WORKER = 'outreach_worker_interview'
+COMMUNITY_MEMBER = 'community_member_interview'
+ADOLESCENT_IN_COMMUNITY = 'adolescent_in_community_tool'
+OBSERVATION_GUIDE = 'observation_guide'
 
 # Clinic registration
 CLINIC_REGISTRATION = 'clinic_registration'
