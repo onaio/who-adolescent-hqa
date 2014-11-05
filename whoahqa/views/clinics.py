@@ -104,7 +104,6 @@ class ClinicViews(object):
             raise HTTPBadRequest("The clinic is not yet assigned")
 
         scores = clinic.get_scores()
-        clinic_characteristics = clinic.get_active_characteristics(period)
         return {
             'period': period,
             'clinic': clinic,
@@ -113,8 +112,7 @@ class ClinicViews(object):
             'characteristics': tuple_to_dict_list(
                 ("id", "description", "number"), constants.CHARACTERISTICS),
             'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAMES,
-            'scores': scores,
-            'clinic_characteristics': clinic_characteristics
+            'scores': scores
 
         }
 
