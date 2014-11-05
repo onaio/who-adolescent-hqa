@@ -1,4 +1,6 @@
+import datetime
 import logging.config
+import transaction
 
 from pyramid.config import Configurator
 from pyramid.authentication import AuthTktAuthenticationPolicy
@@ -12,15 +14,23 @@ from whoahqa.security import group_finder, pwd_context
 from whoahqa.models import (
     DBSession,
     Base,
+    Clinic,
+    Group,
+    OnaUser,
+    User,
+    UserProfile,
     UserFactory,
     ClinicFactory,
     SubmissionFactory,
+    ReportingPeriod,
     ReportingPeriodFactory,
 )
 from whoahqa.views import (
     get_request_user,
     can_list_clinics
 )
+
+DEVELOPMENT_ENV = "development"
 
 
 def main(global_config, **settings):
@@ -65,6 +75,9 @@ def main(global_config, **settings):
 
     includeme(config)
 
+    if settings.get("environment", "") == DEVELOPMENT_ENV:
+        setup_development_data()
+
     return config.make_wsgi_app()
 
 
@@ -87,3 +100,67 @@ def includeme(config):
     config.add_route('periods', '/reporting-periods/*traverse',
                      factory=ReportingPeriodFactory)
     config.scan()
+
+
+def setup_development_data():
+    with transaction.manager:
+        setup_users()
+        setup_clinics()
+        setup_default_reporting_period()
+
+
+def setup_users():
+    group_criteria = Group.name == 'su'
+    group_params = {'name': 'su'}
+    su_group = Group.get_or_create(
+        group_criteria,
+        **group_params)
+
+    su = User()
+    user_profile_criteria = UserProfile.username == 'admin'
+    user_profile_params = {
+        'user': su,
+        'username': 'admin',
+        'password': 'admin'}
+
+    profile = UserProfile.get_or_create(
+        user_profile_criteria,
+        **user_profile_params)
+
+    ona_user_params = {
+        'user': su,
+        'username': 'admin',
+        'refresh_token': '123456'}
+    ona_user = OnaUser.get_or_create(
+        OnaUser.username == "admin",
+        **ona_user_params)
+
+    su.groups.append(su_group)
+    profile.save()
+    ona_user.save()
+
+
+def setup_clinics():
+    # add a couple of clinics
+    clinic_criteria = Clinic.name == "Clinic A"
+    clinic_params = {
+        "name": "Clinic A",
+        "code": "1A2B"}
+    clinic1 = Clinic.get_or_create(
+        clinic_criteria,
+        **clinic_params)
+    clinic1.save()
+
+
+def setup_default_reporting_period():
+    title = 'Dev Period'
+    params = {
+        "title": title,
+        "start_date": datetime.datetime(2014, 11, 5),
+        "end_date": datetime.datetime(2014, 11, 30)
+    }
+    reporting_period = ReportingPeriod.get_or_create(
+        ReportingPeriod.title == title,
+        **params)
+
+    reporting_period.save()

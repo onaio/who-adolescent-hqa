@@ -14,6 +14,7 @@ from submissions import SubmissionViews  # noqa
 @view_config(route_name='default')
 def default(request):
     ona_user = request.ona_user
+
     return HTTPFound(
         request.route_url(
             'users',
