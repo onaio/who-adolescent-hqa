@@ -39,7 +39,7 @@
   </div>
   <div>
    {%if clinics|length == 0 %}
-    {{search_term}} Not found.
+    {{search_term}} {{ gettext('Not found.') }}
   {% endif%}
   </div>
 </div>
