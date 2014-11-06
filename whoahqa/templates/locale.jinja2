@@ -1,0 +1,48 @@
+{% extends "base.jinja2" %}
+{% block title %}{{ gettext("User Settings") }}{% endblock %}
+{% block page_title %} {{ self.title() }} {% endblock %}
+{% block breadcrumbs %}
+  <li>
+    <a href="{{ request.route_url('locale', traverse=()) }}">{{ gettext("User Settings") }} </a>
+  </li>
+{% endblock %}
+{% block content %}
+    <div class="portlet ">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class="icon-reorder"></i> {{ self.title() }}
+          </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" method="post">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">{{ gettext('Select default language') }}</label>
+
+                        <div class="col-md-4">
+                          <select name="locale">
+                              {% for key, lang in available_languages.items() %}
+                                <option value="{{ key }}"
+                                    {% if user_settings and user_settings.language == key %}
+                                        selected="selected"
+                                    {% endif %}
+                                    >{{lang}}</option>
+                              {% endfor %}
+                          </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions fluid">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" class="btn btn-primary">
+                          {{ gettext("Update")}}
+                        </button>
+                        <a class="btn btn-default" href="{{ request.route_url('default', traverse=()) }}">
+                          {{ gettext("Cancel")}}
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
