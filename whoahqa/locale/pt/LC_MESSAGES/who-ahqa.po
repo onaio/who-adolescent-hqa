@@ -19,53 +19,62 @@ msgstr ""
 
 #: whoahqa/constants/__init__.py:24
 msgid "Adolescent Client"
-msgstr ""
+msgstr "Adolescente Usuário"
 
 #: whoahqa/constants/__init__.py:25
 msgid "Health-care Provider"
-msgstr ""
+msgstr "Profissional de Saúde"
 
 #: whoahqa/constants/__init__.py:26
 msgid "Support Staff"
-msgstr ""
+msgstr "Equipe de Apoio"
 
 #: whoahqa/constants/__init__.py:27
 msgid "Health Facility Manager"
-msgstr ""
+msgstr "Gestor da Unidade de Saúde"
 
 #: whoahqa/constants/__init__.py:28
 msgid "Outreach Worker"
-msgstr ""
+msgstr "Agentes Comunitários"
 
 #: whoahqa/constants/__init__.py:29
 msgid "Community Member"
-msgstr ""
+msgstr "Membro da Comunidade"
 
 #: whoahqa/constants/__init__.py:30
 msgid "Adolescent in Community"
-msgstr ""
+msgstr "Adolescente da Comunidade"
 
 #: whoahqa/constants/__init__.py:31
 msgid "Observation Guide"
-msgstr ""
+msgstr "Guia de Observação"
 
 #: whoahqa/constants/__init__.py:56
 msgid ""
 "Policies and procedures are in place that do not restrict the provision "
 "of health services on any terms"
 msgstr ""
+"Políticas, diretrizes e recomendações estão estabelecidas de "
+"maneira que não restrinjam a prestação de serviços "
+"de saúde em quaisquer condições."
 
 #: whoahqa/constants/__init__.py:58
 msgid ""
 "Health-care providers treat all adolescent clients with equal care and "
 "respect, regardless of status"
 msgstr ""
+"Os profissionais que atendem nesta Unidade de Saúde tratam todos os "
+"adolescentes com cuidado e respeito, independentemente de sua condição "
+"socio-econômica ou quaisquer outra características/singularidades."
 
 #: whoahqa/constants/__init__.py:60
 msgid ""
 "Support staff treat all adolescent clients with equal care and respect, "
 "regardless of status"
 msgstr ""
+"Os profissionais de apoio tratam todos os adolescentes com o mesmo cuidado "
+"e respeito, independentemente de sua condição socioeconômica ou quaisquer "
+"outras singularidades/características."
 
 #: whoahqa/constants/__init__.py:62
 msgid ""
@@ -76,18 +85,25 @@ msgstr ""
 #: whoahqa/constants/__init__.py:64
 msgid "The point of health service delivery has convenient hours of operation"
 msgstr ""
+"Os horários de funcionamento da Unidade de Saúde e de prestação de "
+"serviços são convenientes."
 
 #: whoahqa/constants/__init__.py:66
 msgid ""
 "Adolescents are well-informed about the range of available reproductive "
 "health services and how to obtain them"
 msgstr ""
+"Os adolescentes são bem informados sobre a gama de serviços de saúde "
+"sexual e saúde reprodutiva disponíveis e sobre como obtê-los."
 
 #: whoahqa/constants/__init__.py:68
 msgid ""
 "Community members understand the benefits that adolescents will gain by "
 "obtaining the health services they need, and support their provision"
 msgstr ""
+"Os membros da comunidade entendem os benefícios relacionados ao fato "
+"de os/as adolescentes terem acesso aos serviços de saúde de "
+"que precisam, e apoiam esse acesso?"
 
 #: whoahqa/constants/__init__.py:71
 msgid ""
@@ -95,20 +111,27 @@ msgid ""
 "adolescents in the community by selected community members, outreach "
 "workers and adolescents themselves"
 msgstr ""
+"Membros da comunidade, agentes comunitários e os próprios adolescentes "
+"disponibilizam informações e serviços de saúde a adolescentes da comunidade."
 
 #: whoahqa/constants/__init__.py:75
 msgid "Policies and procedures are in place that guarantee client confidentiality"
 msgstr ""
+"Normas e procedimentos que garantem a confidencialidade do usuário(a) "
+"adolescente são aplicados na Unidade de Saúde."
 
 #: whoahqa/constants/__init__.py:77
 msgid "The point of health service delivery ensures privacy"
 msgstr ""
+"A Unidade de Saúde garante a privacidade de adolescentes."
 
 #: whoahqa/constants/__init__.py:78
 msgid ""
 "Health-care providers are non-judgemental, considerate and easy to relate"
 " to"
 msgstr ""
+"Os profissionais da equipe de saúde são atenciosos e respeitosos com "
+"adolescentes, não julgando-os ou emitindo juizos de valor."
 
 #: whoahqa/constants/__init__.py:80
 msgid ""
@@ -116,24 +139,32 @@ msgid ""
 "short waiting time. with or without an appointment, and (where necessary)"
 " with referral"
 msgstr ""
+"A Unidade de Saúde assegura que as consultas sejam realizadas com pouco "
+"tempo de espera, independente de agendamento prévio, com atendimento "
+"imediato se necessário com orientação rápida."
 
 #: whoahqa/constants/__init__.py:83
 msgid ""
 "The point of health service delivery has an appealing and clean "
 "environment"
 msgstr ""
+"A Unidade de Saúde tem um ambiente agradável e limpo."
 
 #: whoahqa/constants/__init__.py:85
 msgid ""
 "The point of health service delivery provides information and education "
 "through a variety of channels"
 msgstr ""
+"A Unidade de Saúde disponibiliza informações de saúde através de "
+"diferentes ferramentas educativas."
 
 #: whoahqa/constants/__init__.py:87
 msgid ""
 "Adolescents are actively involved in designing, assessing and providing "
 "health services"
 msgstr ""
+"Adolescentes participam ativamente na elaboração, implementação e avaliação "
+"dos serviços prestados para adolescentes na Unidade de Saúde."
 
 #: whoahqa/constants/__init__.py:89
 msgid ""
@@ -141,30 +172,41 @@ msgid ""
 "all adolescents either at the point of health service delivery or through"
 " referral linkages"
 msgstr ""
+"As ações de saúde são fornecidas de modo a atender às necessidades de "
+"todos os/as adolescentes, na Unidade de Saúde ou por meio da rede de referência."
 
 #: whoahqa/constants/__init__.py:92
 msgid ""
 "Health-care providers have the required competencies to work with "
 "adolescents and to provide them with the required health services"
 msgstr ""
+"Profissionais de saúde têm conhecimentos e habilidades necessárias para "
+"trabalhar com adolescentes e prestar-lhes os serviços de saúde necessários."
 
 #: whoahqa/constants/__init__.py:95
 msgid ""
 "Health-care providers use evidence-based protocols and guidelines to "
 "provide health services"
 msgstr ""
+"A equipe de saúde usa protocolos e orientações baseadas em evidências e em "
+"documentos/diretrizes do Ministério da Saúde para prestação dos "
+"serviços a adolescentes."
 
 #: whoahqa/constants/__init__.py:97
 msgid ""
 "Health-care providers are able to dedicate sufficient time to work "
 "effectively with their adolescent clients"
 msgstr ""
+"Profissionais da equipe de saúde dispõem de tempo suficiente para "
+"atender usuários(as) adolescentes de modo eficaz."
 
 #: whoahqa/constants/__init__.py:99
 msgid ""
 "The point of health service delivery has the required equipment, supplies"
 " and basic services necessary to deliver the required health services"
 msgstr ""
+"A Unidade de Saúde possui equipamentos, insumos e os serviços necessários "
+"para prestar os serviços de saúde."
 
 #: whoahqa/constants/__init__.py:519
 msgid "Equitable"
