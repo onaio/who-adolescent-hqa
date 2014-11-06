@@ -90,6 +90,7 @@ def includeme(config):
         format_date_for_locale
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('default', '/')
+    config.add_route('locale', '/locale/')
     config.add_route('auth', '/auth/{action}')
     config.add_route('users', '/users/*traverse',
                      factory=UserFactory)

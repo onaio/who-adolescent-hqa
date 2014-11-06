@@ -19,6 +19,7 @@ from whoahqa.models import (
     DBSession,
     Base,
     User,
+    UserSettings,
     Group,
     OnaUser,
     Clinic,
@@ -71,6 +72,8 @@ class TestBase(unittest.TestCase):
         clinic_managers_group = Group(name='managers')
 
         su = User()
+        user_setting = UserSettings(user=su)
+
         su_ona_user = OnaUser(
             user=su, username='super', refresh_token="a123f4")
         su.groups.append(su_group)
@@ -100,8 +103,8 @@ class TestBase(unittest.TestCase):
 
         with transaction.manager:
             DBSession.add_all(
-                [su_ona_user, manager_a_ona_user, manager_b_ona_user,
-                 clinic1, clinic2, reporting_period])
+                [user_setting, su_ona_user, manager_a_ona_user,
+                 manager_b_ona_user, clinic1, clinic2, reporting_period])
 
 
 class IntegrationTestBase(TestBase):

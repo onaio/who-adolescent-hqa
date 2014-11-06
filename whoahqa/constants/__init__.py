@@ -7,6 +7,10 @@ XFORM_ID = '_xform_id_string'
 USER_ID = 'user_id'
 CLINIC_NAME = 'clinic_name'
 
+AVAILABLE_LANGUAGES = {
+    'en': "English",
+    'pt': "Portuguese"}
+
 # Client Tool Constants
 ADOLESCENT_CLIENT = 'adolescent_client_interview'
 HEALTH_CARE_PROVIDER = 'health_care_provider_interview'
@@ -19,7 +23,6 @@ OBSERVATION_GUIDE = 'observation_guide'
 
 # Clinic registration
 CLINIC_REGISTRATION = 'clinic_registration'
-
 
 CLIENT_TOOLS = [
     (ADOLESCENT_CLIENT, _("Adolescent Client")),
