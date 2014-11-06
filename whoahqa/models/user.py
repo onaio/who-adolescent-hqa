@@ -59,6 +59,11 @@ class User(Base):
             (Allow, "u:{}".format(self.id), ALL_PERMISSIONS),
         ]
 
+    @property
+    def settings(self):
+        user_settings = UserSettings.get_or_create(user=self)
+        return user_settings
+
     def __getitem__(self, item):
         # retrieve the reporting period
         try:
@@ -97,6 +102,14 @@ class UserProfile(Base):
         self.pwd = pwd_context.encrypt(value)
 
     password = synonym('_password', descriptor=password)
+
+
+class UserSettings(Base):
+    __tablename__ = 'user_settings'
+    user_id = Column(Integer, ForeignKey('users.id'), primary_key=True,
+                     autoincrement=False)
+    language = Column(String(2), default='pt')
+    user = relationship('User')
 
 
 class Group(Base):
