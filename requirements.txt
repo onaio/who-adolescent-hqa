@@ -18,7 +18,6 @@ coverage==3.7.1
 deform==2.0a2
 ecdsa==0.11
 flake8==2.2.3
-gnureadline==6.3.3
 hashids==1.0.1
 httmock==1.2.2
 ipdb==0.8
