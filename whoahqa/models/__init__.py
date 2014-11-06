@@ -27,6 +27,7 @@ from whoahqa.models.submission import determine_handler_class  # noqa
 from whoahqa.models.user import Group  # noqa
 from whoahqa.models.user import OnaUser  # noqa
 from whoahqa.models.user import User  # noqa
+from whoahqa.models.user import UserSettings  # noqa
 from whoahqa.models.user import user_clinics  # noqa
 from whoahqa.models.user import UserProfile  # noqa
 from whoahqa.models.user import UserFactory  # noqa
