@@ -22,6 +22,12 @@ class TestClinic(TestBase):
             Submission.create_from_json(self.submissions[i])
         transaction.commit()
 
+    def create_brazil_submissions(self):
+        # make submissions
+        for i in range(3):
+            Submission.create_from_json(self.brazil_submissions[i])
+        transaction.commit()
+
     def test_assign_to_user(self):
         self.setup_test_data()
         user = OnaUser.get(OnaUser.username == 'manager_a').user
@@ -280,3 +286,13 @@ class TestClinic(TestBase):
         characteristics = clinic_a.get_active_characteristics(period_1)
 
         self.assertEqual(len(characteristics), 1)
+
+    def test_calculate_key_indicator_for_brazil_responses(self):
+        """ should return a valid value when responses exist
+        """
+        self.setup_test_data()
+        self.create_brazil_submissions()
+        clinic_a = Clinic.get(Clinic.id == 1)
+        key_indicator_scores = clinic_a.calculate_key_indicator_scores(
+            [constants.THREE])
+        self.assertEqual(key_indicator_scores, {constants.THREE: 25.0})
