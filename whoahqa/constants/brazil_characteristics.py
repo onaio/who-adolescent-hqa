@@ -75,3 +75,49 @@ CHARACTERISTIC_MAPPING[EIGHTEEN][HEALTH_CARE_PROVIDER] = {
     'characteristic_eighteen/ch18_q12',
     'characteristic_eighteen/ch18_q13'
 }
+
+CHARACTERISTIC_MAPPING[FOURTEEN][HEALTH_FACILITY_MANAGER].update(
+    {'characteristic_fourteen/ch14_q3Ptg'})
+
+CHARACTERISTIC_MAPPING[SIXTEEN][HEALTH_FACILITY_MANAGER] = {
+    'characteristic_sixteen/ch16_q1',
+    'characteristic_sixteen/ch16_q2',
+    'characteristic_sixteen/ch16_q3',
+    'characteristic_sixteen/ch16_q4',
+    'characteristic_sixteen/ch16_q5',
+    'characteristic_sixteen/ch16_q6',
+    'characteristic_sixteen/ch16_q9Eng',
+    'characteristic_sixteen/ch16_q10',
+    'characteristic_sixteen/ch16_q11',
+    'characteristic_sixteen/ch16_q12',
+    'characteristic_sixteen/ch16_q13',
+    'characteristic_sixteen/ch16_q14'
+}
+
+CHARACTERISTIC_MAPPING[SEVENTEEN][HEALTH_FACILITY_MANAGER] = {
+    'characteristic_seventeen/ch17_q1',
+    'characteristic_seventeen/ch17_q2',
+    'characteristic_seventeen/ch17_q3',
+    'characteristic_seventeen/ch17_q4',
+    'characteristic_seventeen/ch17_q5',
+    'characteristic_seventeen/ch17_q6',
+    'characteristic_seventeen/ch17_q9Eng',
+    'characteristic_seventeen/ch17_q10',
+    'characteristic_seventeen/ch17_q11',
+    'characteristic_seventeen/ch17_q12',
+    'characteristic_seventeen/ch17_q13'
+}
+
+CHARACTERISTIC_MAPPING[EIGHTEEN][HEALTH_FACILITY_MANAGER] = {
+    'characteristic_eighteen/ch18_q1',
+    'characteristic_eighteen/ch18_q2',
+    'characteristic_eighteen/ch18_q3',
+    'characteristic_eighteen/ch18_q4',
+    'characteristic_eighteen/ch18_q5',
+    'characteristic_eighteen/ch18_q6',
+    'characteristic_eighteen/ch18_q9Eng',
+    'characteristic_eighteen/ch18_q10',
+    'characteristic_eighteen/ch18_q11',
+    'characteristic_eighteen/ch18_q12',
+    'characteristic_eighteen/ch18_q13'
+}
