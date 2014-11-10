@@ -12,3 +12,21 @@ KEY_INDICATORS = [
     (APPROPRIATE, (SIXTEEN, )),
     (EFFECTIVE, (SEVENTEEN, EIGHTEEN, NINETEEN, TWENTY))
 ]
+
+CHARACTERISTIC_MAPPING[NINE][ADOLESCENT_CLIENT].update(
+    'characteristic_nine/ch9_q5')
+
+CHARACTERISTIC_MAPPING[TWELVE][ADOLESCENT_CLIENT] = {
+    'characteristic_twelve/ch12_q1',
+    'characteristic_twelve/ch12_q2_yes',
+    'characteristic_twelve/ch12_q2_yes2'
+}
+
+CHARACTERISTIC_MAPPING[FOURTEEN][ADOLESCENT_CLIENT] = {
+    'characteristic_twelve/ch14_q1',
+    'characteristic_twelve/ch14_q1_Ptg',
+    'characteristic_twelve/ch14_q1_yes',
+    'characteristic_twelve/ch14_q1_yes2',
+    'characteristic_twelve/ch14_q1_yes3',
+    'characteristic_twelve/ch14_q1_yes5_Ptg'
+}
