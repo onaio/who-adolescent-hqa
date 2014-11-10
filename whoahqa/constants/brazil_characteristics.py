@@ -121,3 +121,38 @@ CHARACTERISTIC_MAPPING[EIGHTEEN][HEALTH_FACILITY_MANAGER] = {
     'characteristic_eighteen/ch18_q12',
     'characteristic_eighteen/ch18_q13'
 }
+
+CHARACTERISTIC_MAPPING[SEVENTEEN][OBSERVATION_GUIDE] = {
+    'characteristic_seventeen/ch17_q1',
+    'characteristic_seventeen/ch17_q2',
+    'characteristic_seventeen/ch17_q3',
+    'characteristic_seventeen/ch17_q4',
+    'characteristic_seventeen/ch17_q5',
+    'characteristic_seventeen/ch17_q6',
+    'characteristic_seventeen/ch17_q9Eng',
+    'characteristic_seventeen/ch17_q10',
+    'characteristic_seventeen/ch17_q11',
+    'characteristic_seventeen/ch17_q12',
+    'characteristic_seventeen/ch17_q13',
+    'characteristic_seventeen/ch17_q14',
+    'characteristic_seventeen/ch17_q15',
+    'characteristic_seventeen/ch17_q16',
+    'characteristic_seventeen/ch17_q17'
+}
+
+CHARACTERISTIC_MAPPING[EIGHTEEN][OBSERVATION_GUIDE] = {
+    'characteristic_eighteen/ch18_q1',
+    'characteristic_eighteen/ch18_q2',
+    'characteristic_eighteen/ch18_q3',
+    'characteristic_eighteen/ch18_q4',
+    'characteristic_eighteen/ch18_q5',
+    'characteristic_eighteen/ch18_q6',
+    'characteristic_eighteen/ch18_q9Eng',
+    'characteristic_eighteen/ch18_q10',
+    'characteristic_eighteen/ch18_q11',
+    'characteristic_eighteen/ch18_q12',
+    'characteristic_eighteen/ch18_q13'
+}
+
+CHARACTERISTIC_MAPPING[TWENTY][OBSERVATION_GUIDE].update(
+    {'characteristic_twenty/ch20_q3'})
