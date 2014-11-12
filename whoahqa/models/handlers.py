@@ -1,12 +1,8 @@
-import random
 from sqlalchemy.orm.exc import NoResultFound
 from whoahqa import constants
 from whoahqa.models import (
     DBSession,
     Clinic)
-
-from whoahqa.utils import hashid
-random.seed()
 
 
 class BaseSubmissionHandler(object):
@@ -60,17 +56,18 @@ class ClinicRegistrationHandler(BaseSubmissionHandler):
         Return the user_id and the clinic's name
         """
         return (raw_data.get(constants.USER_ID),
-                raw_data.get(constants.CLINIC_NAME))
+                raw_data.get(constants.CLINIC_NAME),
+                raw_data.get(constants.CLINIC_IDENTIFIER))
 
     def handle_submission(self):
         from whoahqa.models import User
 
-        user_id, clinic_name = ClinicRegistrationHandler.parse_data(
-            self.submission.raw_data)
+        user_id, clinic_name, clinic_code = \
+            ClinicRegistrationHandler.parse_data(self.submission.raw_data)
 
         clinic = Clinic(
             name=clinic_name,
-            code='{}'.format(random.randint(189, 1287190)))
+            code=clinic_code)
 
         # check is user exists
         user = None
@@ -82,7 +79,6 @@ class ClinicRegistrationHandler(BaseSubmissionHandler):
             clinic.user = user
         finally:
             clinic.save()
-            clinic.code = hashid.encrypt(clinic.id)
 
         # if no user, raise UserNotFound
         if user is None:

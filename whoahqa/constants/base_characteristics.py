@@ -581,3 +581,9 @@ for indicator, characteristics in KEY_INDICATORS:
         dict([
             (characteristic, indicator)
             for characteristic in characteristics]))
+
+CLINIC_IDENTIFIER = 'facility_info/clinic_id'
+CHARACTERISTIC = 'facility_info/HS_char'
+XFORM_ID = '_xform_id_string'
+USER_ID = 'user_id'
+CLINIC_NAME = 'clinic_name'

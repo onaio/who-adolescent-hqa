@@ -136,7 +136,7 @@ class ClinicViews(object):
     @view_config(name='register',
                  context=ClinicFactory)
     def register_clinic(self):
-        xml_instance = '<?xml version=\'1.0\' ?><clinic_registration id=\"clinic_registration\"><formhub><uuid>73242968f5754dc49c38463af658f3d2</uuid></formhub><user_id>{}</user_id><clinic_name></clinic_name><meta><instanceID>uuid:ec5ce15e-5a0a-4246-93fe-acf60ef69bf2</instanceID></meta></clinic_registration>'.format(   # noqa
+        xml_instance = '<?xml version=\'1.0\' ?><clinic_registration id=\"clinic_registration\"><formhub><uuid>73242968f5754dc49c38463af658f3d2</uuid></formhub><user_id>{}</user_id><facility_info><facility_name></facility_name><facility_cnes></facility_cnes></facility_info><meta><instanceID>uuid:ec5ce15e-5a0a-4246-93fe-acf60ef69bf2</instanceID></meta></clinic_registration>'.format(   # noqa
             self.request.ona_user.user_id)
         server_url = self.request.registry.settings['form_server_url']
         instance_id = uuid.uuid4()
