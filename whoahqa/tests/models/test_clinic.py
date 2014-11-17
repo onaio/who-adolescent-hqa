@@ -202,8 +202,8 @@ class TestClinic(TestBase):
             (constants.ONE, constants.TWO, constants.THREE))
         self.assertEqual(key_indicator_scores, {
             constants.ONE: 50.0,
-            constants.TWO: 27.77777777777778,
-            constants.THREE: 30.0
+            constants.TWO: None,
+            constants.THREE: 33.33333333333333
         })
 
     def test_get_all_key_indicator_scores_when_no_responses_exist(self):
@@ -232,9 +232,9 @@ class TestClinic(TestBase):
         key_indicator_scores = clinic_a.get_all_key_indicator_scores()
         self.assertEqual(key_indicator_scores[constants.EQUITABLE], {
             constants.ONE: 50.0,
-            constants.TWO: 27.77777777777778,
-            constants.THREE: 30.0,
-            'average_score': 35.925925925925924
+            constants.TWO: None,
+            constants.THREE: 33.33333333333333,
+            'average_score': 27.777777777777775
         })
         self.assertEqual(key_indicator_scores[constants.APPROPRIATE], {
             constants.SIXTEEN: None,
