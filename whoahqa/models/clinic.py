@@ -198,7 +198,9 @@ class Clinic(Base):
 
         for characteristic, label, number in constants.CHARACTERISTICS:
             scores[characteristic] = {}
-            total_scores = total_questions = total_responses = 0
+            total_scores = 0
+            total_questions = 0
+            total_responses = 0
             mapping = constants.CHARACTERISTIC_MAPPING[characteristic]
             meets_threshold = True
             for client_tool_id, xpaths in mapping.items():
@@ -229,6 +231,7 @@ class Clinic(Base):
                     meets_threshold = False
 
                 aggregate_score = None
+
                 if num_responses > 0:
                     aggregate_score = Clinic.calculate_aggregate_scores(
                         xpaths, num_responses, submission_jsons)
@@ -291,9 +294,12 @@ class Clinic(Base):
         submissions = self.get_period_clinic_submissions()
 
         key_indicator_scores = {}
-        total_responses = total_scores = total_questions = 0
+
         for characteristic in characteristics_list:
             mapping = constants.CHARACTERISTIC_MAPPING[characteristic]
+            total_responses = 0
+            total_scores = 0
+            total_questions = 0
             key_indicator_scores[characteristic] = {}
             for client_tool_id, xpaths in mapping.items():
                 # filter this clinics submissions to this characteristic and
@@ -323,6 +329,7 @@ class Clinic(Base):
 
                 total_responses += num_responses
                 total_questions += len(xpaths)
+
                 key_indicator_scores[characteristic] = None\
                     if total_responses == 0 else (
                         total_scores / float(total_questions) * 100)
