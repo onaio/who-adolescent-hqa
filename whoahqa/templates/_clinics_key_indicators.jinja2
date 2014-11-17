@@ -40,7 +40,7 @@
                                     {{ char }}
                                   </td>
                                   <td class="">
-                                    {{ value_or_dash(clinic.get_all_key_indicator_scores()[indicator][char]) }}
+                                    {{ value_or_dash(clinic.get_all_key_indicator_scores()[indicator][char]|int(0)) }}
                                   </td>
                                 </tr>
                               {% endfor%}
@@ -50,7 +50,7 @@
                                 {{ gettext('Average Score') }}
                               </td>
                               <td class="">
-                                {{ clinic.get_all_key_indicator_scores()[indicator]['average_score'] }}
+                                {{ clinic.get_all_key_indicator_scores()[indicator]['average_score']|int(0) }}
                               </td>
                             </tr>
                           </tbody>
