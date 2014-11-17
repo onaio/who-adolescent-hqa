@@ -350,3 +350,11 @@ td.enclosed-table table tr:first-child td {
 .table_bottom_bordered {
     border-bottom: 2px solid #cde3f4;
 }
+
+.navbar-nav > li > a.logout {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.navbar-nav > li > a.logout:hover {
+    background: #1175cb;
+}
