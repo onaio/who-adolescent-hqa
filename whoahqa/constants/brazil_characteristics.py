@@ -23,12 +23,12 @@ CHARACTERISTIC_MAPPING[TWELVE][ADOLESCENT_CLIENT] = {
 }
 
 CHARACTERISTIC_MAPPING[FOURTEEN][ADOLESCENT_CLIENT] = {
-    'characteristic_twelve/ch14_q1',
-    'characteristic_twelve/ch14_q1_Ptg',
-    'characteristic_twelve/ch14_q1_yes',
-    'characteristic_twelve/ch14_q1_yes2',
-    'characteristic_twelve/ch14_q1_yes3',
-    'characteristic_twelve/ch14_q1_yes5_Ptg'
+    'characteristic_fourteen/ch14_q1',
+    'characteristic_fourteen/ch14_q1_Ptg',
+    'characteristic_fourteen/ch14_q1_yes',
+    'characteristic_fourteen/ch14_q1_yes2',
+    'characteristic_fourteen/ch14_q1_yes3',
+    'characteristic_fourteen/ch14_q1_yes5_Ptg'
 }
 
 CHARACTERISTIC_MAPPING[SIXTEEN][HEALTH_CARE_PROVIDER] = {
