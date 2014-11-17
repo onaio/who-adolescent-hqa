@@ -53,11 +53,10 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
         <!-- BEGIN USER LOGIN DROPDOWN -->
          <ul class="nav navbar-nav pull-right">
             <li class="dropdown user">
-            	<a href="{{ request.route_url('auth', action='logout') }}" 
+            	<a href="#" 
                class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
    				   <span class="glyphicon glyphicon-user"></span> &nbsp;Signed in as
                   <span class="bold">{{ request.ona_user.username }}</span>
-                  <span class="username"> {{ gettext('Logout')}}</span>
                </a>
                <ul class="dropdown-menu">
                   <li>
@@ -66,6 +65,12 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                       </a>
                   </li>
                </ul>
+            </li>
+            <li>
+               <a href="{{ request.route_url('auth', action='logout') }}" class="logout">
+                  <span class="username"> {{ gettext('Logout')}}</span>
+                  <span class="glyphicon glyphicon-log-out"></span>
+               </a>
             </li>
             <!-- END USER LOGIN DROPDOWN -->
          </ul>
