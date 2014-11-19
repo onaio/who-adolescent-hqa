@@ -27,7 +27,7 @@ def default(request):
 
 
 @view_config(route_name='locale',
-             permission=perms.SHOW,
+             permission=perms.AUTHENTICATED,
              renderer='locale.jinja2')
 def set_locale(request):
     ona_user = request.ona_user
