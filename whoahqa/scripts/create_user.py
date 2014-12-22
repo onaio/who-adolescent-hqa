@@ -7,12 +7,13 @@ from sqlalchemy import engine_from_config
 from pyramid.paster import (
     get_appsettings,
     setup_logging,
-    )
+)
 
 from whoahqa.security import pwd_context
 from whoahqa.models import (
     DBSession,
     Base,
+    OnaUser,
     User,
     UserProfile,
 )
@@ -38,6 +39,14 @@ def main(argv=sys.argv):
     username = argv[2]
     password = argv[3]
     with transaction.manager:
+        user = User()
         profile = UserProfile(
-            user=User(), username=username, password=password)
-        DBSession.add(profile)
+            user=user, username=username, password=password)
+        ona_user_params = {
+            'user': user,
+            'username': username,
+            'refresh_token': 'test'}
+        ona_user = OnaUser.get_or_create(
+            OnaUser.username == username,
+            **ona_user_params)
+        DBSession.add_all([user, profile, ona_user])
