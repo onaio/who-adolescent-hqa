@@ -70,20 +70,11 @@ class LazyCharacteristics(LazyObject):
     """
     def _setup(self, name=None):
         """
-        Load the settings module pointed to by the environment variable. This
-        is used the first time we need any settings at all, if the user has not
-        previously configured the settings manually.
+        Load the characteristics module pointed to by the environment variable.
         """
         characteristic_settings = os.environ.get(
             COUNTRY_SPECIFIC_SETTINGS,
             "whoahqa.constants.base_characteristics")
-        if not characteristic_settings:
-            desc = ("characteristic %s" % name) if name else "characteristics"
-            raise Exception(
-                "Requested %s, but settings are not configured. "
-                "You must either define the environment variable %s "
-                "or call settings.configure() before accessing settings."
-                % (desc, COUNTRY_SPECIFIC_SETTINGS))
 
         self._wrapped = BaseCharacteristics(characteristic_settings)
 
