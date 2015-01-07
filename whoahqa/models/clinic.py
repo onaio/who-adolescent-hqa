@@ -55,7 +55,8 @@ class Clinic(Base):
     def __acl__(self):
         acl = []
         if self.user is not None:
-            acl.append((Allow, "u:{}".format(self.user.id), perms.SHOW))
+            acl.append((Allow, "u:{}".format(self.user.id),
+                        perms.CAN_VIEW_CLINICS))
         return acl
 
     def __getitem__(self, item):
