@@ -7,7 +7,8 @@ DEPLOYMENTS = {
         'virtual_env': '/home/ubuntu/.virtualenvs/whoahqa_prod',
         'test_virtual_env': '/home/ubuntu/.virtualenvs/whoahqa_test',
         'project_dir': '/home/ubuntu/whoahqa',
-        'alembic_section': 'production'
+        'alembic_section': 'production',
+        'country': 'brazil'
     },
     'dev': {
         'host_string': "vagrant@192.168.33.13",
@@ -23,7 +24,7 @@ def get_virtual_env_command(virtual_env_path):
         os.path.join(virtual_env_path, 'bin', 'activate'))
 
 
-def deploy(deployment="prod", branch="master"):
+def deploy(deployment="prod", branch="master", country=None):
     env.update(DEPLOYMENTS[deployment])
     virtual_env_command = get_virtual_env_command(env.virtual_env)
     with cd(env.project_dir):
@@ -33,6 +34,8 @@ def deploy(deployment="prod", branch="master"):
 
         with prefix(virtual_env_command):
             run('pip install -r requirements.txt --allow-all-external')
+            run('export WHOAHQA_COUNTRY_SETTING={}'.format(
+                country or env.get('country')))
             run("python setup.py test -q")
             run("python setup.py install")
             run("rm -rf build")
