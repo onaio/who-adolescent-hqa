@@ -45,7 +45,7 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     clinics = relationship("Clinic", secondary=user_clinics)
-    groups = relationship("Group", secondary=user_groups)
+    group = relationship("Group", secondary=user_groups, uselist=False)
 
     def get_clinics(self):
         from whoahqa.models import Clinic
