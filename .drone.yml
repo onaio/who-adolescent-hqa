@@ -5,4 +5,5 @@ script:
     - psql -c "CREATE USER whoahqa WITH PASSWORD 'whoahqa';" -h 127.0.0.1 -U postgres postgres
     - psql -c "CREATE DATABASE whoahqa_test OWNER whoahqa;" -h 127.0.0.1 -U postgres postgres
     - pip install -qr requirements.txt
+    - export WHOAHQA_COUNTRY_SETTING=whoahqa.constants.brazil_characteristics
     - python setup.py test
