@@ -38,7 +38,9 @@ class ClinicViews(object):
     def list(self):
         # if the user doesnt have permissions to list all clinics,
         # redirect to his own clinics
-        if not has_permission(perms.LIST, self.request.context, self.request):
+        if not has_permission(perms.CAN_LIST_CLINICS,
+                              self.request.context,
+                              self.request):
             return HTTPFound(
                 self.request.route_url(
                     'users', traverse=(
@@ -94,7 +96,7 @@ class ClinicViews(object):
     @view_config(name='',
                  request_method='GET',
                  context=ReportingPeriod,
-                 permission=perms.SHOW,
+                 permission=perms.CAN_VIEW_CLINICS,
                  renderer='clinics_show.jinja2')
     def show(self):
         period = self.request.context
@@ -154,7 +156,7 @@ class ClinicViews(object):
 
     @view_config(name='characteristics',
                  request_method='GET',
-                 permission=perms.SHOW,
+                 permission=perms.CAN_VIEW_CLINICS,
                  context=ReportingPeriod,
                  renderer='clinics_characteristics_list.jinja2')
     def characteristics_list(self):

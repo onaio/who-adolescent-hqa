@@ -1,2 +1,2 @@
 SUPER_USERS = 'su'
-MANAGERS = 'managers'
+MUNICIPALITY_MANAGER = 'municipality_manager'
