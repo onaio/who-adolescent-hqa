@@ -10,6 +10,8 @@ from whoahqa.models import (
     OnaUser,
 )
 
+from whoahqa.constants import permissions as perms
+
 
 def get_request_user(request):
     user_id = authenticated_userid(request)
@@ -20,4 +22,6 @@ def get_request_user(request):
 
 
 def can_list_clinics(request):
-    return has_permission('list', ClinicFactory(request), request)
+    return has_permission(perms.CAN_LIST_CLINICS,
+                          ClinicFactory(request),
+                          request)
