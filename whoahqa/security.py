@@ -1,8 +1,22 @@
 from sqlalchemy.orm.exc import NoResultFound
 from passlib.context import CryptContext
 
+from whoahqa.constants import permissions, groups
+
 
 pwd_context = CryptContext()
+
+
+GROUPS = [groups.MUNICIPALITY_MANAGER]
+
+
+GROUP_PERMISSIONS = {
+    groups.MUNICIPALITY_MANAGER: [permissions.CAN_LIST_CLINICS,
+                                  permissions.CAN_VIEW_CLINICS,
+                                  permissions.CAN_EDIT_CLINICS,
+                                  permissions.CAN_ASSESS_CLINICS,
+                                  permissions.CAN_VIEW_MUNICIPALITY]
+}
 
 
 def group_finder(userid, request):
@@ -12,6 +26,11 @@ def group_finder(userid, request):
     except NoResultFound:
         return None
     else:
-        groups = ["g:{}".format(g.name) for g in user.groups]
-        groups.append("u:{}".format(userid))
-        return groups
+        principals = []
+        if user.group.name == groups.SUPER_USER:
+            principals.append(user.group.name)
+        else:
+            principals = GROUP_PERMISSIONS.get(user.group.name, [])
+
+        principals.append("u:{}".format(userid))
+        return principals
