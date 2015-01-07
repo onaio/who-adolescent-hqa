@@ -2,7 +2,8 @@ import transaction
 import datetime
 import json
 
-from whoahqa import constants
+from whoahqa.constants import characteristics as constants
+from whoahqa.constants import brazil_characteristics as brazil_constants
 from whoahqa.models import (
     DBSession,
     OnaUser,
@@ -294,5 +295,5 @@ class TestClinic(TestBase):
         self.create_brazil_submissions()
         clinic_a = Clinic.get(Clinic.id == 1)
         key_indicator_scores = clinic_a.calculate_key_indicator_scores(
-            [constants.THREE])
-        self.assertEqual(key_indicator_scores, {constants.THREE: 25.0})
+            [brazil_constants.THREE])
+        self.assertEqual(key_indicator_scores, {brazil_constants.THREE: 25.0})

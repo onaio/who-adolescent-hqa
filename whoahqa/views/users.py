@@ -4,7 +4,7 @@ from pyramid.view import (
     view_defaults,
 )
 
-from whoahqa import constants
+from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
 from whoahqa.models import (
     User,

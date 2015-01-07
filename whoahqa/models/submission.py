@@ -9,7 +9,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import JSON
 
-from whoahqa import constants
+from whoahqa.constants import characteristics as constants
 from whoahqa.models import (
     Base,
     BaseModelFactory,

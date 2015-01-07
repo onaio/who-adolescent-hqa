@@ -1,7 +1,7 @@
 import operator
 import unittest
 
-from whoahqa import constants
+from whoahqa.constants import characteristics as constants
 
 
 class TestConstants(unittest.TestCase):

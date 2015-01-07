@@ -1,6 +1,6 @@
 import transaction
 
-from whoahqa import constants
+from whoahqa.constants import characteristics as constants
 from whoahqa.models import (
     DBSession,
     User,

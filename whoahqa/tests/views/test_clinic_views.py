@@ -6,7 +6,7 @@ from pyramid.httpexceptions import (
 )
 from httmock import urlmatch, HTTMock
 
-from whoahqa import constants
+from whoahqa.constants import characteristics as constants
 from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
     DBSession,
