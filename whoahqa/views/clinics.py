@@ -16,7 +16,7 @@ from pyenketo import (
 )
 
 from whoahqa.utils import enketo
-from whoahqa import constants
+from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
 from whoahqa.utils import tuple_to_dict_list, filter_dict_list_by_attr
 from whoahqa.models import (

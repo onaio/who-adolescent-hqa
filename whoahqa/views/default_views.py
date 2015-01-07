@@ -2,7 +2,7 @@ from pyramid.httpexceptions import (
     HTTPFound,
 )
 
-from whoahqa.constants import AVAILABLE_LANGUAGES
+from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
 from pyramid.view import view_config
 
@@ -33,7 +33,7 @@ def set_locale(request):
     ona_user = request.ona_user
     user_settings = ona_user.user.settings
 
-    available_languages = AVAILABLE_LANGUAGES
+    available_languages = constants.AVAILABLE_LANGUAGES
 
     if request.method == "POST":
         locale = request.POST.get("locale", "")

@@ -15,7 +15,7 @@ from sqlalchemy.sql import select
 from sqlalchemy.schema import PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
 
-from whoahqa import constants
+from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
 from whoahqa.models import (
     Base,
