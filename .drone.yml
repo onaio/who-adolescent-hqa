@@ -1,4 +1,4 @@
-image: bradrydzewski/python
+image: bradrydzewski/python:2.7
 services:
     - onaio/postgis
 script:
