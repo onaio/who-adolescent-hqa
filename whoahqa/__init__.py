@@ -9,6 +9,7 @@ from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from sqlalchemy import engine_from_config
 
 from whoahqa.constants import permissions as perms
+from whoahqa.constants import groups
 from utils import hashid, enketo, format_date_for_locale
 from whoahqa.security import group_finder, pwd_context
 from whoahqa.models import (
@@ -111,8 +112,8 @@ def setup_development_data():
 
 
 def setup_users():
-    group_criteria = Group.name == 'su'
-    group_params = {'name': 'su'}
+    group_criteria = Group.name == groups.SUPER_USER
+    group_params = {'name': groups.SUPER_USER}
     su_group = Group.get_or_create(
         group_criteria,
         **group_params)
@@ -136,7 +137,7 @@ def setup_users():
         OnaUser.username == "admin",
         **ona_user_params)
 
-    su.groups.append(su_group)
+    su.group = su_group
     profile.save()
     ona_user.save()
 

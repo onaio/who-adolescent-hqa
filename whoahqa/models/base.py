@@ -12,7 +12,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql.expression import desc
 
-from whoahqa.constants import permissions as perms
+from whoahqa.constants import permissions as perms, groups
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
@@ -60,7 +60,7 @@ Base = declarative_base(cls=BaseModel)
 
 class RootFactory(object):
     __acl__ = [
-        (Allow, 'g:su', ALL_PERMISSIONS),
+        (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
         (Allow, Authenticated, perms.AUTHENTICATED)
     ]
 
