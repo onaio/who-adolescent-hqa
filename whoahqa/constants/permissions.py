@@ -8,3 +8,6 @@ CAN_EDIT_CLINICS = 'edit-clinics'
 # Municipality Manager Permissions
 CAN_VIEW_MUNICIPALITY = 'view-municipality'
 CAN_ASSESS_CLINICS = 'assess-clinics'
+
+# State Official Permissions
+CAN_VIEW_STATE = 'view-state'
