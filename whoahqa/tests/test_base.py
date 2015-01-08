@@ -13,6 +13,7 @@ from sqlalchemy import engine_from_config
 from webtest import TestApp
 
 from whoahqa import main
+from whoahqa.constants import groups
 from whoahqa.utils import enketo
 from whoahqa.security import pwd_context
 from whoahqa.models import (
@@ -75,25 +76,25 @@ class TestBase(unittest.TestCase):
         testing.tearDown()
 
     def setup_test_data(self):
-        su_group = Group(name='su')
-        clinic_managers_group = Group(name='managers')
+        su_group = Group(name=groups.SUPER_USER)
+        clinic_managers_group = Group(name=groups.MUNICIPALITY_MANAGER)
 
         su = User()
         user_setting = UserSettings(user=su)
 
         su_ona_user = OnaUser(
             user=su, username='super', refresh_token="a123f4")
-        su.groups.append(su_group)
+        su.group = su_group
 
         manager_a = User()
         manager_a_ona_user = OnaUser(
             user=manager_a, username='manager_a', refresh_token="b345d6")
-        manager_a.groups.append(clinic_managers_group)
+        manager_a.group = clinic_managers_group
 
         manager_b = User()
         manager_b_ona_user = OnaUser(
             user=manager_b, username='manager_b', refresh_token="c563e9")
-        manager_b.groups.append(clinic_managers_group)
+        manager_b.group = clinic_managers_group
 
         # add a couple of clinics
         clinic1 = Clinic(id=1, name="Clinic A", code="1A2B")
