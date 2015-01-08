@@ -163,6 +163,9 @@ XFORM_ID = '_xform_id_string'
 USER_ID = 'user_id'
 CLINIC_NAME = 'facility_info/facility_name'
 
+MUNICIPALITY_IDENTIFIER = 'facility_info/municipality'
+STATE_IDENTIFIER = 'facility_info/state'
+
 AVAILABLE_LANGUAGES = {
     'en': "English",
     'pt': "Portuguese"}
