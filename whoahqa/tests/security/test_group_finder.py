@@ -12,7 +12,7 @@ class TestGroupFinder(TestBase):
 
         request = testing.DummyRequest()
         groups = group_finder(user.id, request)
-        self.assertListEqual(sorted(groups), sorted(['g:su', 'u:1']))
+        self.assertListEqual(sorted(groups), sorted(['su', 'u:1']))
 
     def test_group_finder_returns_none_if_user_doesnt_exist(self):
         request = testing.DummyRequest()
