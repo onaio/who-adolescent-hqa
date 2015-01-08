@@ -149,6 +149,10 @@ class OnaUser(Base):
     def __str__(self):
         return self.username
 
+    @property
+    def group(self):
+        return self.user.group.name
+
 
 class UserFactory(BaseModelFactory):
     __acl__ = []
