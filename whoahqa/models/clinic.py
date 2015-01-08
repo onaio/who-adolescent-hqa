@@ -13,7 +13,9 @@ from sqlalchemy import (
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql import select
 from sqlalchemy.schema import PrimaryKeyConstraint
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import (
+    backref,
+    relationship)
 
 from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
@@ -50,6 +52,14 @@ class Clinic(Base):
     date_created = Column(DateTime(timezone=True),
                           server_default=func.now(), nullable=False)
     user = relationship("User", secondary=user_clinics, uselist=False)
+
+    municipality_id = Column(Integer, ForeignKey('locations.id'),
+                             nullable=True)
+
+    municipality = relationship("Municipality",
+                                backref=backref('clinics', order_by=id),
+                                primaryjoin="and_(\
+                                    Clinic.municipality_id == Location.id)")
 
     @property
     def __acl__(self):

@@ -6,6 +6,10 @@ from whoahqa.models.base import RootFactory  # noqa
 from whoahqa.models.reporting_period import ReportingPeriod  # noqa
 from whoahqa.models.reporting_period import ReportingPeriodFactory  # noqa
 
+from whoahqa.models.location import Location  # noqa
+from whoahqa.models.location import Municipality  # noqa
+from whoahqa.models.location import State  # noqa
+
 from whoahqa.models.clinic import Clinic  # noqa
 from whoahqa.models.clinic import ClinicCharacteristics  # noqa
 from whoahqa.models.clinic import ClinicFactory  # noqa
@@ -31,7 +35,3 @@ from whoahqa.models.user import UserSettings  # noqa
 from whoahqa.models.user import user_clinics  # noqa
 from whoahqa.models.user import UserProfile  # noqa
 from whoahqa.models.user import UserFactory  # noqa
-
-from whoahqa.models.location import Location  # noqa
-from whoahqa.models.location import Municipality  # noqa
-from whoahqa.models.location import State  # noqa

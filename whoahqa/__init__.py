@@ -17,7 +17,9 @@ from whoahqa.models import (
     Base,
     Clinic,
     Group,
+    Municipality,
     OnaUser,
+    State,
     User,
     UserProfile,
     UserFactory,
@@ -146,10 +148,23 @@ def setup_users():
 
 def setup_clinics():
     # add a couple of clinics
+    state_params = {'name': "Acre"}
+    state = State.get_or_create(
+        State.name == state_params['name'],
+        **state_params)
+
+    municipality_params = {'name': 'Brasilia',
+                           'parent': state}
+
+    municipality = Municipality.get_or_create(
+        Municipality.name == municipality_params['name'],
+        **municipality_params)
+
     clinic_criteria = Clinic.name == "Clinic A"
     clinic_params = {
         "name": "Clinic A",
-        "code": "1A2B"}
+        "code": "1A2B",
+        "municipality": municipality}
     clinic = Clinic.get_or_create(
         clinic_criteria,
         **clinic_params)
