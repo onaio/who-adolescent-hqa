@@ -117,6 +117,9 @@ class Group(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
 
+    def __str__(self):
+        return self.name
+
 
 class OnaUser(Base):
     __tablename__ = 'ona_users'
@@ -142,6 +145,9 @@ class OnaUser(Base):
             ona_user.user = user
         DBSession.add(ona_user)
         return ona_user
+
+    def __str__(self):
+        return self.username
 
 
 class UserFactory(BaseModelFactory):
