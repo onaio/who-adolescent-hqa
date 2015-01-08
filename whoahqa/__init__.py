@@ -28,7 +28,8 @@ from whoahqa.models import (
 )
 from whoahqa.views import (
     get_request_user,
-    can_list_clinics
+    can_list_clinics,
+    can_view_clinics
 )
 
 DEVELOPMENT_ENV = "development"
@@ -55,6 +56,7 @@ def main(global_config, **settings):
 
     # add .user to requests and cache it with reify
     config.add_request_method(get_request_user, 'ona_user', reify=True)
+    config.add_request_method(can_view_clinics, 'can_view_clinics', reify=True)
     config.add_request_method(can_list_clinics, 'can_list_clinics', reify=True)
 
     # setup the hashid salt

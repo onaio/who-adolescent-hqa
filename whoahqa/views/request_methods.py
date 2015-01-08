@@ -25,3 +25,9 @@ def can_list_clinics(request):
     return has_permission(perms.CAN_LIST_CLINICS,
                           ClinicFactory(request),
                           request)
+
+
+def can_view_clinics(request):
+    return has_permission(perms.CAN_VIEW_CLINICS,
+                          ClinicFactory(request),
+                          request)
