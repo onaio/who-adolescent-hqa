@@ -6,11 +6,12 @@ from whoahqa.constants import permissions as perms
 from whoahqa.forms import UserForm
 from whoahqa.models import (
     OnaUser,
+    User,
     UserFactory)
 
 
 @view_defaults(route_name='admin',
-               context=OnaUser,
+               context=User,
                permission=perms.SUPER_USER)
 class AdminViews(object):
 
@@ -26,13 +27,15 @@ class AdminViews(object):
             'users': users
         }
 
-    @view_config(name='edit', renderer='admin_users_edit.jinja2')
+    @view_config(name='edit',
+                 renderer='admin_users_edit.jinja2')
     def edit(self):
         user = self.request.context
+        ona_user = user.ona_user
         form = Form(
             UserForm().bind(
                 request=self.request,
-                user=user),
+                user=ona_user),
             buttons=('Save', Button(name='cancel', type='button')),
             appstruct=user.appstruct)
         if self.request.method == 'POST':
@@ -42,15 +45,13 @@ class AdminViews(object):
             except ValidationFailure:
                 pass
             else:
-                user.update(
-                    values['group'],
-                    values['municipality_id'],
-                    values['active'])
+                ona_user.update(values['group'])
                 self.request.session.flash(
                     "Your changes have been saved", 'success')
                 return HTTPFound(
                     self.request.route_url(
-                        'users', traverse=(user.id, 'edit')))
+                        'admin', traverse=(user.id, 'edit')))
         return {
-            'form': form
+            'form': form,
+            'ona_user': ona_user
         }
