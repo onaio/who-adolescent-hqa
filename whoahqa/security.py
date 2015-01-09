@@ -27,10 +27,10 @@ def group_finder(userid, request):
         return None
     else:
         principals = []
-        if user.group.name == groups.SUPER_USER:
-            principals.append(user.group.name)
+        if user.group == groups.SUPER_USER:
+            principals.append(user.group)
         else:
-            principals = GROUP_PERMISSIONS.get(user.group.name, [])
+            principals = GROUP_PERMISSIONS.get(user.group, [])
 
         principals.append("u:{}".format(userid))
         return principals

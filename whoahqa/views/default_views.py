@@ -16,14 +16,7 @@ def default(request):
         request.response.set_cookie(
             '_LOCALE_', user_setting.language)
 
-    return HTTPFound(
-        request.route_url(
-            'users',
-            traverse=(ona_user.user.id, 'select-period'),
-            _query={
-                'came_from': request.route_path(
-                    'users',
-                    traverse=(ona_user.user.id, '{period_id}', 'clinics'))}))
+    return HTTPFound(request.route_url('clinics', traverse=()))
 
 
 @view_config(route_name='locale',
