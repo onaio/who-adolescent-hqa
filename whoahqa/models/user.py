@@ -12,6 +12,7 @@ from sqlalchemy import (
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.schema import PrimaryKeyConstraint
 from sqlalchemy.orm import (
+    backref,
     relationship,
     synonym,
 )
@@ -77,6 +78,12 @@ class User(Base):
             period.__name__ = item
             return period
 
+    @property
+    def appstruct(self):
+        return {
+            'group': self.group
+        }
+
 
 class UserProfile(Base):
     __tablename__ = 'user_profiles'
@@ -128,7 +135,7 @@ class OnaUser(Base):
                      autoincrement=False)
     username = Column(String(255), nullable=False, unique=True)
     refresh_token = Column(String(255), nullable=False)
-    user = relationship('User')
+    user = relationship('User', backref=backref('ona_user', uselist=False))
 
     @classmethod
     def get_or_create_from_api_data(cls, user_data, refresh_token):
@@ -161,6 +168,17 @@ class OnaUser(Base):
     @property
     def group(self):
         return self.user.group.name
+
+    def update(self, group_name):
+        group_criteria = Group.name == group_name
+        group_params = {'name': group_name}
+        group = Group.get_or_create(
+            group_criteria,
+            **group_params)
+
+        self.user.group = group
+
+        self.save()
 
 
 class UserFactory(BaseModelFactory):
