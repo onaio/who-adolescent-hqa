@@ -1,5 +1,6 @@
 from sqlalchemy.orm.exc import NoResultFound
 from passlib.context import CryptContext
+from pyramid.security import Authenticated
 
 from whoahqa.constants import permissions, groups
 
@@ -15,7 +16,9 @@ GROUP_PERMISSIONS = {
                                   permissions.CAN_VIEW_CLINICS,
                                   permissions.CAN_EDIT_CLINICS,
                                   permissions.CAN_ASSESS_CLINICS,
-                                  permissions.CAN_VIEW_MUNICIPALITY]
+                                  permissions.CAN_VIEW_MUNICIPALITY],
+    groups.USER: [Authenticated],
+    groups.SUPER_USER: [permissions.SUPER_USER]
 }
 
 
@@ -27,10 +30,8 @@ def group_finder(userid, request):
         return None
     else:
         principals = []
-        if user.group == groups.SUPER_USER:
-            principals.append(user.group)
-        else:
-            principals = GROUP_PERMISSIONS.get(user.group, [])
+        if user.group:
+            principals = GROUP_PERMISSIONS.get(user.group.name, [])
 
         principals.append("u:{}".format(userid))
         return principals

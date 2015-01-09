@@ -1,4 +1,5 @@
 AUTHENTICATED = 'authenticated'
+SUPER_USER = 'su'
 
 CAN_LIST_CLINICS = 'list-clinics'
 CAN_VIEW_CLINICS = 'view-clinics'
