@@ -79,7 +79,9 @@ class ClinicRegistrationHandler(BaseSubmissionHandler):
 
         state_args = {'name': map_data['state_name']}
 
-        state = State(State.name == state_args['name'], **state_args)
+        state = State.get_or_create(
+            State.name == state_args['name'],
+            **state_args)
 
         municipality_args = {'name': map_data['municipality_name'],
                              'parent': state}

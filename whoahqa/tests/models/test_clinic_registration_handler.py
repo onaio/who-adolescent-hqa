@@ -49,4 +49,8 @@ class TestClinicRegistrationHandler(TestBase):
         # we expect a user_id and clinic name
         self.assertEqual(
             parsed_data,
-            ("2", "New Kakamega Clinic", "1A2B"))
+            {'municipality_name': 'Brasilia',
+             'clinic_code': '1A2B',
+             'user_id': '2',
+             'clinic_name': 'New Kakamega Clinic',
+             'state_name': 'Acre'})

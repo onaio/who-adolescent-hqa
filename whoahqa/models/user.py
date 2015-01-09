@@ -16,6 +16,7 @@ from sqlalchemy.orm import (
     synonym,
 )
 
+from whoahqa.constants import groups
 from whoahqa.models import (
     Base,
     BaseModelFactory,
@@ -140,7 +141,15 @@ class OnaUser(Base):
             ona_user = OnaUser.get(OnaUser.username == username)
             ona_user.refresh_token = refresh_token
         except NoResultFound:
+            # By Default, all new users are in the user group
+            group_criteria = Group.name == groups.USER
+            group_params = {'name': groups.USER}
+            user_group = Group.get_or_create(
+                group_criteria,
+                **group_params)
+
             user = User()
+            user.group = user_group
             ona_user = OnaUser(username=username, refresh_token=refresh_token)
             ona_user.user = user
         DBSession.add(ona_user)
