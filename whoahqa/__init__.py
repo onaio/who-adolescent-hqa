@@ -56,10 +56,8 @@ def main(global_config, **settings):
     config.set_authorization_policy(ACLAuthorizationPolicy())
     config.set_default_permission(perms.AUTHENTICATED)
 
-    # add .user to requests and cache it with reify
-    config.add_request_method(get_request_user, 'ona_user', reify=True)
-    config.add_request_method(can_view_clinics, 'can_view_clinics', reify=True)
-    config.add_request_method(can_list_clinics, 'can_list_clinics', reify=True)
+    # Add request object helpers
+    add_request_helpers(config)
 
     # setup the hashid salt
     hashid._salt = settings['hashid_salt']
@@ -107,6 +105,13 @@ def includeme(config):
     config.add_route('periods', '/reporting-periods/*traverse',
                      factory=ReportingPeriodFactory)
     config.scan()
+
+
+def add_request_helpers(config):
+    # add .user to requests and cache it with reify
+    config.add_request_method(get_request_user, 'ona_user', reify=True)
+    config.add_request_method(can_view_clinics, 'can_view_clinics', reify=True)
+    config.add_request_method(can_list_clinics, 'can_list_clinics', reify=True)
 
 
 def setup_development_data():
