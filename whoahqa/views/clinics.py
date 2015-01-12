@@ -225,3 +225,14 @@ class ClinicViews(object):
 
         return HTTPFound(
             self.request.route_url('clinics', traverse=(clinic.id, period.id)))
+
+    @view_config(
+        name='manage',
+        renderer='clinics_list.jinja2',
+        request_method='GET',
+        permission=perms.CAN_LIST_CLINICS)
+    def manage_clinics(self):
+        clinics = Clinic.all()
+        return {
+            'clinics': clinics
+        }

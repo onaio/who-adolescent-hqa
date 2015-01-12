@@ -123,7 +123,8 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                         </a>
                      </li>
                      <li>
-                        <a href="">{{gettext('Manage Clinics')}}</a>
+                        <a href="{{ request.route_url('clinics', traverse=('manage')) }}">
+                        {{gettext('Manage Clinics')}}</a>
                      </li>
                    {% endif %}
                    {% if request.can_view_clinics %}
@@ -132,6 +133,8 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                            {{ gettext('My Clinics') }}
                         </a>
                       </li>
+                   {% endif %}
+                   {% if request.can_list_clinics %}
                       <li>
                         <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
                           {{ gettext('Unassigned Clinics') }}

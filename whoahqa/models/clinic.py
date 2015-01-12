@@ -386,7 +386,9 @@ class Clinic(Base):
 
 class ClinicFactory(BaseModelFactory):
     __acl__ = [
-        (Allow, groups.MUNICIPALITY_MANAGER, ALL_PERMISSIONS),
+        (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_LIST_CLINICS),
+        (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_ASSESS_CLINICS),
+        (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_EDIT_CLINICS),
         (Allow, groups.CLINIC_MANAGER, perms.CAN_VIEW_CLINICS)
     ]
 
