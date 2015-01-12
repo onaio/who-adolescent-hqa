@@ -75,6 +75,21 @@ class TestBase(unittest.TestCase):
         DBSession.remove()
         testing.tearDown()
 
+    def _create_user(self, username):
+        user_group = Group(name="user")
+
+        user = User()
+        user.group = user_group
+
+        ona_user = OnaUser(username=username,
+                           user=user,
+                           refresh_token="1239khyackas")
+
+        with transaction.manager:
+            DBSession.add(ona_user)
+
+        return ona_user
+
     def setup_test_data(self):
         su_group = Group(name=groups.SUPER_USER)
         clinic_managers_group = Group(name=groups.MUNICIPALITY_MANAGER)
