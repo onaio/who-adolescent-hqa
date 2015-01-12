@@ -1,6 +1,7 @@
 from sqlalchemy.orm.exc import NoResultFound
 from passlib.context import CryptContext
-from pyramid.security import Authenticated
+from pyramid.security import (
+    Authenticated)
 
 from whoahqa.constants import permissions, groups
 
@@ -18,7 +19,7 @@ GROUP_PERMISSIONS = {
                                   permissions.CAN_ASSESS_CLINICS,
                                   permissions.CAN_VIEW_MUNICIPALITY],
     groups.USER: [Authenticated],
-    groups.SUPER_USER: [permissions.SUPER_USER]
+    groups.SUPER_USER: []
 }
 
 
