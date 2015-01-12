@@ -1,5 +1,6 @@
 from pyramid.security import (
     Allow,
+    ALL_PERMISSIONS
 )
 
 from sqlalchemy import (
@@ -18,7 +19,7 @@ from sqlalchemy.orm import (
     relationship)
 
 from whoahqa.constants import characteristics as constants
-from whoahqa.constants import permissions as perms
+from whoahqa.constants import permissions as perms, groups
 from whoahqa.models import (
     Base,
     BaseModelFactory,
@@ -384,7 +385,10 @@ class Clinic(Base):
 
 
 class ClinicFactory(BaseModelFactory):
-    __acl__ = []
+    __acl__ = [
+        (Allow, groups.MUNICIPALITY_MANAGER, ALL_PERMISSIONS),
+        (Allow, groups.CLINIC_MANAGER, perms.CAN_VIEW_CLINICS)
+    ]
 
     def __getitem__(self, item):
         # try to retrieve the clinic whose id matches item

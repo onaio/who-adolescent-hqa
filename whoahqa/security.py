@@ -24,14 +24,16 @@ GROUP_PERMISSIONS = {
 
 def group_finder(userid, request):
     from whoahqa.models import User
+
+    principals = []
+    principals.append("u:{}".format(userid))
     try:
         user = User.get(User.id == userid)
     except NoResultFound:
         return None
     else:
-        principals = []
         if user.group:
-            principals = GROUP_PERMISSIONS.get(user.group.name, [])
+            principals.append(user.group.name)
+            principals.extend(GROUP_PERMISSIONS.get(user.group.name, []))
 
-        principals.append("u:{}".format(userid))
         return principals
