@@ -13,6 +13,7 @@ from whoahqa.models import (
     user_clinics,
     OnaUser,
     Clinic,
+    Municipality,
     ReportingPeriod,
 )
 from whoahqa.views import (
@@ -53,9 +54,10 @@ class TestClinicViews(IntegrationTestBase):
         super(TestClinicViews, self).setUp()
         self.request = testing.DummyRequest()
         self.clinic_views = ClinicViews(self.request)
+        self.setup_test_data()
+        self._create_municipality("Brazilia")
 
     def test_unassigned_clinics_view(self):
-        self.setup_test_data()
         response = self.clinic_views.unassigned()
 
         # we should only have Clinic B in the response
@@ -71,7 +73,6 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(response['search_term'], "Clinic B")
 
     def test_assign_view(self):
-        self.setup_test_data()
         count = DBSession.query(user_clinics).count()
         self.assertEqual(count, 1)
 
@@ -90,7 +91,6 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(count, 2)
 
     def test_show(self):
-        self.setup_test_data()
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.id == 1)
         period.__parent__ = clinic
@@ -104,7 +104,6 @@ class TestClinicViews(IntegrationTestBase):
                 ("id", "description", "number"), constants.CHARACTERISTICS))
 
     def test_show_raises_bad_request_if_clinic_is_not_assigned(self):
-        self.setup_test_data()
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.name == "Clinic B")
         period.__parent__ = clinic
@@ -112,7 +111,6 @@ class TestClinicViews(IntegrationTestBase):
         self.assertRaises(HTTPBadRequest, self.clinic_views.show)
 
     def test_list_redirects_when_user_has_no_permissions(self):
-        self.setup_test_data()
         self.request.ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         self.config.testing_securitypolicy(
             userid=2, permissive=False)
@@ -128,7 +126,6 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(response['search_term'], "Clinic B")
 
     def test_show_form(self):
-        self.setup_test_data()
         params = MultiDict({'form': constants.ADOLESCENT_CLIENT})
         self.request.GET = params
         with HTTMock(fetch_survey_form_url):
@@ -138,14 +135,12 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(response.location, WEBFORM_URL)
 
     def test_show_form_raises_bad_request_for_bad_form(self):
-        self.setup_test_data()
         params = MultiDict({'form': constants.ADOLESCENT_CLIENT})
         self.request.GET = params
         with HTTMock(fetch_non_existent_survey_form_url):
             self.assertRaises(HTTPBadRequest, self.clinic_views.show_form)
 
     def test_register_clinic(self):
-        self.setup_test_data()
         self.request.ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         with HTTMock(enketo_edit_url_mock):
             response = self.clinic_views.register_clinic()
@@ -160,7 +155,6 @@ class TestClinicViews(IntegrationTestBase):
             self.request.override_renderer, '_clinics_table.jinja2')
 
     def test_characteristics_list(self):
-        self.setup_test_data()
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.id == 1)
         period.__parent__ = clinic
@@ -181,7 +175,6 @@ class TestClinicViews(IntegrationTestBase):
                          constants.CHARACTERISTIC_INDICATOR_MAPPING)
 
     def test_select_characteristics(self):
-        self.setup_test_data()
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.id == 1)
         period.__parent__ = clinic
@@ -199,7 +192,6 @@ class TestClinicViews(IntegrationTestBase):
             'clinics', traverse=(clinic.id, period.id)))
 
     def test_characteristics_list_with_characteristic_type_filter(self):
-        self.setup_test_data()
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.id == 1)
         period.__parent__ = clinic
@@ -223,6 +215,7 @@ class TestClinicViewsFunctional(FunctionalTestBase):
     def setUp(self):
         super(TestClinicViewsFunctional, self).setUp()
         self.setup_test_data()
+        self._create_municipality("Brazilia")
         self._create_user('john')
 
     def test_unassigned_clinics_view_allows_authenticated(self):
@@ -279,3 +272,19 @@ class TestClinicViewsFunctional(FunctionalTestBase):
         headers = self._login_user('john')
         response = self.testapp.get(url, headers=headers, status=403)
         self.assertEqual(response.status_code, 403)
+
+    def test_municipality_manager_can_edit_clinics(self):
+        municipality = Municipality.get(Municipality.name == "Brazilia")
+        clinic = Clinic.get(Clinic.code == '1A2B')
+        url = self.request.route_path('clinics',
+                                      traverse=(clinic.id, 'edit_clinic'))
+
+        headers = self._login_user('manager_a')
+        params = MultiDict({'municipality': municipality.id,
+                            'name': "New Clinic Name",
+                            'code': clinic.code})
+        response = self.testapp.post(url, params, headers=headers)
+        self.assertEqual(response.status_code, 200)
+        clinic = Clinic.get(Clinic.code == '1A2B')
+
+        self.assertEqual(clinic.name, "New Clinic Name")

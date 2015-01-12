@@ -1,7 +1,5 @@
 from pyramid.security import (
-    Allow,
-    ALL_PERMISSIONS
-)
+    Allow)
 
 from sqlalchemy import (
     Column,
@@ -89,6 +87,21 @@ class Clinic(Base):
     @property
     def is_assigned(self):
         return self.user is not None
+
+    @property
+    def appstruct(self):
+        return {
+            'name': self.name,
+            'code': self.code,
+            'municipality': self.municipality_id
+        }
+
+    def update(self, name, code, municipality):
+        self.name = name
+        self.code = code
+        self.municipality = municipality
+
+        self.save()
 
     @classmethod
     def get_unassigned(cls):

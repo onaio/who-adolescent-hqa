@@ -24,6 +24,7 @@ from whoahqa.models import (
     Group,
     OnaUser,
     Clinic,
+    Municipality,
     ReportingPeriod
 )
 
@@ -88,7 +89,11 @@ class TestBase(unittest.TestCase):
         with transaction.manager:
             DBSession.add(ona_user)
 
-        return ona_user
+    def _create_municipality(self, name="Test Municipality"):
+        municipality = Municipality(name=name)
+
+        with transaction.manager:
+            DBSession.add(municipality)
 
     def setup_test_data(self):
         su_group = Group(name=groups.SUPER_USER)
