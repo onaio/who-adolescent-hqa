@@ -220,15 +220,18 @@ class TestClinicViews(IntegrationTestBase):
 
 
 class TestClinicViewsFunctional(FunctionalTestBase):
-    def test_unassigned_clinics_view_allows_authenticated(self):
+    def setUp(self):
+        super(TestClinicViewsFunctional, self).setUp()
         self.setup_test_data()
+        self._create_user('john')
+
+    def test_unassigned_clinics_view_allows_authenticated(self):
         url = self.request.route_path('clinics', traverse=('unassigned',))
         headers = self._login_user('manager_b')
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
 
     def test_assign_clinic_view_allows_authenticated(self):
-        self.setup_test_data()
         clinics = Clinic.all()
         url = self.request.route_path('clinics', traverse=('assign',))
         params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
@@ -240,7 +243,6 @@ class TestClinicViewsFunctional(FunctionalTestBase):
             self.request.route_url('clinics', traverse=('unassigned',)))
 
     def test_clinic_show_allows_owner(self):
-        self.setup_test_data()
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.name == "Clinic A")
         url = self.request.route_path(
@@ -250,14 +252,12 @@ class TestClinicViewsFunctional(FunctionalTestBase):
         self.assertEqual(response.status_code, 200)
 
     def test_clinic_list_allows_super_user(self):
-        self.setup_test_data()
         url = self.request.route_path('clinics', traverse=())
         headers = self._login_user('super')
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
 
     def test_characteristics_returns_200(self):
-        self.setup_test_data()
         clinic = Clinic.get(Clinic.name == "Clinic A")
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         url = self.request.route_path(
@@ -265,3 +265,17 @@ class TestClinicViewsFunctional(FunctionalTestBase):
         headers = self._login_user('super')
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
+
+    def test_manage_clinics(self):
+        url = self.request.route_path(
+            'clinics', traverse=('manage'))
+        headers = self._login_user('super')
+        response = self.testapp.get(url, headers=headers)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_cannot_view_manage_clinics(self):
+        url = self.request.route_path(
+            'clinics', traverse=('manage'))
+        headers = self._login_user('john')
+        response = self.testapp.get(url, headers=headers, status=403)
+        self.assertEqual(response.status_code, 403)
