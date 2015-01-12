@@ -1,5 +1,12 @@
 <div id="sample_1_wrapper" class="dataTables_wrapper form-inline"
      role="grid">
+  <div class="table-toolbar">
+      <div class="btn-group">
+          <a id="sample_editable_1_new" class="btn btn-primary" href="{{ request.route_url('clinics',  traverse=('register')) }}">
+              {{ gettext('Register a Clinic') }} <i class="icon-plus"></i>
+          </a>
+      </div>
+  </div>
   <div class="">
     <table class="table table-striped table-bordered table-hover" id="sample_1">
       <thead>
