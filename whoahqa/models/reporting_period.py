@@ -1,9 +1,14 @@
+from pyramid.security import (
+    Allow,
+    ALL_PERMISSIONS)
+
 from sqlalchemy import (
     Column,
     Integer,
     String,
     Date
 )
+from whoahqa.constants import groups, permissions as perms
 from whoahqa.models import Base, BaseModelFactory
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -17,6 +22,11 @@ class ReportingPeriod(Base):
 
 
 class ReportingPeriodFactory(BaseModelFactory):
+    __acl__ = [
+        (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
+        (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_CREATE_PERIOD),
+        (Allow, groups.CLINIC_MANAGER, perms.CAN_LIST_CLINICS)
+    ]
 
     def __getitem__(self, item):
         try:
