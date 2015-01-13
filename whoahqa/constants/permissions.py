@@ -8,7 +8,7 @@ CAN_EDIT_CLINICS = 'edit-clinics'
 
 # Period permissions
 
-CAN_CREATE_PERIOD = 'can-create-period'
+CAN_CREATE_PERIOD = 'create-period'
 
 # Municipality Manager Permissions
 CAN_VIEW_MUNICIPALITY = 'view-municipality'
