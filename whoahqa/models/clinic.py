@@ -17,7 +17,7 @@ from sqlalchemy.orm import (
     relationship)
 
 from whoahqa.constants import characteristics as constants
-from whoahqa.constants import permissions as perms, groups
+from whoahqa.constants import permissions as perms
 from whoahqa.models import (
     Base,
     BaseModelFactory,
@@ -398,12 +398,6 @@ class Clinic(Base):
 
 
 class ClinicFactory(BaseModelFactory):
-    __acl__ = [
-        (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_LIST_CLINICS),
-        (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_ASSESS_CLINICS),
-        (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_EDIT_CLINICS),
-        (Allow, groups.CLINIC_MANAGER, perms.CAN_VIEW_CLINICS)
-    ]
 
     def __getitem__(self, item):
         # try to retrieve the clinic whose id matches item

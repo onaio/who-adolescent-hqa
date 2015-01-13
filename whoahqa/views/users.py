@@ -20,7 +20,7 @@ class UserViews(object):
 
     @view_config(name='clinics',
                  renderer='user_clinics.jinja2',
-                 permission=perms.CAN_VIEW_CLINICS,
+                 permission=perms.CAN_LIST_CLINICS,
                  context=ReportingPeriod)
     def clinics(self):
         period = self.request.context
@@ -74,7 +74,7 @@ class UserViews(object):
 
     @view_config(name='select-period',
                  renderer='reporting_period_select.jinja2',
-                 permission=perms.CAN_VIEW_CLINICS,
+                 permission=perms.AUTHENTICATED,
                  context=User)
     def select_reporting_period(self):
         user = self.request.context
