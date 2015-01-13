@@ -282,4 +282,3 @@ class ClinicViews(object):
             'form': form,
             'clinic': clinic
         }
-
