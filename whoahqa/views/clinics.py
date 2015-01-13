@@ -118,8 +118,6 @@ class ClinicViews(object):
         return {
             'period': period,
             'clinic': clinic,
-            'client_tools': tuple_to_dict_list(
-                ("id", "name"), constants.CLIENT_TOOLS),
             'characteristics': tuple_to_dict_list(
                 ("id", "description", "number"), constants.CHARACTERISTICS),
             'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAMES,
@@ -281,4 +279,18 @@ class ClinicViews(object):
         return {
             'form': form,
             'clinic': clinic
+        }
+
+    @view_config(
+        name='assess',
+        renderer='clinics_assess.jinja2',
+        request_method='GET',
+        permission=perms.CAN_ASSESS_CLINICS)
+    def assess_clinics(self):
+        clinics = Clinic.all()
+        return {
+            'clinics': clinics,
+            'client_tools': tuple_to_dict_list(
+                ("id", "name"), constants.CLIENT_TOOLS),
+            'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAMES,
         }
