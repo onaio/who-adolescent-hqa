@@ -1,5 +1,12 @@
 <div id="sample_1_wrapper" class="dataTables_wrapper form-inline"
      role="grid">
+  <div class="table-toolbar">
+      <div class="btn-group">
+          <a id="sample_editable_1_new" class="btn btn-primary" href="{{ request.route_url('clinics',  traverse=('register')) }}">
+              {{ gettext('Register a Clinic') }} <i class="icon-plus"></i>
+          </a>
+      </div>
+  </div>
   <div class="">
     <table class="table table-striped table-bordered table-hover" id="sample_1">
       <thead>
@@ -10,7 +17,7 @@
           <th>{{ gettext('Name') }}</th>
           <th>{{ gettext('Clinic Code') }}</th>
           <th>{{ gettext('Created') }}</th>
-          <th> </th>
+          <th>{{gettext('Actions')}}</th>
         </tr>
       </thead>
 
@@ -29,8 +36,10 @@
           </td>
           <td class=" ">{{ clinic.code }}</td>
           <td class="center ">{{ clinic.date_created.strftime('%d %b %Y') }}</td>
-          <td class=" "><span
-              class="label label-sm label-success"> </span>
+          <td class=" ">
+            <a href="{{request.route_url('clinics', traverse=(clinic.user.id, 'edit_clinic'))}}" class="btn btn-default">
+              {{gettext('Edit')}}
+            </a>
           </td>
         </tr>
       {% endfor %}

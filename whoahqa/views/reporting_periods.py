@@ -4,6 +4,7 @@ from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config, view_defaults
 from deform import Form, ValidationFailure
 
+from whoahqa.constants import permissions as perms
 from whoahqa.utils import translation_string_factory as _
 from whoahqa.models import DBSession, ReportingPeriod
 from whoahqa.forms import ReportingPeriodForm
@@ -15,7 +16,7 @@ class ReportingPeriodViews(BaseClassViews):
 
     @view_config(
         name='',
-        permission='list',
+        permission=perms.CAN_LIST_CLINICS,
         renderer='reporting_periods_list.jinja2')
     def list(self):
         periods = ReportingPeriod.all()
@@ -23,7 +24,7 @@ class ReportingPeriodViews(BaseClassViews):
 
     @view_config(
         name='new',
-        permission='create',
+        permission=perms.CAN_CREATE_PERIOD,
         renderer='reporting_periods_create.jinja2')
     def create(self):
         form = Form(

@@ -1,5 +1,7 @@
 import uuid
 
+from deform import Form, ValidationFailure, Button
+
 from pyramid.security import (
     has_permission,
 )
@@ -15,15 +17,22 @@ from pyenketo import (
     Http404,
 )
 
-from whoahqa.utils import enketo
+from sqlalchemy.orm.exc import NoResultFound
+
+from whoahqa.utils import (
+    enketo,
+    translation_string_factory as _)
 from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
+
 from whoahqa.utils import tuple_to_dict_list, filter_dict_list_by_attr
 from whoahqa.models import (
     ClinicFactory,
     Clinic,
+    Municipality,
     ReportingPeriod,
 )
+from whoahqa.forms import ClinicForm
 
 
 @view_defaults(route_name='clinics')
@@ -38,7 +47,9 @@ class ClinicViews(object):
     def list(self):
         # if the user doesnt have permissions to list all clinics,
         # redirect to his own clinics
-        if not has_permission(perms.LIST, self.request.context, self.request):
+        if not has_permission(perms.CAN_LIST_CLINICS,
+                              self.request.context,
+                              self.request):
             return HTTPFound(
                 self.request.route_url(
                     'users', traverse=(
@@ -94,7 +105,7 @@ class ClinicViews(object):
     @view_config(name='',
                  request_method='GET',
                  context=ReportingPeriod,
-                 permission=perms.SHOW,
+                 permission=perms.CAN_VIEW_CLINICS,
                  renderer='clinics_show.jinja2')
     def show(self):
         period = self.request.context
@@ -154,7 +165,7 @@ class ClinicViews(object):
 
     @view_config(name='characteristics',
                  request_method='GET',
-                 permission=perms.SHOW,
+                 permission=perms.CAN_VIEW_CLINICS,
                  context=ReportingPeriod,
                  renderer='clinics_characteristics_list.jinja2')
     def characteristics_list(self):
@@ -223,3 +234,51 @@ class ClinicViews(object):
 
         return HTTPFound(
             self.request.route_url('clinics', traverse=(clinic.id, period.id)))
+
+    @view_config(
+        name='manage',
+        renderer='clinics_list.jinja2',
+        request_method='GET',
+        permission=perms.CAN_LIST_CLINICS)
+    def manage_clinics(self):
+        clinics = Clinic.all()
+        return {
+            'clinics': clinics
+        }
+
+    @view_config(
+        name='edit_clinic',
+        renderer='clinics_edit.jinja2',
+        context=Clinic,
+        permission=perms.CAN_EDIT_CLINICS)
+    def edit_clinics(self):
+        clinic = self.request.context
+
+        form = Form(
+            ClinicForm().bind(
+                request=self.request,
+                clinic=clinic),
+            button=('Save', Button(name='cancel', type='button')),
+            appstruct=clinic.appstruct)
+
+        if self.request.method == 'POST':
+            data = self.request.POST.items()
+            try:
+                values = form.validate(data)
+            except ValidationFailure:
+                pass
+            else:
+                try:
+                    municipality = Municipality.get(
+                        Municipality.id == values.get('municipality'))
+                    clinic.update(values.get('name'),
+                                  values.get('code'),
+                                  municipality)
+                except NoResultFound:
+                    self.request.session.flash(
+                        _("Cannot find selected municipality."), "error")
+
+        return {
+            'form': form,
+            'clinic': clinic
+        }

@@ -175,15 +175,7 @@ def oauth_callback(request):
             headers = remember(request, user_id)
 
             # TODO: redirect to `came_from` url
-            return HTTPFound(
-                request.route_url(
-                    'users',
-                    traverse=(ona_user.user.id, 'select-period'),
-                    _query={
-                        'came_from': request.route_path(
-                            'users', traverse=(
-                                ona_user.user.id, '{period_id}', 'clinics'))}),
-                headers=headers)
+            return HTTPFound(request.route_url('default'), headers=headers)
 
     request.session.flash(
         u"Failed to login, please try again", 'error')

@@ -12,7 +12,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql.expression import desc
 
-from whoahqa.constants import permissions as perms
+from whoahqa.constants import permissions as perms, groups
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
@@ -60,8 +60,15 @@ Base = declarative_base(cls=BaseModel)
 
 class RootFactory(object):
     __acl__ = [
-        (Allow, 'g:su', ALL_PERMISSIONS),
-        (Allow, Authenticated, perms.AUTHENTICATED)
+        (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
+        (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_CREATE_PERIOD),
+        (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_LIST_CLINICS),
+        (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_VIEW_CLINICS),
+        (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_ASSESS_CLINICS),
+        (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_EDIT_CLINICS),
+        (Allow, groups.CLINIC_MANAGER, perms.CAN_LIST_CLINICS),
+        (Allow, groups.CLINIC_MANAGER, perms.CAN_VIEW_CLINICS),
+        (Allow, Authenticated, perms.AUTHENTICATED),
     ]
 
     def __init__(self, request):

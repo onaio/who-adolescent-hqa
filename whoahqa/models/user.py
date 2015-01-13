@@ -12,10 +12,12 @@ from sqlalchemy import (
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.schema import PrimaryKeyConstraint
 from sqlalchemy.orm import (
+    backref,
     relationship,
     synonym,
 )
 
+from whoahqa.constants import groups
 from whoahqa.models import (
     Base,
     BaseModelFactory,
@@ -45,7 +47,7 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     clinics = relationship("Clinic", secondary=user_clinics)
-    groups = relationship("Group", secondary=user_groups)
+    group = relationship("Group", secondary=user_groups, uselist=False)
 
     def get_clinics(self):
         from whoahqa.models import Clinic
@@ -75,6 +77,12 @@ class User(Base):
             period.__parent__ = self
             period.__name__ = item
             return period
+
+    @property
+    def appstruct(self):
+        return {
+            'group': self.group
+        }
 
 
 class UserProfile(Base):
@@ -117,6 +125,9 @@ class Group(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
 
+    def __str__(self):
+        return self.name
+
 
 class OnaUser(Base):
     __tablename__ = 'ona_users'
@@ -124,7 +135,7 @@ class OnaUser(Base):
                      autoincrement=False)
     username = Column(String(255), nullable=False, unique=True)
     refresh_token = Column(String(255), nullable=False)
-    user = relationship('User')
+    user = relationship('User', backref=backref('ona_user', uselist=False))
 
     @classmethod
     def get_or_create_from_api_data(cls, user_data, refresh_token):
@@ -137,11 +148,37 @@ class OnaUser(Base):
             ona_user = OnaUser.get(OnaUser.username == username)
             ona_user.refresh_token = refresh_token
         except NoResultFound:
+            # By Default, all new users are in the user group
+            group_criteria = Group.name == groups.USER
+            group_params = {'name': groups.USER}
+            user_group = Group.get_or_create(
+                group_criteria,
+                **group_params)
+
             user = User()
+            user.group = user_group
             ona_user = OnaUser(username=username, refresh_token=refresh_token)
             ona_user.user = user
         DBSession.add(ona_user)
         return ona_user
+
+    def __str__(self):
+        return self.username
+
+    @property
+    def group(self):
+        return self.user.group.name
+
+    def update(self, group_name):
+        group_criteria = Group.name == group_name
+        group_params = {'name': group_name}
+        group = Group.get_or_create(
+            group_criteria,
+            **group_params)
+
+        self.user.group = group
+
+        self.save()
 
 
 class UserFactory(BaseModelFactory):

@@ -20,7 +20,7 @@ class UserViews(object):
 
     @view_config(name='clinics',
                  renderer='user_clinics.jinja2',
-                 permission=perms.LIST_USER_CLINICS,
+                 permission=perms.CAN_LIST_CLINICS,
                  context=ReportingPeriod)
     def clinics(self):
         period = self.request.context
@@ -40,7 +40,7 @@ class UserViews(object):
 
     @view_config(name='summary',
                  renderer='clinics_score_summary.jinja2',
-                 permission=perms.LIST_USER_CLINICS,
+                 permission=perms.CAN_VIEW_CLINICS,
                  context=User)
     def clinics_score_summary(self):
         user = self.request.context
@@ -59,7 +59,7 @@ class UserViews(object):
         }
 
     @view_config(name='clinics',
-                 permission=perms.LIST_USER_CLINICS,
+                 permission=perms.CAN_VIEW_CLINICS,
                  context=User)
     def reporting_period_redirect(self):
         user = self.request.context
@@ -74,7 +74,7 @@ class UserViews(object):
 
     @view_config(name='select-period',
                  renderer='reporting_period_select.jinja2',
-                 permission=perms.LIST_USER_CLINICS,
+                 permission=perms.AUTHENTICATED,
                  context=User)
     def select_reporting_period(self):
         user = self.request.context
