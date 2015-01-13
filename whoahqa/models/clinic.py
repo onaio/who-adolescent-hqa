@@ -1,6 +1,5 @@
 from pyramid.security import (
-    Allow,
-)
+    Allow)
 
 from sqlalchemy import (
     Column,
@@ -13,7 +12,9 @@ from sqlalchemy import (
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql import select
 from sqlalchemy.schema import PrimaryKeyConstraint
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import (
+    backref,
+    relationship)
 
 from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
@@ -51,11 +52,20 @@ class Clinic(Base):
                           server_default=func.now(), nullable=False)
     user = relationship("User", secondary=user_clinics, uselist=False)
 
+    municipality_id = Column(Integer, ForeignKey('locations.id'),
+                             nullable=True)
+
+    municipality = relationship("Municipality",
+                                backref=backref('clinics', order_by=id),
+                                primaryjoin="and_(\
+                                    Clinic.municipality_id == Location.id)")
+
     @property
     def __acl__(self):
         acl = []
         if self.user is not None:
-            acl.append((Allow, "u:{}".format(self.user.id), perms.SHOW))
+            acl.append((Allow, "u:{}".format(self.user.id),
+                        perms.CAN_VIEW_CLINICS))
         return acl
 
     def __getitem__(self, item):
@@ -77,6 +87,21 @@ class Clinic(Base):
     @property
     def is_assigned(self):
         return self.user is not None
+
+    @property
+    def appstruct(self):
+        return {
+            'name': self.name,
+            'code': self.code,
+            'municipality': self.municipality_id
+        }
+
+    def update(self, name, code, municipality):
+        self.name = name
+        self.code = code
+        self.municipality = municipality
+
+        self.save()
 
     @classmethod
     def get_unassigned(cls):
@@ -373,7 +398,6 @@ class Clinic(Base):
 
 
 class ClinicFactory(BaseModelFactory):
-    __acl__ = []
 
     def __getitem__(self, item):
         # try to retrieve the clinic whose id matches item

@@ -86,55 +86,65 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    
       <!-- BEGIN SIDEBAR -->
       <div class="page-sidebar navbar-collapse collapse">
-         <!-- BEGIN SIDEBAR MENU -->        
-         <ul class="page-sidebar-menu">
-            <li>
-               <form class="search-form search-form-sidebar" role="form">
-                  <div class="input-icon right">
-                     <i class="icon-search"></i>
-                     <input type="text" class="form-control input-medium input-sm" placeholder="Search...">
-                  </div>
-               </form>
-            </li>
-            <li>
-               <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+         <!-- BEGIN SIDEBAR MENU --> 
+         {% block sidebar_menu %}       
+            <ul class="page-sidebar-menu">
+               <li>
+                  <form class="search-form search-form-sidebar" role="form">
+                     <div class="input-icon right">
+                        <i class="icon-search"></i>
+                        <input type="text" class="form-control input-medium input-sm" placeholder="Search...">
+                     </div>
+                  </form>
+               </li>
+               <li>
+                  <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
 
-               <div class="clearfix"></div>
-               <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-            </li>
-            <li class="active last">
-               <a href="javascript:;">
-               <i class="icon-user-md"></i>
-               <span class="title">{{ gettext('Clinics') }}</span>
-               <span class="selected"></span>
-               <span class="arrow open"></span>
-               </a>
-              <ul class="sub-menu">
-                {% if request.can_list_clinics %}
-                  <li>
-                    <a href="{{ request.route_url('periods', traverse=()) }}">
-                      {{ gettext('Reporting Periods') }}
-                    </a>
-                  </li>
-                  <li>
-                     <a href="{{ request.route_url('clinics', traverse=()) }}">
-                        {{ gettext('All Clinics') }}
-                     </a>
-                  </li>
-                {% endif %}
-                <li>
-                  <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'select-period'), _query={'came_from': request.route_path('users', traverse=(request.ona_user.user_id, '{period_id}', 'clinics'))}) }}">
-                     {{ gettext('My Clinics') }}
+                  <div class="clearfix"></div>
+                  <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+               </li>
+               <li class="active last">
+                  <a href="javascript:;">
+                     <i class="icon-user-md"></i>
+                     <span class="title">{{request.ona_user.group | capitalize | replace("_", " ")}}</span>
+                     <span class="selected"></span>
+                     <span class="arrow open"></span>
                   </a>
-                </li>
-                <li>
-                  <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
-                    {{ gettext('Unassigned Clinics') }}
-                 </a>
-                </li>
-              </ul>
-            </li>
-         </ul>
+                 <ul class="sub-menu">
+                   {% if request.can_list_clinics %}
+                     <li>
+                       <a href="{{ request.route_url('periods', traverse=()) }}">
+                         {{ gettext('Scores') }}
+                       </a>
+                     </li>
+                     <li>
+                        <a href="{{ request.route_url('clinics', traverse=()) }}">
+                           {{ gettext('Assessment Surveys') }}
+                        </a>
+                     </li>
+                     <li>
+                        <a href="{{ request.route_url('clinics', traverse=('manage')) }}">
+                        {{gettext('Manage Clinics')}}</a>
+                     </li>
+                   {% endif %}
+                   {% if request.can_view_clinics %}
+                      <li>
+                        <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'select-period'), _query={'came_from': request.route_path('users', traverse=(request.ona_user.user_id, '{period_id}', 'clinics'))}) }}">
+                           {{ gettext('My Clinics') }}
+                        </a>
+                      </li>
+                   {% endif %}
+                   {% if request.can_list_clinics %}
+                      <li>
+                        <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
+                          {{ gettext('Unassigned Clinics') }}
+                       </a>
+                      </li>
+                   {% endif %}
+                 </ul>
+               </li>
+            </ul>
+         {% endblock %}
          <!-- END SIDEBAR MENU -->
       </div>
       <!-- END SIDEBAR -->

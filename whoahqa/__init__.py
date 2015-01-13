@@ -9,6 +9,7 @@ from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from sqlalchemy import engine_from_config
 
 from whoahqa.constants import permissions as perms
+from whoahqa.constants import groups
 from utils import hashid, enketo, format_date_for_locale
 from whoahqa.security import group_finder, pwd_context
 from whoahqa.models import (
@@ -16,7 +17,9 @@ from whoahqa.models import (
     Base,
     Clinic,
     Group,
+    Municipality,
     OnaUser,
+    State,
     User,
     UserProfile,
     UserFactory,
@@ -27,7 +30,8 @@ from whoahqa.models import (
 )
 from whoahqa.views import (
     get_request_user,
-    can_list_clinics
+    can_list_clinics,
+    can_view_clinics
 )
 
 DEVELOPMENT_ENV = "development"
@@ -52,9 +56,8 @@ def main(global_config, **settings):
     config.set_authorization_policy(ACLAuthorizationPolicy())
     config.set_default_permission(perms.AUTHENTICATED)
 
-    # add .user to requests and cache it with reify
-    config.add_request_method(get_request_user, 'ona_user', reify=True)
-    config.add_request_method(can_list_clinics, 'can_list_clinics', reify=True)
+    # Add request object helpers
+    add_request_helpers(config)
 
     # setup the hashid salt
     hashid._salt = settings['hashid_salt']
@@ -91,6 +94,7 @@ def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('default', '/')
     config.add_route('locale', '/locale/')
+    config.add_route('admin', '/admin/*traverse', factory=UserFactory)
     config.add_route('auth', '/auth/{action}')
     config.add_route('users', '/users/*traverse',
                      factory=UserFactory)
@@ -103,6 +107,13 @@ def includeme(config):
     config.scan()
 
 
+def add_request_helpers(config):
+    # add .user to requests and cache it with reify
+    config.add_request_method(get_request_user, 'ona_user', reify=True)
+    config.add_request_method(can_view_clinics, 'can_view_clinics', reify=True)
+    config.add_request_method(can_list_clinics, 'can_list_clinics', reify=True)
+
+
 def setup_development_data():
     with transaction.manager:
         setup_users()
@@ -111,8 +122,8 @@ def setup_development_data():
 
 
 def setup_users():
-    group_criteria = Group.name == 'su'
-    group_params = {'name': 'su'}
+    group_criteria = Group.name == groups.SUPER_USER
+    group_params = {'name': groups.SUPER_USER}
     su_group = Group.get_or_create(
         group_criteria,
         **group_params)
@@ -136,17 +147,30 @@ def setup_users():
         OnaUser.username == "admin",
         **ona_user_params)
 
-    su.groups.append(su_group)
+    su.group = su_group
     profile.save()
     ona_user.save()
 
 
 def setup_clinics():
     # add a couple of clinics
+    state_params = {'name': "Acre"}
+    state = State.get_or_create(
+        State.name == state_params['name'],
+        **state_params)
+
+    municipality_params = {'name': 'Brasilia',
+                           'parent': state}
+
+    municipality = Municipality.get_or_create(
+        Municipality.name == municipality_params['name'],
+        **municipality_params)
+
     clinic_criteria = Clinic.name == "Clinic A"
     clinic_params = {
         "name": "Clinic A",
-        "code": "1A2B"}
+        "code": "1A2B",
+        "municipality": municipality}
     clinic = Clinic.get_or_create(
         clinic_criteria,
         **clinic_params)

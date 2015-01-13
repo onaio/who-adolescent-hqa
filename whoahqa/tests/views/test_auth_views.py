@@ -173,11 +173,12 @@ class TestForbiddenViewFunctional(FunctionalTestBase):
     def test_render_unauthorized_when_forbidden_and_authenticated(self):
         # TODO: move setup_test_data call to setUp
         self.setup_test_data()
+        self._create_user('john')
         clinic = Clinic.get(Clinic.name == "Clinic A")
         period = ReportingPeriod.get(ReportingPeriod.title == "Period 1")
         url = self.request.route_url(
             'clinics', traverse=(clinic.id, period.id))
-        headers = self._login_user('manager_b')
+        headers = self._login_user('john')
         response = self.testapp.get(url, headers=headers, status=403)
         self.assertEqual(response.status_code, 403)
 
@@ -200,20 +201,13 @@ class TestAuthFunctional(FunctionalTestBase):
             })
 
         # test that user is gotten or created
-        ona_user = OnaUser.get(OnaUser.username == 'user_one')
+        OnaUser.get(OnaUser.username == 'user_one')
 
         self.assertEqual(response.status_code, 302)
+
         self.assertEqual(
             response.location,
-            self.request.route_url(
-                'users',
-                traverse=(ona_user.user.id, 'select-period'),
-                _query={
-                    'came_from': self.request.route_path(
-                        'users', traverse=(
-                            ona_user.user.id, '{period_id}', 'clinics'))}))
-        response = response.follow()
-        self.assertEqual(response.status_code, 200)
+            self.request.route_url('default'))
 
         # check that we set the login header
         self.assertIn('Set-Cookie', response.headers)
