@@ -13,7 +13,8 @@ GROUPS = [groups.MUNICIPALITY_MANAGER]
 
 
 GROUP_PERMISSIONS = {
-    groups.MUNICIPALITY_MANAGER: [permissions.CAN_LIST_CLINICS,
+    groups.MUNICIPALITY_MANAGER: [permissions.CAN_CREATE_PERIOD,
+                                  permissions.CAN_LIST_CLINICS,
                                   permissions.CAN_VIEW_CLINICS,
                                   permissions.CAN_EDIT_CLINICS,
                                   permissions.CAN_ASSESS_CLINICS,

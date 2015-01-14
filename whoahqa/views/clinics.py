@@ -42,7 +42,7 @@ class ClinicViews(object):
 
     @view_config(name='',
                  context=ClinicFactory,
-                 renderer='clinics_list.jinja2',
+                 renderer='clinics_summary.jinja2',
                  request_method='GET')
     def list(self):
         # if the user doesnt have permissions to list all clinics,
@@ -66,9 +66,8 @@ class ClinicViews(object):
             clinics = Clinic.all()
 
         return {
-            'can_list_clinics': True,
             'clinics': clinics,
-            'search_term': search_term
+            'indicator_labels': dict(constants.INDICATOR_LABELS),
         }
 
     @view_config(name='unassigned',
@@ -118,8 +117,6 @@ class ClinicViews(object):
         return {
             'period': period,
             'clinic': clinic,
-            'client_tools': tuple_to_dict_list(
-                ("id", "name"), constants.CLIENT_TOOLS),
             'characteristics': tuple_to_dict_list(
                 ("id", "description", "number"), constants.CHARACTERISTICS),
             'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAMES,
@@ -281,4 +278,18 @@ class ClinicViews(object):
         return {
             'form': form,
             'clinic': clinic
+        }
+
+    @view_config(
+        name='assess',
+        renderer='clinics_assess.jinja2',
+        request_method='GET',
+        permission=perms.CAN_ASSESS_CLINICS)
+    def assess_clinics(self):
+        clinics = Clinic.all()
+        return {
+            'clinics': clinics,
+            'client_tools': tuple_to_dict_list(
+                ("id", "name"), constants.CLIENT_TOOLS),
+            'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAMES,
         }

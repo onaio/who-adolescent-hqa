@@ -1,0 +1,53 @@
+<div id="sample_1_wrapper" class="dataTables_wrapper form-inline"
+     role="grid">
+  <div class="">
+    <div class="row">
+      <div class="pull-left table-header">{{ gettext('Clinic Scores by Key Indicator') }}</div>
+    </div>
+    <table class="table scores-table scores-table-horizontal" id="sample_1">
+      <thead>
+        <tr role="row">
+          <th>{{ gettext('Name') }}</th>
+          {% for id, label in indicator_labels.iteritems() %}
+            <th>{{ gettext(label) }}</th> 
+          {% endfor %}
+        </tr>
+      </thead>
+
+      <tbody role="alert" aria-live="polite" aria-relevant="all">
+      {% for clinic in clinics %}
+        <tr class="gradeX odd">
+          <td>
+            {% if clinic.is_assigned %}
+              <a href="{{ request.route_url('users', traverse=(clinic.user.id, 'select-period'), _query={'came_from': request.route_path('clinics', traverse=(clinic.id, '{period_id}'))}) }}">
+                <strong>{{ clinic.name }}</strong>
+              </a>
+              <div>
+                {{ "CNES: " + clinic.code }}
+              </div>
+            {% else %}
+              {{ clinic.name }}
+              <div>
+                {{ clinic.code }}
+              </div>
+            {% endif %}
+          </td>
+          {% for id, label in indicator_labels.iteritems() %}
+            <td>
+                <div class="score-bar">
+                    <div class="elapsed" style="width: {{ clinic.get_all_key_indicator_scores()[id].average_score|round }}%"></div>
+                    <span class="score-msg">{{ clinic.get_all_key_indicator_scores()[id].average_score|round|int}}</span>
+                </div>
+            </td> 
+          {% endfor %}
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div>
+   {%if clinics|length == 0 %}
+    {{search_term}} {{ gettext('Not found.') }}
+  {% endif%}
+  </div>
+</div>
