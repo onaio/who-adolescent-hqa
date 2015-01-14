@@ -62,12 +62,10 @@
     color: #fff;
 }
 
-.char-header, .score-header {
+.char-header, .score-header, .table-header {
     font-size: 18px;
     color: #1175cb;
-    width: 16%;
     padding-left: 10px;
-
     background: #cde3f4; /* Old browsers */
     background: -moz-linear-gradient(left, #cde3f4 0%, #ffffff 97%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, right top, color-stop(0%,#cde3f4), color-stop(97%,#ffffff)); /* Chrome,Safari4+ */
@@ -78,11 +76,16 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3c1ea', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
 }
 
+.table-header {
+    margin-left: 15px;
+}
 .char-header {
     margin-left: 15px;
+    width: 16%;
 }
 .score-header {
     margin-right: 15px;
+    width: 16%;
 }
 
 .scores-table thead > tr > th, .scores-table > tbody > tr > td {
@@ -267,6 +270,17 @@
     border-bottom: 0px;
 }
 
+.scores-table-horizontal thead > tr > th {
+    border: 2px solid #cde3f4;
+}
+.scores-table-horizontal > tbody > tr > td {
+    border-top: 0px;
+    border-bottom: 0px;
+}
+.scores-table-horizontal > tbody > tr:last-child {
+    border-bottom: 2px solid #cde3f4;
+}
+
 .scores-table .table-striped > tbody > tr:nth-child(odd) > td, 
 .table-striped > tbody > tr:nth-child(odd) > th {
     background-color: #fff;
@@ -357,4 +371,23 @@ td.enclosed-table table tr:first-child td {
 }
 .navbar-nav > li > a.logout:hover {
     background: #1175cb;
+}
+
+/* scores bars  */
+.score-bar, .elapsed, .score-msg{
+    height:1.5em;
+}
+.score-bar{
+    position:relative;
+}
+.elapsed{
+    background-color:#1175cb;
+    float: left;
+    max-width: 75%;
+}
+
+.score-msg {
+    padding-left: 5px;
+    float: left;
+    color: #1175cb;
 }

@@ -1,0 +1,32 @@
+{% extends "base.jinja2" %}
+{% block title %}{{ gettext("Scores") }}{% endblock %}
+{% block page_title %} {{ self.title() }} {% endblock %}
+{% block breadcrumbs %}
+  <li>{{ self.page_title() }}</li>
+  <li><a href="#"> </a></li>
+{% endblock %}
+{% block content %}
+  <div class="row">
+    <div style="margin-left:0px; margin-bottom:5px;" class="row">
+        <div class="col-md-2 form-group">
+           <input id="search_term" name="search_term" type="text" class="form-control" placeholder="Search clinics..."/>
+        </div>
+    </div>
+    <div class="col-md-12">
+      {% block clinic_table %}
+        <form method="post" action="">
+            <div class="clinics_table">
+              {% include '_summary_scores_table.jinja2' %}
+            </div>
+        </form>
+      {% endblock %}
+    </div>
+  </div>
+{% endblock content %}
+{% block page_scripts %}
+  <script src="{{ request.static_url('whoahqa:static/scripts/custom.js') }}"></script>
+{% endblock %}
+{% block jquery_ready %}
+  {{ super() }}
+  Custom.filterClinicTable();
+{% endblock %}
