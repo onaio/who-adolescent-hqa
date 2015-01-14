@@ -22,6 +22,7 @@ from whoahqa.models import (
     User,
     UserSettings,
     Group,
+    Submission,
     OnaUser,
     Clinic,
     Municipality,
@@ -133,6 +134,18 @@ class TestBase(unittest.TestCase):
             DBSession.add_all(
                 [user_setting, su_ona_user, manager_a_ona_user,
                  manager_b_ona_user, clinic1, clinic2, reporting_period])
+
+    def create_submissions(self):
+        # make submissions
+        for i in range(6):
+            Submission.create_from_json(self.submissions[i])
+        transaction.commit()
+
+    def create_brazil_submissions(self):
+        # make submissions
+        for i in range(3):
+            Submission.create_from_json(self.brazil_submissions[i])
+        transaction.commit()
 
 
 class IntegrationTestBase(TestBase):
