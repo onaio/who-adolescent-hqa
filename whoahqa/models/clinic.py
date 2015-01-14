@@ -396,6 +396,10 @@ class Clinic(Base):
 
         return all_key_indicator_scores
 
+    def get_report(self, period):
+        from whoahqa.models import ClinicReport
+        return ClinicReport.get_or_generate(self, period)
+
 
 class ClinicFactory(BaseModelFactory):
 
