@@ -42,7 +42,7 @@ class ClinicViews(object):
 
     @view_config(name='',
                  context=ClinicFactory,
-                 renderer='clinics_list.jinja2',
+                 renderer='clinics_summary.jinja2',
                  request_method='GET')
     def list(self):
         # if the user doesnt have permissions to list all clinics,
@@ -66,9 +66,8 @@ class ClinicViews(object):
             clinics = Clinic.all()
 
         return {
-            'can_list_clinics': True,
             'clinics': clinics,
-            'search_term': search_term
+            'indicator_labels': dict(constants.INDICATOR_LABELS),
         }
 
     @view_config(name='unassigned',
