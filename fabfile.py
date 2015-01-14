@@ -24,7 +24,7 @@ def get_virtual_env_command(virtual_env_path):
         os.path.join(virtual_env_path, 'bin', 'activate'))
 
 
-def deploy(deployment="prod", branch="master", country=None):
+def deploy(deployment="prod", branch="master", country_characteristics=None):
     env.update(DEPLOYMENTS[deployment])
     virtual_env_command = get_virtual_env_command(env.virtual_env)
     with cd(env.project_dir):
@@ -35,7 +35,7 @@ def deploy(deployment="prod", branch="master", country=None):
         with prefix(virtual_env_command):
             run('pip install -r requirements.txt --allow-all-external')
             run('export WHOAHQA_COUNTRY_SETTING={}'.format(
-                country or env.get('country_characteristics')))
+                country_characteristics or env.get('country_characteristics')))
             run("python setup.py test -q")
             run("python setup.py install")
             run("rm -rf build")
