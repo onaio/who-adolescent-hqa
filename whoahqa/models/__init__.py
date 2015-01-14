@@ -13,6 +13,7 @@ from whoahqa.models.location import State  # noqa
 from whoahqa.models.clinic import Clinic  # noqa
 from whoahqa.models.clinic import ClinicCharacteristics  # noqa
 from whoahqa.models.clinic import ClinicFactory  # noqa
+from whoahqa.models.reports import ClinicReport  # noqa
 
 from whoahqa.models.handlers import BaseSubmissionHandler  # noqa
 from whoahqa.models.handlers import ClinicRegistrationHandler  # noqa
