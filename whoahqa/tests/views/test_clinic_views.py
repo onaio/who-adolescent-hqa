@@ -152,7 +152,7 @@ class TestClinicViews(IntegrationTestBase):
         ])
         self.clinic_views.list()
         self.assertEqual(
-            self.request.override_renderer, '_clinics_table.jinja2')
+            self.request.override_renderer, '_summary_scores_table.jinja2')
 
     def test_characteristics_list(self):
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')

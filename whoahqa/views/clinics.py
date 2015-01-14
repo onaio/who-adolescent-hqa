@@ -60,13 +60,14 @@ class ClinicViews(object):
         # TODO: change renderer only if its an xhr request
         search_term = self.request.GET.get('search')
         # get period
+        period = ReportingPeriod.newest()
+
         if search_term is not None:
             clinics = Clinic.filter_clinics(search_term, True)
             self.request.override_renderer = '_summary_scores_table.jinja2'
         else:
             clinics = Clinic.all()
             # ensure all clinic reports exist
-            period = ReportingPeriod.newest()
             [clinic.get_report(period) for clinic in clinics]
 
         return {
