@@ -20,7 +20,7 @@ class ClinicReport(Base):
     __tablename__ = 'clinic_reports'
     id = Column(Integer, primary_key=True)
     clinic_id = Column(Integer, ForeignKey('clinics.id'))
-    clinic = relationship('Clinics',
+    clinic = relationship('Clinic',
                           backref=backref('reports'))
 
     period_id = Column(Integer, ForeignKey('reporting_periods.id'))
@@ -28,7 +28,15 @@ class ClinicReport(Base):
 
     json_data = Column(JSON, nullable=False)
 
-    def get_report(self, clinic, period):
+    def generate_report_data(self):
+        self.json_data = self.clinic.get_all_key_indicator_scores()
+
+    def update(self):
+        self.generate_report_data()
+        self.save()
+
+    @classmethod
+    def get_or_generate(cls, clinic, period):
         """
         If report does not exist for requested reporting period,
         generate and cache it.
