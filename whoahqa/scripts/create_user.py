@@ -13,6 +13,7 @@ from whoahqa.security import pwd_context
 from whoahqa.models import (
     DBSession,
     Base,
+    Group,
     OnaUser,
     User,
     UserProfile,
@@ -38,8 +39,16 @@ def main(argv=sys.argv):
     Base.metadata.create_all(engine)
     username = argv[2]
     password = argv[3]
+    group = argv[4]
     with transaction.manager:
+        group_criteria = Group.name == group
+        group_params = {'name': group}
+        group = Group.get_or_create(
+            group_criteria,
+            **group_params)
+
         user = User()
+        user.group = group
         profile = UserProfile(
             user=user, username=username, password=password)
         ona_user_params = {
