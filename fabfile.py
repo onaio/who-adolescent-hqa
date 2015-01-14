@@ -33,6 +33,7 @@ def deploy(deployment="prod", branch="master", country_char=None):
     env.update(DEPLOYMENTS[deployment])
     virtual_env_command = get_virtual_env_command(env.virtual_env)
     with cd(env.project_dir):
+        run('git fetch')
         run("git checkout {branch}".format(branch=branch))
         run("git pull origin {branch}".format(branch=branch))
         run('find . -name "*.pyc" -exec rm -rf {} \;')
