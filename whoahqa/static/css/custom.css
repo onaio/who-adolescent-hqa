@@ -391,3 +391,7 @@ td.enclosed-table table tr:first-child td {
     float: left;
     color: #1175cb;
 }
+
+#assessment-portlet > .portlet-title {
+    height: auto;
+}
