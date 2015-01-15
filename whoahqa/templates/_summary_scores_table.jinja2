@@ -33,7 +33,7 @@
             {% endif %}
           </td>
           {% for id, label in indicator_labels.iteritems() %}
-          {% set key_indicators = clinic.get_report(period).get_key_indicators() %}
+          {% set key_indicators = clinic.key_indicators(period) %}
             <td>
                 <div class="score-bar">
                     <div class="elapsed" style="width: {{ key_indicators[id]|round }}%"></div>

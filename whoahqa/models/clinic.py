@@ -1,3 +1,4 @@
+from collections import defaultdict
 from pyramid.security import (
     Allow)
 
@@ -59,6 +60,7 @@ class Clinic(Base):
                                 backref=backref('clinics', order_by=id),
                                 primaryjoin="and_(\
                                     Clinic.municipality_id == Location.id)")
+    _cached_key_indicators = defaultdict(int)
 
     @property
     def __acl__(self):
@@ -396,9 +398,13 @@ class Clinic(Base):
 
         return all_key_indicator_scores
 
-    def get_report(self, period):
+    def key_indicators(self, period):
         from whoahqa.models import ClinicReport
-        return ClinicReport.get_or_generate(self, period)
+        if bool(self._cached_key_indicators) is False:
+            report = ClinicReport.get_or_generate(self, period)
+            self._cached_key_indicators = report.get_key_indicators()
+
+        return self._cached_key_indicators
 
 
 class ClinicFactory(BaseModelFactory):

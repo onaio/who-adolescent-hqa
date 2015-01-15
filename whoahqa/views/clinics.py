@@ -67,8 +67,6 @@ class ClinicViews(object):
             self.request.override_renderer = '_summary_scores_table.jinja2'
         else:
             clinics = Clinic.all()
-            # ensure all clinic reports exist
-            [clinic.get_report(period) for clinic in clinics]
 
         return {
             'clinics': clinics,
