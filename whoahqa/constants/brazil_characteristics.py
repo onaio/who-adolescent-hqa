@@ -162,6 +162,7 @@ CHARACTERISTIC = 'facility_info/HS_char'
 XFORM_ID = '_xform_id_string'
 USER_ID = 'user_id'
 CLINIC_NAME = 'facility_info/facility_name'
+PERIOD_IDENTIFIER = 'facility_info/reporting_period'
 
 MUNICIPALITY_IDENTIFIER = 'facility_info/municipality'
 STATE_IDENTIFIER = 'facility_info/state'

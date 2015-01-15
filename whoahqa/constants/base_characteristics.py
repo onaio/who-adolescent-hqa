@@ -587,5 +587,6 @@ CHARACTERISTIC = 'facility_info/HS_char'
 XFORM_ID = '_xform_id_string'
 USER_ID = 'user_id'
 CLINIC_NAME = 'clinic_name'
+PERIOD_IDENTIFIER = 'period'
 
 AVAILABLE_LANGUAGES = {'en': "English"}

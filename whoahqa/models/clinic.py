@@ -59,6 +59,7 @@ class Clinic(Base):
                                 backref=backref('clinics', order_by=id),
                                 primaryjoin="and_(\
                                     Clinic.municipality_id == Location.id)")
+    _cached_key_indicators = None
 
     @property
     def __acl__(self):
@@ -395,6 +396,14 @@ class Clinic(Base):
             )
 
         return all_key_indicator_scores
+
+    def key_indicators(self, period):
+        from whoahqa.models import ClinicReport
+        if self._cached_key_indicators is None:
+            report = ClinicReport.get_or_generate(self, period)
+            self._cached_key_indicators = report.get_key_indicators()
+
+        return self._cached_key_indicators
 
 
 class ClinicFactory(BaseModelFactory):

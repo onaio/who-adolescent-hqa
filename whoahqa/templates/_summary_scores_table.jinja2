@@ -33,10 +33,11 @@
             {% endif %}
           </td>
           {% for id, label in indicator_labels.iteritems() %}
+          {% set key_indicators = clinic.key_indicators(period) %}
             <td>
                 <div class="score-bar">
-                    <div class="elapsed" style="width: {{ clinic.get_all_key_indicator_scores()[id].average_score|round }}%"></div>
-                    <span class="score-msg">{{ clinic.get_all_key_indicator_scores()[id].average_score|round|int}}</span>
+                    <div class="elapsed" style="width: {{ key_indicators[id]|round }}%"></div>
+                    <span class="score-msg">{{ key_indicators[id]|round|int}}</span>
                 </div>
             </td> 
           {% endfor %}
