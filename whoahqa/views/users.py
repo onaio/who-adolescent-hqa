@@ -19,7 +19,7 @@ class UserViews(object):
         self.request = request
 
     @view_config(name='clinics',
-                 renderer='user_clinics.jinja2',
+                 renderer='clinics_summary.jinja2',
                  permission=perms.CAN_LIST_CLINICS,
                  context=ReportingPeriod)
     def clinics(self):
@@ -27,15 +27,10 @@ class UserViews(object):
         user = period.__parent__
         clinics = user.get_clinics()
 
-        key_indicators = [i for i, v in constants.KEY_INDICATORS]
-        key_indicator_char_map = tuple_to_dict_list(
-            ("id", "characteristics"), constants.KEY_INDICATORS)
         return {
-            'user': user,
             'period': period,
             'clinics': clinics,
-            'key_indicators': key_indicators,
-            'key_indicator_char_map': key_indicator_char_map
+            'indicator_labels': dict(constants.INDICATOR_LABELS)
         }
 
     @view_config(name='summary',

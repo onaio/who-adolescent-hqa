@@ -47,7 +47,7 @@ class ClinicViews(object):
     def list(self):
         # if the user doesnt have permissions to list all clinics,
         # redirect to his own clinics
-        if not has_permission(perms.CAN_LIST_CLINICS,
+        if not has_permission(perms.CAN_VIEW_MUNICIPALITY,
                               self.request.context,
                               self.request):
             return HTTPFound(
@@ -287,10 +287,16 @@ class ClinicViews(object):
     @view_config(
         name='assess',
         renderer='clinics_assess.jinja2',
-        request_method='GET',
-        permission=perms.CAN_ASSESS_CLINICS)
+        request_method='GET')
     def assess_clinics(self):
-        clinics = Clinic.all()
+        # redirect to his own clinics
+        if not has_permission(perms.CAN_ASSESS_CLINICS,
+                              self.request.context,
+                              self.request):
+            user = self.request.ona_user.user
+            clinics = user.get_clinics()
+        else:
+            clinics = Clinic.all()
         return {
             'clinics': clinics,
             'client_tools': tuple_to_dict_list(
