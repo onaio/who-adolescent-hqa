@@ -1,4 +1,3 @@
-import transaction
 import datetime
 import json
 
@@ -8,7 +7,6 @@ from whoahqa.models import (
     DBSession,
     OnaUser,
     Clinic,
-    Submission,
     ReportingPeriod,
     ClinicCharacteristics
 )
@@ -16,18 +14,6 @@ from whoahqa.tests import TestBase
 
 
 class TestClinic(TestBase):
-
-    def create_submissions(self):
-        # make submissions
-        for i in range(6):
-            Submission.create_from_json(self.submissions[i])
-        transaction.commit()
-
-    def create_brazil_submissions(self):
-        # make submissions
-        for i in range(3):
-            Submission.create_from_json(self.brazil_submissions[i])
-        transaction.commit()
 
     def test_assign_to_user(self):
         self.setup_test_data()
