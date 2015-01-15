@@ -1,0 +1,59 @@
+{% for clinic in clinics %}
+{% set responses_per_tool = clinic.get_num_responses_per_tool() %}
+    <div class="portlet">
+    <div class="portlet-title">
+        <a href="{{ request.route_url('users', traverse=(clinic.user.id, 'select-period'), _query={'came_from': request.route_path('clinics', traverse=(clinic.id, '{period_id}'))}) }}">
+            <strong>{{ clinic.name }}</strong>
+        </a>
+        <div>
+            {{ "CNES: " + clinic.code }}
+        </div>
+        <div class="tools">
+            <a class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="sample-frame-table">
+                <thead>
+                    <tr>
+                        <th class="col-md-6">{{ gettext('Stakeholder') }}</th>
+                        <th class="col-md-4">{{ gettext('Surveys done')}}</th>
+                        <th class="col-md-2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client_tool in client_tools %}
+                        <tr>
+                            <td>
+                                {{ gettext(client_tool.name) }}
+                            </td>
+                            <td>
+                                {{responses_per_tool[client_tool.id].responses}}
+                                of
+                                {{responses_per_tool[client_tool.id].sample_frame}}
+                            </td>
+                            <td>
+                                <a href="{{ request.route_url('clinics', traverse=('show_form'), _query=(('form', client_tool.id),)) }}">
+                                    <i class="pull-left icon-blue icon-plus-sign launch-form"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>{{ gettext('Total')}}</td>
+                        <td>
+                            {{responses_per_tool.values()|sum(attribute='responses')}}
+                            of
+                            {{responses_per_tool.values()|sum(attribute='sample_frame')}}
+                            </td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    </div>
+{% endfor %}
