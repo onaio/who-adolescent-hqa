@@ -10,7 +10,7 @@ from sqlalchemy import (
     func,
 )
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy.sql import select
+from sqlalchemy.sql import select, and_
 from sqlalchemy.schema import PrimaryKeyConstraint
 from sqlalchemy.orm import (
     backref,
@@ -126,6 +126,23 @@ class Clinic(Base):
                     user_clinics.columns.clinic_id.is_(None),
                     Clinic.name.ilike('%' + search_term + '%')).all()
         return clinics
+
+    def get_num_responses_per_tool(self):
+        clinic_submissions_table = Base.metadata.tables['clinic_submissions']
+        responses_per_tool = {}
+        for tool, sample_frame in \
+                constants.RECOMMENDED_SAMPLE_FRAMES.iteritems():
+            responses_per_tool[tool] = {
+                'sample_frame': sample_frame,
+                'responses': (
+                    DBSession.query(clinic_submissions_table).filter(
+                        and_(
+                            clinic_submissions_table.c.clinic_id == self.id,
+                            clinic_submissions_table.c.xform_id == tool))
+                    .distinct(clinic_submissions_table.c.submission_id)
+                    .count())
+            }
+        return responses_per_tool
 
     @classmethod
     def get_num_responses_per_characteristic_xform_id(cls, clinic_id):
