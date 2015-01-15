@@ -210,6 +210,16 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(response['characteristic_indicator_mapping'],
                          constants.CHARACTERISTIC_INDICATOR_MAPPING)
 
+    def test_access_clinics_view(self):
+        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+
+        self.request.method = 'GET'
+        self.request.ona_user = ona_user
+
+        response = self.clinic_views.assess_clinics()
+
+        self.assertEqual(len(response['clinics']), 1)
+
 
 class TestClinicViewsFunctional(FunctionalTestBase):
     def setUp(self):
