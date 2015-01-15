@@ -30,6 +30,7 @@ from whoahqa.models import (
 )
 from whoahqa.views import (
     get_request_user,
+    can_access_clinics,
     can_list_clinics,
     can_view_clinics,
     is_su_user
@@ -111,6 +112,8 @@ def includeme(config):
 def add_request_helpers(config):
     # add .user to requests and cache it with reify
     config.add_request_method(get_request_user, 'ona_user', reify=True)
+    config.add_request_method(
+        can_access_clinics, 'can_access_clinics', reify=True)
     config.add_request_method(can_view_clinics, 'can_view_clinics', reify=True)
     config.add_request_method(can_list_clinics, 'can_list_clinics', reify=True)
     config.add_request_method(is_su_user, 'is_su_user', reify=True)
