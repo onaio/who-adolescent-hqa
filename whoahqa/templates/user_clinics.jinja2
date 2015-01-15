@@ -1,6 +1,6 @@
 {% extends "base.jinja2" %}
 {% block title %}
-  {{ gettext("My Clinics")}}
+  {{ gettext("Scores")}}
 {% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
@@ -8,7 +8,7 @@
     <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'select-period'), _query={'came_from': request.route_path('users', traverse=(user.id, '{period_id}', 'clinics'))}) }}">
       {% trans %}Reporting Periods{% endtrans %}
     </a> <i class="icon-angle-right"></i></li>
-  <li>{% trans %}My Clinics{% endtrans %}</li>
+  <li>{% trans %}Scores{% endtrans %}</li>
 {% endblock %}
 {% block content %}
   <div class="row">
