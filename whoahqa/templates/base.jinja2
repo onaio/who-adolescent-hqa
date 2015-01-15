@@ -124,11 +124,15 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                          {{ gettext('Scores') }}
                        </a>
                      </li>
+                   {% endif %}
+                  {% if request.can_access_clinics %}
                      <li>
                         <a href="{{ request.route_url('clinics', traverse=('assess')) }}">
                            {{ gettext('Assessment Surveys') }}
                         </a>
                      </li>
+                  {% endif %}
+                  {% if request.can_list_clinics %}
                      <li>
                         <a href="{{ request.route_url('clinics', traverse=('manage')) }}">
                         {{gettext('Manage Clinics')}}</a>

@@ -37,3 +37,9 @@ def is_su_user(request):
     return has_permission(perms.SUPER_USER,
                           ClinicFactory(request),
                           request)
+
+
+def can_access_clinics(request):
+    return has_permission(perms.CAN_ASSESS_CLINICS,
+                          ClinicFactory(request),
+                          request)

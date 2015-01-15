@@ -287,16 +287,12 @@ class ClinicViews(object):
     @view_config(
         name='assess',
         renderer='clinics_assess.jinja2',
-        request_method='GET')
+        request_method='GET',
+        permission=perms.CAN_ASSESS_CLINICS)
     def assess_clinics(self):
-        # redirect to his own clinics
-        if not has_permission(perms.CAN_ASSESS_CLINICS,
-                              self.request.context,
-                              self.request):
-            user = self.request.ona_user.user
-            clinics = user.get_clinics()
-        else:
-            clinics = Clinic.all()
+        user = self.request.ona_user.user
+        clinics = user.get_clinics()
+
         return {
             'clinics': clinics,
             'client_tools': tuple_to_dict_list(
