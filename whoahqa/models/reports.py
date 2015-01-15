@@ -11,7 +11,8 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from whoahqa.constants import characteristics
 from whoahqa.models import (
-    Base)
+    Base,
+    DBSession)
 
 AVERAGE_SCORE_KEY = 'average_score'
 
@@ -35,24 +36,6 @@ class ClinicReport(Base):
         self.generate_report_data()
         self.save()
 
-    @classmethod
-    def get_or_generate(cls, clinic, period):
-        """
-        If report does not exist for requested reporting period,
-        generate and cache it.
-        """
-        try:
-            report = ClinicReport.get(ClinicReport.clinic == clinic,
-                                      ClinicReport.period == period)
-        except NoResultFound:
-            # Generate report and save it
-            report = ClinicReport(clinic=clinic, period=period)
-            report.json_data = clinic.get_all_key_indicator_scores()
-
-            report.save()
-        else:
-            return report
-
     def get_key_indicators(self):
         return {
             characteristics.EQUITABLE: self.json_data[
@@ -66,3 +49,25 @@ class ClinicReport(Base):
             characteristics.EFFECTIVE: self.json_data[
                 characteristics.EFFECTIVE][AVERAGE_SCORE_KEY],
         }
+
+    @classmethod
+    def generate_clinic_report(cls, clinic, period):
+        # Generate report and save it
+        report = ClinicReport(clinic=clinic, period=period)
+        report.json_data = clinic.get_all_key_indicator_scores()
+        report.save()
+        return DBSession.merge(report)
+
+    @classmethod
+    def get_or_generate(cls, clinic, period):
+        """
+        If report does not exist for requested reporting period,
+        generate and cache it.
+        """
+        try:
+            report = ClinicReport.get(ClinicReport.clinic == clinic,
+                                      ClinicReport.period == period)
+        except NoResultFound:
+            report = cls.generate_clinic_report(clinic, period)
+
+        return report
