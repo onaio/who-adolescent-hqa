@@ -6,6 +6,8 @@ from pyramid.httpexceptions import (
 )
 from httmock import urlmatch, HTTMock
 
+from sqlalchemy.orm.exc import NoResultFound
+
 from whoahqa.constants import characteristics as constants
 from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
@@ -234,6 +236,19 @@ class TestClinicViews(IntegrationTestBase):
 
         self.assertEqual(response['clinics'], user_clinics)
         self.assertNotEqual(count, len(user_clinics))
+
+    def test_delete_clinics(self):
+        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+        user_clinics = ona_user.user.get_clinics()
+        clinic = user_clinics[0]
+        self.request.method = 'GET'
+        self.request.ona_user = ona_user
+        self.request.context = clinic
+
+        response = self.clinic_views.delete()
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRaises(NoResultFound, Clinic.get, Clinic.id == clinic.id)
 
 
 class TestClinicViewsFunctional(FunctionalTestBase):

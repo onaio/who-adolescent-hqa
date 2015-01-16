@@ -288,6 +288,21 @@ class ClinicViews(object):
         }
 
     @view_config(
+        name='delete',
+        renderer='clinics_edit.jinja2',
+        context=Clinic,
+        permission=perms.CAN_EDIT_CLINICS)
+    def delete(self):
+        clinic = self.request.context
+        user = clinic.user
+
+        user.clinics.remove(clinic)
+        clinic.delete()
+
+        return HTTPFound(
+            location=self.request.route_url('clinics', traverse=('manage')))
+
+    @view_config(
         name='assess',
         renderer='clinics_assess.jinja2',
         request_method='GET',
