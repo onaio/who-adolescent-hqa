@@ -33,7 +33,7 @@ def can_view_clinics(request):
                           request)
 
 
-def is_su_user(request):
+def is_super_user(request):
     return has_permission(perms.SUPER_USER,
                           ClinicFactory(request),
                           request)
