@@ -98,6 +98,7 @@ class TestClinicViews(IntegrationTestBase):
         response = self.clinic_views.show()
         self.assertIsInstance(response['clinic'], Clinic)
         self.assertEqual(response['clinic'].id, clinic.id)
+        self.assertIn('client_tools', response)
         self.assertEqual(
             response['characteristics'],
             tuple_to_dict_list(

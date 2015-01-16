@@ -123,6 +123,8 @@ class ClinicViews(object):
             'clinic': clinic,
             'characteristics': tuple_to_dict_list(
                 ("id", "description", "number"), constants.CHARACTERISTICS),
+            'client_tools': tuple_to_dict_list(
+                ("id", "name"), constants.CLIENT_TOOLS),
             'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAMES,
             'scores': scores
 
