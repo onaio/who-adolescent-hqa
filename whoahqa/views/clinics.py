@@ -71,7 +71,7 @@ class ClinicViews(object):
         return {
             'clinics': clinics,
             'period': period,
-            'indicator_labels': dict(constants.INDICATOR_LABELS),
+            'key_indicators_key_labels': constants.INDICATOR_LABELS,
         }
 
     @view_config(name='unassigned',
