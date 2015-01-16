@@ -244,7 +244,8 @@ class ClinicViews(object):
         request_method='GET',
         permission=perms.CAN_LIST_CLINICS)
     def manage_clinics(self):
-        clinics = Clinic.all()
+        user = self.request.ona_user.user
+        clinics = user.get_clinics()
         return {
             'clinics': clinics
         }
