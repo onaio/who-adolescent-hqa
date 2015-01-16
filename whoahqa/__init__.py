@@ -33,7 +33,7 @@ from whoahqa.views import (
     can_access_clinics,
     can_list_clinics,
     can_view_clinics,
-    is_su_user
+    is_super_user
 )
 
 DEVELOPMENT_ENV = "development"
@@ -116,7 +116,7 @@ def add_request_helpers(config):
         can_access_clinics, 'can_access_clinics', reify=True)
     config.add_request_method(can_view_clinics, 'can_view_clinics', reify=True)
     config.add_request_method(can_list_clinics, 'can_list_clinics', reify=True)
-    config.add_request_method(is_su_user, 'is_su_user', reify=True)
+    config.add_request_method(is_super_user, 'is_super_user', reify=True)
 
 
 def setup_development_data():
