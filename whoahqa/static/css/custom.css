@@ -395,3 +395,11 @@ td.enclosed-table table tr:first-child td {
 #assessment-portlet > .portlet-title {
     height: auto;
 }
+
+.scores-table-horizontal .clinic-name {
+    width: 40%;
+}
+
+.scores-table-horizontal .key-indicators {
+    width: 12%
+}

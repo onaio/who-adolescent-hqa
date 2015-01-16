@@ -7,9 +7,9 @@
     <table class="table scores-table scores-table-horizontal" id="sample_1">
       <thead>
         <tr role="row">
-          <th>{{ gettext('Name') }}</th>
+          <th class="clinic-name">{{ gettext('Name') }}</th>
           {% for id, label in indicator_labels.iteritems() %}
-            <th>{{ gettext(label) }}</th> 
+            <th class="key-indicators">{{ gettext(label) }}</th> 
           {% endfor %}
         </tr>
       </thead>
