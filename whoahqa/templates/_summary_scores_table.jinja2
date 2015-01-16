@@ -8,7 +8,7 @@
       <thead>
         <tr role="row">
           <th class="clinic-name">{{ gettext('Name') }}</th>
-          {% for id, label in indicator_labels.iteritems() %}
+          {% for id, label in key_indicators_key_labels %}
             <th class="key-indicators">{{ gettext(label) }}</th> 
           {% endfor %}
         </tr>
@@ -32,7 +32,7 @@
               </div>
             {% endif %}
           </td>
-          {% for id, label in indicator_labels.iteritems() %}
+          {% for id, label in key_indicators_key_labels %}
           {% set key_indicators = clinic.key_indicators(period) %}
             <td>
                 <div class="score-bar">
