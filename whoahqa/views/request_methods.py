@@ -31,3 +31,15 @@ def can_view_clinics(request):
     return has_permission(perms.CAN_VIEW_CLINICS,
                           ClinicFactory(request),
                           request)
+
+
+def is_super_user(request):
+    return has_permission(perms.SUPER_USER,
+                          ClinicFactory(request),
+                          request)
+
+
+def can_access_clinics(request):
+    return has_permission(perms.CAN_ASSESS_CLINICS,
+                          ClinicFactory(request),
+                          request)

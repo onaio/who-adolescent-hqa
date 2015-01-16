@@ -111,17 +111,28 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                      <span class="arrow open"></span>
                   </a>
                  <ul class="sub-menu">
+                   {% if request.is_super_user %}
+                     <li>
+                       <a href="{{ request.route_url('admin', traverse=()) }}">
+                         {{ gettext('Users') }}
+                       </a>
+                     </li>
+                   {% endif %}
                    {% if request.can_list_clinics %}
                      <li>
                        <a href="{{ request.route_url('clinics', traverse=()) }}">
                          {{ gettext('Scores') }}
                        </a>
                      </li>
+                   {% endif %}
+                  {% if request.can_access_clinics %}
                      <li>
                         <a href="{{ request.route_url('clinics', traverse=('assess')) }}">
                            {{ gettext('Assessment Surveys') }}
                         </a>
                      </li>
+                  {% endif %}
+                  {% if request.can_list_clinics %}
                      <li>
                         <a href="{{ request.route_url('clinics', traverse=('manage')) }}">
                         {{gettext('Manage Clinics')}}</a>
