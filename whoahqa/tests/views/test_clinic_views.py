@@ -98,6 +98,7 @@ class TestClinicViews(IntegrationTestBase):
         response = self.clinic_views.show()
         self.assertIsInstance(response['clinic'], Clinic)
         self.assertEqual(response['clinic'].id, clinic.id)
+        self.assertIn('client_tools', response)
         self.assertEqual(
             response['characteristics'],
             tuple_to_dict_list(
@@ -219,6 +220,20 @@ class TestClinicViews(IntegrationTestBase):
         response = self.clinic_views.assess_clinics()
 
         self.assertEqual(len(response['clinics']), 1)
+
+    def test_manage_clinics_view(self):
+        count = Clinic.count()
+
+        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+        self.request.method = 'GET'
+        self.request.ona_user = ona_user
+
+        user_clinics = ona_user.user.get_clinics()
+
+        response = self.clinic_views.manage_clinics()
+
+        self.assertEqual(response['clinics'], user_clinics)
+        self.assertNotEqual(count, len(user_clinics))
 
 
 class TestClinicViewsFunctional(FunctionalTestBase):

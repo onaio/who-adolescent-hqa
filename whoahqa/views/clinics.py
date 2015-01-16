@@ -71,7 +71,7 @@ class ClinicViews(object):
         return {
             'clinics': clinics,
             'period': period,
-            'indicator_labels': dict(constants.INDICATOR_LABELS),
+            'key_indicators_key_labels': constants.INDICATOR_LABELS,
         }
 
     @view_config(name='unassigned',
@@ -123,6 +123,8 @@ class ClinicViews(object):
             'clinic': clinic,
             'characteristics': tuple_to_dict_list(
                 ("id", "description", "number"), constants.CHARACTERISTICS),
+            'client_tools': tuple_to_dict_list(
+                ("id", "name"), constants.CLIENT_TOOLS),
             'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAMES,
             'scores': scores
 
@@ -242,7 +244,8 @@ class ClinicViews(object):
         request_method='GET',
         permission=perms.CAN_LIST_CLINICS)
     def manage_clinics(self):
-        clinics = Clinic.all()
+        user = self.request.ona_user.user
+        clinics = user.get_clinics()
         return {
             'clinics': clinics
         }
