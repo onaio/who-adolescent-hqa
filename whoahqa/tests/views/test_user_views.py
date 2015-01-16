@@ -39,8 +39,6 @@ class TestUserViews(IntegrationTestBase):
         self.assertIsInstance(response['period'], ReportingPeriod)
         self.assertEqual(len(response['clinics']), 1)
         self.assertEqual(response['clinics'][0].name, "Clinic A")
-        self.assertIn('key_indicators', response)
-        self.assertIn('key_indicator_char_map', response)
 
     def test_user_summary_view(self):
         self.setup_test_data()

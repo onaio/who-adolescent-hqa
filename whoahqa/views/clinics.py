@@ -47,7 +47,7 @@ class ClinicViews(object):
     def list(self):
         # if the user doesnt have permissions to list all clinics,
         # redirect to his own clinics
-        if not has_permission(perms.CAN_LIST_CLINICS,
+        if not has_permission(perms.CAN_VIEW_MUNICIPALITY,
                               self.request.context,
                               self.request):
             return HTTPFound(
@@ -290,7 +290,9 @@ class ClinicViews(object):
         request_method='GET',
         permission=perms.CAN_ASSESS_CLINICS)
     def assess_clinics(self):
-        clinics = Clinic.all()
+        user = self.request.ona_user.user
+        clinics = user.get_clinics()
+
         return {
             'clinics': clinics,
             'client_tools': tuple_to_dict_list(
