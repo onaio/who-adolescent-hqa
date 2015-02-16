@@ -22,7 +22,10 @@ class ClinicReport(Base):
     id = Column(Integer, primary_key=True)
     clinic_id = Column(Integer, ForeignKey('clinics.id'))
     clinic = relationship('Clinic',
-                          backref=backref('reports'))
+                          backref=backref(
+                              'reports',
+                              cascade="all, delete, delete-orphan"),
+                          single_parent=True)
 
     period_id = Column(Integer, ForeignKey('reporting_periods.id'))
     period = relationship('ReportingPeriod')

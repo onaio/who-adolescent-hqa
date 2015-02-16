@@ -6,7 +6,7 @@ from sqlalchemy import (
     ForeignKey,
     String
 )
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import backref, relationship
 from sqlalchemy.dialects.postgresql import JSON
 
 from whoahqa.constants import characteristics as constants
@@ -78,6 +78,9 @@ class ClinicSubmission(Base):
     characteristic = Column(String, nullable=False, primary_key=True)
     xform_id = Column(String, nullable=False, primary_key=True)
     submission = relationship("Submission")
+    clinic = relationship(
+        "Clinic",
+        backref=backref("submissions", cascade="all, delete, delete-orphan"))
 
 
 class SubmissionFactory(BaseModelFactory):
