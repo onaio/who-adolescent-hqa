@@ -176,12 +176,23 @@ def setup_clinics():
         "name": "Clinic A",
         "code": "1A2B",
         "municipality": municipality}
-    clinic = Clinic.get_or_create(
+    clinic_a = Clinic.get_or_create(
         clinic_criteria,
         **clinic_params)
-    clinic.save()
+    clinic_a.save()
+
+    clinic_params = {
+        "name": "Clinic b",
+        "code": "1B2C",
+        "municipality": municipality}
+    clinic_b = Clinic.get_or_create(
+        clinic_criteria,
+        **clinic_params)
+    clinic_b.save()
+
     user = OnaUser.get(OnaUser.username == 'admin').user
-    clinic.assign_to(user)
+    clinic_a.assign_to(user)
+    clinic_b.assign_to(user)
 
 
 def setup_default_reporting_period():

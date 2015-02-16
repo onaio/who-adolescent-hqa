@@ -29,6 +29,7 @@ from whoahqa.utils import tuple_to_dict_list, filter_dict_list_by_attr
 from whoahqa.models import (
     ClinicFactory,
     Clinic,
+    DBSession,
     Municipality,
     ReportingPeriod,
 )
@@ -294,10 +295,7 @@ class ClinicViews(object):
         permission=perms.CAN_EDIT_CLINICS)
     def delete(self):
         clinic = self.request.context
-        user = clinic.user
-
-        user.clinics.remove(clinic)
-        clinic.delete()
+        DBSession.delete(clinic)
 
         return HTTPFound(
             location=self.request.route_url('clinics', traverse=('manage')))
