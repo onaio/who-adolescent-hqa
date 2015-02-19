@@ -58,8 +58,7 @@ class Clinic(Base):
                           server_default=func.now(), nullable=False)
     user = relationship("User",
                         secondary=user_clinics,
-                        uselist=False,
-                        single_parent=True)
+                        uselist=False)
 
     municipality_id = Column(Integer, ForeignKey('locations.id'),
                              nullable=True)
