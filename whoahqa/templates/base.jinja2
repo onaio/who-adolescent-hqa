@@ -99,13 +99,13 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                   <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
                </li>
                <li class="active last">
-                  <a href="javascript:;">
-                     <i class="icon-user-md"></i>
-                     <span class="title">{{ gettext('Scores') }}</span>
-                     <span class="selected"></span>
-                     <span class="arrow open"></span>
-                  </a>
                  <ul class="sub-menu">
+                  <li class="selected">
+                     <a href="{{ request.route_url('default')}}">
+                        <i class="icon-user-md"></i>
+                        <span class="title">{{ gettext('Scores') }}</span>
+                     </a>
+                  </li>
                    {% if request.is_super_user %}
                      <li>
                        <a href="{{ request.route_url('admin', traverse=()) }}">
