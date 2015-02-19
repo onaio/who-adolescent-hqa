@@ -403,3 +403,12 @@ td.enclosed-table table tr:first-child td {
 .scores-table-horizontal .key-indicators {
     width: 12%
 }
+
+ul.page-sidebar-menu > li.active > ul.sub-menu > li.selected {
+    background: #084e78 !important;
+}
+
+ul.page-sidebar-menu > li.active > ul.sub-menu > li.selected > a,
+ul.page-sidebar-menu > li.active > ul.sub-menu > li.selected > a i {
+    color: #fff;
+}
