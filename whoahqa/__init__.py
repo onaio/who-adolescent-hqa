@@ -17,6 +17,7 @@ from whoahqa.models import (
     Base,
     Clinic,
     Group,
+    LocationFactory,
     Municipality,
     OnaUser,
     State,
@@ -106,6 +107,8 @@ def includeme(config):
                      factory=SubmissionFactory)
     config.add_route('periods', '/reporting-periods/*traverse',
                      factory=ReportingPeriodFactory)
+    config.add_route('municipalities', '/municipalities/*traverse',
+                     factory=LocationFactory)
     config.scan()
 
 
