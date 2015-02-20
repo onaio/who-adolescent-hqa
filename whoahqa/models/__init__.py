@@ -9,6 +9,7 @@ from whoahqa.models.reporting_period import ReportingPeriodFactory  # noqa
 from whoahqa.models.location import Location  # noqa
 from whoahqa.models.location import Municipality  # noqa
 from whoahqa.models.location import State  # noqa
+from whoahqa.models.location import LocationFactory  # noqa
 
 from whoahqa.models.clinic import Clinic  # noqa
 from whoahqa.models.clinic import ClinicCharacteristics  # noqa
