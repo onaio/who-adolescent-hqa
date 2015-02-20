@@ -15,6 +15,22 @@
       </thead>
 
       <tbody role="alert" aria-live="polite" aria-relevant="all">
+      {% if parent %}
+        <tr class="average-row">
+          <td>
+              <strong>{{ gettext('Clinic Average') }}</strong>
+          </td>
+          {% for id, label in key_indicators_key_labels %}
+          {% set key_indicators = parent.key_indicators(period) %}
+            <td>
+                <div class="score-bar">
+                    <div class="elapsed average" style="width: {{ key_indicators[id]|round }}%"></div>
+                    <span class="score-msg">{{ key_indicators[id]|round|int}}</span>
+                </div>
+            </td> 
+          {% endfor %}
+        </tr>
+      {% endif %}
       {% for location in locations %}
         <tr class="gradeX odd">
           <td>
