@@ -12,6 +12,7 @@ CAN_CREATE_PERIOD = 'create-period'
 
 # Municipality Manager Permissions
 CAN_VIEW_MUNICIPALITY = 'view-municipality'
+CAN_LIST_MUNICIPALITY = 'list-municipality'
 CAN_ASSESS_CLINICS = 'assess-clinics'
 
 # State Official Permissions

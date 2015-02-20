@@ -18,6 +18,7 @@ GROUP_PERMISSIONS = {
                                   permissions.CAN_VIEW_CLINICS,
                                   permissions.CAN_EDIT_CLINICS,
                                   permissions.CAN_ASSESS_CLINICS,
+                                  permissions.CAN_LIST_MUNICIPALITY,
                                   permissions.CAN_VIEW_MUNICIPALITY],
     groups.USER: [Authenticated],
     groups.SUPER_USER: []
