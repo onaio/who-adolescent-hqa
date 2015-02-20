@@ -29,7 +29,7 @@ class UserViews(object):
 
         return {
             'period': period,
-            'clinics': clinics,
+            'locations': clinics,
             'key_indicators_key_labels': constants.INDICATOR_LABELS
         }
 

@@ -2,9 +2,7 @@ import uuid
 
 from deform import Form, ValidationFailure, Button
 
-from pyramid.security import (
-    has_permission,
-)
+from pyramid.security import has_permission
 from pyramid.httpexceptions import (
     HTTPFound,
     HTTPBadRequest,
@@ -70,7 +68,7 @@ class ClinicViews(object):
             clinics = Clinic.all()
 
         return {
-            'clinics': clinics,
+            'locations': clinics,
             'period': period,
             'key_indicators_key_labels': constants.INDICATOR_LABELS,
         }
