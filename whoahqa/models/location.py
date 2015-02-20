@@ -51,7 +51,8 @@ class Municipality(Location):
 
     __acl__ = [
         (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
-        (Allow, Authenticated, perms.CAN_VIEW_MUNICIPALITY)
+        (Allow, Authenticated, perms.CAN_VIEW_MUNICIPALITY),
+        (Allow, Authenticated, perms.CAN_LIST_MUNICIPALITY)
     ]
 
     def get_url(self, request, period):
