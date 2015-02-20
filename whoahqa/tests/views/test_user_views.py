@@ -37,8 +37,8 @@ class TestUserViews(IntegrationTestBase):
 
         # we should only have Clinic A in the response
         self.assertIsInstance(response['period'], ReportingPeriod)
-        self.assertEqual(len(response['clinics']), 1)
-        self.assertEqual(response['clinics'][0].name, "Clinic A")
+        self.assertEqual(len(response['locations']), 1)
+        self.assertEqual(response['locations'][0].name, "Clinic A")
 
     def test_user_summary_view(self):
         self.setup_test_data()
