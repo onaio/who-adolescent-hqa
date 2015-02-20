@@ -100,12 +100,14 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                </li>
                <li class="active last">
                  <ul class="sub-menu">
-                  <li class="selected">
-                     <a href="{{ request.route_url('default')}}">
-                        <i class="icon-user-md"></i>
-                        <span class="title">{{ gettext('Scores') }}</span>
-                     </a>
-                  </li>
+                 {% block sub_menu_item %}
+                     <li class="selected">
+                        <a href="{{ request.route_url('default')}}">
+                           <i class="icon-user-md"></i>
+                           <span class="title">{{ gettext('Scores') }}</span>
+                        </a>
+                     </li>
+                  {% endblock %}
                    {% if request.is_super_user %}
                      <li>
                        <a href="{{ request.route_url('admin', traverse=()) }}">
