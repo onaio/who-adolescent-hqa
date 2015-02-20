@@ -15,25 +15,20 @@
       </thead>
 
       <tbody role="alert" aria-live="polite" aria-relevant="all">
-      {% for clinic in clinics %}
+      {% for location in locations %}
         <tr class="gradeX odd">
           <td>
-            {% if clinic.is_assigned %}
-              <a href="{{ request.route_url('clinics', traverse=(clinic.id, period.id)) }}">
-                <strong>{{ clinic.name }}</strong>
-              </a>
+            <a href="{{ location.get_url(request, period) }}">
+              <strong>{{ location.name }}</strong>
+            </a>
+            {% if location.__class__.__name__ == "Clinic" %}
               <div>
-                {{ "CNES: " + clinic.code }}
-              </div>
-            {% else %}
-              {{ clinic.name }}
-              <div>
-                {{ clinic.code }}
+                {{ "CNES: " + location.code }}
               </div>
             {% endif %}
           </td>
           {% for id, label in key_indicators_key_labels %}
-          {% set key_indicators = clinic.key_indicators(period) %}
+          {% set key_indicators = location.key_indicators(period) %}
             <td>
                 <div class="score-bar">
                     <div class="elapsed" style="width: {{ key_indicators[id]|round }}%"></div>
@@ -47,7 +42,7 @@
     </table>
   </div>
   <div>
-   {%if clinics|length == 0 %}
+   {%if locations|length == 0 %}
     {{search_term}} {{ gettext('Not found.') }}
   {% endif%}
   </div>
