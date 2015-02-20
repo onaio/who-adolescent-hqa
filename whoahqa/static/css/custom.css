@@ -388,6 +388,9 @@ td.enclosed-table table tr:first-child td {
 
 tr.average-row {
     color: #979695;
+}
+
+.scores-table tbody tr.average-row td {
     background-color: #eff0f1;
 }
 
