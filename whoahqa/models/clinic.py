@@ -112,6 +112,10 @@ class Clinic(Base):
 
         self.save()
 
+    def get_url(self, request, period):
+        return request.route_url('clinics',
+                                 traverse=(self.id, period.id))
+
     @classmethod
     def get_unassigned(cls):
         clinics = DBSession.query(Clinic).outerjoin(user_clinics).filter(
