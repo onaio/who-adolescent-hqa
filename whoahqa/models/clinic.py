@@ -34,13 +34,19 @@ from whoahqa.utils import (
 
 class ClinicCharacteristics(Base):
     __tablename__ = 'clinic_characteristics'
-    clinic_id = Column(Integer, ForeignKey('clinics.id'), primary_key=True)
+    clinic_id = Column(Integer,
+                       ForeignKey('clinics.id'),
+                       primary_key=True)
     characteristic_id = Column(String(100), nullable=False, primary_key=True)
     period_id = Column(Integer, ForeignKey('reporting_periods.id'),
                        nullable=False, primary_key=True)
     pk_clinic_characteristic = PrimaryKeyConstraint(
         clinic_id, characteristic_id, period_id)
-    clinic_characteristic = relationship("Clinic")
+    clinic_characteristic = relationship(
+        "Clinic",
+        single_parent=True,
+        backref=backref('characteristics',
+                        cascade="all, delete, delete-orphan"))
 
 
 class Clinic(Base):
@@ -50,7 +56,9 @@ class Clinic(Base):
     name = Column(String(255), nullable=False)
     date_created = Column(DateTime(timezone=True),
                           server_default=func.now(), nullable=False)
-    user = relationship("User", secondary=user_clinics, uselist=False)
+    user = relationship("User",
+                        secondary=user_clinics,
+                        uselist=False)
 
     municipality_id = Column(Integer, ForeignKey('locations.id'),
                              nullable=True)
@@ -103,6 +111,10 @@ class Clinic(Base):
         self.municipality = municipality
 
         self.save()
+
+    def get_url(self, request, period):
+        return request.route_url('clinics',
+                                 traverse=(self.id, period.id))
 
     @classmethod
     def get_unassigned(cls):
