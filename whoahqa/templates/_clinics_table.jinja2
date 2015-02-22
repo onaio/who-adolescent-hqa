@@ -37,7 +37,7 @@
           <td class=" ">{{ clinic.code }}</td>
           <td class="center ">{{ clinic.date_created.strftime('%d %b %Y') }}</td>
           <td class=" ">
-            <a href="{{request.route_url('clinics', traverse=(clinic.user.id, 'edit_clinic'))}}" class="btn btn-default">
+            <a href="{{request.route_url('clinics', traverse=(clinic.id, 'edit_clinic'))}}" class="btn btn-default">
               {{gettext('Edit')}}
             </a>
           </td>

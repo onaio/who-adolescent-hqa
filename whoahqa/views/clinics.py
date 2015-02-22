@@ -2,9 +2,7 @@ import uuid
 
 from deform import Form, ValidationFailure, Button
 
-from pyramid.security import (
-    has_permission,
-)
+from pyramid.security import has_permission
 from pyramid.httpexceptions import (
     HTTPFound,
     HTTPBadRequest,
@@ -29,6 +27,7 @@ from whoahqa.utils import tuple_to_dict_list, filter_dict_list_by_attr
 from whoahqa.models import (
     ClinicFactory,
     Clinic,
+    DBSession,
     Municipality,
     ReportingPeriod,
 )
@@ -69,7 +68,7 @@ class ClinicViews(object):
             clinics = Clinic.all()
 
         return {
-            'clinics': clinics,
+            'locations': clinics,
             'period': period,
             'key_indicators_key_labels': constants.INDICATOR_LABELS,
         }
@@ -286,6 +285,18 @@ class ClinicViews(object):
             'form': form,
             'clinic': clinic
         }
+
+    @view_config(
+        name='delete',
+        renderer='clinics_edit.jinja2',
+        context=Clinic,
+        permission=perms.CAN_EDIT_CLINICS)
+    def delete(self):
+        clinic = self.request.context
+        DBSession.delete(clinic)
+
+        return HTTPFound(
+            location=self.request.route_url('clinics', traverse=('manage')))
 
     @view_config(
         name='assess',

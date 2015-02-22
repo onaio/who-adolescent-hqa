@@ -47,6 +47,7 @@
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-primary">Save</button>
+                    <a class="btn btn-danger" href="{{ request.route_url('clinics', traverse=(clinic.id, 'delete')) }}">Delete</a>
                     <a class="btn btn-default" href="{{ request.route_url('clinics', traverse=('manage')) }}">Back</a>
                   </div>
                 </div>

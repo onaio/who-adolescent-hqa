@@ -2,18 +2,17 @@
 {% block title %}{{ gettext("Scores") }}{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
-  {% if parent %}
-    <li>
-      <a href="{{ request.route_url('municipalities', traverse=()) }}">
-        {{ gettext("Municipalities") }}
-      </a>
-    </li>
-    <li><i class="icon-angle-right"></i></li>
-    <li>{{ parent.name }}</li>
-    <li><i class="icon-angle-right"></i></li>
-  {% endif %}
   <li>{{ self.page_title() }}</li>
   <li><a href="#"> </a></li>
+{% endblock %}
+{% block sub_menu_item %}
+  {% for location in locations %}
+    <li>
+      <a href="{{request.route_url('municipalities', traverse=())}}">
+        {{ gettext('Municipalities') }}
+      </a>
+    </li>
+  {% endfor %}
 {% endblock %}
 {% block content %}
   <div class="row">
@@ -25,9 +24,9 @@
     </div>
     -->
     <div class="col-md-12">
-      {% block clinic_table %}
+      {% block location_table %}
         <form method="post" action="">
-            <div class="clinics_table">
+            <div class="location_table">
               {% include '_summary_scores_table.jinja2' %}
             </div>
         </form>
