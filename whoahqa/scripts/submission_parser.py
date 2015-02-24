@@ -3,6 +3,7 @@ import sys
 import transaction
 
 from sqlalchemy import engine_from_config
+from sqlalchemy.orm.exc import NoResultFound
 
 from pyramid.paster import (
     get_appsettings,
@@ -11,8 +12,9 @@ from pyramid.paster import (
 from whoahqa.constants import characteristics as constants
 from whoahqa.models import (
     Base,
+    Clinic,
     DBSession,
-    ClinicSubmission,
+    Submission,
     Municipality)
 
 
@@ -37,22 +39,25 @@ def main(argv=sys.argv):
 
 
 def parse_municipalities_from_submissions():
-    clinic_submissions = ClinicSubmission.all()
-    for clinic_submission in clinic_submissions:
-        clinic = clinic_submission.clinic
-        if clinic.municipality is None:
+    submissions = Submission.all()
+    for submission in submissions:
+        try:
             with transaction.manager:
-                try:
-                    municipality_name = clinic_submission.submission.raw_data[
-                        constants.MUNICIPALITY_IDENTIFIER]
+                clinic_code = submission.raw_data[constants.CLINIC_IDENTIFIER]
+                clinic = Clinic.get(
+                    Clinic.code == clinic_code)
 
-                    municipality_params = {'name': municipality_name}
-                    municipality = Municipality.get_or_create(
-                        Municipality.name == municipality_name,
-                        **municipality_params)
+                municipality_name = submission.raw_data[
+                    constants.MUNICIPALITY_IDENTIFIER]
 
+                municipality_params = {'name': municipality_name}
+                municipality = Municipality.get_or_create(
+                    Municipality.name == municipality_name,
+                    **municipality_params)
+
+                if clinic.municipality is None:
                     clinic.municipality = municipality
                     DBSession.add_all([municipality, clinic])
 
-                except KeyError:
-                    pass
+        except (NoResultFound, KeyError):
+            pass

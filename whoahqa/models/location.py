@@ -14,12 +14,18 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm.exc import NoResultFound
+from whoahqa.constants import characteristics
 from whoahqa.models import (
     Base,
     BaseModelFactory)
 from whoahqa.constants import permissions as perms, groups
 
 AVERAGE_SCORE_KEY = 'average_score'
+INITIAL_SCORE_MAP = {characteristics.EQUITABLE: 0,
+                     characteristics.ACCESSIBLE: 0,
+                     characteristics.ACCEPTABLE: 0,
+                     characteristics.APPROPRIATE: 0,
+                     characteristics.EFFECTIVE: 0}
 
 
 class Location(Base):
@@ -49,17 +55,19 @@ class Location(Base):
         if self._key_indicators:
             return self._key_indicators
         else:
-            self._key_indicators = defaultdict(int)
             self._key_indicators = reduce(
                 lambda x, y: Counter(x) + Counter(y),
-                (c.key_indicators(period) for c in clinics))
+                (c.key_indicators(period) for c in clinics),
+                INITIAL_SCORE_MAP)
             self._key_indicators = {
                 key: (value / len(clinics))
-                for key, value in self._key_indicators.items()}
+                for key, value in self._key_indicators.items()
+                if value is not 0}
+
+            if not self._key_indicators:
+                self._key_indicators = defaultdict(int)
 
             return self._key_indicators
-
-        return defaultdict(int)
 
 
 class Municipality(Location):

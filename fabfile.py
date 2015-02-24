@@ -49,5 +49,6 @@ def deploy(deployment="prod", branch="master", country_char=None):
                 run("alembic -n {0} upgrade head".format(
                     env.get('alembic_section', 'alembic')))
                 run("python setup.py compile_catalog")
+                run("parse_municipalities production.ini")
 
                 run("uwsgi --reload /var/run/whoahqa.pid")
