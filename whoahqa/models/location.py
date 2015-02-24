@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import defaultdict, Counter
 from pyramid.security import (
     Allow,
     Authenticated,
@@ -19,6 +19,8 @@ from whoahqa.models import (
     BaseModelFactory)
 from whoahqa.constants import permissions as perms, groups
 
+AVERAGE_SCORE_KEY = 'average_score'
+
 
 class Location(Base):
     __tablename__ = 'locations'
@@ -35,12 +37,28 @@ class Location(Base):
                            nullable=False, index=True)
     parent = relationship("Location", remote_side=[id])
 
+    _key_indicators = None
+
     __mapper_args__ = {
         'polymorphic_on': location_type,
         'polymorphic_identity': 'location'
     }
 
     def key_indicators(self, period):
+        clinics = self.clinics
+        if self._key_indicators:
+            return self._key_indicators
+        else:
+            self._key_indicators = defaultdict(int)
+            self._key_indicators = reduce(
+                lambda x, y: Counter(x) + Counter(y),
+                (c.key_indicators(period) for c in clinics))
+            self._key_indicators = {
+                key: (value / len(clinics))
+                for key, value in self._key_indicators.items()}
+
+            return self._key_indicators
+
         return defaultdict(int)
 
 
