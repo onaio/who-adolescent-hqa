@@ -64,6 +64,7 @@ class Clinic(Base):
                              nullable=True)
 
     municipality = relationship("Municipality",
+                                lazy='subquery',
                                 backref=backref('clinics', order_by=id),
                                 primaryjoin="and_(\
                                     Clinic.municipality_id == Location.id)")

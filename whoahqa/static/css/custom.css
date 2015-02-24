@@ -380,10 +380,26 @@ td.enclosed-table table tr:first-child td {
 .score-bar{
     position:relative;
 }
-.elapsed{
+.elapsed {
     background-color:#1175cb;
     float: left;
     max-width: 75%;
+}
+
+tr.average-row {
+    color: #979695;
+}
+
+.scores-table tbody tr.average-row td {
+    background-color: #eff0f1;
+}
+
+tr.average-row span.score-msg {
+    color: #979695;
+}
+
+.elapsed.average {
+    background-color: #959493;
 }
 
 .score-msg {

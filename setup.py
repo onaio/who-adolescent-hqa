@@ -49,11 +49,11 @@ setup(name='who-ahqa',
       description='WHO Adolescent Health Quality Assessment',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
-        "Programming Language :: Python",
-        "Framework :: Pyramid",
-        "Topic :: Internet :: WWW/HTTP",
-        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
-        ],
+          "Programming Language :: Python",
+          "Framework :: Pyramid",
+          "Topic :: Internet :: WWW/HTTP",
+          "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+      ],
       author='Ona Labs',
       author_email='support@ona.io',
       url='',
@@ -69,6 +69,7 @@ setup(name='who-ahqa',
       [console_scripts]
       initialize_who-ahqa_db = whoahqa.scripts.initializedb:main
       create_whoahqa_user = whoahqa.scripts.create_user:main
+      parse_municipalities = whoahqa.scripts.submission_parser:main
       """,
       message_extractors=extractors
       )

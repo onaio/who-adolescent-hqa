@@ -77,9 +77,10 @@ class ClinicSubmission(Base):
         Integer, ForeignKey('submissions.id'), primary_key=True)
     characteristic = Column(String, nullable=False, primary_key=True)
     xform_id = Column(String, nullable=False, primary_key=True)
-    submission = relationship("Submission")
+    submission = relationship("Submission", lazy='subquery')
     clinic = relationship(
         "Clinic",
+        lazy='subquery',
         backref=backref("submissions", cascade="all, delete, delete-orphan"))
 
 
