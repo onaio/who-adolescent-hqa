@@ -35,7 +35,7 @@
         <tr class="gradeX odd">
           <td>
             <a href="{{ location.get_url(request, period) }}">
-              <strong>{{ location.name }}</strong>
+              <strong>{{ location.name | replace("_", " ") | capitalize }}</strong>
             </a>
             {% if location.__class__.__name__ == "Clinic" %}
               <div>
