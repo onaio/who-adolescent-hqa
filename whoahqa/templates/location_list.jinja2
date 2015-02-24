@@ -6,13 +6,11 @@
   <li><a href="#"> </a></li>
 {% endblock %}
 {% block sub_menu_item %}
-  {% for location in locations %}
-    <li>
-      <a href="{{request.route_url('municipalities', traverse=())}}">
+  <li>
+    <a href="{{request.route_url('municipalities', traverse=())}}">
         {{ gettext('Municipalities') }}
-      </a>
-    </li>
-  {% endfor %}
+    </a>
+  </li>
 {% endblock %}
 {% block content %}
   <div class="row">
