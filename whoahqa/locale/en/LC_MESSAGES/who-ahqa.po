@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-07 11:09+0300\n"
+"POT-Creation-Date: 2015-03-06 12:32+0300\n"
 "PO-Revision-Date: 2014-03-04 12:22+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -17,327 +17,494 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#~ msgid "Adolescent Client"
-#~ msgstr ""
-
-#~ msgid "Health-care Provider"
-#~ msgstr ""
-
-#~ msgid "Support Staff"
-#~ msgstr ""
-
-#~ msgid "Health Facility Manager"
-#~ msgstr ""
-
-#~ msgid "Outreach Worker"
-#~ msgstr ""
-
-#~ msgid "Community Member"
-#~ msgstr ""
-
-#~ msgid "Adolescent in Community"
-#~ msgstr ""
-
-#~ msgid "Observation Guide"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Policies and procedures are in place "
-#~ "that do not restrict the provision "
-#~ "of health services on any terms"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Health-care providers treat all "
-#~ "adolescent clients with equal care and"
-#~ " respect, regardless of status"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Support staff treat all adolescent "
-#~ "clients with equal care and respect, "
-#~ "regardless of status"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Policies and procedures are in place "
-#~ "that ensure that health services are "
-#~ "either free or affordable to adolescents"
-#~ msgstr ""
-
-#~ msgid "The point of health service delivery has convenient hours of operation"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Adolescents are well-informed about the"
-#~ " range of available reproductive health "
-#~ "services and how to obtain them"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Community members understand the benefits "
-#~ "that adolescents will gain by obtaining"
-#~ " the health services they need, and"
-#~ " support their provision"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Some health services and health-related"
-#~ " commodities are provided to adolescents"
-#~ " in the community by selected "
-#~ "community members, outreach workers and "
-#~ "adolescents themselves"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Policies and procedures are in place "
-#~ "that guarantee client confidentiality"
-#~ msgstr ""
-
-#~ msgid "The point of health service delivery ensures privacy"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Health-care providers are non-"
-#~ "judgemental, considerate and easy to "
-#~ "relate to"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The point of health service delivery "
-#~ "ensures consultations occur in a short"
-#~ " waiting time. with or without an "
-#~ "appointment, and (where necessary) with "
-#~ "referral"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The point of health service delivery "
-#~ "has an appealing and clean environment"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The point of health service delivery "
-#~ "provides information and education through "
-#~ "a variety of channels"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Adolescents are actively involved in "
-#~ "designing, assessing and providing health "
-#~ "services"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The required package of health care "
-#~ "is provided to fulfil the needs of"
-#~ " all adolescents either at the point"
-#~ " of health service delivery or "
-#~ "through referral linkages"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Health-care providers have the required"
-#~ " competencies to work with adolescents "
-#~ "and to provide them with the "
-#~ "required health services"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Health-care providers use evidence-based"
-#~ " protocols and guidelines to provide "
-#~ "health services"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Health-care providers are able to "
-#~ "dedicate sufficient time to work "
-#~ "effectively with their adolescent clients"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The point of health service delivery "
-#~ "has the required equipment, supplies and"
-#~ " basic services necessary to deliver "
-#~ "the required health services"
-#~ msgstr ""
-
-#~ msgid "Equitable"
-#~ msgstr ""
-
-#~ msgid "Accessible"
-#~ msgstr ""
-
-#~ msgid "Acceptable"
-#~ msgstr ""
-
-#~ msgid "Appropriate"
-#~ msgstr ""
-
-#~ msgid "Effective"
-#~ msgstr ""
-
-#~ msgid "Start date must be earlier than end date"
-#~ msgstr ""
-
-#~ msgid "Name"
-#~ msgstr ""
-
-#~ msgid "Give the reporting period a name"
-#~ msgstr ""
-
-#~ msgid "Start Date"
-#~ msgstr ""
-
-#~ msgid "Start date is required"
-#~ msgstr ""
-
-#~ msgid "End Date"
-#~ msgstr ""
-
-#~ msgid "End date is required"
-#~ msgstr ""
-
-#~ msgid "Clinics"
-#~ msgstr ""
-
-#~ msgid "Aggregate Scores"
-#~ msgstr ""
-
-#~ msgid "No."
-#~ msgstr ""
-
-#~ msgid "Clinic Name"
-#~ msgstr ""
-
-#~ msgid "Average Score"
-#~ msgstr ""
-
-#~ msgid "Clinic Code"
-#~ msgstr ""
-
-#~ msgid "Created"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Quality Assessment Tool: Assessing Health "
-#~ "Services for Adolescent Clients"
-#~ msgstr ""
-
-#~ msgid "Reporting Periods"
-#~ msgstr ""
-
-#~ msgid "All Clinics"
-#~ msgstr ""
-
-#~ msgid "My Clinics"
-#~ msgstr ""
-
-#~ msgid "Unassigned Clinics"
-#~ msgstr ""
-
-#~ msgid "Home"
-#~ msgstr ""
-
-#~ msgid "Recommended Sample Frame"
-#~ msgstr ""
-
-#~ msgid "Data Collection Instrument"
-#~ msgstr ""
-
-#~ msgid "Recommended Sample frame"
-#~ msgstr ""
-
-#~ msgid "Survey Form"
-#~ msgstr ""
-
-#~ msgid "Select Characteristics"
-#~ msgstr ""
-
-#~ msgid "Filter by Characteristic Type"
-#~ msgstr ""
-
-#~ msgid "All"
-#~ msgstr ""
-
-#~ msgid "Description"
-#~ msgstr ""
-
-#~ msgid "Category"
-#~ msgstr ""
-
-#~ msgid "Min - Max"
-#~ msgstr ""
-
-#~ msgid "# Respondents"
-#~ msgstr ""
-
-#~ msgid "Absolute total score"
-#~ msgstr ""
-
-#~ msgid "Score Summary"
-#~ msgstr ""
-
-#~ msgid "Characteristic Scores"
-#~ msgstr ""
-
-#~ msgid "Characteristics"
-#~ msgstr ""
-
-#~ msgid "Relative Score"
-#~ msgstr ""
-
-#~ msgid "Description "
-#~ msgstr ""
-
-#~ msgid "Score"
-#~ msgstr ""
-
-#~ msgid "Assign Selected to Myself"
-#~ msgstr ""
-
-#~ msgid "Login | WHO Adolescent Health Quality Assessment"
-#~ msgstr ""
-
-#~ msgid "Login to your account"
-#~ msgstr ""
-
-#~ msgid "Login with your Ona Account"
-#~ msgstr ""
-
-#~ msgid "Don't have an account yet?"
-#~ msgstr ""
-
-#~ msgid "Create an account"
-#~ msgstr ""
-
-#~ msgid "Create Reporting Period"
-#~ msgstr ""
-
-#~ msgid "Reporting Period"
-#~ msgstr ""
-
-#~ msgid "New Reporting Period"
-#~ msgstr ""
-
-#~ msgid "Register a Clinic"
-#~ msgstr ""
-
-#~ msgid "Code:"
-#~ msgstr ""
-
-#~ msgid "Assign a new clinic to myself"
-#~ msgstr ""
-
-#~ msgid "View Clinics Score Summary"
-#~ msgstr ""
-
-#~ msgid "Characteristics Summary"
-#~ msgstr ""
-
-#~ msgid "Please fix the errors indicated below."
-#~ msgstr ""
-
-#~ msgid "Reporting period created"
-#~ msgstr ""
-
+#: whoahqa/constants/base_characteristics.py:19
+msgid "Adolescent Client"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:20
+msgid "Health-care Provider"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:21
+msgid "Support Staff"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:22
+msgid "Health Facility Manager"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:23
+msgid "Outreach Worker"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:24
+msgid "Community Member"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:25
+msgid "Adolescent in Community"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:26
+msgid "Observation Guide"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:51
+msgid ""
+"Policies and procedures are in place that do not restrict the provision "
+"of health services on any terms"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:53
+msgid ""
+"Health-care providers treat all adolescent clients with equal care and "
+"respect, regardless of status"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:55
+msgid ""
+"Support staff treat all adolescent clients with equal care and respect, "
+"regardless of status"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:57
+msgid ""
+"Policies and procedures are in place that ensure that health services are"
+" either free or affordable to adolescents"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:59
+msgid "The point of health service delivery has convenient hours of operation"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:61
+msgid ""
+"Adolescents are well-informed about the range of available reproductive "
+"health services and how to obtain them"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:63
+msgid ""
+"Community members understand the benefits that adolescents will gain by "
+"obtaining the health services they need, and support their provision"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:66
+msgid ""
+"Some health services and health-related commodities are provided to "
+"adolescents in the community by selected community members, outreach "
+"workers and adolescents themselves"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:70
+msgid "Policies and procedures are in place that guarantee client confidentiality"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:72
+msgid "The point of health service delivery ensures privacy"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:73
+msgid ""
+"Health-care providers are non-judgemental, considerate and easy to relate"
+" to"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:75
+msgid ""
+"The point of health service delivery ensures consultations occur in a "
+"short waiting time. with or without an appointment, and (where necessary)"
+" with referral"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:78
+msgid ""
+"The point of health service delivery has an appealing and clean "
+"environment"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:80
+msgid ""
+"The point of health service delivery provides information and education "
+"through a variety of channels"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:82
+msgid ""
+"Adolescents are actively involved in designing, assessing and providing "
+"health services"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:84
+msgid ""
+"The required package of health care is provided to fulfil the needs of "
+"all adolescents either at the point of health service delivery or through"
+" referral linkages"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:87
+msgid ""
+"Health-care providers have the required competencies to work with "
+"adolescents and to provide them with the required health services"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:90
+msgid ""
+"Health-care providers use evidence-based protocols and guidelines to "
+"provide health services"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:92
+msgid ""
+"Health-care providers are able to dedicate sufficient time to work "
+"effectively with their adolescent clients"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:94
+msgid ""
+"The point of health service delivery has the required equipment, supplies"
+" and basic services necessary to deliver the required health services"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:514
+msgid "Equitable"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:515
+msgid "Accessible"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:516
+msgid "Acceptable"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:517
+msgid "Appropriate"
+msgstr ""
+
+#: whoahqa/constants/base_characteristics.py:518
+msgid "Effective"
+msgstr ""
+
+#: whoahqa/forms/clinic_form.py:18
+#: whoahqa/templates/_clinics_key_indicators.jinja2:14
+#: whoahqa/templates/clinics_score_summary.jinja2:44
+msgid "Clinic Name"
+msgstr ""
+
+#: whoahqa/forms/clinic_form.py:21 whoahqa/templates/_clinics_table.jinja2:18
+msgid "Clinic Code"
+msgstr ""
+
+#: whoahqa/forms/reporting_period.py:22
+msgid "{} is not a valid date"
+msgstr ""
+
+#: whoahqa/forms/reporting_period.py:52
+msgid "Start date must be earlier than end date"
+msgstr ""
+
+#: whoahqa/forms/reporting_period.py:59
+#: whoahqa/templates/_clinics_table.jinja2:17
+#: whoahqa/templates/_summary_scores_table.jinja2:10
+#: whoahqa/templates/reporting_periods_list.jinja2:32
+msgid "Name"
+msgstr ""
+
+#: whoahqa/forms/reporting_period.py:60
+msgid "Give the reporting period a name"
+msgstr ""
+
+#: whoahqa/forms/reporting_period.py:63
+#: whoahqa/templates/reporting_periods_list.jinja2:33
+msgid "Start Date"
+msgstr ""
+
+#: whoahqa/forms/reporting_period.py:65
+msgid "Start date is required"
+msgstr ""
+
+#: whoahqa/forms/reporting_period.py:68
+#: whoahqa/templates/reporting_periods_list.jinja2:34
+msgid "End Date"
+msgstr ""
+
+#: whoahqa/forms/reporting_period.py:70
+msgid "End date is required"
+msgstr ""
+
+#: whoahqa/templates/_clinics_key_indicators.jinja2:9
+#: whoahqa/templates/clinics_score_summary.jinja2:32
+#: whoahqa/templates/clinics_show.jinja2:10
+msgid "Clinics"
+msgstr ""
+
+#: whoahqa/templates/_clinics_key_indicators.jinja2:10
+msgid "Aggregate Scores"
+msgstr ""
+
+#: whoahqa/templates/_clinics_key_indicators.jinja2:13
+#: whoahqa/templates/clinics_characteristics_list.jinja2:59
+#: whoahqa/templates/clinics_score_summary.jinja2:39
+#: whoahqa/templates/clinics_show.jinja2:36
+msgid "No."
+msgstr ""
+
+#: whoahqa/templates/_clinics_key_indicators.jinja2:50
+msgid "Average Score"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:6
+msgid "Register a Clinic"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:19
+msgid "Created"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:20
+msgid "Actions"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:41
+msgid "Edit"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:51
+#: whoahqa/templates/_summary_scores_table.jinja2:62
+msgid "Not found."
+msgstr ""
+
+#: whoahqa/templates/_summary_scores_table.jinja2:5
+msgid "Clinic Scores by Key Indicator"
+msgstr ""
+
+#: whoahqa/templates/_summary_scores_table.jinja2:21
+msgid "Clinic Average"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:49
+msgid "Quality Assessment Tool: Assessing Health Services for Adolescent Clients"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:65
+msgid "Logout"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:107 whoahqa/templates/clinics_summary.jinja2:2
+#: whoahqa/templates/location_list.jinja2:2
+#: whoahqa/templates/user_clinics.jinja2:3
+#: whoahqa/templates/user_clinics.jinja2:11
+msgid "Scores"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:114
+msgid "Users"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:121 whoahqa/templates/clinics_assess.jinja2:2
+msgid "Assessment Surveys"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:128 whoahqa/templates/clinics_edit.jinja2:5
+msgid "Manage Clinics"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:179
+msgid "Home"
+msgstr ""
+
+#: whoahqa/templates/clinic_assessment_table.jinja2:20
+msgid "Stakeholder"
+msgstr ""
+
+#: whoahqa/templates/clinic_assessment_table.jinja2:21
+msgid "Surveys done"
+msgstr ""
+
+#: whoahqa/templates/clinic_assessment_table.jinja2:46
+msgid "Total"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:10
+#: whoahqa/templates/reporting_periods_create.jinja2:13
+#: whoahqa/templates/reporting_periods_list.jinja2:3
+#: whoahqa/templates/user_clinics.jinja2:9
+msgid "Reporting Periods"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:18
+msgid "Select Characteristics"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:27
+msgid "Filter by Characteristic Type"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:31
+msgid "All"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:41
+msgid "Work on selected"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:49
+#: whoahqa/templates/clinics_show.jinja2:24
+msgid "Characteristics"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:60
+msgid "Description"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:61
+#: whoahqa/templates/clinics_show.jinja2:38
+msgid "Category"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:62
+#: whoahqa/templates/clinics_show.jinja2:39
+msgid "Min - Max"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:63
+#: whoahqa/templates/clinics_show.jinja2:40
+msgid "# Respondents"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:86
+#: whoahqa/templates/clinics_show.jinja2:60
+msgid "Absolute total score"
+msgstr ""
+
+#: whoahqa/templates/clinics_list.jinja2:2
+msgid "All Clinics"
+msgstr ""
+
+#: whoahqa/templates/clinics_score_summary.jinja2:3
+#: whoahqa/templates/clinics_score_summary.jinja2:9
+#: whoahqa/templates/reporting_period_select.jinja2:3
+#: whoahqa/templates/user_clinics.jinja2:19
+msgid "My Clinics"
+msgstr ""
+
+#: whoahqa/templates/clinics_score_summary.jinja2:13
+#: whoahqa/templates/clinics_score_summary.jinja2:20
+msgid "Score Summary"
+msgstr ""
+
+#: whoahqa/templates/clinics_score_summary.jinja2:33
+msgid "Characteristic Scores"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:25
+msgid "Relative Score"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:37
+msgid "Description "
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:41
+msgid "Score"
+msgstr ""
+
+#: whoahqa/templates/clinics_summary.jinja2:8
+#: whoahqa/templates/location_list.jinja2:11
+msgid "Municipalities"
+msgstr ""
+
+#: whoahqa/templates/clinics_unassigned.jinja2:3
+msgid "Unassigned Clinics"
+msgstr ""
+
+#: whoahqa/templates/clinics_unassigned.jinja2:20
+msgid "Assign Selected to Myself"
+msgstr ""
+
+#: whoahqa/templates/locale.jinja2:2 whoahqa/templates/locale.jinja2:6
+msgid "User Settings"
+msgstr ""
+
+#: whoahqa/templates/locale.jinja2:20
+msgid "Select default language"
+msgstr ""
+
+#: whoahqa/templates/locale.jinja2:38
+msgid "Update"
+msgstr ""
+
+#: whoahqa/templates/locale.jinja2:41
+#: whoahqa/templates/reporting_periods_create.jinja2:76
+msgid "Cancel"
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:16
+msgid "Login | WHO Adolescent Health Quality Assessment"
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:67
+msgid "Login to your account"
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:72
+msgid "Login with your Ona Account"
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:77
+msgid "Don't have an account yet?"
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:79
+msgid "Create an account"
+msgstr ""
+
+#: whoahqa/templates/reporting_period_select.jinja2:8
+#: whoahqa/templates/reporting_period_select.jinja2:16
+msgid "Select Reporting Period"
+msgstr ""
+
+#: whoahqa/templates/reporting_periods_create.jinja2:9
+msgid "Create Reporting Period"
+msgstr ""
+
+#: whoahqa/templates/reporting_periods_create.jinja2:42
+msgid "Reporting Period"
+msgstr ""
+
+#: whoahqa/templates/reporting_periods_create.jinja2:73
+msgid "Create"
+msgstr ""
+
+#: whoahqa/templates/reporting_periods_list.jinja2:16
+msgid "New Reporting Period"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:28
+msgid "Code:"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:36
+msgid "Assign a new clinic to myself"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:42
+msgid "View Clinics Score Summary"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:50
+msgid "Characteristics Summary"
+msgstr ""
+
+#: whoahqa/views/clinics.py:282
+msgid "Cannot find selected municipality."
+msgstr ""
+
+#: whoahqa/views/reporting_periods.py:40
+msgid "Please fix the errors indicated below."
+msgstr ""
+
+#: whoahqa/views/reporting_periods.py:49
+msgid "Reporting period created"
+msgstr ""
