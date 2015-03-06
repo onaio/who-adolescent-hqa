@@ -39,7 +39,7 @@ requires = [
 
 extractors = {
     'whoahqa': [
-        ('**.py', 'lingua_python', None),
+        ('**.py', 'python', None),
         ('**.jinja2', 'jinja2', None)
     ]
 }
