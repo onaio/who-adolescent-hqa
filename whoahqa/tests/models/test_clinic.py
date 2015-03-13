@@ -283,3 +283,57 @@ class TestClinic(TestBase):
         key_indicator_scores = clinic_a.calculate_key_indicator_scores(
             [brazil_constants.THREE])
         self.assertEqual(key_indicator_scores, {brazil_constants.THREE: 25.0})
+
+    def test_calculate_characteristic_scores_with_period(self):
+        self.setup_test_data()
+        self.create_adolescent_client_submissions()
+        health_centre = Clinic.get(Clinic.id == 3)
+
+        period = '1may_31jul_2015'
+        scores = health_centre.get_characteristic_scores(period)
+
+        scores_1 = scores['one']
+        self.assertEqual(scores_1[constants.ADOLESCENT_CLIENT], {
+            'aggregate_score': 1.3333333333333333,
+            'num_questions': 2,
+            'num_responses': 3,
+            'num_pending_responses': 3,
+        })
+        self.assertEqual(scores_1[constants.HEALTH_CARE_PROVIDER], {
+            'aggregate_score': None,
+            'num_questions': 1,
+            'num_responses': 0,
+            'num_pending_responses': 5,
+        })
+
+        self.assertEqual(scores_1['totals'], {
+            'total_scores': 1.3333333333333333,
+            'total_questions': 5,
+            'total_responses': 3,
+            'total_percentage': 26.666666666666668,
+            'meets_threshold': False,
+            'score_classification': constants.BAD
+        })
+
+        score_14 = scores['fourteen']
+        self.assertEqual(score_14[constants.ADOLESCENT_CLIENT], {
+            'aggregate_score': 2.0,
+            'num_questions': 6,
+            'num_responses': 3,
+            'num_pending_responses': 3,
+        })
+        self.assertEqual(score_14[constants.HEALTH_FACILITY_MANAGER], {
+            'aggregate_score': None,
+            'num_questions': 2,
+            'num_responses': 0,
+            'num_pending_responses': 1,
+        })
+
+        self.assertEqual(score_14['totals'], {
+            'total_scores': 2.0,
+            'total_questions': 10,
+            'total_responses': 3,
+            'total_percentage': 20.0,
+            'meets_threshold': False,
+            'score_classification': constants.BAD
+        })
