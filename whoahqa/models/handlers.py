@@ -34,7 +34,7 @@ class ClinicReportHandler(BaseSubmissionHandler):
         clinic_code, characteristics, xform_id = \
             ClinicReportHandler.parse_data(self.submission.raw_data)
 
-        # check if we have a valid clinic with said id
+        # Check if we have a valid clinic with said id
         try:
             clinic = Clinic.get(Clinic.code == clinic_code)
         except NoResultFound:
@@ -45,7 +45,8 @@ class ClinicReportHandler(BaseSubmissionHandler):
                     clinic_id=clinic.id,
                     submission=self.submission,
                     characteristic=characteristic,
-                    xform_id=xform_id
+                    xform_id=xform_id,
+                    period=self.submission[constants.PERIOD_IDENTIFIER]
                 )
                 DBSession.add(clinic_submission)
 

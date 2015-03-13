@@ -78,6 +78,7 @@ class ClinicSubmission(Base):
     characteristic = Column(String, nullable=False, primary_key=True)
     xform_id = Column(String, nullable=False, primary_key=True)
     submission = relationship("Submission", lazy='subquery')
+    period = Column(String, nullable=True)
     clinic = relationship(
         "Clinic",
         lazy='subquery',
