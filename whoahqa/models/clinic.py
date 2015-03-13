@@ -222,6 +222,133 @@ class Clinic(Base):
             aggregate_score += num_1s / denominator
         return aggregate_score
 
+    def calculate_characteristic_aggregate_scores(
+            self, xpath, num_responses, submission_jsons):
+        """ Gets the aggregate score for a client_tool/characteristic pair.
+
+            :param xpath:
+            the total score xpath for the characteristic
+            e.g.
+
+            .. code-block:: python
+
+            'characteristic_one/ch1_scores'
+
+            :param num_responses
+            The number of submissions for the current interviewee group e.g.
+            Adolescent client. Should be retrieved by doing an SQL count on
+            the `clinic_submissions` table by client_tool/characteristic pair
+
+            :param submission_jsons
+            A list of submission json data for the characteristic we are
+            interested in. Should be filtered by clinic and reporting period.
+        """
+        # raise ValueError if num_submissions is invalid
+        if int(num_responses) < 1:
+            raise ValueError("cant calculate scores with zero responses")
+
+        # for each xpath, loop through the submissions  to find where the
+        # value is
+        def get_score(s):
+            try:
+                return int(s.get(xpath, 0))
+            except ValueError:
+                return 0
+
+        denominator = float(num_responses)
+        aggregate_score = 0.0
+        total_score = sum(map(get_score, submission_jsons))
+        aggregate_score = total_score / denominator
+        return aggregate_score
+
+    def get_characteristic_scores(self, period):
+        # get all submissions for this clinic for the specified period
+        # get characteristic mapping for each characteristic by tool
+        # validate the score of each tool for each characteristic
+        # compute the scores, valid-responses, expected-responses
+        submissions = self.get_period_clinic_submissions(period)
+
+        # filter count based on whether score is valid
+        characteristics_submission_map = \
+            self.get_num_responses_per_characteristic_xform_id(period)
+
+        scores = {}
+
+        for characteristic, label, number in constants.CHARACTERISTICS:
+            scores[characteristic] = {}
+            total_scores = 0
+            total_questions = 0
+            total_responses = 0
+            mapping = constants.CHARACTERISTIC_MAPPING[characteristic]
+            meets_threshold = True
+
+            for score_xpath, client_tools in mapping.items():
+                # generate characteristic tool scores
+                for client_tool_id in client_tools:
+                    recommended_sample_frame =\
+                        constants.RECOMMENDED_SAMPLE_FRAMES[client_tool_id]
+                    num_questions = (constants.QUESTION_COUNT
+                                     [characteristic][client_tool_id])
+
+                    submission_jsons = [s.raw_data
+                                        for c, s in submissions
+                                        if c.characteristic == characteristic
+                                        and c.xform_id == client_tool_id]
+
+                    current_submission_map = filter(
+                        lambda c: c['characteristic'] == characteristic
+                        and c['xform_id'] == client_tool_id,
+                        characteristics_submission_map)
+
+                    num_responses = 0
+
+                    if len(current_submission_map) > 0:
+                        # we have responses for this combination
+                        num_responses = current_submission_map[0]['count']
+
+                    # check if number of submissions meets the threshold
+                    if not check_meets_threshold(
+                            num_responses,
+                            recommended_sample_frame,
+                            constants.MINIMUM_SAMPLE_FRAME_RATIO):
+                        meets_threshold = False
+
+                    aggregate_score = None
+
+                    if num_responses > 0:
+                        aggregate_score =\
+                            self.calculate_characteristic_aggregate_scores(
+                                score_xpath, num_responses, submission_jsons)
+                        # increment total scores
+                        total_scores += aggregate_score
+
+                    stats = {
+                        'aggregate_score': aggregate_score,
+                        'num_responses': num_responses,
+                        'num_questions': num_questions,
+                        'num_pending_responses':
+                        recommended_sample_frame - num_responses
+                    }
+
+                    scores[characteristic][client_tool_id] = stats
+                    total_questions += num_questions
+                    total_responses += num_responses
+
+            total_percentage = None if total_responses == 0 else (
+                total_scores / float(total_questions) * 100)
+
+            scores[characteristic]['totals'] = {
+                'total_scores': None if total_scores == 0 else total_scores,
+                'total_questions': total_questions,
+                'total_responses': total_responses,
+                'total_percentage': total_percentage,
+                'meets_threshold': meets_threshold,
+                'score_classification': constants.get_score_classification(
+                    total_percentage)
+            }
+
+        return scores
+
     def get_scores(self):  # , period):
         """
         scores = {
