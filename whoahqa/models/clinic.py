@@ -157,8 +157,7 @@ class Clinic(Base):
             }
         return responses_per_tool
 
-    @classmethod
-    def get_num_responses_per_characteristic_xform_id(cls, clinic_id):
+    def get_num_responses_per_characteristic_xform_id(self, period):
         clinic_submissions_table = Base.metadata.tables['clinic_submissions']
         result = DBSession.execute(
             select([
@@ -166,8 +165,9 @@ class Clinic(Base):
                 clinic_submissions_table.c.characteristic,
                 clinic_submissions_table.c.xform_id])
             .select_from(clinic_submissions_table)
-            .where(
-                clinic_submissions_table.c.clinic_id == clinic_id)
+            .where(and_(
+                clinic_submissions_table.c.clinic_id == self.id,
+                clinic_submissions_table.c.period == period))
             .group_by(
                 clinic_submissions_table.c.characteristic,
                 clinic_submissions_table.c.xform_id)
@@ -176,12 +176,13 @@ class Clinic(Base):
             ('count', 'characteristic', 'xform_id'), result)
 
     # TODO: factor in reporting period
-    def get_period_clinic_submissions(self):
+    def get_period_clinic_submissions(self, period):
         from whoahqa.models import ClinicSubmission, Submission
         return DBSession\
             .query(ClinicSubmission, Submission)\
             .outerjoin(Submission)\
-            .filter(ClinicSubmission.clinic_id == self.id)\
+            .filter(ClinicSubmission.clinic_id == self.id,
+                    ClinicSubmission.period == period)\
             .all()
 
     @classmethod
