@@ -369,3 +369,34 @@ class TestClinic(TestBase):
             'meets_threshold': False,
             'score_classification': None
         })
+
+    def test_clinic_with_submissions_from_different_periods(self):
+        self.setup_test_data()
+        self.create_adolescent_client_submissions()
+        health_centre = Clinic.get(Clinic.id == 3)
+
+        period = '1aug_31oct_2015'
+        scores = health_centre.get_characteristic_scores(period)
+
+        scores_1 = scores['one']
+        self.assertEqual(scores_1[constants.ADOLESCENT_CLIENT], {
+            'aggregate_score': 0.0,
+            'num_questions': 2,
+            'num_responses': 1,
+            'num_pending_responses': 5,
+        })
+        self.assertEqual(scores_1[constants.HEALTH_CARE_PROVIDER], {
+            'aggregate_score': None,
+            'num_questions': 1,
+            'num_responses': 0,
+            'num_pending_responses': 5,
+        })
+
+        self.assertEqual(scores_1['totals'], {
+            'total_scores': None,
+            'total_questions': 5,
+            'total_responses': 1,
+            'total_percentage': 0.0,
+            'meets_threshold': False,
+            'score_classification': constants.BAD
+        })
