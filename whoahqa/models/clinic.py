@@ -11,6 +11,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql import select, and_
+from sqlalchemy.sql.expression import true
 from sqlalchemy.schema import PrimaryKeyConstraint
 from sqlalchemy.orm import (
     backref,
@@ -167,6 +168,7 @@ class Clinic(Base):
             .select_from(clinic_submissions_table)
             .where(and_(
                 clinic_submissions_table.c.clinic_id == self.id,
+                clinic_submissions_table.c.valid == true(),
                 clinic_submissions_table.c.period == period))
             .group_by(
                 clinic_submissions_table.c.characteristic,
