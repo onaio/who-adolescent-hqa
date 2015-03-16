@@ -318,9 +318,16 @@ class Clinic(Base):
                     aggregate_score = None
 
                     if num_responses > 0:
+                        # filter out submissions with invalid characteristic
+                        # data
+                        valid_submissions = filter(
+                            lambda s: not bool(int(
+                                s[constants.INVALID_CHARACTERISTICS_FLAGS
+                                    [characteristic]])),
+                            submission_jsons)
                         aggregate_score =\
                             self.calculate_characteristic_aggregate_scores(
-                                score_xpath, num_responses, submission_jsons)
+                                score_xpath, num_responses, valid_submissions)
                         # increment total scores
                         total_scores += aggregate_score
 
