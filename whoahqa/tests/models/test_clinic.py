@@ -315,12 +315,13 @@ class TestClinic(TestBase):
             'score_classification': constants.BAD
         })
 
+        # Test scores of characteristic with an invalid entry
         score_14 = scores['fourteen']
         self.assertEqual(score_14[constants.ADOLESCENT_CLIENT], {
-            'aggregate_score': 2.0,
+            'aggregate_score': 3.0,
             'num_questions': 6,
-            'num_responses': 3,
-            'num_pending_responses': 3,
+            'num_responses': 2,
+            'num_pending_responses': 4,
         })
         self.assertEqual(score_14[constants.HEALTH_FACILITY_MANAGER], {
             'aggregate_score': None,
@@ -330,10 +331,10 @@ class TestClinic(TestBase):
         })
 
         self.assertEqual(score_14['totals'], {
-            'total_scores': 2.0,
+            'total_scores': 3.0,
             'total_questions': 10,
-            'total_responses': 3,
-            'total_percentage': 20.0,
+            'total_responses': 2,
+            'total_percentage': 30.0,
             'meets_threshold': False,
             'score_classification': constants.BAD
         })
