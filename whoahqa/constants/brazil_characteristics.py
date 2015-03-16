@@ -183,3 +183,24 @@ STATE_IDENTIFIER = 'facility_info/state'
 AVAILABLE_LANGUAGES = {
     'en': "English",
     'pt': "Portuguese"}
+
+INVALID_CHARACTERISTICS_FLAGS = {
+    ONE: 'characteristic_one/ch1_invalid',
+    TWO: 'characteristic_two/ch2_invalid',
+    THREE: 'characteristic_three/ch3_invalid',
+    FIVE: 'characteristic_five/ch5_invalid',
+    SIX: 'characteristic_six/ch6_invalid',
+    SEVEN: 'characteristic_seven/ch7_invalid',
+    EIGHT: 'characteristic_eight/ch8_invalid',
+    NINE: 'characteristic_nine/ch9_invalid',
+    TEN: 'characteristic_ten/ch10_invalid',
+    ELEVEN: 'characteristic_eleven/ch11_invalid',
+    TWELVE: 'characteristic_twelve/ch12_invalid',
+    THIRTEEN: 'characteristic_thirteen/ch13_invalid',
+    FOURTEEN: 'characteristic_fourteen/ch14_invalid',
+    FIFTEEN: 'characteristic_fifteen/ch15_invalid',
+    SIXTEEN: 'characteristic_sixteen/ch16_invalid',
+    EIGHTEEN: 'characteristic_eighteen/ch18_invalid',
+    NINETEEN: 'characteristic_nineteen/ch19_invalid',
+    TWENTY: 'characteristic_twenty/ch20_invalid'
+}
