@@ -47,7 +47,11 @@ class ClinicReportHandler(BaseSubmissionHandler):
                     characteristic=characteristic,
                     xform_id=xform_id,
                     period=(
-                        self.submission.raw_data[constants.PERIOD_IDENTIFIER])
+                        self.submission.raw_data[constants.PERIOD_IDENTIFIER]),
+                    valid=(not bool(int(
+                        self.submission.raw_data
+                        [constants.INVALID_CHARACTERISTICS_FLAGS
+                            [characteristic]])))
                 )
                 DBSession.add(clinic_submission)
 
