@@ -367,24 +367,25 @@ class Clinic(Base):
             ...
         }
         """
-        key_indicators = tuple_to_dict_list(
-            ("key", "characteristic_list"), constants.KEY_INDICATORS)
-        all_key_indicator_scores = {}
-        for key_char_pair in key_indicators:
-            average_score = 0
-            indicator_score = self.calculate_key_indicator_scores(
-                key_char_pair['characteristic_list'])
-            for score in indicator_score.itervalues():
-                if score is not None:
-                    average_score += score
-            all_key_indicator_scores[key_char_pair['key']] = indicator_score
-            all_key_indicator_scores[key_char_pair['key']].update(
-                {
-                    'average_score': (average_score / len(indicator_score))
-                }
-            )
+        key_indicators = {key: list(values)
+                          for key, values in constants.KEY_INDICATORS}
+        key_indicator_scores = {}
 
-        return all_key_indicator_scores
+        scores = self.get_scores(period)
+
+        for key_indicator, characteristic_list in key_indicators.iteritems():
+            total_scores = 0
+            characteristic_scores = [scores[k]
+                                     .get('totals')
+                                     .get('total_percentage') or 0
+                                     for k in characteristic_list]
+
+            total_scores = sum(characteristic_scores)
+
+            key_indicator_scores[key_indicator] = (
+                total_scores / len(characteristic_list))
+
+        return key_indicator_scores
 
     def key_indicators(self, period):
         from whoahqa.models import ClinicReport
