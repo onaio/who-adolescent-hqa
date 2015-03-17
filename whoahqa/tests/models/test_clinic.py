@@ -290,7 +290,7 @@ class TestClinic(TestBase):
         health_centre = Clinic.get(Clinic.id == 3)
 
         period = '1may_31jul_2015'
-        scores = health_centre.get_characteristic_scores(period)
+        scores = health_centre.get_scores(period)
 
         scores_1 = scores['one']
         self.assertEqual(scores_1[constants.ADOLESCENT_CLIENT], {
@@ -345,7 +345,7 @@ class TestClinic(TestBase):
         period = '1may_31jul_2015'
         clinic = Clinic.get(Clinic.id == 1)
 
-        scores = clinic.get_characteristic_scores(period)
+        scores = clinic.get_scores(period)
 
         scores_1 = scores['one']
         self.assertEqual(scores_1[constants.ADOLESCENT_CLIENT], {
@@ -376,7 +376,7 @@ class TestClinic(TestBase):
         health_centre = Clinic.get(Clinic.id == 3)
 
         period = '1aug_31oct_2015'
-        scores = health_centre.get_characteristic_scores(period)
+        scores = health_centre.get_scores(period)
 
         scores_1 = scores['one']
         self.assertEqual(scores_1[constants.ADOLESCENT_CLIENT], {
