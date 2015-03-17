@@ -400,3 +400,18 @@ class TestClinic(TestBase):
             'meets_threshold': False,
             'score_classification': constants.BAD
         })
+
+    def test_calculate_key_indicator_scores_with_period(self):
+        self.setup_test_data()
+        self.create_adolescent_client_submissions()
+        health_centre = Clinic.get(Clinic.id == 3)
+
+        period = '1may_31jul_2015'
+        key_indicator_scores = health_centre.get_key_indicator_scores(period)
+
+        self.assertEqual(key_indicator_scores, {
+            'accessible': 19.343434343434343,
+            'equitable': 19.999999999999996,
+            'acceptable': 22.222222222222225,
+            'appropriate': 3.8461538461538463,
+            'effective': 10.353535353535353})
