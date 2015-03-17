@@ -193,41 +193,6 @@ class TestClinic(TestBase):
             constants.THREE: 33.33333333333333
         })
 
-    def test_get_all_key_indicator_scores_when_no_responses_exist(self):
-        """ Should return list containing None values for each characteristic
-        """
-        self.setup_test_data()
-        clinic_a = Clinic.get(Clinic.id == 1)
-        key_indicator_scores = clinic_a.get_all_key_indicator_scores()
-        self.assertEqual(key_indicator_scores[constants.EQUITABLE], {
-            constants.ONE: None,
-            constants.TWO: None,
-            constants.THREE: None,
-            'average_score': 0
-        })
-        self.assertEqual(key_indicator_scores[constants.APPROPRIATE], {
-            constants.SIXTEEN: None,
-            'average_score': 0
-        })
-
-    def test_get_all_key_indicator_scores_when_responses_exist(self):
-        """ Should list containing values for each characteristic
-        """
-        self.setup_test_data()
-        self.create_submissions()
-        clinic_a = Clinic.get(Clinic.id == 1)
-        key_indicator_scores = clinic_a.get_all_key_indicator_scores()
-        self.assertEqual(key_indicator_scores[constants.EQUITABLE], {
-            constants.ONE: 50.0,
-            constants.TWO: None,
-            constants.THREE: 33.33333333333333,
-            'average_score': 27.777777777777775
-        })
-        self.assertEqual(key_indicator_scores[constants.APPROPRIATE], {
-            constants.SIXTEEN: None,
-            'average_score': 0
-        })
-
     def test_get_item_returns_reporting_period(self):
         self.setup_test_data()
         period = ReportingPeriod(
@@ -415,3 +380,18 @@ class TestClinic(TestBase):
             'acceptable': 22.222222222222225,
             'appropriate': 3.8461538461538463,
             'effective': 10.353535353535353})
+
+    def test_key_indicator_scores_for_period_without_submissions(self):
+        self.setup_test_data()
+        self.create_adolescent_client_submissions()
+        health_centre = Clinic.get(Clinic.id == 3)
+
+        period = '1april_31jul_2015'
+        key_indicator_scores = health_centre.get_key_indicator_scores(period)
+
+        self.assertEqual(key_indicator_scores, {
+            'accessible': 0,
+            'equitable': 0,
+            'acceptable': 0,
+            'appropriate': 0,
+            'effective': 0})
