@@ -82,7 +82,7 @@ class TestClinic(TestBase):
 
         submissions = clinic.get_period_clinic_submissions(
             period.generate_form_key())
-        self.assertEqual(len(submissions), 51)
+        self.assertEqual(len(submissions), 50)
 
     def test_is_assigned_returns_true_if_assigned(self):
         self.setup_test_data()
