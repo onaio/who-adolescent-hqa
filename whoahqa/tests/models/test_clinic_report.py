@@ -11,10 +11,10 @@ class TestClinicReports(TestBase):
     def setUp(self):
         super(TestClinicReports, self).setUp()
         self.setup_test_data()
-        self.create_brazil_submissions()
+        self.create_adolescent_client_submissions()
 
     def create_clinic_report(self):
-        clinic = Clinic.get(Clinic.id == 1)
+        clinic = Clinic.get(Clinic.id == 3)
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
 
         with transaction.manager:
@@ -22,7 +22,7 @@ class TestClinicReports(TestBase):
 
     def test_clinic_report_is_generated_if_none_existent(self):
         count = ClinicReport.count()
-        clinic = Clinic.get(Clinic.id == 1)
+        clinic = Clinic.get(Clinic.id == 3)
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
 
         ClinicReport.get_or_generate(clinic, period)
@@ -32,5 +32,6 @@ class TestClinicReports(TestBase):
     def test_clinic_report_catches_key_indicators(self):
         self.create_clinic_report()
         report = ClinicReport.newest()
+
         key_indicators = report.get_key_indicators()
-        self.assertEqual(key_indicators['equitable'], 25.0)
+        self.assertEqual(key_indicators['equitable'], 19.999999999999996)
