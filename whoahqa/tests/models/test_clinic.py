@@ -27,7 +27,7 @@ class TestClinic(TestBase):
         self.setup_test_data()
 
         clinics = Clinic.get_unassigned()
-        self.assertEqual(len(clinics), 1)
+        self.assertEqual(len(clinics), 2)
         self.assertEqual(clinics[0].name, "Clinic B")
 
     def test_filter_clinics(self):
@@ -78,66 +78,11 @@ class TestClinic(TestBase):
         self.setup_test_data()
         self.create_submissions()
         clinic = Clinic.get(Clinic.name == 'Clinic A')
-        submissions = clinic.get_period_clinic_submissions()
-        self.assertEqual(len(submissions), 7)
+        period = ReportingPeriod.get(ReportingPeriod.title == "Period 1")
 
-    def test_get_scores(self):
-        """
-        Test scores calculation for all characteristic and tool pairs per
-        clinic
-        """
-        self.setup_test_data()
-        self.create_submissions()
-
-        clinic = Clinic.get(Clinic.id == 1)
-        scores = clinic.get_scores()
-
-        scores_1 = scores['one']
-        self.assertEqual(scores_1[constants.ADOLESCENT_CLIENT], {
-            'aggregate_score': 1.5,
-            'num_questions': 2,
-            'num_responses': 2,
-            'num_pending_responses': 4,
-        })
-        self.assertEqual(scores_1[constants.HEALTH_CARE_PROVIDER], {
-            'aggregate_score': 1,
-            'num_questions': 1,
-            'num_responses': 1,
-            'num_pending_responses': 4,
-        })
-
-        self.assertEqual(scores_1['totals'], {
-            'total_scores': 2.5,
-            'total_questions': 5,
-            'total_responses': 3,
-            'total_percentage': 50.0,
-            'meets_threshold': False,
-            'score_classification': constants.BAD
-        })
-
-    def test_get_scores_when_no_responses_sets_totals_to_none(self):
-        self.setup_test_data()
-        self.create_submissions()
-
-        clinic = Clinic.get(Clinic.id == 1)
-        scores = clinic.get_scores()
-
-        scores_10 = scores['ten']
-        self.assertEqual(scores_10[constants.ADOLESCENT_CLIENT], {
-            'aggregate_score': None,
-            'num_questions': 4,
-            'num_responses': 0,
-            'num_pending_responses': 6,
-        })
-
-        self.assertEqual(scores_10['totals'], {
-            'total_scores': None,
-            'total_questions': 10,
-            'total_responses': 0,
-            'total_percentage': None,
-            'meets_threshold': False,
-            'score_classification': None
-        })
+        submissions = clinic.get_period_clinic_submissions(
+            period.generate_form_key())
+        self.assertEqual(len(submissions), 51)
 
     def test_is_assigned_returns_true_if_assigned(self):
         self.setup_test_data()
