@@ -2,7 +2,6 @@ import datetime
 import json
 
 from whoahqa.constants import characteristics as constants
-from whoahqa.constants import brazil_characteristics as brazil_constants
 from whoahqa.models import (
     DBSession,
     OnaUser,
@@ -42,26 +41,14 @@ class TestClinic(TestBase):
         self.create_submissions()
         clinic_a = Clinic.get(Clinic.name == 'Clinic A')
         result = clinic_a.get_num_responses_per_characteristic_xform_id(
-            clinic_a.id)
-        self.assertEqual(len(result), 5)
+            '1may_31jul_2015')
+        self.assertEqual(len(result), 17)
         self.assertIn(
-            {'count': 1, 'characteristic': constants.TWENTY,
-             'xform_id': constants.HEALTH_FACILITY_MANAGER},
-            result)
-        self.assertIn(
-            {'count': 1, 'characteristic': constants.THREE,
-             'xform_id': constants.HEALTH_CARE_PROVIDER},
-            result)
-        self.assertIn(
-            {'count': 2, 'characteristic': constants.THREE,
+            {'count': 3, 'characteristic': constants.THREE,
              'xform_id': constants.ADOLESCENT_CLIENT},
             result)
         self.assertIn(
-            {'count': 1, 'characteristic': constants.ONE,
-             'xform_id': constants.HEALTH_CARE_PROVIDER},
-            result)
-        self.assertIn(
-            {'count': 2, 'characteristic': constants.ONE,
+            {'count': 3, 'characteristic': constants.ONE,
              'xform_id': constants.ADOLESCENT_CLIENT},
             result)
 
@@ -168,32 +155,19 @@ class TestClinic(TestBase):
         self.assertEquals(
             clinic_a.date_created.date(), datetime.datetime.today().date())
 
-    def test_calculate_key_indicator_scores_when_no_responses_exist(self):
-        """ should return None when no responses exist
-        """
-        self.setup_test_data()
-        clinic_a = Clinic.get(Clinic.id == 1)
-        key_indicator_scores = clinic_a.calculate_key_indicator_scores(
-            (constants.ONE, constants.TWO, constants.THREE))
-        self.assertEqual(key_indicator_scores, {
-            constants.ONE: None,
-            constants.TWO: None,
-            constants.THREE: None
-        })
-
     def test_calculate_key_indicator_when_responses_exist(self):
         """ should return a valid value when responses exist
         """
         self.setup_test_data()
         self.create_submissions()
         clinic_a = Clinic.get(Clinic.id == 1)
-        key_indicator_scores = clinic_a.calculate_key_indicator_scores(
-            (constants.ONE, constants.TWO, constants.THREE))
+        key_indicator_scores = clinic_a.get_key_indicator_scores('')
         self.assertEqual(key_indicator_scores, {
-            constants.ONE: 50.0,
-            constants.TWO: None,
-            constants.THREE: 33.33333333333333
-        })
+            'accessible': 0,
+            'equitable': 0,
+            'acceptable': 0,
+            'appropriate': 0,
+            'effective': 0})
 
     def test_get_item_returns_reporting_period(self):
         self.setup_test_data()
@@ -240,16 +214,6 @@ class TestClinic(TestBase):
         characteristics = clinic_a.get_active_characteristics(period_1)
 
         self.assertEqual(len(characteristics), 1)
-
-    def test_calculate_key_indicator_for_brazil_responses(self):
-        """ should return a valid value when responses exist
-        """
-        self.setup_test_data()
-        self.create_brazil_submissions()
-        clinic_a = Clinic.get(Clinic.id == 1)
-        key_indicator_scores = clinic_a.calculate_key_indicator_scores(
-            [brazil_constants.THREE])
-        self.assertEqual(key_indicator_scores, {brazil_constants.THREE: 25.0})
 
     def test_calculate_characteristic_scores_with_period(self):
         self.setup_test_data()
