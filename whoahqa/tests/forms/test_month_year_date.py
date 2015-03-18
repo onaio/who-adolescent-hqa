@@ -10,7 +10,7 @@ class TestMonthYearDate(unittest.TestCase):
     def test_serialize_converts_date_time_to_string(self):
         month_year = MonthYearDate()
         value = month_year.serialize(None, datetime(2014, 3, 13))
-        self.assertEqual(value, "03-2014")
+        self.assertEqual(value, "13-03-2014")
 
     def test_serialize_raises_invalid_if_not_datetime(self):
         month_year = MonthYearDate()
@@ -24,7 +24,7 @@ class TestMonthYearDate(unittest.TestCase):
 
     def test_deserialize_converts_straing_to_datetime(self):
         month_year = MonthYearDate()
-        value = month_year.deserialize(None, "03-2014")
+        value = month_year.deserialize(None, "1-03-2014")
         self.assertEqual(value, datetime(2014, 3, 1))
 
     def test_deserialize_raises_invalid_if_not_basestring(self):

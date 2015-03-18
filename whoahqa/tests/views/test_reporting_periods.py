@@ -17,8 +17,8 @@ class TestReportingPeriods(IntegrationTestBase):
         self.request.method = "POST"
         self.request.POST = MultiDict([
             ('title', "2013/2014"),
-            ('start_date', '02-2014'),
-            ('end_date', '01-2015')
+            ('start_date', '1-02-2014'),
+            ('end_date', '1-01-2015')
         ])
         response = self.view.create()
         self.assertEqual(response.status_code, 302)
