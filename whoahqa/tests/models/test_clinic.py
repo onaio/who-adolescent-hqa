@@ -66,24 +66,26 @@ class TestClinic(TestBase):
             result)
 
     def test_calculate_aggregate_scores(self):
-        xpaths = constants.CHARACTERISTIC_MAPPING[
-            constants.ONE][constants.ADOLESCENT_CLIENT]
+        clinic = Clinic(code="123", name="Test Clinic")
+        characteristic_one = constants.CHARACTERISTIC_MAPPING[constants.ONE]
+        score_xpath = characteristic_one.keys()[0]
         num_responses = 3
         submissions = [json.loads(s) for s in self.submissions[1: 4]]
-        scores = Clinic.calculate_aggregate_scores(
-            xpaths, num_responses, submissions)
+        scores = clinic.calculate_characteristic_aggregate_scores(
+            score_xpath, num_responses, submissions)
         self.assertIsInstance(scores, float)
         self.assertEqual(scores, 1.3333333333333333)
 
     def test_calculate_aggregate_scores_raises_value_error_for_0_submissions(
             self):
-        xpaths = constants.CHARACTERISTIC_MAPPING[
-            constants.ONE][constants.ADOLESCENT_CLIENT]
+        clinic = Clinic(code="123", name="Test Clinic")
+        characteristic_one = constants.CHARACTERISTIC_MAPPING[constants.ONE]
+        score_xpath = characteristic_one.keys()[0]
         num_responses = 0
         submissions = [json.loads(s) for s in self.submissions[1: 4]]
         self.assertRaises(
-            ValueError, Clinic.calculate_aggregate_scores, xpaths,
-            num_responses, submissions)
+            ValueError, clinic.calculate_characteristic_aggregate_scores,
+            score_xpath, num_responses, submissions)
 
     def test_get_period_submissions(self):
         self.setup_test_data()
