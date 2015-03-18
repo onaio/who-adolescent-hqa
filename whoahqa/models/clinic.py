@@ -184,7 +184,8 @@ class Clinic(Base):
             .query(ClinicSubmission, Submission)\
             .outerjoin(Submission)\
             .filter(ClinicSubmission.clinic_id == self.id,
-                    ClinicSubmission.period == period)\
+                    ClinicSubmission.period == period,
+                    ClinicSubmission.valid == true())\
             .all()
 
     def calculate_characteristic_aggregate_scores(
