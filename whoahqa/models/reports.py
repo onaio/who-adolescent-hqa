@@ -9,7 +9,6 @@ from sqlalchemy.orm import (
     relationship)
 from sqlalchemy.orm.exc import NoResultFound
 
-from whoahqa.constants import characteristics
 from whoahqa.models import (
     Base,
     DBSession)
@@ -41,18 +40,7 @@ class ClinicReport(Base):
         self.save()
 
     def get_key_indicators(self):
-        return {
-            characteristics.EQUITABLE: self.json_data[
-                characteristics.EQUITABLE][AVERAGE_SCORE_KEY],
-            characteristics.ACCESSIBLE: self.json_data[
-                characteristics.ACCESSIBLE][AVERAGE_SCORE_KEY],
-            characteristics.ACCEPTABLE: self.json_data[
-                characteristics.ACCEPTABLE][AVERAGE_SCORE_KEY],
-            characteristics.APPROPRIATE: self.json_data[
-                characteristics.APPROPRIATE][AVERAGE_SCORE_KEY],
-            characteristics.EFFECTIVE: self.json_data[
-                characteristics.EFFECTIVE][AVERAGE_SCORE_KEY],
-        }
+        return self.json_data
 
     @classmethod
     def generate_clinic_report(cls, clinic, period):
