@@ -40,23 +40,6 @@ class TestUserViews(IntegrationTestBase):
         self.assertEqual(len(response['locations']), 1)
         self.assertEqual(response['locations'][0].name, "Clinic A")
 
-    def test_user_summary_view(self):
-        self.setup_test_data()
-        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
-        request = testing.DummyRequest()
-        request.context = ona_user.user
-        request.ona_user = ona_user
-        user_views = UserViews(request)
-
-        with HTTMock(get_edit_url_mock):
-            response = user_views.clinics_score_summary()
-
-        # we should only have Clinic A in the response
-        self.assertEqual(len(response['clinics']), 1)
-        self.assertEqual(response['clinics'][0].name, "Clinic A")
-        self.assertIn('characteristics', response)
-        self.assertIn('clinic_scores', response)
-
     def select_reporting_period(self):
         self.setup_test_data()
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
