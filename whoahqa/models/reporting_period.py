@@ -1,3 +1,4 @@
+import datetime
 from sqlalchemy import (
     Column,
     Integer,
@@ -6,6 +7,10 @@ from sqlalchemy import (
 )
 from whoahqa.models import Base, BaseModelFactory
 from sqlalchemy.orm.exc import NoResultFound
+
+
+def get_current_date():
+    return datetime.datetime.now()
 
 
 class ReportingPeriod(Base):
@@ -27,6 +32,12 @@ class ReportingPeriod(Base):
                                     self.end_date.strftime("%-d%b_%Y"))
 
         return period.lower()
+
+    @classmethod
+    def get_active_periods(self):
+        today = get_current_date()
+
+        return ReportingPeriod.all(ReportingPeriod.start_date <= today)
 
 
 class ReportingPeriodFactory(BaseModelFactory):
