@@ -859,92 +859,70 @@ Page title
 Page breadcrumb
 ***/
 
-.ie8 .row .page-breadcrumb.breadcrumb > li {
-  margin-right: 1px;
-}
-
-.page-content .page-breadcrumb.breadcrumb {
-  -webkit-border-radius: 0px;
-     -moz-border-radius: 0px;
-          border-radius: 0px;
-  box-shadow: none;
-  padding-right: 30px;
-  padding-left: 20px;
-  margin-top: 15px;
-  margin-bottom: 20px;
-  border:0px !important;  
-  border-top: 1px solid #e6e6e6 !important;
-  border-bottom: 1px solid #e6e6e6 !important;  
-  -webkit-box-shadow: none !important;
-     -moz-box-shadow: none !important;
-          box-shadow: none !important;
-  background-color: #EFEFEF;
+/* Page breadcrumb */
+.page-bar {
+  border: 0;
+  padding: 0px;
+  background-color: #eee;
+  margin-bottom: 25px;
   margin-left: -20px;
   margin-right: -20px;
+  padding-left: 10px;
+  padding-right: 20px;
 }
 
-.page-content .page-breadcrumb.breadcrumb > li > a, 
-.page-content .page-breadcrumb.breadcrumb > li > i, 
-.page-content .page-breadcrumb.breadcrumb > li > span {
-  font-size: 14px;
-  text-shadow:none;
-}
-
-.page-content .page-breadcrumb.breadcrumb > li > i {
-  color: #666;
+.page-boxed .page-bar {
+  margin-right: -19px;
 } 
 
-.page-content .page-breadcrumb.breadcrumb > li+li:before {
-  display: none;
+.page-bar:before, 
+.page-bar:after {
+  content: " ";
+  display: table;
+}
+.page-bar:after {
+  clear: both;
+}
+.page-bar .page-breadcrumb {
+  display: inline-block;
+  float: left;
+  padding: 8px;
+  margin: 0;
+  list-style: none;
+}
+.page-bar .page-breadcrumb > li {
+  display: inline-block;
+}
+.page-bar .page-breadcrumb > li > a,
+.page-bar .page-breadcrumb > li > span {
+  color: #666;
+  font-size: 14px;
+  text-shadow: none;
+}
+.page-bar .page-breadcrumb > li > i {
+  color: #999;
+  font-size: 14px;
+  text-shadow: none;
+}
+.page-bar .page-breadcrumb > li > i[class^="icon-"],
+.page-bar .page-breadcrumb > li > i[class*="icon-"] {
+  color: gray;
 }
 
-/* Dashboard breadcrumb Dropdown */
-.page-content .page-breadcrumb.breadcrumb .btn-group {
-  right: 15px;
-  position: absolute;
-  margin-top: -8px;
+.page-bar .page-toolbar {
+  display: inline-block;
+  float: right;
+  padding: 0;
 }
 
-.page-content .page-breadcrumb.breadcrumb > .btn-group .btn {
+.page-bar .page-toolbar .btn-fit-height {
   padding-top: 8px;
   padding-bottom: 8px;
+  border-radius: 0;
 }
 
-/* Dashboard date range panel */
-.page-content .page-breadcrumb.breadcrumb .dashboard-date-range  {
-  position: relative;
-  top: -8px;
-  margin-right: -10px;
-  display: none;
-  padding: 9px 9px 8px 9px;
-  cursor: pointer;
-  color: #fff;
-  background-color: #d12610;
-}
-
-/* hack for chrome and safari */
-@media all and (-webkit-min-device-pixel-ratio:0) {
-  .page-content .page-breadcrumb.breadcrumb .dashboard-date-range  {
-    padding: 9px;
-  } 
-}
-
-.page-content .page-breadcrumb.breadcrumb .dashboard-date-range > span {
-  font-size: 13px;
-  font-weight: 300; 
-  color: #fff;
-} 
-
-.page-content .page-breadcrumb.breadcrumb .dashboard-date-range > .icon-calendar {
-  text-transform: normal;
-  color: #fff;
-  margin-top: 0px;
-  font-size: 14px;
-}
-
-.page-content .page-breadcrumb.breadcrumb .dashboard-date-range > .icon-angle-down {
-  color:#fff;
-  font-size: 16px;
+.page-bar .page-toolbar .btn.default {  
+  background-color: #ddd;
 }
 
 /***
