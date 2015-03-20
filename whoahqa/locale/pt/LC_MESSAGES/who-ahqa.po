@@ -392,7 +392,7 @@ msgstr "Categoria"
 #: whoahqa/templates/clinics_characteristics_list.jinja2:62
 #: whoahqa/templates/clinics_show.jinja2:39
 msgid "Min - Max"
-msgstr "Mín - Máx"
+msgstr "Mín - Máx Pontuação"
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:63
 #: whoahqa/templates/clinics_show.jinja2:40
@@ -434,7 +434,7 @@ msgstr "Descrição"
 
 #: whoahqa/templates/clinics_show.jinja2:41
 msgid "Score"
-msgstr ""
+msgstr "Pontos Recebidos"
 
 #: whoahqa/templates/clinics_summary.jinja2:8
 #: whoahqa/templates/location_list.jinja2:11
