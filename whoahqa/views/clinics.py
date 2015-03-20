@@ -58,8 +58,6 @@ class ClinicViews(object):
         # TODO: paginate
         # TODO: change renderer only if its an xhr request
         search_term = self.request.GET.get('search')
-        # get period
-        period = ReportingPeriod.newest()
 
         if search_term is not None:
             clinics = Clinic.filter_clinics(search_term, True)
@@ -69,7 +67,8 @@ class ClinicViews(object):
 
         return {
             'locations': clinics,
-            'period': period,
+            'period': ReportingPeriod.get_current_period(),
+            'periods': ReportingPeriod.get_active_periods(),
             'key_indicators_key_labels': constants.INDICATOR_LABELS,
         }
 
