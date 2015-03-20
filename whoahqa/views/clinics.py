@@ -118,6 +118,7 @@ class ClinicViews(object):
         scores = clinic.get_scores(period.generate_form_key())
         return {
             'period': period,
+            'periods': ReportingPeriod.get_active_periods(),
             'clinic': clinic,
             'characteristics': tuple_to_dict_list(
                 ("id", "description", "number"), constants.CHARACTERISTICS),
