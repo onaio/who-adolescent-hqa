@@ -5,7 +5,10 @@ from sqlalchemy import (
     String,
     Date
 )
-from whoahqa.models import Base, BaseModelFactory
+from whoahqa.models import (
+    Base,
+    BaseModelFactory,
+    DBSession)
 from sqlalchemy.orm.exc import NoResultFound
 
 
@@ -37,7 +40,16 @@ class ReportingPeriod(Base):
     def get_active_periods(self):
         today = get_current_date()
 
-        return ReportingPeriod.all(ReportingPeriod.start_date <= today)
+        return DBSession.query(ReportingPeriod).filter(
+            ReportingPeriod.start_date <= today).order_by(
+            "start_date desc").all()
+
+    @classmethod
+    def get_current_period(self):
+        today = get_current_date()
+        return DBSession.query(ReportingPeriod).filter(
+            ReportingPeriod.start_date <= today).order_by(
+            "start_date desc").limit(1).one()
 
 
 class ReportingPeriodFactory(BaseModelFactory):
