@@ -20,7 +20,7 @@ class MunicipalityViews(BaseClassViews):
                  renderer='location_list.jinja2',
                  request_method='GET')
     def index(self):
-        period = ReportingPeriod.newest()
+        period = ReportingPeriod.get_current_period()
         return {
             'locations': Municipality.all(),
             'period': period,
@@ -35,7 +35,7 @@ class MunicipalityViews(BaseClassViews):
         municipality = self.request.context
         clinics = municipality.clinics
         # TODO determine period based on what user selected.
-        period = ReportingPeriod.newest()
+        period = ReportingPeriod.get_current_period()
 
         return {
             'locations': clinics,
