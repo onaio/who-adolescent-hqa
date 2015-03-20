@@ -19,8 +19,11 @@ class ReportingPeriodViews(BaseClassViews):
         permission=perms.CAN_LIST_CLINICS,
         renderer='reporting_periods_list.jinja2')
     def list(self):
+        # This lists all periods including those in the future
         periods = ReportingPeriod.all()
-        return {'periods': periods}
+        return {
+            'periods': periods,
+            'period': ReportingPeriod.get_current_period()}
 
     @view_config(
         name='new',
