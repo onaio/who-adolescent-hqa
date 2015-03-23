@@ -115,7 +115,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                        </a>
                      </li>
                      <li>
-                       <a href="{{ request.route_url('periods', traverse=()) }}">
+                       <a href="{{ request.route_url('periods', traverse=('list')) }}">
                          {{ gettext('Reporting Periods') }}
                        </a>
                      </li>
@@ -190,31 +190,33 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                      {% block breadcrumbs %}{% endblock %}
                   </ul>
                   <!-- END PAGE TITLE & BREADCRUMB-->
-                  {% if periods %}
-                     <div class="dashboard-date-range btn-group pull-right">
-                        <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-primary dropdown-toggle" data-container="body" data-placement="top" data-original-title="{{gettext('Change dashboard date range')}}" data-toggle="dropdown" aria-expanded="false">
-                           <i class="icon-calendar"></i>&nbsp; 
-                              {% set active_period = selected_period or period%}
-                              <span class="thin uppercase visible-lg-inline-block">
-                                 {{(active_period.start_date) | format_date("medium", request)}}
-                                 -
-                                 {{(active_period.end_date) | format_date("medium", request)}}
-                              </span>&nbsp; 
-                              <i class="icon-angle-down"></i>
-                        </div>
-                        <ul class="dropdown-menu" role="menu">
-                           {% for p in periods if p != period %}
-                              <li>
-                              <a href="">
-                                 {{(p.start_date) | format_date('medium', request)}}
+                  {% block period_selector %}
+                     {% if periods %}
+                        <div class="dashboard-date-range btn-group pull-right">
+                           <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-primary dropdown-toggle" data-container="body" data-placement="top" data-original-title="{{gettext('Change dashboard date range')}}" data-toggle="dropdown" aria-expanded="false">
+                              <i class="icon-calendar"></i>&nbsp; 
+                                 {% set active_period = selected_period or period%}
+                                 <span class="thin uppercase visible-lg-inline-block">
+                                    {{(active_period.start_date) | format_date("medium", request)}}
                                     -
-                                 {{(p.end_date) | format_date('medium', request)}}
-                              </a>
-                              </li>
-                           {% endfor %}
-                        </ul>
-                     </div>
-                  {% endif %}
+                                    {{(active_period.end_date) | format_date("medium", request)}}
+                                 </span>&nbsp; 
+                                 <i class="icon-angle-down"></i>
+                           </div>
+                           <ul class="dropdown-menu" role="menu">
+                              {% for p in periods if p != period %}
+                                 <li>
+                                 <a href="{{ request.current_route_url(_query={'period': p.id}) }}">
+                                    {{(p.start_date) | format_date('medium', request)}}
+                                       -
+                                    {{(p.end_date) | format_date('medium', request)}}
+                                 </a>
+                                 </li>
+                              {% endfor %}
+                           </ul>
+                        </div>
+                     {% endif %}
+                  {% endblock %}
                </div>
             </div>
          </div>

@@ -15,7 +15,7 @@ from whoahqa.views.base import BaseClassViews
 class ReportingPeriodViews(BaseClassViews):
 
     @view_config(
-        name='',
+        name='list',
         permission=perms.CAN_LIST_CLINICS,
         renderer='reporting_periods_list.jinja2')
     def list(self):
@@ -52,7 +52,7 @@ class ReportingPeriodViews(BaseClassViews):
                     _(u"Reporting period created"),
                     'success')
                 return HTTPFound(
-                    self.request.route_url('periods', traverse=()))
+                    self.request.route_url('periods', traverse=('list')))
 
         # render form
         return {'form': form}
