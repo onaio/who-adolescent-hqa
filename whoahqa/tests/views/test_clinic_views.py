@@ -1,3 +1,5 @@
+import datetime
+
 from webob.multidict import MultiDict
 from pyramid import testing
 from pyramid.httpexceptions import (
@@ -5,6 +7,7 @@ from pyramid.httpexceptions import (
     HTTPFound
 )
 from httmock import urlmatch, HTTMock
+from mock import patch
 
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -146,9 +149,11 @@ class TestClinicViews(IntegrationTestBase):
         self.request.GET = MultiDict([
             ('search', 'clinic a')
         ])
-        self.clinic_views.list()
-        self.assertEqual(
-            self.request.override_renderer, '_summary_scores_table.jinja2')
+        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
+            mock.return_value = datetime.date(2015, 6, 1)
+            self.clinic_views.list()
+            self.assertEqual(
+                self.request.override_renderer, '_summary_scores_table.jinja2')
 
     def test_characteristics_list(self):
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
@@ -212,9 +217,11 @@ class TestClinicViews(IntegrationTestBase):
         self.request.method = 'GET'
         self.request.ona_user = ona_user
 
-        response = self.clinic_views.assess_clinics()
+        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
+            mock.return_value = datetime.date(2015, 6, 1)
+            response = self.clinic_views.assess_clinics()
 
-        self.assertEqual(len(response['clinics']), 1)
+            self.assertEqual(len(response['clinics']), 1)
 
     def test_manage_clinics_view(self):
         count = Clinic.count()
