@@ -22,6 +22,7 @@ from whoahqa.utils import (
     translation_string_factory as _)
 from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
+from whoahqa.views.helpers import get_period_from_request
 
 from whoahqa.utils import tuple_to_dict_list, filter_dict_list_by_attr
 from whoahqa.models import (
@@ -59,11 +60,7 @@ class ClinicViews(object):
         # TODO: change renderer only if its an xhr request
         search_term = self.request.GET.get('search')
 
-        try:
-            period = ReportingPeriod.get(
-                ReportingPeriod.id == self.request.GET.get('period', 0))
-        except NoResultFound:
-            period = ReportingPeriod.get_current_period()
+        period = get_period_from_request(self.request)
 
         if search_term is not None:
             clinics = Clinic.filter_clinics(search_term, True)
@@ -117,9 +114,10 @@ class ClinicViews(object):
     def show(self):
         period = self.request.context
         clinic = period.__parent__
+
         # if clinic is not assigned, throw a bad request
-        if not clinic.is_assigned:
-            raise HTTPBadRequest("The clinic is not yet assigned")
+        # if not clinic.is_assigned:
+        #     raise HTTPBadRequest("The clinic is not yet assigned")
 
         scores = clinic.get_scores(period.generate_form_key())
         return {
