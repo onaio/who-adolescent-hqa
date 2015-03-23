@@ -5,6 +5,7 @@ from pyramid.view import (
 
 from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
+from whoahqa.views.helpers import get_period_from_request
 from whoahqa.models import (
     LocationFactory,
     Municipality,
@@ -20,10 +21,12 @@ class MunicipalityViews(BaseClassViews):
                  renderer='location_list.jinja2',
                  request_method='GET')
     def index(self):
-        period = ReportingPeriod.get_current_period()
+        period = get_period_from_request(self.request)
+
         return {
             'locations': Municipality.all(),
             'period': period,
+            'periods': ReportingPeriod.get_active_periods(),
             'key_indicators_key_labels': constants.INDICATOR_LABELS,
         }
 
@@ -34,12 +37,12 @@ class MunicipalityViews(BaseClassViews):
     def show(self):
         municipality = self.request.context
         clinics = municipality.clinics
-        # TODO determine period based on what user selected.
-        period = ReportingPeriod.get_current_period()
+        period = get_period_from_request(self.request)
 
         return {
             'locations': clinics,
             'parent': municipality,
             'period': period,
+            'periods': ReportingPeriod.get_active_periods(),
             'key_indicators_key_labels': constants.INDICATOR_LABELS,
         }
