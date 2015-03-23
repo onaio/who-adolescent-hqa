@@ -310,9 +310,12 @@ class ClinicViews(object):
     def assess_clinics(self):
         user = self.request.ona_user.user
         clinics = user.get_clinics()
+        period = get_period_from_request(self.request)
 
         return {
             'clinics': clinics,
+            'period': period,
+            'periods': ReportingPeriod.get_active_periods(),
             'client_tools': tuple_to_dict_list(
                 ("id", "name"), constants.CLIENT_TOOLS),
             'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAMES,
