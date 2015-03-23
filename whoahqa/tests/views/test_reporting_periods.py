@@ -50,7 +50,7 @@ class TestReportingPeriodsFunctional(FunctionalTestBase):
 
     def test_list_allows_su(self):
         headers = self._login_user('super')
-        url = self.request.route_path('periods', traverse=())
+        url = self.request.route_path('periods', traverse=('list'))
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
 

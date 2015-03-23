@@ -287,8 +287,10 @@ class TestClinicViewsFunctional(FunctionalTestBase):
     def test_clinic_list_allows_super_user(self):
         url = self.request.route_path('clinics', traverse=())
         headers = self._login_user('super')
-        response = self.testapp.get(url, headers=headers)
-        self.assertEqual(response.status_code, 200)
+        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
+            mock.return_value = datetime.date(2015, 6, 1)
+            response = self.testapp.get(url, headers=headers)
+            self.assertEqual(response.status_code, 200)
 
     def test_characteristics_returns_200(self):
         clinic = Clinic.get(Clinic.name == "Clinic A")
