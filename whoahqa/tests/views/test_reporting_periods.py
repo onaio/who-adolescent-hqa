@@ -1,5 +1,7 @@
+import datetime
 import deform
 
+from mock import patch
 from pyramid import testing
 from webob.multidict import MultiDict
 
@@ -51,8 +53,10 @@ class TestReportingPeriodsFunctional(FunctionalTestBase):
     def test_list_allows_su(self):
         headers = self._login_user('super')
         url = self.request.route_path('periods', traverse=('list'))
-        response = self.testapp.get(url, headers=headers)
-        self.assertEqual(response.status_code, 200)
+        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
+            mock.return_value = datetime.date(2015, 6, 1)
+            response = self.testapp.get(url, headers=headers)
+            self.assertEqual(response.status_code, 200)
 
     def test_create_denies_non_su(self):
         headers = self._login_user('john')
