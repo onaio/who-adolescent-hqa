@@ -398,6 +398,10 @@ class Clinic(Base):
 
         return self._cached_key_indicators
 
+    def update_reports(self):
+        for report in self.reports:
+            report.update()
+
 
 class ClinicFactory(BaseModelFactory):
 
