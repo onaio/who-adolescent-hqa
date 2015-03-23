@@ -106,13 +106,6 @@ class TestClinicViews(IntegrationTestBase):
             tuple_to_dict_list(
                 ("id", "description", "number"), constants.CHARACTERISTICS))
 
-    def test_show_raises_bad_request_if_clinic_is_not_assigned(self):
-        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
-        clinic = Clinic.get(Clinic.name == "Clinic B")
-        period.__parent__ = clinic
-        self.request.context = period
-        self.assertRaises(HTTPBadRequest, self.clinic_views.show)
-
     def test_list_redirects_when_user_has_no_permissions(self):
         self.request.ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         self.config.testing_securitypolicy(
