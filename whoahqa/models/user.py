@@ -22,8 +22,14 @@ from whoahqa.models import (
     Base,
     BaseModelFactory,
     DBSession,
+    Location,
     ReportingPeriod)
 from whoahqa.security import pwd_context
+
+LOCATION_MAP = {
+    groups.MUNICIPALITY_MANAGER: 'municipality',
+    groups.STATE_OFFICIAL: 'state'
+}
 
 user_clinics = Table(
     'user_clinics',
@@ -179,16 +185,42 @@ class OnaUser(Base):
 
     @property
     def group(self):
-        return self.user.group.name
+        return self.user.group
 
-    def update(self, group_name):
-        group_criteria = Group.name == group_name
-        group_params = {'name': group_name}
-        group = Group.get_or_create(
-            group_criteria,
-            **group_params)
+    @property
+    def location(self):
+        return self.user.location
 
-        self.user.group = group
+    @property
+    def clinics(self):
+        return self.user.clinics
+
+    def update(self, values):
+        group_name = values['group']
+
+        # check if new group is the same as previous group
+        # add new location selected to location table
+        # if group is clinic manager, add clinics selected to clinics list
+
+        if self.user.group is None or self.user.group.name != group_name:
+            group_criteria = Group.name == group_name
+            group_params = {'name': group_name}
+            group = Group.get_or_create(
+                group_criteria,
+                **group_params)
+
+            self.user.group = group
+
+        if group_name == groups.CLINIC_MANAGER:
+            from whoahqa.models import Clinic
+
+            clinic_id_list = values['clinics']
+            clinics = Clinic.all(Clinic.id.in_(clinic_id_list))
+            self.user.clinics = clinics
+            # add clinics to user
+        else:
+            location_id = values[LOCATION_MAP[group_name]]
+            self.user.location = Location.get(Location.id == location_id)
 
         self.save()
 

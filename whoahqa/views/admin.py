@@ -45,7 +45,7 @@ class AdminViews(object):
             except ValidationFailure:
                 pass
             else:
-                ona_user.update(values['group'])
+                ona_user.update(values)
                 self.request.session.flash(
                     "Your changes have been saved", 'success')
                 return HTTPFound(
