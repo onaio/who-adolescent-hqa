@@ -78,11 +78,27 @@ var Custom = function () {
         $('#charactersictic_type').val(type_value)
 
     }
+
+    var userFormValidation = function() {
+        $('select[name=group]').on('change', function(e){
+            value = this.value
+            $('select[name!=group]').closest('div.form-group').hide();
+            if(value === 'municipality_manager'){
+                $('select[name=municipality]').closest('div.form-group').show();
+            } else if(value === 'state_official'){
+                $('select[name=state]').closest('div.form-group').show();
+            } else {
+                $('select[name=clinic]').closest('div.form-group').show();
+            }
+        });
+    }
+
     return {
         addCheckAllListener: addCheckAllListener,
         enableDatatables: enableDatatables,
         filterClinicTable:filterClinicTable,
-        filterCharacteristics: filterCharacteristics
+        filterCharacteristics: filterCharacteristics,
+        userFormValidation: userFormValidation
     }
 }();
 

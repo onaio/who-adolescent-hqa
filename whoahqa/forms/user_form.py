@@ -3,6 +3,10 @@ import colander
 from deform.widget import SelectWidget
 
 from whoahqa.constants.groups import GROUPS
+from whoahqa.models import (
+    Clinic,
+    Municipality,
+    State)
 
 
 def key_to_label(key):
@@ -15,10 +19,41 @@ def user_role_widget(node, kw):
         values=[(g, key_to_label(g)) for g in GROUPS])
 
 
+@colander.deferred
+def muncipality_selection_widget(node, kw):
+    return SelectWidget(
+        values=[(m.id, key_to_label(m.name)) for m in Municipality.all()])
+
+
+@colander.deferred
+def state_selection_widget(node, kw):
+    return SelectWidget(
+        values=[(m.id, key_to_label(m.name)) for m in State.all()])
+
+
+@colander.deferred
+def clinic_selection_widget(node, kw):
+    return SelectWidget(
+        values=[(c.id, key_to_label(c.name)) for c in Clinic.all()],
+        multiple=True)
+
+
 class UserForm(colander.MappingSchema):
     group = colander.SchemaNode(
         colander.String(encoding='utf-8'), title="Role",
         widget=user_role_widget)
+
+    clinic = colander.SchemaNode(
+        colander.String(encoding='utf-8'), title="Clinic",
+        widget=clinic_selection_widget)
+
+    municipality = colander.SchemaNode(
+        colander.String(encoding='utf-8'), title="Municipality",
+        widget=muncipality_selection_widget)
+
+    state = colander.SchemaNode(
+        colander.String(encoding='utf-8'), title="State",
+        widget=state_selection_widget)
 
     def validator(self, node, value):
         exc = colander.Invalid(node, "")
