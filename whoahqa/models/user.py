@@ -43,11 +43,23 @@ user_groups = Table(
 )
 
 
+user_locations = Table(
+    'user_locations',
+    Base.metadata,
+    Column('user_id', Integer, ForeignKey('users.id'), nullable=False),
+    Column('location_id', Integer, ForeignKey('locations.id'), nullable=False),
+    PrimaryKeyConstraint('user_id', 'location_id')
+)
+
+
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     clinics = relationship("Clinic", secondary=user_clinics)
     group = relationship("Group", secondary=user_groups, uselist=False)
+    location = relationship('Location',
+                            secondary=user_locations,
+                            uselist=False)
 
     def get_clinics(self):
         from whoahqa.models import Clinic
