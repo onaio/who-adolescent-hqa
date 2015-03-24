@@ -43,8 +43,8 @@ class UserForm(colander.MappingSchema):
         colander.String(encoding='utf-8'), title="Role",
         widget=user_role_widget)
 
-    clinic = colander.SchemaNode(
-        colander.String(encoding='utf-8'), title="Clinic",
+    clinics = colander.SchemaNode(
+        colander.Set(), title="Clinic",
         widget=clinic_selection_widget)
 
     municipality = colander.SchemaNode(
