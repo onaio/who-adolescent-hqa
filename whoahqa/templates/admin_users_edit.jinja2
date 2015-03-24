@@ -69,6 +69,8 @@
   {{ super() }}
   $('select[name!=group]').closest('div.form-group').hide();
   Custom.userFormValidation();
+
   /* Show clinic select since it is the default selected option */
-  $('select[name=clinic]').closest('div.form-group').show();
+
+  $('select[name=clinics]').closest('div.form-group').show();
 {% endblock %}

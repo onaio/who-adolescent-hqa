@@ -88,7 +88,7 @@ var Custom = function () {
             } else if(value === 'state_official'){
                 $('select[name=state]').closest('div.form-group').show();
             } else {
-                $('select[name=clinic]').closest('div.form-group').show();
+                $('select[name=clinics]').closest('div.form-group').show();
             }
         });
     }
