@@ -71,6 +71,5 @@
   Custom.userFormValidation();
 
   /* Show clinic select since it is the default selected option */
-
-  $('select[name=clinics]').closest('div.form-group').show();
+  $('select[name=group]').trigger('change');
 {% endblock %}
