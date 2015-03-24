@@ -69,6 +69,9 @@ class Location(Base):
 
             return self._key_indicators
 
+    def __str__(self):
+        return self.name
+
 
 class Municipality(Location):
     __mapper_args__ = {
