@@ -1,3 +1,4 @@
+from pyramid.httpexceptions import HTTPFound
 from pyramid.view import (
     view_config,
     view_defaults,
@@ -5,6 +6,7 @@ from pyramid.view import (
 
 from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
+from whoahqa.constants import groups
 from whoahqa.views.helpers import get_period_from_request
 from whoahqa.models import (
     LocationFactory,
@@ -22,6 +24,11 @@ class MunicipalityViews(BaseClassViews):
                  request_method='GET')
     def index(self):
         period = get_period_from_request(self.request)
+        ona_user = self.request.ona_user
+
+        if ona_user.group.name == groups.MUNICIPALITY_MANAGER:
+            return HTTPFound(self.request.route_url(
+                'municipalities', traverse=(ona_user.location.id)))
 
         return {
             'locations': Municipality.all(),
