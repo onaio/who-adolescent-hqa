@@ -55,6 +55,7 @@ def deploy(deployment="prod", branch="master", country_char=None):
 
 
 def reset_submission_tables(deployment="prod", branch="master"):
+    env.update(DEPLOYMENTS[deployment])
     virtual_env_command = get_virtual_env_command(env.virtual_env)
     with cd(env.project_dir):
         run('git fetch')
