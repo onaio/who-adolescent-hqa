@@ -114,6 +114,11 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                          {{ gettext('Users') }}
                        </a>
                      </li>
+                     <li>
+                       <a href="{{ request.route_url('periods', traverse=()) }}">
+                         {{ gettext('Reporting Periods') }}
+                       </a>
+                     </li>
                    {% endif %}
                   {% if request.can_access_clinics %}
                      <li>

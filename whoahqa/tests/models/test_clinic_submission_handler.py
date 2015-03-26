@@ -24,7 +24,7 @@ class TestClinicSubmissionHandler(TestBase):
         ClinicReportHandler(submission).handle_submission()
 
         # check that a clinic_submission record was created
-        self.assertEqual(ClinicSubmission.count(), count + 1)
+        self.assertEqual(ClinicSubmission.count(), count + 17)
 
     def test_save_submission_with_multiple_characteristics(self):
         # create clinic with matching id
@@ -38,8 +38,8 @@ class TestClinicSubmissionHandler(TestBase):
         submission = Submission(raw_data=json.loads(payload))
         ClinicReportHandler(submission).handle_submission()
 
-        # check that 2 clinic_submission record was created
-        self.assertEqual(ClinicSubmission.count(), count + 2)
+        # check that 17 clinic_submission record was created
+        self.assertEqual(ClinicSubmission.count(), count + 17)
 
     def test_save_submission_with_invalid_clinic_id(self):
         clinic_submissions_count = ClinicSubmission.count()
@@ -58,4 +58,21 @@ class TestClinicSubmissionHandler(TestBase):
         # mapping of client tools to form ids)
         self.assertEqual(
             parsed_data,
-            ("1A2B", ["twenty"], "health_facility_manager_interview",))
+            ("1A2B",
+                ['one',
+                 'two',
+                 'three',
+                 'five',
+                 'six',
+                 'seven',
+                 'eight',
+                 'nine',
+                 'ten',
+                 'eleven',
+                 'twelve',
+                 'thirteen',
+                 'fourteen',
+                 'fifteen',
+                 'sixteen',
+                 'nineteen',
+                 'twenty'], "adolescent_client_interview",))

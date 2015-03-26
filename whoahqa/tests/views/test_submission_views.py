@@ -36,7 +36,7 @@ class TestSubmissionViews(IntegrationTestBase):
     def test_json_post_with_invalid_clinic_id(self):
         clinic = Clinic(code='1A2B', name="Clinic A")
         DBSession.add(clinic)
-        response = self.post_json(self.submissions[6])
+        response = self.post_json(self.submissions[5])
 
         # should return a 202 response code
         self.assertEqual(response.status_code, 202)
@@ -66,7 +66,7 @@ class TestSubmissionViewsFunctional(FunctionalTestBase):
         count = Submission.count()
         clinic_submission_count = ClinicSubmission.count()
         url = self.request.route_path('submissions', traverse=())
-        payload = self.submissions[6]
+        payload = self.submissions[5]
         headers = self._login_user('manager_b')
         response = self.testapp.post(url, payload, headers=headers)
         self.assertEqual(response.status_code, 202)

@@ -6,7 +6,7 @@ from deform.widget import TextInputWidget
 from whoahqa.utils import translation_string_factory as _
 
 
-DATE_FORMAT = "%m-%Y"
+DATE_FORMAT = "%d-%m-%Y"
 
 
 class MonthYearDate(object):

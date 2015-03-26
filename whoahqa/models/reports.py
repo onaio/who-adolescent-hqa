@@ -9,7 +9,6 @@ from sqlalchemy.orm import (
     relationship)
 from sqlalchemy.orm.exc import NoResultFound
 
-from whoahqa.constants import characteristics
 from whoahqa.models import (
     Base,
     DBSession)
@@ -33,31 +32,23 @@ class ClinicReport(Base):
     json_data = Column(JSON, nullable=False)
 
     def generate_report_data(self):
-        self.json_data = self.clinic.get_all_key_indicator_scores()
+        self.json_data = self.clinic.get_key_indicator_scores(
+            self.period.generate_form_key())
 
     def update(self):
         self.generate_report_data()
         self.save()
 
     def get_key_indicators(self):
-        return {
-            characteristics.EQUITABLE: self.json_data[
-                characteristics.EQUITABLE][AVERAGE_SCORE_KEY],
-            characteristics.ACCESSIBLE: self.json_data[
-                characteristics.ACCESSIBLE][AVERAGE_SCORE_KEY],
-            characteristics.ACCEPTABLE: self.json_data[
-                characteristics.ACCEPTABLE][AVERAGE_SCORE_KEY],
-            characteristics.APPROPRIATE: self.json_data[
-                characteristics.APPROPRIATE][AVERAGE_SCORE_KEY],
-            characteristics.EFFECTIVE: self.json_data[
-                characteristics.EFFECTIVE][AVERAGE_SCORE_KEY],
-        }
+        return self.json_data
 
     @classmethod
     def generate_clinic_report(cls, clinic, period):
         # Generate report and save it
         report = ClinicReport(clinic=clinic, period=period)
-        report.json_data = clinic.get_all_key_indicator_scores()
+        # Pass period argument to get_key_indicator_scores
+        report.json_data = clinic.get_key_indicator_scores(
+            period.generate_form_key())
         report.save()
         return DBSession.merge(report)
 

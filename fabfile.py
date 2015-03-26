@@ -52,3 +52,15 @@ def deploy(deployment="prod", branch="master", country_char=None):
                 run("parse_municipalities production.ini")
 
                 run("uwsgi --reload /var/run/whoahqa.pid")
+
+
+def reset_submission_tables(deployment="prod", branch="master"):
+    virtual_env_command = get_virtual_env_command(env.virtual_env)
+    with cd(env.project_dir):
+        run('git fetch')
+        run("git checkout {branch}".format(branch=branch))
+        run("git pull origin {branch}".format(branch=branch))
+        run('find . -name "*.pyc" -exec rm -rf {} \;')
+
+        with prefix(virtual_env_command):
+            run("reset_submissions production.ini")
