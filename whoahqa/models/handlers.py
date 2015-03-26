@@ -2,9 +2,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from whoahqa.constants import characteristics as constants
 from whoahqa.models import (
     DBSession,
-    Clinic,
-    Municipality,
-    State)
+    Clinic)
 
 
 class BaseSubmissionHandler(object):
@@ -67,16 +65,11 @@ class ClinicRegistrationHandler(BaseSubmissionHandler):
             - user_id
             - clinic's name
             - clinic identifier
-            - municipality name
-            - state name
         """
         return {
             'user_id': raw_data.get(constants.USER_ID),
             'clinic_name': raw_data.get(constants.CLINIC_NAME),
-            'clinic_code': raw_data.get(constants.CLINIC_IDENTIFIER),
-            'municipality_name': raw_data.get(
-                constants.MUNICIPALITY_IDENTIFIER),
-            'state_name': raw_data.get(constants.STATE_IDENTIFIER)
+            'clinic_code': raw_data.get(constants.CLINIC_IDENTIFIER)
         }
 
     def handle_submission(self):
@@ -84,23 +77,9 @@ class ClinicRegistrationHandler(BaseSubmissionHandler):
 
         map_data = ClinicRegistrationHandler.parse_data(
             self.submission.raw_data)
-
-        state_args = {'name': map_data['state_name']}
-
-        state = State.get_or_create(
-            State.name == state_args['name'],
-            **state_args)
-
-        municipality_args = {'name': map_data['municipality_name'],
-                             'parent': state}
-        municipality = Municipality.get_or_create(
-            Municipality.name == map_data['municipality_name'],
-            **municipality_args)
-
         clinic = Clinic(
             name=map_data['clinic_name'],
-            code=map_data['clinic_code'],
-            municipality=municipality)
+            code=map_data['clinic_code'])
 
         # check is user exists
         user = None
@@ -112,7 +91,6 @@ class ClinicRegistrationHandler(BaseSubmissionHandler):
             clinic.user = user
         finally:
             clinic.save()
-            municipality.save()
 
         # if no user, raise UserNotFound
         if user is None:
