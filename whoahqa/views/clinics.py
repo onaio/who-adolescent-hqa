@@ -158,7 +158,7 @@ class ClinicViews(object):
         server_url = self.request.registry.settings['form_server_url']
         instance_id = uuid.uuid4()
         return_url = self.request.route_url(
-            'users', traverse=(self.request.ona_user.user_id, 'clinics'))
+            'default', traverse=())
         edit_url = enketo.get_edit_url(
             server_url,
             constants.CLINIC_REGISTRATION,
