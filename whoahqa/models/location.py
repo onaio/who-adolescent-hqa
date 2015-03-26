@@ -100,6 +100,11 @@ class State(Location):
         (Allow, Authenticated, perms.CAN_VIEW_STATE)
     ]
 
+    def get_url(self, request, period):
+        return request.route_url('states',
+                                 traverse=(self.id),
+                                 _query={'period': period.id})
+
 
 class LocationFactory(BaseModelFactory):
     def __getitem__(self, item):
