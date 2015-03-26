@@ -1,11 +1,19 @@
+import datetime
 from sqlalchemy import (
     Column,
     Integer,
     String,
     Date
 )
-from whoahqa.models import Base, BaseModelFactory
+from whoahqa.models import (
+    Base,
+    BaseModelFactory,
+    DBSession)
 from sqlalchemy.orm.exc import NoResultFound
+
+
+def get_current_date():
+    return datetime.datetime.now()
 
 
 class ReportingPeriod(Base):
@@ -27,6 +35,21 @@ class ReportingPeriod(Base):
                                     self.end_date.strftime("%-d%b_%Y"))
 
         return period.lower()
+
+    @classmethod
+    def get_active_periods(self):
+        today = get_current_date()
+
+        return DBSession.query(ReportingPeriod).filter(
+            ReportingPeriod.start_date <= today).order_by(
+            "start_date desc").all()
+
+    @classmethod
+    def get_current_period(self):
+        today = get_current_date()
+        return DBSession.query(ReportingPeriod).filter(
+            ReportingPeriod.start_date <= today).order_by(
+            "start_date desc").limit(1).one()
 
 
 class ReportingPeriodFactory(BaseModelFactory):

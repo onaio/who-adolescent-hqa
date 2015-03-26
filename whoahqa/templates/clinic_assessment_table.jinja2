@@ -1,11 +1,11 @@
 {% for clinic in clinics %}
-{% set responses_per_tool = clinic.get_num_responses_per_tool() %}
+{% set responses_per_tool = clinic.get_num_responses_per_tool(period.generate_form_key()) %}
     <div class="portlet" id="assessment-portlet">
         <div class="portlet-title">
             <div class="tools">
                 <a class="collapse"> </a>
             </div>
-            <a href="{{ request.route_url('users', traverse=(clinic.user.id, 'select-period'), _query={'came_from': request.route_path('clinics', traverse=(clinic.id, '{period_id}'))}) }}">
+            <a href="{{ request.route_url('clinics', traverse=(clinic.id, period.id)) }}">
                 <strong>{{ clinic.name }}</strong>
             </a>
             <div>
