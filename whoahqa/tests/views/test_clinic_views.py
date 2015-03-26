@@ -63,7 +63,7 @@ class TestClinicViews(IntegrationTestBase):
         response = self.clinic_views.unassigned()
 
         # we should only have Clinic B in the response
-        self.assertEqual(len(response['clinics']), 1)
+        self.assertEqual(len(response['clinics']), 2)
         self.assertEqual(response['clinics'][0].name, "Clinic B")
 
         # test when filter is done
@@ -90,7 +90,7 @@ class TestClinicViews(IntegrationTestBase):
 
         # both clinics should now be assigned to user
         count = DBSession.query(user_clinics).count()
-        self.assertEqual(count, 2)
+        self.assertEqual(count, 3)
 
     def test_show(self):
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')

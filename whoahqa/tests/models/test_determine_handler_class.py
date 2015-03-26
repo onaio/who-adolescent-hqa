@@ -31,8 +31,8 @@ class TestDetermineHandlerClass(TestBase):
             self):
         payload = self.submissions[0]
         handler_mapping = (
-            (ClinicReportHandler, [constants.HEALTH_FACILITY_MANAGER]),
-            (ClinicRegistrationHandler, [constants.HEALTH_FACILITY_MANAGER]),
+            (ClinicReportHandler, [constants.ADOLESCENT_CLIENT]),
+            (ClinicRegistrationHandler, [constants.ADOLESCENT_CLIENT]),
         )
         submission = Submission(raw_data=json.loads(payload))
         self.assertRaises(MultipleSubmissionHandlersError,

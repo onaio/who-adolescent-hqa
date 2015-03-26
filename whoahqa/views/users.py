@@ -10,7 +10,6 @@ from whoahqa.models import (
     User,
     ReportingPeriod
 )
-from whoahqa.utils import tuple_to_dict_list
 
 
 @view_defaults(route_name='users')
@@ -31,26 +30,6 @@ class UserViews(object):
             'period': period,
             'locations': clinics,
             'key_indicators_key_labels': constants.INDICATOR_LABELS
-        }
-
-    @view_config(name='summary',
-                 renderer='clinics_score_summary.jinja2',
-                 permission=perms.CAN_VIEW_CLINICS,
-                 context=User)
-    def clinics_score_summary(self):
-        user = self.request.context
-        clinics = user.get_clinics()
-        characteristics = tuple_to_dict_list(
-            ("id", "description"), constants.CHARACTERISTICS)
-        clinic_scores = {}
-        for clinic in clinics:
-            scores = clinic.get_scores()
-            clinic_scores[clinic.id] = scores
-        return {
-            'clinics': clinics,
-            'characteristics': characteristics,
-            'clinic_scores': clinic_scores,
-            'score_limits': constants.SCORE_RANGE_LIMITS,
         }
 
     @view_config(name='clinics',

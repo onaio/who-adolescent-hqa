@@ -27,7 +27,8 @@ class TestSubmission(TestBase):
         self.assertEqual(submission.raw_data, json.loads(payload))
 
         # check that a clinic_submission record was created
-        self.assertEqual(ClinicSubmission.count(), clinic_submission_count + 1)
+        self.assertEqual(
+            ClinicSubmission.count(), clinic_submission_count + 17)
 
     def test_raises_submission_handler_error_if_invalid_json(self):
         # check current counts
@@ -35,7 +36,7 @@ class TestSubmission(TestBase):
         clinic_count = Clinic.count()
         payload = self.clinic_registrations[1]
         self.assertRaises(
-            SubmissionHandlerError,  Submission.create_from_json, payload)
+            SubmissionHandlerError, Submission.create_from_json, payload)
         submission = Submission.newest()
         self.assertEqual(Submission.count(), count + 1)
         self.assertEqual(submission.raw_data, json.loads(payload))
