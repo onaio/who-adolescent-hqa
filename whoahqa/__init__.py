@@ -109,6 +109,8 @@ def includeme(config):
                      factory=ReportingPeriodFactory)
     config.add_route('municipalities', '/municipalities/*traverse',
                      factory=LocationFactory)
+    config.add_route('states', '/states/*traverse',
+                     factory=LocationFactory)
     config.scan()
 
 
