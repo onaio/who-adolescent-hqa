@@ -1,6 +1,4 @@
-from pyramid.httpexceptions import (
-    HTTPFound,
-)
+from pyramid.httpexceptions import HTTPFound
 
 from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
