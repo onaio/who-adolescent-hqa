@@ -34,7 +34,8 @@ requires = [
     'passlib',
     'colander',
     'deform',
-    'flake8'
+    'flake8',
+    'mock'
 ]
 
 extractors = {

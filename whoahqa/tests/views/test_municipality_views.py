@@ -1,10 +1,13 @@
+import datetime
 import transaction
 from pyramid import testing
+from mock import patch
 
 from whoahqa.models import (
     Clinic,
     DBSession,
-    Municipality)
+    Municipality,
+    ReportingPeriod)
 from whoahqa.tests.test_base import IntegrationTestBase
 from whoahqa.views import MunicipalityViews
 
@@ -16,6 +19,13 @@ class TestMunicipalityViews(IntegrationTestBase):
         self.view = MunicipalityViews(self.request)
 
         with transaction.manager:
+            reporting_period = ReportingPeriod(
+                title='Period 1',
+                start_date=datetime.datetime(2015, 5, 1),
+                end_date=datetime.datetime(2015, 7, 31))
+
+            reporting_period.save()
+
             municipality = Municipality(name="Brasillia")
             DBSession.add(municipality)
             for i in range(5):
@@ -25,18 +35,22 @@ class TestMunicipalityViews(IntegrationTestBase):
                 DBSession.add(clinic)
 
     def test_municipality_index(self):
-        response = self.view.index()
+        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
+            mock.return_value = datetime.date(2015, 6, 1)
+            response = self.view.index()
 
-        locations = response['locations']
-        self.assertEquals(locations, Municipality.all())
-        self.assertNotEquals(len(locations), 0)
+            locations = response['locations']
+            self.assertEquals(locations, Municipality.all())
+            self.assertNotEquals(len(locations), 0)
 
     def test_municipality_show(self):
         municipality = Municipality.get(Municipality.name == "Brasillia")
         self.request.context = municipality
 
-        response = self.view.show()
+        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
+            mock.return_value = datetime.date(2015, 6, 1)
+            response = self.view.show()
 
-        self.assertEqual(response['parent'], municipality)
-        self.assertEqual(response['locations'], municipality.clinics)
-        self.assertNotEqual(len(response['locations']), 0)
+            self.assertEqual(response['parent'], municipality)
+            self.assertEqual(response['locations'], municipality.clinics)
+            self.assertNotEqual(len(response['locations']), 0)

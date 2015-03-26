@@ -55,6 +55,8 @@ class ClinicReportHandler(BaseSubmissionHandler):
                 )
                 DBSession.add(clinic_submission)
 
+            clinic.update_reports()
+
 
 class ClinicRegistrationHandler(BaseSubmissionHandler):
 

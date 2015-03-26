@@ -1,3 +1,5 @@
+import datetime
+
 from webob.multidict import MultiDict
 from pyramid import testing
 from pyramid.httpexceptions import (
@@ -5,6 +7,7 @@ from pyramid.httpexceptions import (
     HTTPFound
 )
 from httmock import urlmatch, HTTMock
+from mock import patch
 
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -106,13 +109,6 @@ class TestClinicViews(IntegrationTestBase):
             tuple_to_dict_list(
                 ("id", "description", "number"), constants.CHARACTERISTICS))
 
-    def test_show_raises_bad_request_if_clinic_is_not_assigned(self):
-        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
-        clinic = Clinic.get(Clinic.name == "Clinic B")
-        period.__parent__ = clinic
-        self.request.context = period
-        self.assertRaises(HTTPBadRequest, self.clinic_views.show)
-
     def test_list_redirects_when_user_has_no_permissions(self):
         self.request.ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         self.config.testing_securitypolicy(
@@ -153,9 +149,11 @@ class TestClinicViews(IntegrationTestBase):
         self.request.GET = MultiDict([
             ('search', 'clinic a')
         ])
-        self.clinic_views.list()
-        self.assertEqual(
-            self.request.override_renderer, '_summary_scores_table.jinja2')
+        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
+            mock.return_value = datetime.date(2015, 6, 1)
+            self.clinic_views.list()
+            self.assertEqual(
+                self.request.override_renderer, '_summary_scores_table.jinja2')
 
     def test_characteristics_list(self):
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
@@ -219,9 +217,11 @@ class TestClinicViews(IntegrationTestBase):
         self.request.method = 'GET'
         self.request.ona_user = ona_user
 
-        response = self.clinic_views.assess_clinics()
+        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
+            mock.return_value = datetime.date(2015, 6, 1)
+            response = self.clinic_views.assess_clinics()
 
-        self.assertEqual(len(response['clinics']), 1)
+            self.assertEqual(len(response['clinics']), 1)
 
     def test_manage_clinics_view(self):
         count = Clinic.count()
@@ -287,8 +287,10 @@ class TestClinicViewsFunctional(FunctionalTestBase):
     def test_clinic_list_allows_super_user(self):
         url = self.request.route_path('clinics', traverse=())
         headers = self._login_user('super')
-        response = self.testapp.get(url, headers=headers)
-        self.assertEqual(response.status_code, 200)
+        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
+            mock.return_value = datetime.date(2015, 6, 1)
+            response = self.testapp.get(url, headers=headers)
+            self.assertEqual(response.status_code, 200)
 
     def test_characteristics_returns_200(self):
         clinic = Clinic.get(Clinic.name == "Clinic A")

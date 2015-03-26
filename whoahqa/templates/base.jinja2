@@ -115,7 +115,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                        </a>
                      </li>
                      <li>
-                       <a href="{{ request.route_url('periods', traverse=()) }}">
+                       <a href="{{ request.route_url('periods', traverse=('list')) }}">
                          {{ gettext('Reporting Periods') }}
                        </a>
                      </li>
@@ -170,23 +170,54 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
          <div class="row">
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-               <div class="pull-right">
-                  <a href="{{request.route_url('locale', traverse=())}}" class="btn btn-default">
-                     <span class="glyphicon glyphicon-cog"></span>
-                  </a>
+               <div class="page-title">
+                  <div class="pull-right">
+                     <a href="{{request.route_url('locale', traverse=())}}" class="btn btn-default">
+                        <span class="glyphicon glyphicon-cog"></span>
+                     </a>
+                  </div>
+                  <h3 class="page-title">
+                     {{ self.page_title() }} <small></small>
+                  </h3>
                </div>
-               <h3 class="page-title">
-                  {{ self.page_title() }} <small></small>
-               </h3>
-               <ul class="page-breadcrumb breadcrumb">
-                  <li>
-                     <i class="icon-home"></i>
-                     <a href="{{ request.route_url('default')}}">{{ gettext('Home') }}</a>
-                     <i class="icon-angle-right"></i>
-                  </li>
-                  {% block breadcrumbs %}{% endblock %}
-               </ul>
-               <!-- END PAGE TITLE & BREADCRUMB-->
+               <div class="page-bar">
+                  <ul class="page-breadcrumb">
+                     <li>
+                        <i class="icon-home"></i>
+                        <a href="{{ request.route_url('default')}}">{{ gettext('Home') }}</a>
+                        <i class="icon-angle-right"></i>
+                     </li>
+                     {% block breadcrumbs %}{% endblock %}
+                  </ul>
+                  <!-- END PAGE TITLE & BREADCRUMB-->
+                  {% block period_selector %}
+                     {% if periods %}
+                        <div class="dashboard-date-range btn-group pull-right">
+                           <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-primary dropdown-toggle" data-container="body" data-placement="top" data-original-title="{{gettext('Change dashboard date range')}}" data-toggle="dropdown" aria-expanded="false">
+                              <i class="icon-calendar"></i>&nbsp; 
+                                 {% set active_period = selected_period or period%}
+                                 <span class="thin uppercase visible-lg-inline-block">
+                                    {{(active_period.start_date) | format_date("medium", request)}}
+                                    -
+                                    {{(active_period.end_date) | format_date("medium", request)}}
+                                 </span>&nbsp; 
+                                 <i class="icon-angle-down"></i>
+                           </div>
+                           <ul class="dropdown-menu" role="menu">
+                              {% for p in periods if p != period %}
+                                 <li>
+                                 <a href="{{ request.current_route_url(_query={'period': p.id}) }}">
+                                    {{(p.start_date) | format_date('medium', request)}}
+                                       -
+                                    {{(p.end_date) | format_date('medium', request)}}
+                                 </a>
+                                 </li>
+                              {% endfor %}
+                           </ul>
+                        </div>
+                     {% endif %}
+                  {% endblock %}
+               </div>
             </div>
          </div>
          <!-- END PAGE HEADER-->

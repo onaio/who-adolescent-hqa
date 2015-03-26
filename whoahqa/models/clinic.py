@@ -141,7 +141,7 @@ class Clinic(Base):
                     Clinic.name.ilike('%' + search_term + '%')).all()
         return clinics
 
-    def get_num_responses_per_tool(self):
+    def get_num_responses_per_tool(self, period):
         clinic_submissions_table = Base.metadata.tables['clinic_submissions']
         responses_per_tool = {}
         for tool, sample_frame in \
@@ -152,7 +152,9 @@ class Clinic(Base):
                     DBSession.query(clinic_submissions_table).filter(
                         and_(
                             clinic_submissions_table.c.clinic_id == self.id,
-                            clinic_submissions_table.c.xform_id == tool))
+                            clinic_submissions_table.c.valid == true(),
+                            clinic_submissions_table.c.xform_id == tool,
+                            clinic_submissions_table.c.period == period))
                     .distinct(clinic_submissions_table.c.submission_id)
                     .count())
             }
@@ -395,6 +397,10 @@ class Clinic(Base):
             self._cached_key_indicators = report.get_key_indicators()
 
         return self._cached_key_indicators
+
+    def update_reports(self):
+        for report in self.reports:
+            report.update()
 
 
 class ClinicFactory(BaseModelFactory):
