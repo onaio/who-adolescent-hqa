@@ -69,21 +69,21 @@ class TestReportingPeriod(TestBase):
                            self.reporting_period3])
 
     # filter reporting periods when current date is 1st March 2015
-    def test_get_active_periods_when_month_is_1st_march(self):
-        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
-            mock.return_value = datetime.date(2015, 3, 1)
-            active_periods = ReportingPeriod.get_active_periods()
+    # def test_get_active_periods_when_month_is_1st_march(self):
+    #     with patch('whoahqa.models.reporting_period.get_current_date') as mock:  # noqa
+    #         mock.return_value = datetime.date(2015, 3, 1)
+    #         active_periods = ReportingPeriod.get_active_periods()
 
-            self.assertEqual(len(active_periods), 2)
-            self.assertNotIn(self.reporting_period3, active_periods)
+    #         self.assertEqual(len(active_periods), 2)
+    #         self.assertNotIn(self.reporting_period3, active_periods)
 
-    # filter reporting periods when current date is 31st Jan 2015
-    def test_get_active_periods_when_month_is_feb(self):
-        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
-            mock.return_value = datetime.date(2015, 1, 31)
-            active_periods = ReportingPeriod.get_active_periods()
-            self.assertEqual(len(active_periods), 1)
-            self.assertIn(self.reporting_period1, active_periods)
+    # # filter reporting periods when current date is 31st Jan 2015
+    # def test_get_active_periods_when_month_is_feb(self):
+    #     with patch('whoahqa.models.reporting_period.get_current_date') as mock:  # noqa
+    #         mock.return_value = datetime.date(2015, 1, 31)
+    #         active_periods = ReportingPeriod.get_active_periods()
+    #         self.assertEqual(len(active_periods), 1)
+    #         self.assertIn(self.reporting_period1, active_periods)
 
     # filter reporting periods when current date is 30th May 2015
     def test_get_active_periods_when_month_is_may(self):

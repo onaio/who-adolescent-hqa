@@ -38,10 +38,13 @@ class ReportingPeriod(Base):
 
     @classmethod
     def get_active_periods(self):
-        today = get_current_date()
+        # today = get_current_date()
 
-        return DBSession.query(ReportingPeriod).filter(
-            ReportingPeriod.start_date <= today).order_by(
+        # return DBSession.query(ReportingPeriod).filter(
+        #     ReportingPeriod.start_date <= today).order_by(
+        #     "start_date desc").all()
+
+        return DBSession.query(ReportingPeriod).order_by(
             "start_date desc").all()
 
     @classmethod
