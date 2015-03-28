@@ -3,7 +3,7 @@ from whoahqa.constants.base_characteristics import *  # noqa
 # filter CHARACTERISTICS to remove CHARACTERISTIC 4
 
 CHARACTERISTICS = filter(
-    lambda x: x[0] not in [FOUR, SEVENTEEN], CHARACTERISTICS)
+    lambda x: x[0] not in [FOUR], CHARACTERISTICS)
 
 KEY_INDICATORS = [
     (EQUITABLE, (ONE, TWO, THREE)),
@@ -11,7 +11,7 @@ KEY_INDICATORS = [
     (ACCEPTABLE, (NINE, TEN, ELEVEN, TWELVE, THIRTEEN, FOURTEEN,
                   FIFTEEN)),
     (APPROPRIATE, (SIXTEEN, )),
-    (EFFECTIVE, (EIGHTEEN, NINETEEN, TWENTY))
+    (EFFECTIVE, (SEVENTEEN, EIGHTEEN, NINETEEN, TWENTY))
 ]
 
 # Characteristic 4 has been removed since health care in brazil is free
