@@ -208,7 +208,7 @@ INVALID_CHARACTERISTICS_FLAGS = {
     FOURTEEN: 'characteristic_fourteen/ch14_invalid',
     FIFTEEN: 'characteristic_fifteen/ch15_invalid',
     SIXTEEN: 'characteristic_sixteen/ch16_invalid',
-    SEVENTEEN: 'characteristic_sixteen/ch17_invalid',
+    SEVENTEEN: 'characteristic_seventeen/ch17_invalid',
     EIGHTEEN: 'characteristic_eighteen/ch18_invalid',
     NINETEEN: 'characteristic_nineteen/ch19_invalid',
     TWENTY: 'characteristic_twenty/ch20_invalid'
