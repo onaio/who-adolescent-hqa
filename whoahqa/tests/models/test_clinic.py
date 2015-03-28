@@ -290,7 +290,7 @@ class TestClinic(TestBase):
             'equitable': 19.999999999999996,
             'acceptable': 22.222222222222225,
             'appropriate': 3.8461538461538463,
-            'effective': 10.353535353535353})
+            'effective': 7.765151515151515})
 
     def test_key_indicator_scores_for_period_without_submissions(self):
         self.setup_test_data()
