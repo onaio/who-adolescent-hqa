@@ -20,7 +20,7 @@ from whoahqa.views.base import BaseClassViews
 class MunicipalityViews(BaseClassViews):
     @view_config(name='',
                  context=LocationFactory,
-                 renderer='location_list.jinja2',
+                 renderer='municipalities_list.jinja2',
                  request_method='GET')
     def index(self):
         period = get_period_from_request(self.request)
