@@ -10,7 +10,6 @@ from whoahqa.constants import groups
 from whoahqa.views.helpers import get_period_from_request
 from whoahqa.models import (
     LocationFactory,
-    Municipality,
     ReportingPeriod,
     State)
 from whoahqa.views.base import BaseClassViews
@@ -21,7 +20,7 @@ from whoahqa.views.base import BaseClassViews
 class StateViews(BaseClassViews):
     @view_config(name='',
                  context=LocationFactory,
-                 renderer='location_list.jinja2',
+                 renderer='states_list.jinja2',
                  request_method='GET')
     def index(self):
         period = get_period_from_request(self.request)
@@ -44,11 +43,10 @@ class StateViews(BaseClassViews):
                  request_method='GET')
     def show(self):
         state = self.request.context
-        municipalities = Municipality.all(Municipality.parent == state)
         period = get_period_from_request(self.request)
 
         return {
-            'locations': municipalities,
+            'locations': state.children(),
             'parent': state,
             'period': period,
             'periods': ReportingPeriod.get_active_periods(),

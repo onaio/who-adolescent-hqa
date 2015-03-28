@@ -89,6 +89,9 @@ class Municipality(Location):
                                  traverse=(self.id),
                                  _query={'period': period.id})
 
+    def children(self):
+        return self.clinics
+
 
 class State(Location):
     __mapper_args__ = {
@@ -99,6 +102,15 @@ class State(Location):
         (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
         (Allow, Authenticated, perms.CAN_VIEW_STATE)
     ]
+
+    def children(self):
+        return Municipality.all(Municipality.parent_id == self.id)
+
+    @property
+    def clinics(self):
+        municipalities = self.children()
+        clinics = [clinic for m in municipalities for clinic in m.clinics]
+        return clinics
 
     def get_url(self, request, period):
         return request.route_url('states',
