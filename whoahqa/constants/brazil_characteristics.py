@@ -79,6 +79,10 @@ CHARACTERISTIC_MAPPING = {
         'characteristic_sixteen/ch16_score': [ADOLESCENT_CLIENT,
                                               HEALTH_CARE_PROVIDER,
                                               HEALTH_FACILITY_MANAGER]},
+    SEVENTEEN: {
+        'characteristic_seventeen/ch17_score': [ADOLESCENT_CLIENT,
+                                                HEALTH_CARE_PROVIDER,
+                                                HEALTH_FACILITY_MANAGER]},
     EIGHTEEN: {
         'characteristic_eighteen/ch18_score': [HEALTH_CARE_PROVIDER,
                                                HEALTH_FACILITY_MANAGER,
@@ -156,6 +160,10 @@ QUESTION_COUNT = {
         ADOLESCENT_CLIENT: 2,
         HEALTH_CARE_PROVIDER: 12,
         HEALTH_FACILITY_MANAGER: 12},
+    SEVENTEEN: {
+        ADOLESCENT_CLIENT: 6,
+        HEALTH_CARE_PROVIDER: 14,
+        HEALTH_FACILITY_MANAGER: 13},
     EIGHTEEN: {
         HEALTH_CARE_PROVIDER: 11,
         HEALTH_FACILITY_MANAGER: 11,
