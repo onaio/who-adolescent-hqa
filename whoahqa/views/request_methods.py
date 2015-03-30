@@ -43,3 +43,15 @@ def can_access_clinics(request):
     return has_permission(perms.CAN_ASSESS_CLINICS,
                           ClinicFactory(request),
                           request)
+
+
+def can_list_municipalities(request):
+    return has_permission(perms.CAN_LIST_MUNICIPALITY,
+                          ClinicFactory(request),
+                          request)
+
+
+def can_list_states(request):
+    return has_permission(perms.CAN_LIST_STATE,
+                          ClinicFactory(request),
+                          request)
