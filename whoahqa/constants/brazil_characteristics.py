@@ -25,7 +25,8 @@ CHARACTERISTIC_MAPPING = {
     TWO: {
         'characteristic_two/ch2_score': [ADOLESCENT_CLIENT,
                                          HEALTH_CARE_PROVIDER,
-                                         ADOLESCENT_IN_COMMUNITY]},
+                                         ADOLESCENT_IN_COMMUNITY,
+                                         OUTREACH_WORKER]},
     THREE: {
         'characteristic_three/ch3_score': [ADOLESCENT_CLIENT,
                                            SUPPORT_STAFF,
@@ -41,7 +42,8 @@ CHARACTERISTIC_MAPPING = {
         'characteristic_seven/ch7_score': [ADOLESCENT_CLIENT,
                                            HEALTH_CARE_PROVIDER,
                                            COMMUNITY_MEMBER,
-                                           ADOLESCENT_IN_COMMUNITY]},
+                                           ADOLESCENT_IN_COMMUNITY,
+                                           OUTREACH_WORKER]},
     EIGHT: {
         'characteristic_eight/ch8_score': [ADOLESCENT_CLIENT,
                                            HEALTH_FACILITY_MANAGER,
@@ -51,7 +53,8 @@ CHARACTERISTIC_MAPPING = {
         'characteristic_nine/ch9_score': [ADOLESCENT_CLIENT,
                                           HEALTH_CARE_PROVIDER,
                                           HEALTH_FACILITY_MANAGER,
-                                          OBSERVATION_GUIDE]},
+                                          OBSERVATION_GUIDE,
+                                          OUTREACH_WORKER]},
     TEN: {
         'characteristic_ten/ch10_score': [ADOLESCENT_CLIENT,
                                           HEALTH_CARE_PROVIDER,
@@ -78,18 +81,22 @@ CHARACTERISTIC_MAPPING = {
     SIXTEEN: {
         'characteristic_sixteen/ch16_score': [ADOLESCENT_CLIENT,
                                               HEALTH_CARE_PROVIDER,
-                                              HEALTH_FACILITY_MANAGER]},
+                                              HEALTH_FACILITY_MANAGER,
+                                              OUTREACH_WORKER]},
     SEVENTEEN: {
         'characteristic_seventeen/ch17_score': [ADOLESCENT_CLIENT,
                                                 HEALTH_CARE_PROVIDER,
-                                                HEALTH_FACILITY_MANAGER]},
+                                                HEALTH_FACILITY_MANAGER,
+                                                OUTREACH_WORKER]},
     EIGHTEEN: {
         'characteristic_eighteen/ch18_score': [HEALTH_CARE_PROVIDER,
                                                HEALTH_FACILITY_MANAGER,
-                                               OBSERVATION_GUIDE]},
+                                               OBSERVATION_GUIDE,
+                                               OUTREACH_WORKER]},
     NINETEEN: {
         'characteristic_nineteen/ch19_score': [ADOLESCENT_CLIENT,
-                                               HEALTH_CARE_PROVIDER]},
+                                               HEALTH_CARE_PROVIDER,
+                                               OUTREACH_WORKER]},
     TWENTY: {
         'characteristic_twenty/ch20_score': [ADOLESCENT_CLIENT,
                                              HEALTH_CARE_PROVIDER,
@@ -100,16 +107,17 @@ CHARACTERISTIC_MAPPING = {
 QUESTION_COUNT = {
     ONE: {
         ADOLESCENT_CLIENT: 2,
-        HEALTH_CARE_PROVIDER: 1,
-        HEALTH_FACILITY_MANAGER: 1,
+        HEALTH_CARE_PROVIDER: 5,
+        HEALTH_FACILITY_MANAGER: 5,
         ADOLESCENT_IN_COMMUNITY: 1},
     TWO: {
-        ADOLESCENT_CLIENT: 2,
-        HEALTH_CARE_PROVIDER: 1,
-        ADOLESCENT_IN_COMMUNITY: 1},
+        ADOLESCENT_CLIENT: 1,
+        HEALTH_CARE_PROVIDER: 6,
+        ADOLESCENT_IN_COMMUNITY: 1,
+        OUTREACH_WORKER: 6},
     THREE: {
-        ADOLESCENT_CLIENT: 4,
-        SUPPORT_STAFF: 1,
+        ADOLESCENT_CLIENT: 1,
+        SUPPORT_STAFF: 6,
         ADOLESCENT_IN_COMMUNITY: 1},
     FIVE: {
         ADOLESCENT_CLIENT: 1,
@@ -122,32 +130,34 @@ QUESTION_COUNT = {
         ADOLESCENT_CLIENT: 3,
         HEALTH_CARE_PROVIDER: 1,
         COMMUNITY_MEMBER: 4,
-        ADOLESCENT_IN_COMMUNITY: 3},
+        ADOLESCENT_IN_COMMUNITY: 3,
+        OUTREACH_WORKER: 1},
     EIGHT: {
         ADOLESCENT_CLIENT: 1,
         HEALTH_FACILITY_MANAGER: 1,
         OUTREACH_WORKER: 1,
         ADOLESCENT_IN_COMMUNITY: 2},
     NINE: {
-        ADOLESCENT_CLIENT: 5,
+        ADOLESCENT_CLIENT: 6,
         HEALTH_CARE_PROVIDER: 1,
         HEALTH_FACILITY_MANAGER: 1,
-        OBSERVATION_GUIDE: 1},
+        OBSERVATION_GUIDE: 1,
+        OUTREACH_WORKER: 1},
     TEN: {
         ADOLESCENT_CLIENT: 4,
         HEALTH_CARE_PROVIDER: 2,
         HEALTH_FACILITY_MANAGER: 1,
         OBSERVATION_GUIDE: 3},
     ELEVEN: {
-        ADOLESCENT_CLIENT: 4,
+        ADOLESCENT_CLIENT: 3,
         OBSERVATION_GUIDE: 4},
     TWELVE: {
         ADOLESCENT_CLIENT: 3,
         HEALTH_CARE_PROVIDER: 2,
-        SUPPORT_STAFF: 2,
+        SUPPORT_STAFF: 1,
         OBSERVATION_GUIDE: 1},
     THIRTEEN: {
-        ADOLESCENT_CLIENT: 6,
+        ADOLESCENT_CLIENT: 5,
         OBSERVATION_GUIDE: 9},
     FOURTEEN: {
         ADOLESCENT_CLIENT: 6,
@@ -159,18 +169,22 @@ QUESTION_COUNT = {
     SIXTEEN: {
         ADOLESCENT_CLIENT: 2,
         HEALTH_CARE_PROVIDER: 12,
-        HEALTH_FACILITY_MANAGER: 12},
+        HEALTH_FACILITY_MANAGER: 12,
+        OUTREACH_WORKER: 6},
     SEVENTEEN: {
         ADOLESCENT_CLIENT: 6,
         HEALTH_CARE_PROVIDER: 14,
-        HEALTH_FACILITY_MANAGER: 13},
+        HEALTH_FACILITY_MANAGER: 13,
+        OUTREACH_WORKER: 5},
     EIGHTEEN: {
         HEALTH_CARE_PROVIDER: 11,
         HEALTH_FACILITY_MANAGER: 11,
-        OBSERVATION_GUIDE: 11},
+        OBSERVATION_GUIDE: 11,
+        OUTREACH_WORKER: 3},
     NINETEEN: {
         ADOLESCENT_CLIENT: 2,
-        HEALTH_CARE_PROVIDER: 2},
+        HEALTH_CARE_PROVIDER: 2,
+        OUTREACH_WORKER: 1},
     TWENTY: {
         ADOLESCENT_CLIENT: 1,
         HEALTH_CARE_PROVIDER: 4,
