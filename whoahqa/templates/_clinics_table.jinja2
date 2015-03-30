@@ -29,7 +29,7 @@
           </td>
           <td>
             {% if clinic.is_assigned %}
-              <a href="{{ request.route_url('users', traverse=(clinic.user.id, 'select-period'), _query={'came_from': request.route_path('clinics', traverse=(clinic.id, '{period_id}'))}) }}">{{ clinic.name }}</a>
+              <a href="{{ request.route_url('clinics', traverse=(clinic.id, period.id)) }}">{{ clinic.name }}</a>
             {% else %}
               {{ clinic.name }}
             {% endif %}
