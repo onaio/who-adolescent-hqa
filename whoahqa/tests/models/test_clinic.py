@@ -177,16 +177,16 @@ class TestClinic(TestBase):
         })
         self.assertEqual(scores_1[constants.HEALTH_CARE_PROVIDER], {
             'aggregate_score': None,
-            'num_questions': 1,
+            'num_questions': 5,
             'num_responses': 0,
             'num_pending_responses': 5,
         })
 
         self.assertEqual(scores_1['totals'], {
             'total_scores': 1.3333333333333333,
-            'total_questions': 5,
+            'total_questions': 13,
             'total_responses': 3,
-            'total_percentage': 26.666666666666668,
+            'total_percentage': 10.256410256410255,
             'meets_threshold': False,
             'score_classification': constants.BAD
         })
@@ -232,14 +232,14 @@ class TestClinic(TestBase):
         })
         self.assertEqual(scores_1[constants.HEALTH_CARE_PROVIDER], {
             'aggregate_score': None,
-            'num_questions': 1,
+            'num_questions': 5,
             'num_responses': 0,
             'num_pending_responses': 5,
         })
 
         self.assertEqual(scores_1['totals'], {
             'total_scores': None,
-            'total_questions': 5,
+            'total_questions': 13,
             'total_responses': 0,
             'total_percentage': None,
             'meets_threshold': False,
@@ -263,14 +263,14 @@ class TestClinic(TestBase):
         })
         self.assertEqual(scores_1[constants.HEALTH_CARE_PROVIDER], {
             'aggregate_score': None,
-            'num_questions': 1,
+            'num_questions': 5,
             'num_responses': 0,
             'num_pending_responses': 5,
         })
 
         self.assertEqual(scores_1['totals'], {
             'total_scores': None,
-            'total_questions': 5,
+            'total_questions': 13,
             'total_responses': 1,
             'total_percentage': 0.0,
             'meets_threshold': False,
@@ -286,11 +286,11 @@ class TestClinic(TestBase):
         key_indicator_scores = health_centre.get_key_indicator_scores(period)
 
         self.assertEqual(key_indicator_scores, {
-            'accessible': 19.343434343434343,
-            'equitable': 19.999999999999996,
-            'acceptable': 22.222222222222225,
-            'appropriate': 3.8461538461538463,
-            'effective': 7.765151515151515})
+            'accessible': 19.02777777777778,
+            'equitable': 9.172771672771672,
+            'acceptable': 22.108843537414963,
+            'appropriate': 3.125,
+            'effective': 6.515151515151515})
 
     def test_key_indicator_scores_for_period_without_submissions(self):
         self.setup_test_data()

@@ -133,7 +133,12 @@ class TestBase(unittest.TestCase):
 
         clinic3 = Clinic(id=3, name="Health Centre 09", code="0010731")
 
-        reporting_period = ReportingPeriod(
+        reporting_period1 = ReportingPeriod(
+            title='Default Period',
+            start_date=datetime.datetime(2015, 1, 1),
+            end_date=datetime.datetime(2015, 3, 31))
+
+        reporting_period2 = ReportingPeriod(
             title='Period 1',
             start_date=datetime.datetime(2015, 5, 1),
             end_date=datetime.datetime(2015, 7, 31))
@@ -142,7 +147,7 @@ class TestBase(unittest.TestCase):
             DBSession.add_all(
                 [user_setting, su_ona_user, manager_a_ona_user,
                  manager_b_ona_user, clinic1, clinic2, clinic3,
-                 reporting_period])
+                 reporting_period1, reporting_period2])
 
     def create_submissions(self):
         # make submissions
