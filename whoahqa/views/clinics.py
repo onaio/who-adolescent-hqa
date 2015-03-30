@@ -249,8 +249,10 @@ class ClinicViews(object):
     def manage_clinics(self):
         user = self.request.ona_user.user
         clinics = user.get_clinics()
+        period = get_period_from_request(self.request)
         return {
-            'clinics': clinics
+            'clinics': clinics,
+            'period': period
         }
 
     @view_config(
