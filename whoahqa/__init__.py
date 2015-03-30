@@ -34,6 +34,8 @@ from whoahqa.views import (
     can_access_clinics,
     can_list_clinics,
     can_view_clinics,
+    can_list_municipalities,
+    can_list_states,
     is_super_user
 )
 
@@ -121,6 +123,9 @@ def add_request_helpers(config):
         can_access_clinics, 'can_access_clinics', reify=True)
     config.add_request_method(can_view_clinics, 'can_view_clinics', reify=True)
     config.add_request_method(can_list_clinics, 'can_list_clinics', reify=True)
+    config.add_request_method(
+        can_list_municipalities, 'can_list_municipalities', reify=True)
+    config.add_request_method(can_list_states, 'can_list_states', reify=True)
     config.add_request_method(is_super_user, 'is_super_user', reify=True)
 
 
