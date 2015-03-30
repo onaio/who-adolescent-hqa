@@ -17,3 +17,4 @@ CAN_ASSESS_CLINICS = 'assess-clinics'
 
 # State Official Permissions
 CAN_VIEW_STATE = 'view-state'
+CAN_LIST_STATE = 'list-state'
