@@ -10,7 +10,11 @@ from sqlalchemy import engine_from_config
 
 from whoahqa.constants import permissions as perms
 from whoahqa.constants import groups
-from utils import hashid, enketo, format_date_for_locale
+from utils import (
+    hashid,
+    enketo,
+    format_date_for_locale,
+    format_location_name)
 from whoahqa.security import group_finder, pwd_context
 from whoahqa.models import (
     DBSession,
@@ -96,6 +100,8 @@ def includeme(config):
     config.add_jinja2_search_path("whoahqa:templates")
     config.get_jinja2_environment().filters['format_date'] = \
         format_date_for_locale
+    config.get_jinja2_environment().filters['format_location_name'] = \
+        format_location_name
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('default', '/')
     config.add_route('locale', '/locale/')
