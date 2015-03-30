@@ -39,7 +39,7 @@ class MunicipalityViews(BaseClassViews):
 
     @view_config(name='',
                  context=Municipality,
-                 renderer='clinics_summary.jinja2',
+                 renderer='municipality_summary.jinja2',
                  request_method='GET')
     def show(self):
         municipality = self.request.context
@@ -48,7 +48,8 @@ class MunicipalityViews(BaseClassViews):
 
         return {
             'locations': clinics,
-            'parent': municipality,
+            'municipality': municipality,
+            'state': municipality.parent,
             'period': period,
             'periods': ReportingPeriod.get_active_periods(),
             'key_indicators_key_labels': constants.INDICATOR_LABELS,
