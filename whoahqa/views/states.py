@@ -39,7 +39,7 @@ class StateViews(BaseClassViews):
 
     @view_config(name='',
                  context=State,
-                 renderer='clinics_summary.jinja2',
+                 renderer='state_summary.jinja2',
                  request_method='GET')
     def show(self):
         state = self.request.context
@@ -47,7 +47,7 @@ class StateViews(BaseClassViews):
 
         return {
             'locations': state.children(),
-            'parent': state,
+            'state': state,
             'period': period,
             'periods': ReportingPeriod.get_active_periods(),
             'key_indicators_key_labels': constants.INDICATOR_LABELS,
