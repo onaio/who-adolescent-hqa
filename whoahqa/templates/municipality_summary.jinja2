@@ -2,33 +2,31 @@
 {% block title %}{{ gettext("Clinics") }}{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 
-{% if request.can_list_states %}
-  {% block sub_menu_item %}
-    <li>
-      <a href="{{request.route_url('states', traverse=(state.id, period.id))}}">
-          {{ state.name|format_location_name }}
+{% block sub_menu_item %}
+  <li>
+    <a href="{{municipality.get_url(request, period)}}">
+        {{ municipality.name|format_location_name }}
+    </a>
+  </li>
+  {% for clinic in locations %}
+    <li class="sub-location">
+      <a href="{{clinic.get_url(request, period)}}">
+          {{ clinic.name|format_location_name }}
       </a>
     </li>
-    {% for clinic in locations %}
-      <li class="sub-location">
-        <a href="{{request.route_url('clinics', traverse=(clinic.id, period.id))}}">
-            {{ clinic.name|format_location_name }}
-        </a>
-      </li>
-    {% endfor %}
-  {% endblock %}
-{% endif %}
+  {% endfor %}
+{% endblock %}
 
 {% block breadcrumbs %}
-  {% if request.can_list_states %}
+  {% if request.can_view_state %}
     <li>
       <a href="{{ state.get_url(request, period) }}">
         {{ state.name|format_location_name }}
       </a>
     </li>
-  {% endif %}
-  {% if request.can_list_clinics %}
     <li><i class="icon-angle-right"></i></li>
+  {% endif %}
+  {% if request.can_view_municipality %}
     <li>
       <a href="{{ municipality.get_url(request, period) }}">
         {{ municipality.name|format_location_name }}
