@@ -129,17 +129,3 @@ class LocationFactory(BaseModelFactory):
             location.__parent__ = self
             location.__name__ = item
             return location
-
-
-class StateFactory(BaseModelFactory):
-
-    def __getitem__(self, item):
-        try:
-            location_id = int(item)
-            location = Location.get(Location.id == location_id)
-        except(ValueError, NoResultFound):
-            raise KeyError
-        else:
-            location.__parent__ = self
-            location.__name__ = item
-            return location
