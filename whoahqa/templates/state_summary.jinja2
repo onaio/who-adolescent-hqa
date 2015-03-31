@@ -1,0 +1,56 @@
+{% extends "base.jinja2" %}
+{% block title %}{{ gettext("Municipalities") }}{% endblock %}
+{% block page_title %} {{ state.name|format_location_name }} {% endblock %}
+
+{% block sub_menu_item %}
+  <li>
+    <a href="{{state.get_url(request, period)}}">
+        {{ state.name|format_location_name }}
+    </a>
+  </li>
+  {% for municipality in locations %}
+    <li class="sub-location">
+      <a href="{{municipality.get_url(request, period)}}">
+          {{ municipality.name|format_location_name }}
+      </a>
+    </li>
+  {% endfor %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <li>
+    <a href="{{ state.get_url(request, period) }}">
+      {{ state.name|format_location_name }}
+    </a>
+  </li>
+  <li><i class="icon-angle-right"></i></li>
+  <li>{{ gettext("Municipalities") }}</li>
+  <li><a href="#"> </a></li>
+{% endblock %}
+{% block content %}
+  <div class="row">
+    <!--
+    <div style="margin-left:0px; margin-bottom:5px;" class="row">
+        <div class="col-md-2 form-group">
+           <input id="search_term" name="search_term" type="text" class="form-control" placeholder="Search clinics..."/>
+        </div>
+    </div>
+    -->
+    <div class="col-md-12">
+      {% block clinic_table %}
+        <form method="post" action="">
+            <div class="clinics_table">
+              {% include '_summary_scores_table.jinja2' %}
+            </div>
+        </form>
+      {% endblock %}
+    </div>
+  </div>
+{% endblock content %}
+{% block page_scripts %}
+  <script src="{{ request.static_url('whoahqa:static/scripts/custom.js') }}"></script>
+{% endblock %}
+{% block jquery_ready %}
+  {{ super() }}
+  Custom.filterClinicTable();
+{% endblock %}
