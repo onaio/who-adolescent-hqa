@@ -100,7 +100,8 @@ class State(Location):
 
     __acl__ = [
         (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
-        (Allow, Authenticated, perms.CAN_VIEW_STATE)
+        (Allow, groups.STATE_OFFICIAL, perms.CAN_LIST_STATE),
+        (Allow, groups.STATE_OFFICIAL, perms.CAN_VIEW_STATE)
     ]
 
     def children(self):
