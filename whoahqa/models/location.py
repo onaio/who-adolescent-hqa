@@ -1,7 +1,6 @@
 from collections import defaultdict, Counter
 from pyramid.security import (
     Allow,
-    Authenticated,
     ALL_PERMISSIONS
 )
 
@@ -78,11 +77,17 @@ class Municipality(Location):
         'polymorphic_identity': Location.MUNICIPALITY
     }
 
-    __acl__ = [
-        (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
-        (Allow, Authenticated, perms.CAN_VIEW_MUNICIPALITY),
-        (Allow, Authenticated, perms.CAN_LIST_MUNICIPALITY)
-    ]
+    @property
+    def __acl__(self):
+        acl = [
+            (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
+            (Allow, groups.STATE_OFFICIAL, perms.CAN_VIEW_MUNICIPALITY),
+            (Allow, groups.STATE_OFFICIAL, perms.CAN_LIST_MUNICIPALITY)
+        ]
+        if self.user is not None:
+            acl.append((Allow, "u:{}".format(self.user.id),
+                        perms.CAN_VIEW_MUNICIPALITY))
+        return acl
 
     def get_url(self, request, period):
         return request.route_url('municipalities',
@@ -98,11 +103,15 @@ class State(Location):
         'polymorphic_identity': Location.STATE
     }
 
-    __acl__ = [
-        (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
-        (Allow, groups.STATE_OFFICIAL, perms.CAN_LIST_STATE),
-        (Allow, groups.STATE_OFFICIAL, perms.CAN_VIEW_STATE)
-    ]
+    @property
+    def __acl__(self):
+        acl = [
+            (Allow, groups.SUPER_USER, ALL_PERMISSIONS)
+        ]
+        if self.user is not None:
+            acl.append((Allow, "u:{}".format(self.user.id),
+                        perms.CAN_VIEW_STATE))
+        return acl
 
     def children(self):
         return Municipality.all(Municipality.parent_id == self.id)
@@ -120,6 +129,30 @@ class State(Location):
 
 
 class LocationFactory(BaseModelFactory):
+
+    @property
+    def __acl__(self):
+        acl = [
+            (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
+            (Allow, groups.STATE_OFFICIAL, perms.CAN_VIEW_MUNICIPALITY),
+            (Allow, groups.STATE_OFFICIAL, perms.CAN_LIST_MUNICIPALITY)
+        ]
+
+        if self.request.ona_user is not None:
+            user = self.request.ona_user.user
+
+            try:
+                traversal_args = self.request.traversed
+                location_id = traversal_args[0]
+                location = self[location_id]
+            except (IndexError, KeyError):
+                return acl
+            else:
+                if location.user == user:
+                    acl.append((Allow, "u:{}".format(user.id),
+                                perms.CAN_VIEW_MUNICIPALITY))
+        return acl
+
     def __getitem__(self, item):
         try:
             location_id = int(item)
