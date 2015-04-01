@@ -112,7 +112,8 @@ class TestBase(unittest.TestCase):
 
     def setup_test_data(self):
         su_group = Group(name=groups.SUPER_USER)
-        clinic_managers_group = Group(name=groups.MUNICIPALITY_MANAGER)
+        clinic_managers_group = Group(name=groups.CLINIC_MANAGER)
+        municipality_manager_group = Group(name=groups.MUNICIPALITY_MANAGER)
 
         su = User()
         user_setting = UserSettings(user=su)
@@ -124,7 +125,7 @@ class TestBase(unittest.TestCase):
         manager_a = User()
         manager_a_ona_user = OnaUser(
             user=manager_a, username='manager_a', refresh_token="b345d6")
-        manager_a.group = clinic_managers_group
+        manager_a.group = municipality_manager_group
 
         manager_b = User()
         manager_b_ona_user = OnaUser(
