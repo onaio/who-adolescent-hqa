@@ -103,16 +103,17 @@ class TestStateViewsFunctional(FunctionalTestBase):
         response = self.testapp.get(url, headers=headers, status=403)
         self.assertEqual(response.status_code, 403)
 
-    def test_state_index_with_authorised_user(self):
-        url = self.request.route_path('states', traverse=())
+    def test_state_show_with_authorised_user(self):
+        state = State.get(State.name == "Sao Paolo")
+        url = self.request.route_path('states', traverse=(state.id))
         headers = self._login_user("state-official")
 
         with patch('whoahqa.models.reporting_period.get_current_date') as mock:
             mock.return_value = datetime.date(2015, 6, 1)
             response = self.testapp.get(url, headers=headers)
-            self.assertEqual(response.status_code, 302)
+            self.assertEqual(response.status_code, 200)
 
-    def test_state_view_for_user_without_perms(self):
+    def test_state_show_for_user_without_perms(self):
         state = State.get(State.name == "Sao Paolo")
         self._create_user('renegade', 'state_official')
         url = self.request.route_path('states', traverse=(state.id))
@@ -120,5 +121,5 @@ class TestStateViewsFunctional(FunctionalTestBase):
 
         with patch('whoahqa.models.reporting_period.get_current_date') as mock:
             mock.return_value = datetime.date(2015, 6, 1)
-            response = self.testapp.get(url, headers=headers)
+            response = self.testapp.get(url, headers=headers, status=403)
             self.assertEqual(response.status_code, 403)
