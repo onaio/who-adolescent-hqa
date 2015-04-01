@@ -7,6 +7,7 @@ from whoahqa.models import (
     Clinic,
     DBSession,
     Municipality,
+    OnaUser,
     ReportingPeriod)
 from whoahqa.tests.test_base import IntegrationTestBase
 from whoahqa.views import MunicipalityViews
@@ -17,6 +18,7 @@ class TestMunicipalityViews(IntegrationTestBase):
         super(TestMunicipalityViews, self).setUp()
         self.request = testing.DummyRequest()
         self.view = MunicipalityViews(self.request)
+        self._create_user('municipality-manager')
 
         with transaction.manager:
             reporting_period = ReportingPeriod(
@@ -33,6 +35,9 @@ class TestMunicipalityViews(IntegrationTestBase):
                                 code="{}BCDE".format(i),
                                 municipality=municipality)
                 DBSession.add(clinic)
+
+        self.request.ona_user = OnaUser.get(
+            OnaUser.username == 'municipality-manager')
 
     def test_municipality_index(self):
         with patch('whoahqa.models.reporting_period.get_current_date') as mock:
@@ -51,6 +56,6 @@ class TestMunicipalityViews(IntegrationTestBase):
             mock.return_value = datetime.date(2015, 6, 1)
             response = self.view.show()
 
-            self.assertEqual(response['parent'], municipality)
+            self.assertEqual(response['municipality'], municipality)
             self.assertEqual(response['locations'], municipality.clinics)
             self.assertNotEqual(len(response['locations']), 0)
