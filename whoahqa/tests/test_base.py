@@ -85,8 +85,8 @@ class TestBase(unittest.TestCase):
         DBSession.remove()
         testing.tearDown()
 
-    def _create_user(self, username):
-        user_group = Group(name="user")
+    def _create_user(self, username, group='user'):
+        user_group = Group(name=group)
 
         user = User()
         user.group = user_group
