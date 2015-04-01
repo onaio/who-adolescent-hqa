@@ -65,6 +65,7 @@ class User(Base):
     group = relationship("Group", secondary=user_groups, uselist=False)
     location = relationship('Location',
                             secondary=user_locations,
+                            backref=backref('user', uselist=False),
                             uselist=False)
 
     def get_clinics(self):

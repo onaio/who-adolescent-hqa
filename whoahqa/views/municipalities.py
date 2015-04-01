@@ -39,6 +39,7 @@ class MunicipalityViews(BaseClassViews):
 
     @view_config(name='',
                  context=Municipality,
+                 permission=perms.CAN_VIEW_MUNICIPALITY,
                  renderer='municipality_summary.jinja2',
                  request_method='GET')
     def show(self):
