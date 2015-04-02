@@ -19,6 +19,10 @@ def format_date_for_locale(value, format_def, request):
     return format_date(value, format_def, locale=localizer.locale_name)
 
 
+def format_location_name(value):
+    return '' if value is None else value.replace("_", " ").title()
+
+
 def filter_dict_list_by_attr(
         active_ids, characteristic_list, attribute, invert=False):
     return [c for c in characteristic_list

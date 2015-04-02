@@ -1,3 +1,4 @@
+from pyramid.httpexceptions import HTTPFound
 from pyramid.view import (
     view_config,
     view_defaults,
@@ -5,6 +6,7 @@ from pyramid.view import (
 
 from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
+from whoahqa.constants import groups
 from whoahqa.views.helpers import get_period_from_request
 from whoahqa.models import (
     LocationFactory,
@@ -18,10 +20,15 @@ from whoahqa.views.base import BaseClassViews
 class MunicipalityViews(BaseClassViews):
     @view_config(name='',
                  context=LocationFactory,
-                 renderer='location_list.jinja2',
+                 renderer='municipalities_list.jinja2',
                  request_method='GET')
     def index(self):
         period = get_period_from_request(self.request)
+        ona_user = self.request.ona_user
+
+        if ona_user.group.name == groups.MUNICIPALITY_MANAGER:
+            return HTTPFound(self.request.route_url(
+                'municipalities', traverse=(ona_user.location.id)))
 
         return {
             'locations': Municipality.all(),
@@ -32,7 +39,8 @@ class MunicipalityViews(BaseClassViews):
 
     @view_config(name='',
                  context=Municipality,
-                 renderer='clinics_summary.jinja2',
+                 permission=perms.CAN_VIEW_MUNICIPALITY,
+                 renderer='municipality_summary.jinja2',
                  request_method='GET')
     def show(self):
         municipality = self.request.context
@@ -41,7 +49,8 @@ class MunicipalityViews(BaseClassViews):
 
         return {
             'locations': clinics,
-            'parent': municipality,
+            'municipality': municipality,
+            'state': municipality.parent,
             'period': period,
             'periods': ReportingPeriod.get_active_periods(),
             'key_indicators_key_labels': constants.INDICATOR_LABELS,
