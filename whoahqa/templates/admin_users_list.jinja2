@@ -21,6 +21,7 @@
               <tr>
                 <th>Username</th>
                 <th>Role</th>
+                <th>Location List / Clinic</th>
                 <th>Actions</th>
               </tr>
               </thead>
@@ -30,6 +31,16 @@
                 <tr>
                   <td>{{ ona_user.username }}</td>
                   <td>{{ ona_user.group|capitalize }}</td>
+                  <td>
+                    {% if ona_user.location is not none%}
+                      {{ ona_user.location.name|format_location_name }} 
+                      {{ ona_user.location.location_type|format_location_name }}
+                    {% else %}
+                      {% for clinic in ona_user.clinics %}
+                        {{ clinic.name|format_location_name }}
+                      {% endfor %}
+                    {% endif %}
+                  </td>
                   <td>
                     {% if not is_current_user %}
                       <a class="btn btn-default btn-xs" href="{{ request.route_path('admin', traverse=(ona_user.user.id, 'edit')) }}">Edit</a>
