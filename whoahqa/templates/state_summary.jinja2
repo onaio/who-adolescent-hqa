@@ -6,12 +6,14 @@
   <li>
     <a href="{{state.get_url(request, period)}}">
         {{ state.name|format_location_name }}
+        {{ state.location_type|capitalize }}
     </a>
   </li>
   {% for municipality in locations %}
     <li class="sub-location">
       <a href="{{municipality.get_url(request, period)}}">
           {{ municipality.name|format_location_name }}
+          {{ municipality.location_type|capitalize }}
       </a>
     </li>
   {% endfor %}
