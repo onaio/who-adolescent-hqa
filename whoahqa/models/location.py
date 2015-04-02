@@ -144,7 +144,9 @@ class LocationFactory(BaseModelFactory):
 
     @property
     def __acl__(self):
-        acl = []
+        acl = [
+            (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
+        ]
 
         try:
             traversal_args = self.request.traversed
