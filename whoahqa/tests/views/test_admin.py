@@ -20,7 +20,10 @@ class TestAdminViews(IntegrationTestBase):
         self.request.context = user
 
         self.request.method = 'POST'
-        params = MultiDict({'group': groups.CLINIC_MANAGER})
+        params = MultiDict({'group': groups.CLINIC_MANAGER,
+                            'clinics': ['1'],
+                            'municipality': '1',
+                            'state': '2'})
         self.request.POST = params
 
         response = self.view.edit()

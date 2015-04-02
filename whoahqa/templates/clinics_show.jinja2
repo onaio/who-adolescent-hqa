@@ -4,13 +4,61 @@
 {% from 'macros/client_rows.jinja2' import generate_client_rows %}
 {% block title %}{{ clinic.name }} {% endblock %}
 {% block page_title %}{{ self.title() }} <span class="bold">({{ clinic.code }})</span> {% endblock %}
+
+{% set municipality = clinic.municipality %}
+{% set state = municipality.parent if municipality else None %}
+
+{% block sub_menu_item %}
+    {% if request.can_view_municipality %}
+      <li>
+        <a href="{{municipality.get_url(request, period)}}">
+            {{ municipality.name|format_location_name }}
+            {{ municipality.location_type|capitalize }}
+        </a>
+      </li>
+      {% for clinic in municipality.clinics %}
+        <li class="sub-location">
+          <a href="{{clinic.get_url(request, period)}}">
+              {{ clinic.name|format_location_name }}
+          </a>
+        </li>
+      {% endfor %}
+    {% else %}
+      {% for clinic in request.ona_user.clinics %}
+        <li>
+          <a href="{{clinic.get_url(request, period)}}">
+              {{ clinic.name|format_location_name }}
+          </a>
+        </li>
+      {% endfor %}
+    {% endif %}
+  {% endblock %}
+
 {% block breadcrumbs %}
-  <li>
-    <a href="{{ request.route_url('clinics',traverse=('')) }}">
-      {{ gettext("Clinics") }}
-    </a>
-    <i class="icon-angle-right"></i>
-  </li>
+  {% if state is not none %}
+    <li>
+      {% if request.can_view_state %}
+        <a href="{{ state.get_url(request, period)}}">
+          {{ state.name|format_location_name }}
+        </a>
+      {% else %}
+        {{ state.name|format_location_name }}
+      {% endif %}
+      <i class="icon-angle-right"></i>
+    </li>
+  {% endif %}
+  {% if municipality is not none %}
+    <li>
+      {% if request.can_view_municipality %}
+        <a href="{{ municipality.get_url(request, period)}}">
+          {{ municipality.name|format_location_name }}
+        </a>
+      {% else %}
+        {{ municipality.name|format_location_name }}
+      {% endif %}
+      <i class="icon-angle-right"></i>
+    </li>
+  {% endif %}
   <li>
     {{ self.page_title() }}
     <i class="icon-angle-right"></i>

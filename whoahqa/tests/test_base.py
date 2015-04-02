@@ -26,7 +26,8 @@ from whoahqa.models import (
     OnaUser,
     Clinic,
     Municipality,
-    ReportingPeriod
+    ReportingPeriod,
+    State
 )
 
 
@@ -84,8 +85,8 @@ class TestBase(unittest.TestCase):
         DBSession.remove()
         testing.tearDown()
 
-    def _create_user(self, username):
-        user_group = Group(name="user")
+    def _create_user(self, username, group='user'):
+        user_group = Group(name=group)
 
         user = User()
         user.group = user_group
@@ -103,9 +104,17 @@ class TestBase(unittest.TestCase):
         with transaction.manager:
             DBSession.add(municipality)
 
+    def _create_state(self, name="Test State"):
+        state = State(name=name)
+
+        with transaction.manager:
+            DBSession.add(state)
+
     def setup_test_data(self):
         su_group = Group(name=groups.SUPER_USER)
-        clinic_managers_group = Group(name=groups.MUNICIPALITY_MANAGER)
+        clinic_managers_group = Group(name=groups.CLINIC_MANAGER)
+        municipality_manager_group = Group(name=groups.MUNICIPALITY_MANAGER)
+        municipality = Municipality(name="Test Municipality")
 
         su = User()
         user_setting = UserSettings(user=su)
@@ -117,7 +126,7 @@ class TestBase(unittest.TestCase):
         manager_a = User()
         manager_a_ona_user = OnaUser(
             user=manager_a, username='manager_a', refresh_token="b345d6")
-        manager_a.group = clinic_managers_group
+        manager_a.group = municipality_manager_group
 
         manager_b = User()
         manager_b_ona_user = OnaUser(
@@ -125,13 +134,22 @@ class TestBase(unittest.TestCase):
         manager_b.group = clinic_managers_group
 
         # add a couple of clinics
-        clinic1 = Clinic(id=1, name="Clinic A", code="1A2B")
+        clinic1 = Clinic(id=1,
+                         name="Clinic A",
+                         code="1A2B",
+                         municipality=municipality)
         # assign a su to clinic1
         manager_a.clinics.append(clinic1)
 
-        clinic2 = Clinic(id=2, name="Clinic B", code="3E4G")
+        clinic2 = Clinic(id=2,
+                         name="Clinic B",
+                         code="3E4G",
+                         municipality=municipality)
 
-        clinic3 = Clinic(id=3, name="Health Centre 09", code="0010731")
+        clinic3 = Clinic(id=3,
+                         name="Health Centre 09",
+                         code="0010731",
+                         municipality=municipality)
 
         reporting_period1 = ReportingPeriod(
             title='Default Period',
@@ -146,7 +164,7 @@ class TestBase(unittest.TestCase):
         with transaction.manager:
             DBSession.add_all(
                 [user_setting, su_ona_user, manager_a_ona_user,
-                 manager_b_ona_user, clinic1, clinic2, clinic3,
+                 manager_b_ona_user, municipality, clinic1, clinic2, clinic3,
                  reporting_period1, reporting_period2])
 
     def create_submissions(self):

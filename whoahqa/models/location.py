@@ -1,7 +1,6 @@
 from collections import defaultdict, Counter
 from pyramid.security import (
     Allow,
-    Authenticated,
     ALL_PERMISSIONS
 )
 
@@ -69,22 +68,33 @@ class Location(Base):
 
             return self._key_indicators
 
+    def __str__(self):
+        return self.name
+
 
 class Municipality(Location):
     __mapper_args__ = {
         'polymorphic_identity': Location.MUNICIPALITY
     }
 
-    __acl__ = [
-        (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
-        (Allow, Authenticated, perms.CAN_VIEW_MUNICIPALITY),
-        (Allow, Authenticated, perms.CAN_LIST_MUNICIPALITY)
-    ]
+    @property
+    def __acl__(self):
+        acl = [
+            (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
+        ]
+        if self.user is not None:
+            acl.append((Allow, "u:{}".format(self.user.id),
+                        perms.CAN_VIEW_MUNICIPALITY))
+
+        return acl
 
     def get_url(self, request, period):
         return request.route_url('municipalities',
                                  traverse=(self.id),
                                  _query={'period': period.id})
+
+    def children(self):
+        return self.clinics
 
 
 class State(Location):
@@ -92,13 +102,62 @@ class State(Location):
         'polymorphic_identity': Location.STATE
     }
 
-    __acl__ = [
-        (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
-        (Allow, Authenticated, perms.CAN_VIEW_STATE)
-    ]
+    @property
+    def __acl__(self):
+        acl = [
+            (Allow, groups.SUPER_USER, ALL_PERMISSIONS)
+        ]
+        if self.user is not None:
+            children_perms = [
+                (Allow, "u:{}".format(
+                    self.user.id), perms.CAN_VIEW_MUNICIPALITY),
+                (Allow, "u:{}".format(
+                    self.user.id), perms.CAN_LIST_MUNICIPALITY)
+            ]
+            acl.append((Allow, "u:{}".format(self.user.id),
+                        perms.CAN_VIEW_STATE))
+            acl.extend(children_perms)
+
+        return acl
+
+    def children(self):
+        return Municipality.all(Municipality.parent_id == self.id)
+
+    @property
+    def clinics(self):
+        municipalities = self.children()
+        clinics = [clinic for m in municipalities for clinic in m.clinics]
+        return clinics
+
+    def get_url(self, request, period):
+        return request.route_url('states',
+                                 traverse=(self.id),
+                                 _query={'period': period.id})
 
 
 class LocationFactory(BaseModelFactory):
+
+    @property
+    def __parent__(self):
+        # reset Parent
+        return None
+
+    @property
+    def __acl__(self):
+        acl = []
+
+        try:
+            traversal_args = self.request.traversed
+            location_id = traversal_args[0]
+            location = self[location_id]
+        except (IndexError, KeyError):
+            return acl
+        else:
+            acl.extend(location.__acl__)
+            acl.extend(location.parent.__acl__)
+
+        return acl
+
     def __getitem__(self, item):
         try:
             location_id = int(item)

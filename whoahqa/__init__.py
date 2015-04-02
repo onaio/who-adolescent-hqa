@@ -10,7 +10,11 @@ from sqlalchemy import engine_from_config
 
 from whoahqa.constants import permissions as perms
 from whoahqa.constants import groups
-from utils import hashid, enketo, format_date_for_locale
+from utils import (
+    hashid,
+    enketo,
+    format_date_for_locale,
+    format_location_name)
 from whoahqa.security import group_finder, pwd_context
 from whoahqa.models import (
     DBSession,
@@ -34,6 +38,8 @@ from whoahqa.views import (
     can_access_clinics,
     can_list_clinics,
     can_view_clinics,
+    can_view_municipality,
+    can_view_state,
     is_super_user
 )
 
@@ -94,6 +100,8 @@ def includeme(config):
     config.add_jinja2_search_path("whoahqa:templates")
     config.get_jinja2_environment().filters['format_date'] = \
         format_date_for_locale
+    config.get_jinja2_environment().filters['format_location_name'] = \
+        format_location_name
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('default', '/')
     config.add_route('locale', '/locale/')
@@ -109,6 +117,8 @@ def includeme(config):
                      factory=ReportingPeriodFactory)
     config.add_route('municipalities', '/municipalities/*traverse',
                      factory=LocationFactory)
+    config.add_route('states', '/states/*traverse',
+                     factory=LocationFactory)
     config.scan()
 
 
@@ -119,6 +129,9 @@ def add_request_helpers(config):
         can_access_clinics, 'can_access_clinics', reify=True)
     config.add_request_method(can_view_clinics, 'can_view_clinics', reify=True)
     config.add_request_method(can_list_clinics, 'can_list_clinics', reify=True)
+    config.add_request_method(
+        can_view_municipality, 'can_view_municipality', reify=True)
+    config.add_request_method(can_view_state, 'can_view_state', reify=True)
     config.add_request_method(is_super_user, 'is_super_user', reify=True)
 
 
