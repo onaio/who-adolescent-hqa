@@ -6,6 +6,7 @@
   <li>
     <a href="{{municipality.get_url(request, period)}}">
         {{ municipality.name|format_location_name }}
+        {{ municipality.location_type|capitalize }}
     </a>
   </li>
   {% for clinic in locations %}
