@@ -7,6 +7,7 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from whoahqa.models import (
     ClinicFactory,
+    LocationFactory,
     OnaUser,
 )
 
@@ -47,11 +48,11 @@ def can_access_clinics(request):
 
 def can_view_municipality(request):
     return has_permission(perms.CAN_VIEW_MUNICIPALITY,
-                          ClinicFactory(request),
+                          LocationFactory(request),
                           request)
 
 
 def can_view_state(request):
     return has_permission(perms.CAN_VIEW_STATE,
-                          ClinicFactory(request),
+                          LocationFactory(request),
                           request)
