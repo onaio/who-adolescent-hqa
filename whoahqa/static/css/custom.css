@@ -428,3 +428,7 @@ ul.page-sidebar-menu > li.active > ul.sub-menu > li.selected > a,
 ul.page-sidebar-menu > li.active > ul.sub-menu > li.selected > a i {
     color: #fff;
 }
+
+.page-sidebar-menu > li > ul.sub-menu > li.sub-location {
+    margin-left: 15px;
+}
