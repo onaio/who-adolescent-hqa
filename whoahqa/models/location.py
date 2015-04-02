@@ -138,6 +138,11 @@ class State(Location):
 class LocationFactory(BaseModelFactory):
 
     @property
+    def __parent__(self):
+        # reset Parent
+        return None
+
+    @property
     def __acl__(self):
         acl = []
 

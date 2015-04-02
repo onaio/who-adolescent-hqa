@@ -114,6 +114,7 @@ class TestBase(unittest.TestCase):
         su_group = Group(name=groups.SUPER_USER)
         clinic_managers_group = Group(name=groups.CLINIC_MANAGER)
         municipality_manager_group = Group(name=groups.MUNICIPALITY_MANAGER)
+        municipality = Municipality(name="Test Municipality")
 
         su = User()
         user_setting = UserSettings(user=su)
@@ -133,13 +134,22 @@ class TestBase(unittest.TestCase):
         manager_b.group = clinic_managers_group
 
         # add a couple of clinics
-        clinic1 = Clinic(id=1, name="Clinic A", code="1A2B")
+        clinic1 = Clinic(id=1,
+                         name="Clinic A",
+                         code="1A2B",
+                         municipality=municipality)
         # assign a su to clinic1
         manager_a.clinics.append(clinic1)
 
-        clinic2 = Clinic(id=2, name="Clinic B", code="3E4G")
+        clinic2 = Clinic(id=2,
+                         name="Clinic B",
+                         code="3E4G",
+                         municipality=municipality)
 
-        clinic3 = Clinic(id=3, name="Health Centre 09", code="0010731")
+        clinic3 = Clinic(id=3,
+                         name="Health Centre 09",
+                         code="0010731",
+                         municipality=municipality)
 
         reporting_period1 = ReportingPeriod(
             title='Default Period',
@@ -154,7 +164,7 @@ class TestBase(unittest.TestCase):
         with transaction.manager:
             DBSession.add_all(
                 [user_setting, su_ona_user, manager_a_ona_user,
-                 manager_b_ona_user, clinic1, clinic2, clinic3,
+                 manager_b_ona_user, municipality, clinic1, clinic2, clinic3,
                  reporting_period1, reporting_period2])
 
     def create_submissions(self):
