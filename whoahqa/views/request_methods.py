@@ -11,6 +11,7 @@ from whoahqa.models import (
     OnaUser,
 )
 
+from whoahqa.constants import groups
 from whoahqa.constants import permissions as perms
 
 
@@ -47,12 +48,17 @@ def can_access_clinics(request):
 
 
 def can_view_municipality(request):
-    return has_permission(perms.CAN_VIEW_MUNICIPALITY,
-                          LocationFactory(request),
-                          request)
+    ona_user = request.ona_user
+    if ona_user.user.group.name == groups.MUNICIPALITY_MANAGER or (
+            ona_user.user.group.name == groups.STATE_OFFICIAL):
+        return True
+
+    return False
 
 
 def can_view_state(request):
-    return has_permission(perms.CAN_VIEW_STATE,
-                          LocationFactory(request),
-                          request)
+    ona_user = request.ona_user
+    if ona_user.user.group.name == groups.STATE_OFFICIAL:
+        return True
+
+    return False
