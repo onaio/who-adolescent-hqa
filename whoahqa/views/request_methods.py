@@ -7,7 +7,6 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from whoahqa.models import (
     ClinicFactory,
-    LocationFactory,
     OnaUser,
 )
 
