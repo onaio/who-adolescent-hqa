@@ -81,12 +81,11 @@ class Municipality(Location):
     def __acl__(self):
         acl = [
             (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
-            (Allow, groups.STATE_OFFICIAL, perms.CAN_VIEW_MUNICIPALITY),
-            (Allow, groups.STATE_OFFICIAL, perms.CAN_LIST_MUNICIPALITY)
         ]
         if self.user is not None:
             acl.append((Allow, "u:{}".format(self.user.id),
                         perms.CAN_VIEW_MUNICIPALITY))
+
         return acl
 
     def get_url(self, request, period):
@@ -109,8 +108,16 @@ class State(Location):
             (Allow, groups.SUPER_USER, ALL_PERMISSIONS)
         ]
         if self.user is not None:
+            children_perms = [
+                (Allow, "u:{}".format(
+                    self.user.id), perms.CAN_VIEW_MUNICIPALITY),
+                (Allow, "u:{}".format(
+                    self.user.id), perms.CAN_LIST_MUNICIPALITY)
+            ]
             acl.append((Allow, "u:{}".format(self.user.id),
                         perms.CAN_VIEW_STATE))
+            acl.extend(children_perms)
+
         return acl
 
     def children(self):
@@ -132,25 +139,18 @@ class LocationFactory(BaseModelFactory):
 
     @property
     def __acl__(self):
-        acl = [
-            (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
-            (Allow, groups.STATE_OFFICIAL, perms.CAN_VIEW_MUNICIPALITY),
-            (Allow, groups.STATE_OFFICIAL, perms.CAN_LIST_MUNICIPALITY)
-        ]
+        acl = []
 
-        if self.request.ona_user is not None:
-            user = self.request.ona_user.user
+        try:
+            traversal_args = self.request.traversed
+            location_id = traversal_args[0]
+            location = self[location_id]
+        except (IndexError, KeyError):
+            return acl
+        else:
+            acl.extend(location.__acl__)
+            acl.extend(location.parent.__acl__)
 
-            try:
-                traversal_args = self.request.traversed
-                location_id = traversal_args[0]
-                location = self[location_id]
-            except (IndexError, KeyError):
-                return acl
-            else:
-                if location.user == user:
-                    acl.append((Allow, "u:{}".format(user.id),
-                                perms.CAN_VIEW_MUNICIPALITY))
         return acl
 
     def __getitem__(self, item):
