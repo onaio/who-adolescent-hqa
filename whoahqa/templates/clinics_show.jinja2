@@ -4,9 +4,37 @@
 {% from 'macros/client_rows.jinja2' import generate_client_rows %}
 {% block title %}{{ clinic.name }} {% endblock %}
 {% block page_title %}{{ self.title() }} <span class="bold">({{ clinic.code }})</span> {% endblock %}
+
+{% set municipality = clinic.municipality %}
+{% set state = municipality.parent if municipality else None %}
+
+{% block sub_menu_item %}
+    {% if request.can_view_municipality %}
+      <li>
+        <a href="{{municipality.get_url(request, period)}}">
+            {{ municipality.name|format_location_name }}
+            {{ municipality.location_type|capitalize }}
+        </a>
+      </li>
+      {% for clinic in municipality.clinics %}
+        <li class="sub-location">
+          <a href="{{clinic.get_url(request, period)}}">
+              {{ clinic.name|format_location_name }}
+          </a>
+        </li>
+      {% endfor %}
+    {% else %}
+      {% for clinic in request.ona_user.clinics %}
+        <li>
+          <a href="{{clinic.get_url(request, period)}}">
+              {{ clinic.name|format_location_name }}
+          </a>
+        </li>
+      {% endfor %}
+    {% endif %}
+  {% endblock %}
+
 {% block breadcrumbs %}
-  {% set municipality = clinic.municipality %}
-  {% set state = municipality.parent if municipality else None %}
   {% if state is not none %}
     <li>
       {% if request.can_view_state %}
