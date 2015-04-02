@@ -32,6 +32,12 @@
                                     {{responses_per_tool[client_tool.id].responses}}
                                     of
                                     {{responses_per_tool[client_tool.id].sample_frame}}
+                                    &nbsp;
+                                    {% if responses_per_tool[client_tool.id].responses == responses_per_tool[client_tool.id].sample_frame %}
+                                        <span class="label label-primary"> {{ gettext('Complete') }}</span>
+                                    {% elif responses_per_tool[client_tool.id].responses == 0 %}
+                                        <span class="label label-warning"> {{ gettext('Not Started') }}</span>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     <a href="{{ request.route_url('clinics', traverse=('show_form'), _query=(('form', client_tool.id),)) }}">
