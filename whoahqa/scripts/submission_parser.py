@@ -15,6 +15,7 @@ from whoahqa.models import (
     Clinic,
     DBSession,
     Submission,
+    State,
     Municipality)
 
 
@@ -47,13 +48,23 @@ def parse_municipalities_from_submissions():
                 clinic = Clinic.get(
                     Clinic.code == clinic_code)
 
+                state_name = submission.raw_data[
+                    constants.STATE_IDENTIFIER]
+
                 municipality_name = submission.raw_data[
                     constants.MUNICIPALITY_IDENTIFIER]
+
+                state_params = {'name': state_name}
+                state = State.get_or_create(
+                    State.name == state_name,
+                    **state_params)
 
                 municipality_params = {'name': municipality_name}
                 municipality = Municipality.get_or_create(
                     Municipality.name == municipality_name,
                     **municipality_params)
+
+                municipality.state = state
 
                 if clinic.municipality is None:
                     clinic.municipality = municipality
