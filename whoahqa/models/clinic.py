@@ -77,6 +77,21 @@ class Clinic(Base):
         if self.user is not None:
             acl.append((Allow, "u:{}".format(self.user.id),
                         perms.CAN_VIEW_CLINICS))
+
+        if self.municipality:
+            municipality_user = self.municipality.user
+
+            if municipality_user:
+                acl.append((Allow, "u:{}".format(municipality_user.id),
+                            perms.CAN_VIEW_CLINICS))
+
+            if self.municipality.parent:
+                state_user = self.municipality.parent.user
+
+                if state_user:
+                    acl.append((Allow, "u:{}".format(state_user.id),
+                                perms.CAN_VIEW_CLINICS))
+
         return acl
 
     def __getitem__(self, item):
