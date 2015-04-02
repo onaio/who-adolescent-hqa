@@ -15,6 +15,7 @@
       </thead>
 
       <tbody role="alert" aria-live="polite" aria-relevant="all">
+      {% set parent = state or municipality %}
       {% if parent %}
         <tr class="average-row">
           <td>
