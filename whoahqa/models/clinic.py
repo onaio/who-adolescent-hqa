@@ -279,6 +279,8 @@ class Clinic(Base):
             total_scores = 0
             total_questions = 0
             total_responses = 0
+            total_pending_responses = 0
+
             mapping = constants.CHARACTERISTIC_MAPPING[characteristic]
             meets_threshold = True
 
@@ -329,17 +331,19 @@ class Clinic(Base):
                         # increment total scores
                         total_scores += aggregate_score
 
+                    num_pending_responses = (
+                        recommended_sample_frame - num_responses)
                     stats = {
                         'aggregate_score': aggregate_score,
                         'num_responses': num_responses,
                         'num_questions': num_questions,
-                        'num_pending_responses':
-                        recommended_sample_frame - num_responses
+                        'num_pending_responses': num_pending_responses
                     }
 
                     scores[characteristic][client_tool_id] = stats
                     total_questions += num_questions
                     total_responses += num_responses
+                    total_pending_responses += num_pending_responses
 
             total_percentage = None if total_responses == 0 else (
                 total_scores / float(total_questions) * 100)
@@ -348,6 +352,7 @@ class Clinic(Base):
                 'total_scores': None if total_scores == 0 else total_scores,
                 'total_questions': total_questions,
                 'total_responses': total_responses,
+                'total_pending_responses': total_pending_responses,
                 'total_percentage': total_percentage,
                 'meets_threshold': meets_threshold,
                 'score_classification': constants.get_score_classification(

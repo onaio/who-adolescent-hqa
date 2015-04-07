@@ -102,6 +102,7 @@
     <table class="table table-bordered scores-table">
       {% for characteristic in characteristics %}
           {% set total_responses = scores[characteristic.id].totals.total_responses %}
+          {% set total_pending_responses = scores[characteristic.id].totals.total_pending_responses %}
           {% set total_scores = scores[characteristic.id].totals.total_scores %}
           {% set percentage = scores[characteristic.id].totals.total_percentage %}
           {% set meets_threshold = scores[characteristic.id].totals.meets_threshold %}
@@ -203,6 +204,9 @@
                     {% endif %}
                     <i class="big icon-medkit {{ class_name }}"></i>
                     {{ "%s"| format(percentage|int(0)) }}%
+                  {% endif %}
+                  {% if total_pending_responses == 0 %}
+                    <span class="label label-primary"> {{ gettext('Complete') }}</span>
                   {% endif %}
               </td>
             </tr>
