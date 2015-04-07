@@ -248,7 +248,7 @@ class ClinicViews(object):
         permission=perms.CAN_LIST_CLINICS)
     def manage_clinics(self):
         user = self.request.ona_user.user
-        clinics = user.get_clinics()
+        clinics = user.location.clinics
         period = get_period_from_request(self.request)
         return {
             'clinics': clinics,
