@@ -25,7 +25,8 @@ class UserViews(object):
         user = self.request.context
         clinics = user.get_clinics()
         period = get_period_from_request(self.request)
-        municipality = clinics[0].municipality
+
+        municipality = user.get_municipality_from_clinics()
 
         return {
             'period': period,

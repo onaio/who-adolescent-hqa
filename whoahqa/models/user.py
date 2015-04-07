@@ -74,6 +74,10 @@ class User(Base):
             user_clinics.columns.user_id == self.id).all()
         return clinics
 
+    def get_municipality_from_clinics(self):
+        if self.clinics:
+            return self.clinics[0].municipality
+
     @property
     def __acl__(self):
         return [
