@@ -311,7 +311,7 @@ class ClinicViews(object):
         permission=perms.CAN_ASSESS_CLINICS)
     def assess_clinics(self):
         user = self.request.ona_user.user
-        clinics = user.get_clinics()
+        clinics = user.location.clinics
         period = get_period_from_request(self.request)
 
         return {
