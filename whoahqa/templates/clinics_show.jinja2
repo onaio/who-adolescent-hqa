@@ -154,16 +154,21 @@
                   {% if score[client_tool.id] is defined %}
                       <tr>
                           <td>
-                          {% set responses = score[client_tool.id]['num_responses']|int(0) %}
-                          {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
-                          {% if responses %}
-                            {% for response in range(responses) %}
-                              <i class="icon-blue icon-circle"></i>
+                            {% set responses = score[client_tool.id]['num_responses']|int(0) %}
+                            {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
+                            {% if responses %}
+                              {% for response in range(responses) %}
+                                <i class="icon-blue icon-circle"></i>
+                              {% endfor %}
+                            {% endif %}
+                            {% for response in range(pending_responses) %}
+                              <i class="icon-grey icon-circle"></i>
                             {% endfor %}
-                          {% endif %}
-                          {% for response in range(pending_responses) %}
-                            <i class="icon-grey icon-circle"></i>
-                          {% endfor %}
+                            {% if pending_responses == 0 %}
+                              <i class="icon-blue icon-ok pull-right"></i>
+                            {% elif responses == 0 or pending_responses > responses %}
+                              <i class="icon-orange icon-warning-sign pull-right"></i>
+                            {% endif %}
                           </td>
                       </tr>
                   {% endif %}
