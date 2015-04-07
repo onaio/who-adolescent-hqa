@@ -228,16 +228,16 @@
     width: 5%;
 }
 .scores-table thead > tr > th.char-desc {
-    width: 16%;
+    width: 12%;
 }
 .scores-table thead > tr > th.char-cat {
     width: 16%;
 }
 .scores-table thead > tr > th.min-max {
-    width: 9%;
+    width: 7%;
 }
 .scores-table thead > tr > th.char-resp {
-    width: 16%;
+    width: 17%;
 }
 .scores-table thead > tr > th.char-score {
     width: 5%;
@@ -431,4 +431,13 @@ ul.page-sidebar-menu > li.active > ul.sub-menu > li.selected > a i {
 
 .page-sidebar-menu > li > ul.sub-menu > li.sub-location {
     margin-left: 15px;
+}
+
+span.client-prop {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 95%;
+    overflow: hidden;
+    display: block;
+}
 }
