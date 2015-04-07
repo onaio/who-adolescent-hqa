@@ -221,21 +221,18 @@ class TestClinicViews(IntegrationTestBase):
             mock.return_value = datetime.date(2015, 6, 1)
             response = self.clinic_views.assess_clinics()
 
-            self.assertEqual(len(response['clinics']), 1)
+            self.assertEqual(len(response['clinics']), 3)
 
     def test_manage_clinics_view(self):
-        count = Clinic.count()
-
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         self.request.method = 'GET'
         self.request.ona_user = ona_user
 
-        user_clinics = ona_user.user.get_clinics()
+        user_clinics = ona_user.user.location.clinics
 
         response = self.clinic_views.manage_clinics()
 
         self.assertEqual(response['clinics'], user_clinics)
-        self.assertNotEqual(count, len(user_clinics))
 
     def test_delete_clinics(self):
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
@@ -304,7 +301,7 @@ class TestClinicViewsFunctional(FunctionalTestBase):
     def test_manage_clinics(self):
         url = self.request.route_path(
             'clinics', traverse=('manage'))
-        headers = self._login_user('super')
+        headers = self._login_user('manager_a')
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
 

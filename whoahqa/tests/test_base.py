@@ -123,12 +123,12 @@ class TestBase(unittest.TestCase):
             user=su, username='super', refresh_token="a123f4")
         su.group = su_group
 
-        manager_a = User()
+        manager_a = User(location=municipality)
         manager_a_ona_user = OnaUser(
             user=manager_a, username='manager_a', refresh_token="b345d6")
         manager_a.group = municipality_manager_group
 
-        manager_b = User()
+        manager_b = User(location=municipality)
         manager_b_ona_user = OnaUser(
             user=manager_b, username='manager_b', refresh_token="c563e9")
         manager_b.group = clinic_managers_group
