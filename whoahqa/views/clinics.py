@@ -22,7 +22,6 @@ from whoahqa.utils import (
     translation_string_factory as _)
 from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
-from whoahqa.constants import groups
 from whoahqa.views.helpers import get_period_from_request
 
 from whoahqa.utils import tuple_to_dict_list, filter_dict_list_by_attr
@@ -250,7 +249,9 @@ class ClinicViews(object):
     def manage_clinics(self):
         user = self.request.ona_user.user
 
-        if user.group == groups.SUPER_USER:
+        if has_permission(perms.SUPER_USER,
+                          self.request.context,
+                          self.request):
             clinics = Clinic.all()
         else:
             clinics = user.location.clinics
