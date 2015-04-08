@@ -109,7 +109,6 @@
           {% set meets_threshold = scores[characteristic.id].totals.meets_threshold %}
           <thead>
           <tr>
-            <th class="char-defn"></th>
             <th class="char-no center-align">{{ gettext('No.') }}</th>
             <th class="char-desc">{{ gettext('Description ') }}</th>
             <th class="char-cat">{{ gettext('Category') }}</th>
@@ -121,9 +120,6 @@
           </thead>
           <tbody>
             <tr>
-              <td class="center-align ">
-                <img src="{{ request.static_url('whoahqa:static/images/char_en/sm/%d.png' % characteristic.number) }}">
-              </td>
               <td class="center-align char-no-vals">
                 {{ characteristic.number }}
               </td>
