@@ -102,7 +102,9 @@
     <table class="table table-bordered scores-table">
       {% for characteristic in characteristics %}
           {% set total_responses = scores[characteristic.id].totals.total_responses %}
+          {% set total_pending_responses = scores[characteristic.id].totals.total_pending_responses %}
           {% set total_scores = scores[characteristic.id].totals.total_scores %}
+          {% set score_classification = scores[characteristic.id].totals.score_classification %}
           {% set percentage = scores[characteristic.id].totals.total_percentage %}
           {% set meets_threshold = scores[characteristic.id].totals.meets_threshold %}
           <thead>
@@ -154,16 +156,21 @@
                   {% if score[client_tool.id] is defined %}
                       <tr>
                           <td>
-                          {% set responses = score[client_tool.id]['num_responses']|int(0) %}
-                          {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
-                          {% if responses %}
-                            {% for response in range(responses) %}
-                              <i class="icon-blue icon-circle"></i>
+                            {% set responses = score[client_tool.id]['num_responses']|int(0) %}
+                            {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
+                            {% if responses %}
+                              {% for response in range(responses) %}
+                                <i class="icon-blue icon-circle"></i>
+                              {% endfor %}
+                            {% endif %}
+                            {% for response in range(pending_responses) %}
+                              <i class="icon-grey icon-circle"></i>
                             {% endfor %}
-                          {% endif %}
-                          {% for response in range(pending_responses) %}
-                            <i class="icon-grey icon-circle"></i>
-                          {% endfor %}
+                            {% if pending_responses == 0 %}
+                              <i class="icon-blue icon-ok pull-right"></i>
+                            {% elif responses == 0 or pending_responses > responses %}
+                              <i class="icon-orange icon-warning-sign pull-right"></i>
+                            {% endif %}
                           </td>
                       </tr>
                   {% endif %}
@@ -198,6 +205,9 @@
                     {% endif %}
                     <i class="big icon-medkit {{ class_name }}"></i>
                     {{ "%s"| format(percentage|int(0)) }}%
+                  {% endif %}
+                  {% if total_pending_responses == 0 %}
+                    <span class="label label-primary"> {{ gettext('Complete') }}</span>
                   {% endif %}
               </td>
             </tr>

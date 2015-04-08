@@ -186,6 +186,7 @@ class TestClinic(TestBase):
             'total_scores': 1.3333333333333333,
             'total_questions': 13,
             'total_responses': 3,
+            'total_pending_responses': 14,
             'total_percentage': 10.256410256410255,
             'meets_threshold': False,
             'score_classification': constants.BAD
@@ -210,6 +211,7 @@ class TestClinic(TestBase):
             'total_scores': 3.0,
             'total_questions': 10,
             'total_responses': 2,
+            'total_pending_responses': 8,
             'total_percentage': 30.0,
             'meets_threshold': False,
             'score_classification': constants.BAD
@@ -241,6 +243,7 @@ class TestClinic(TestBase):
             'total_scores': None,
             'total_questions': 13,
             'total_responses': 0,
+            'total_pending_responses': 17,
             'total_percentage': None,
             'meets_threshold': False,
             'score_classification': None
@@ -272,6 +275,7 @@ class TestClinic(TestBase):
             'total_scores': None,
             'total_questions': 13,
             'total_responses': 1,
+            'total_pending_responses': 16,
             'total_percentage': 0.0,
             'meets_threshold': False,
             'score_classification': constants.BAD
