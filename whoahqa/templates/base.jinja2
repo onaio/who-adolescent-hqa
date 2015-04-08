@@ -209,7 +209,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                                  <i class="icon-angle-down"></i>
                            </div>
                            <ul class="dropdown-menu" role="menu">
-                              {% for p in periods if p != period %}
+                              {% for p in periods %}
                                  <li>
                                  <a href="{{ request.current_route_url(_query={'period': p.id}) }}">
                                     {{(p.start_date) | format_date('long', request)}}

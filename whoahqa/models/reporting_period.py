@@ -45,7 +45,7 @@ class ReportingPeriod(Base):
         #     "start_date desc").all()
 
         return DBSession.query(ReportingPeriod).order_by(
-            "start_date desc").all()
+            "start_date asc").all()
 
     @classmethod
     def get_current_period(self):
