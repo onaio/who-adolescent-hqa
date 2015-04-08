@@ -6,6 +6,7 @@
 {% block page_title %}{{ self.title() }} <span class="bold">({{ clinic.code }})</span> {% endblock %}
 
 {% set municipality = clinic.municipality %}
+{% set clinic_key_indicators = clinic.key_indicators(period) %}
 {% set state = municipality.parent if municipality else None %}
 
 {% block sub_menu_item %}
@@ -94,121 +95,131 @@
   {% endif %}
 {% endblock %}
 {% block content %}
+
+{% for key_indicator, char_list in key_indicators %}
   <div class="table-responsive">
     <div class="row">
-      <div class="pull-left char-header">{{ gettext('Characteristics') }}</div>
+      <h3 class="key-indicator-title">
+        {{ key_indicator|capitalize }} {{ gettext('Key Indicator Score') }}:
+        {{ 0 or clinic_key_indicators[key_indicator]|round|int }} 
+      </h3>
+    </div>
+    <div class="row">
+      <div class="pull-left char-header">{{ gettext('Characteristics') }} {{ key_indicator|capitalize }}</div>
       <div class="pull-right score-header">{{ gettext('Relative Score') }}</div>
     </div>
-    <table class="table table-bordered scores-table">
-      {% for characteristic in characteristics %}
-          {% set total_responses = scores[characteristic.id].totals.total_responses %}
-          {% set total_pending_responses = scores[characteristic.id].totals.total_pending_responses %}
-          {% set total_scores = scores[characteristic.id].totals.total_scores %}
-          {% set score_classification = scores[characteristic.id].totals.score_classification %}
-          {% set percentage = scores[characteristic.id].totals.total_percentage %}
-          {% set meets_threshold = scores[characteristic.id].totals.meets_threshold %}
-          <thead>
-          <tr>
-            <th class="char-no center-align">{{ gettext('No.') }}</th>
-            <th class="char-desc">{{ gettext('Description ') }}</th>
-            <th class="char-cat">{{ gettext('Category') }}</th>
-            <th class="min-max">{{ gettext('Min - Max') }}</th>
-            <th class="char-resp">{{ gettext('# Respondents') }}</th>
-            <th class="char-score">{{ gettext('Score') }}</th>
-            <th class="char-rel-score"></th>
-          </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="center-align char-no-vals">
-                {{ characteristic.number }}
-              </td>
-              <td class="">{{ gettext(characteristic.description) }}
-              </td>
-              <td class="client-tool-table">
-                <table class="table table-striped">
-                  {{ generate_client_rows(scores, client_tools, characteristic.id, client_property='name', characteristic_id=characteristic.id)}}
-                  <tr>
-                    <td class="text-right bold">
-                      {{ gettext("Absolute total score") }}
-                    </td>
-                  </tr>
-                </table>
-              </td>
-              <td class="client-tool-table">
-                <table class="table table-striped">
-                  {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_questions', output_prefix='0 - ', characteristic_id=characteristic.id) }}
-                  <tr>
-                    <td class="text-center bold">
-                      0 - {{ scores[characteristic.id].totals.total_questions }}
-                    </td>
-                  </tr>
-                </table>
-              </td>
-              <td class="client-tool-table">
-                <table class="table table-striped respondents">
-                {% for client_tool in client_tools %}
-                  {% set score = scores[characteristic.id] %}
-                  {% if score[client_tool.id] is defined %}
-                      <tr>
-                          <td>
-                            {% set responses = score[client_tool.id]['num_responses']|int(0) %}
-                            {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
-                            {% if responses %}
-                              {% for response in range(responses) %}
-                                <i class="icon-blue icon-circle"></i>
-                              {% endfor %}
-                            {% endif %}
-                            {% for response in range(pending_responses) %}
-                              <i class="icon-grey icon-circle"></i>
-                            {% endfor %}
-                            {% if pending_responses == 0 %}
-                              <i class="icon-blue icon-ok pull-right"></i>
-                            {% elif responses == 0 or pending_responses > responses %}
-                              <i class="icon-orange icon-warning-sign pull-right"></i>
-                            {% endif %}
-                          </td>
-                      </tr>
-                  {% endif %}
 
-                {% endfor %}
-                  <tr>
-                      <td>&nbsp;</td>
-                  </tr>
-                </table>
-              </td>
-              <td class="client-tool-table">
-                  <table class="table table-striped">
-                      {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
-                  <tr>
-                      <td class="text-center">{{ total_scores|int }}</td>
-                  </tr>
-                  </table>
-              </td>
-              <td class="text-center relative-score">
-                  {% if total_responses == 0 %}
-                    -
-                  {% else %}
-                    {% set class_name = "icon-grey" %}
-                    {% if meets_threshold %}
-                      {% if score_classification == 'great' %}
-                        {% set class_name = "icon-green" %}
-                      {% elif score_classification == 'good' %}
-                        {% set class_name = "icon-orange" %}
-                      {% else %}
-                        {% set class_name = "icon-red" %}
-                      {% endif %}
-                    {% endif %}
-                    <i class="big icon-medkit {{ class_name }}"></i>
-                    {{ "%s"| format(percentage|int(0)) }}%
-                  {% endif %}
-                  {% if total_pending_responses == 0 %}
-                    <span class="label label-primary"> {{ gettext('Complete') }}</span>
-                  {% endif %}
-              </td>
+      <table class="table table-bordered scores-table">
+        {% for characteristic in characteristics if characteristic.id in char_list %}
+            {% set total_responses = scores[characteristic.id].totals.total_responses %}
+            {% set total_pending_responses = scores[characteristic.id].totals.total_pending_responses %}
+            {% set total_scores = scores[characteristic.id].totals.total_scores %}
+            {% set score_classification = scores[characteristic.id].totals.score_classification %}
+            {% set percentage = scores[characteristic.id].totals.total_percentage %}
+            {% set meets_threshold = scores[characteristic.id].totals.meets_threshold %}
+            <thead>
+            <tr>
+              <th class="char-no center-align">{{ gettext('No.') }}</th>
+              <th class="char-desc">{{ gettext('Description ') }}</th>
+              <th class="char-cat">{{ gettext('Category') }}</th>
+              <th class="min-max">{{ gettext('Min - Max') }}</th>
+              <th class="char-resp">{{ gettext('# Respondents') }}</th>
+              <th class="char-score">{{ gettext('Score') }}</th>
+              <th class="char-rel-score"></th>
             </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="center-align char-no-vals">
+                  {{ characteristic.number }}
+                </td>
+                <td class="">{{ gettext(characteristic.description) }}
+                </td>
+                <td class="client-tool-table">
+                  <table class="table table-striped">
+                    {{ generate_client_rows(scores, client_tools, characteristic.id, client_property='name', characteristic_id=characteristic.id)}}
+                    <tr>
+                      <td class="text-right bold">
+                        {{ gettext("Absolute total score") }}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="client-tool-table">
+                  <table class="table table-striped">
+                    {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='num_questions', output_prefix='0 - ', characteristic_id=characteristic.id) }}
+                    <tr>
+                      <td class="text-center bold">
+                        0 - {{ scores[characteristic.id].totals.total_questions }}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="client-tool-table">
+                  <table class="table table-striped respondents">
+                  {% for client_tool in client_tools %}
+                    {% set score = scores[characteristic.id] %}
+                    {% if score[client_tool.id] is defined %}
+                        <tr>
+                            <td>
+                              {% set responses = score[client_tool.id]['num_responses']|int(0) %}
+                              {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
+                              {% if responses %}
+                                {% for response in range(responses) %}
+                                  <i class="icon-blue icon-circle"></i>
+                                {% endfor %}
+                              {% endif %}
+                              {% for response in range(pending_responses) %}
+                                <i class="icon-grey icon-circle"></i>
+                              {% endfor %}
+                              {% if pending_responses == 0 %}
+                                <i class="icon-blue icon-ok pull-right"></i>
+                              {% elif responses == 0 or pending_responses > responses %}
+                                <i class="icon-orange icon-warning-sign pull-right"></i>
+                              {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+
+                  {% endfor %}
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="client-tool-table">
+                    <table class="table table-striped">
+                        {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
+                    <tr>
+                        <td class="text-center">{{ total_scores|int }}</td>
+                    </tr>
+                    </table>
+                </td>
+                <td class="text-center relative-score">
+                    {% if total_responses == 0 %}
+                      -
+                    {% else %}
+                      {% set class_name = "icon-grey" %}
+                      {% if meets_threshold %}
+                        {% if score_classification == 'great' %}
+                          {% set class_name = "icon-green" %}
+                        {% elif score_classification == 'good' %}
+                          {% set class_name = "icon-orange" %}
+                        {% else %}
+                          {% set class_name = "icon-red" %}
+                        {% endif %}
+                      {% endif %}
+                      <i class="big icon-medkit {{ class_name }}"></i>
+                      {{ "%s"| format(percentage|int(0)) }}%
+                    {% endif %}
+                    {% if total_pending_responses == 0 %}
+                      <span class="label label-primary"> {{ gettext('Complete') }}</span>
+                    {% endif %}
+                </td>
+              </tr>
+        {% endfor %}
+        </tbody>
+      </table>
   </div>
+{% endfor %}
 {% endblock %}
