@@ -17,11 +17,12 @@ def default(request):
 
     # redirect to view depending on the group which user belongs
 
-    if ona_user.group and ona_user.group.name == groups.STATE_OFFICIAL:
-        url = request.route_url('states', traverse=(ona_user.location.id))
-    elif ona_user.group.name == groups.MUNICIPALITY_MANAGER:
-        url = request.route_url(
-            'municipalities', traverse=(ona_user.location.id))
+    if ona_user.location:
+        if ona_user.group and ona_user.group.name == groups.STATE_OFFICIAL:
+            url = request.route_url('states', traverse=(ona_user.location.id))
+        elif ona_user.group.name == groups.MUNICIPALITY_MANAGER:
+            url = request.route_url(
+                'municipalities', traverse=(ona_user.location.id))
     else:
         url = request.route_url('clinics', traverse=())
 
