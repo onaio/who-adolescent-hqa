@@ -126,8 +126,20 @@ class User(Base):
 
     @property
     def appstruct(self):
+        municipality_id = None
+        state_id = None
+
+        if self.location:
+            if self.location.location_type == Location.MUNICIPALITY:
+                municipality_id = self.location.id
+            else:
+                state_id = self.location.id
+
         return {
-            'group': self.group
+            'group': self.group,
+            'clinics': [c.id for c in self.clinics],
+            'municipality': municipality_id,
+            'state': state_id
         }
 
 
@@ -225,7 +237,6 @@ class OnaUser(Base):
 
     def update(self, values):
         group_name = values['group']
-        clinic_id_list = values['clinics']
 
         # check if new group is the same as previous group
         # add new location selected to location table
@@ -255,6 +266,7 @@ class OnaUser(Base):
 
             from whoahqa.models import Clinic
 
+            clinic_id_list = values['clinics']
             clinics = Clinic.all(Clinic.id.in_(clinic_id_list))
 
             self.user.clinics = clinics
