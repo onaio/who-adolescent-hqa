@@ -10,6 +10,7 @@ from sqlalchemy import (
     Table,
 )
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.sql import and_
 from sqlalchemy.schema import PrimaryKeyConstraint
 from sqlalchemy.orm import (
     backref,
@@ -58,6 +59,27 @@ user_locations = Table(
 )
 
 
+def delete_user_clinics(clinic_id_list):
+    statement = user_clinics.delete(
+        user_clinics.c.clinic_id.in_(clinic_id_list))
+    statement.execute()
+
+
+def delete_user_locations(user, location):
+    statement = user_locations.delete()\
+                              .where(and_(
+                                  user_locations.c.user_id == user.id,
+                                  user_locations.c.location_id == location.id))
+    statement.execute()
+
+
+def delete_user_groups(user, group):
+    statement = user_groups.delete()\
+                           .where(and_(user_groups.c.group_id == group.id,
+                                  user_groups.c.user_id == user.id))
+    statement.execute()
+
+
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
@@ -66,6 +88,7 @@ class User(Base):
     location = relationship('Location',
                             secondary=user_locations,
                             backref=backref('user', uselist=False),
+                            cascade="save-update",
                             uselist=False)
 
     def get_clinics(self):
@@ -202,12 +225,21 @@ class OnaUser(Base):
 
     def update(self, values):
         group_name = values['group']
+        clinic_id_list = values['clinics']
 
         # check if new group is the same as previous group
         # add new location selected to location table
         # if group is clinic manager, add clinics selected to clinics list
 
-        if self.user.group is None or self.user.group.name != group_name:
+        # if self.group:
+        #     # Remove previous user group mapping
+        #     delete_user_groups(self.user, self.group)
+
+        # Remove existing clinic mapping
+        if self.clinics:
+            delete_user_clinics([c.id for c in self.clinics])
+
+        if self.group is None or self.group.name != group_name:
             group_criteria = Group.name == group_name
             group_params = {'name': group_name}
             group = Group.get_or_create(
@@ -217,14 +249,19 @@ class OnaUser(Base):
             self.user.group = group
 
         if group_name == groups.CLINIC_MANAGER:
+            # Remove existing location mapping
+            if self.location:
+                delete_user_locations(self.user, self.location)
+
             from whoahqa.models import Clinic
 
-            clinic_id_list = values['clinics']
             clinics = Clinic.all(Clinic.id.in_(clinic_id_list))
+
             self.user.clinics = clinics
             # add clinics to user
         else:
             location_id = values[LOCATION_MAP[group_name]]
+
             self.user.location = Location.get(Location.id == location_id)
 
         self.save()
