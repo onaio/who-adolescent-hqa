@@ -120,6 +120,7 @@ class ClinicViews(object):
         #     raise HTTPBadRequest("The clinic is not yet assigned")
 
         scores = clinic.get_scores(period.generate_form_key())
+
         return {
             'period': period,
             'periods': ReportingPeriod.get_active_periods(),
@@ -129,6 +130,7 @@ class ClinicViews(object):
             'client_tools': tuple_to_dict_list(
                 ("id", "name"), constants.CLIENT_TOOLS),
             'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAMES,
+            'key_indicators': constants.KEY_INDICATORS,
             'scores': scores
 
         }

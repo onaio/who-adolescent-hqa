@@ -81,11 +81,20 @@
 }
 .char-header {
     margin-left: 15px;
-    width: 16%;
+    width: 25%;
 }
+
+h3.key-indicator-title {
+    margin-left: 15px;
+    color: #1175cb;
+    font-weight: bold !important;
+    font-size: 22px !important;
+    padding-bottom: 5px;
+}
+
 .score-header {
     margin-right: 15px;
-    width: 16%;
+    width: 20%;
 }
 
 .scores-table thead > tr > th, .scores-table > tbody > tr > td {
