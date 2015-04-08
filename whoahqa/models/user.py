@@ -242,14 +242,6 @@ class OnaUser(Base):
         # add new location selected to location table
         # if group is clinic manager, add clinics selected to clinics list
 
-        # if self.group:
-        #     # Remove previous user group mapping
-        #     delete_user_groups(self.user, self.group)
-
-        # Remove existing clinic mapping
-        if self.clinics:
-            delete_user_clinics([c.id for c in self.clinics])
-
         if self.group is None or self.group.name != group_name:
             group_criteria = Group.name == group_name
             group_params = {'name': group_name}
@@ -272,6 +264,10 @@ class OnaUser(Base):
             self.user.clinics = clinics
             # add clinics to user
         else:
+            # Remove existing clinic mapping
+            if self.clinics:
+                delete_user_clinics([c.id for c in self.clinics])
+
             location_id = values[LOCATION_MAP[group_name]]
 
             self.user.location = Location.get(Location.id == location_id)
