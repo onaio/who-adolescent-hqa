@@ -119,6 +119,8 @@ def includeme(config):
                      factory=LocationFactory)
     config.add_route('states', '/states/*traverse',
                      factory=LocationFactory)
+    config.add_route('locations', '/locations/*traverse',
+                     factory=LocationFactory)
     config.scan()
 
 
