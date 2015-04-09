@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-06 12:32+0300\n"
+"POT-Creation-Date: 2015-04-09 16:41+0300\n"
 "PO-Revision-Date: 2014-11-05 16:38+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: pt <LL@li.org>\n"
@@ -53,14 +53,16 @@ msgstr "Guia de Observação"
 msgid ""
 "Policies and procedures are in place that do not restrict the provision "
 "of health services on any terms"
-msgstr "Políticas, diretrizes e recomendações estão estabelecidas de maneira " 
-"que não restrinjam a prestação de serviços de saúde em quaisquer condições."
+msgstr ""
+"Políticas, diretrizes e recomendações estão estabelecidas de maneira que "
+"não restrinjam a prestação de serviços de saúde em quaisquer condições."
 
 #: whoahqa/constants/base_characteristics.py:53
 msgid ""
 "Health-care providers treat all adolescent clients with equal care and "
 "respect, regardless of status"
-msgstr "Os profissionais que atendem nesta Unidade de Saúde tratam todos os "
+msgstr ""
+"Os profissionais que atendem nesta Unidade de Saúde tratam todos os "
 "adolescentes com cuidado e respeito, independentemente de sua condição "
 "socio-econômica ou quaisquer outra características/singularidades."
 
@@ -68,7 +70,8 @@ msgstr "Os profissionais que atendem nesta Unidade de Saúde tratam todos os "
 msgid ""
 "Support staff treat all adolescent clients with equal care and respect, "
 "regardless of status"
-msgstr "Os profissionais de apoio tratam todos os adolescentes com o mesmo "
+msgstr ""
+"Os profissionais de apoio tratam todos os adolescentes com o mesmo "
 "cuidado e respeito, independentemente de sua condição socioeconômica ou "
 "quaisquer outras singularidades/características."
 
@@ -80,37 +83,42 @@ msgstr "N/A"
 
 #: whoahqa/constants/base_characteristics.py:59
 msgid "The point of health service delivery has convenient hours of operation"
-msgstr "Os horários de funcionamento da Unidade de Saúde e de prestação de "
+msgstr ""
+"Os horários de funcionamento da Unidade de Saúde e de prestação de "
 "serviços são convenientes."
 
 #: whoahqa/constants/base_characteristics.py:61
 msgid ""
 "Adolescents are well-informed about the range of available reproductive "
 "health services and how to obtain them"
-msgstr "Os adolescentes são bem informados sobre a gama de serviços de "
-"saúde sexual e saúde reprodutiva disponíveis e sobre como obtê-los."
+msgstr ""
+"Os adolescentes são bem informados sobre a gama de serviços de saúde "
+"sexual e saúde reprodutiva disponíveis e sobre como obtê-los."
 
 #: whoahqa/constants/base_characteristics.py:63
 msgid ""
 "Community members understand the benefits that adolescents will gain by "
 "obtaining the health services they need, and support their provision"
-msgstr "Os membros da comunidade entendem os benefícios relacionados ao fato "
-"de os/as adolescentes terem acesso aos serviços de saúde de que precisam, "
-"e apoiam esse acesso?"
+msgstr ""
+"Os membros da comunidade entendem os benefícios relacionados ao fato de "
+"os/as adolescentes terem acesso aos serviços de saúde de que precisam, e "
+"apoiam esse acesso?"
 
 #: whoahqa/constants/base_characteristics.py:66
 msgid ""
 "Some health services and health-related commodities are provided to "
 "adolescents in the community by selected community members, outreach "
 "workers and adolescents themselves"
-msgstr "Membros da comunidade, agentes comunitários e os próprios "
-"adolescentes disponibilizam informações e serviços de saúde a "
-"adolescentes da comunidade."
+msgstr ""
+"Membros da comunidade, agentes comunitários e os próprios adolescentes "
+"disponibilizam informações e serviços de saúde a adolescentes da "
+"comunidade."
 
 #: whoahqa/constants/base_characteristics.py:70
 msgid "Policies and procedures are in place that guarantee client confidentiality"
-msgstr "Normas e procedimentos que garantem a confidencialidade do "
-"usuário(a) adolescente são aplicados na Unidade de Saúde."
+msgstr ""
+"Normas e procedimentos que garantem a confidencialidade do usuário(a) "
+"adolescente são aplicados na Unidade de Saúde."
 
 #: whoahqa/constants/base_characteristics.py:72
 msgid "The point of health service delivery ensures privacy"
@@ -120,16 +128,18 @@ msgstr "A Unidade de Saúde garante a privacidade de adolescentes."
 msgid ""
 "Health-care providers are non-judgemental, considerate and easy to relate"
 " to"
-msgstr "Os profissionais da equipe de saúde são atenciosos e respeitosos "
-"com adolescentes, não julgando-os ou emitindo juizos de valor."
+msgstr ""
+"Os profissionais da equipe de saúde são atenciosos e respeitosos com "
+"adolescentes, não julgando-os ou emitindo juizos de valor."
 
 #: whoahqa/constants/base_characteristics.py:75
 msgid ""
 "The point of health service delivery ensures consultations occur in a "
 "short waiting time. with or without an appointment, and (where necessary)"
 " with referral"
-msgstr "A Unidade de Saúde assegura que as consultas sejam realizadas com "
-"pouco tempo de espera, independente de agendamento prévio, com atendimento "
+msgstr ""
+"A Unidade de Saúde assegura que as consultas sejam realizadas com pouco "
+"tempo de espera, independente de agendamento prévio, com atendimento "
 "imediato se necessário com orientação rápida."
 
 #: whoahqa/constants/base_characteristics.py:78
@@ -142,14 +152,16 @@ msgstr "A Unidade de Saúde tem um ambiente agradável e limpo."
 msgid ""
 "The point of health service delivery provides information and education "
 "through a variety of channels"
-msgstr "A Unidade de Saúde disponibiliza informações de saúde através "
-"de diferentes ferramentas educativas."
+msgstr ""
+"A Unidade de Saúde disponibiliza informações de saúde através de "
+"diferentes ferramentas educativas."
 
 #: whoahqa/constants/base_characteristics.py:82
 msgid ""
 "Adolescents are actively involved in designing, assessing and providing "
 "health services"
-msgstr "Adolescentes participam ativamente na elaboração, implementação e "
+msgstr ""
+"Adolescentes participam ativamente na elaboração, implementação e "
 "avaliação dos serviços prestados para adolescentes na Unidade de Saúde."
 
 #: whoahqa/constants/base_characteristics.py:84
@@ -157,39 +169,44 @@ msgid ""
 "The required package of health care is provided to fulfil the needs of "
 "all adolescents either at the point of health service delivery or through"
 " referral linkages"
-msgstr "As ações de saúde são fornecidas de modo a atender às necessidades "
-"de todos os/as adolescentes, na Unidade de Saúde ou por meio da rede de "
+msgstr ""
+"As ações de saúde são fornecidas de modo a atender às necessidades de "
+"todos os/as adolescentes, na Unidade de Saúde ou por meio da rede de "
 "referência."
 
 #: whoahqa/constants/base_characteristics.py:87
 msgid ""
 "Health-care providers have the required competencies to work with "
 "adolescents and to provide them with the required health services"
-msgstr "Profissionais de saúde têm conhecimentos e habilidades necessárias "
-"para trabalhar com adolescentes e prestar-lhes os serviços de saúde "
+msgstr ""
+"Profissionais de saúde têm conhecimentos e habilidades necessárias para "
+"trabalhar com adolescentes e prestar-lhes os serviços de saúde "
 "necessários."
 
 #: whoahqa/constants/base_characteristics.py:90
 msgid ""
 "Health-care providers use evidence-based protocols and guidelines to "
 "provide health services"
-msgstr "A equipe de saúde usa protocolos e orientações baseadas em "
-"evidências e em documentos/diretrizes do Ministério da Saúde para "
-"prestação dos serviços a adolescentes."
+msgstr ""
+"A equipe de saúde usa protocolos e orientações baseadas em evidências e "
+"em documentos/diretrizes do Ministério da Saúde para prestação dos "
+"serviços a adolescentes."
 
 #: whoahqa/constants/base_characteristics.py:92
 msgid ""
 "Health-care providers are able to dedicate sufficient time to work "
 "effectively with their adolescent clients"
-msgstr "Profissionais da equipe de saúde dispõem de tempo suficiente para "
-"atender usuários(as) adolescentes de modo eficaz."
+msgstr ""
+"Profissionais da equipe de saúde dispõem de tempo suficiente para atender"
+" usuários(as) adolescentes de modo eficaz."
 
 #: whoahqa/constants/base_characteristics.py:94
 msgid ""
 "The point of health service delivery has the required equipment, supplies"
 " and basic services necessary to deliver the required health services"
-msgstr "A Unidade de Saúde possui equipamentos, insumos e os serviços "
-"necessários para prestar os serviços de saúde."
+msgstr ""
+"A Unidade de Saúde possui equipamentos, insumos e os serviços necessários"
+" para prestar os serviços de saúde."
 
 #: whoahqa/constants/base_characteristics.py:514
 msgid "Equitable"
@@ -221,6 +238,17 @@ msgstr "Nome da Unidade de Saúde"
 msgid "Clinic Code"
 msgstr "CNES"
 
+#: whoahqa/forms/location_form.py:30 whoahqa/forms/reporting_period.py:59
+#: whoahqa/templates/_clinics_table.jinja2:17
+#: whoahqa/templates/_summary_scores_table.jinja2:10
+#: whoahqa/templates/reporting_periods_list.jinja2:32
+msgid "Name"
+msgstr "Nome"
+
+#: whoahqa/forms/location_form.py:33
+msgid "Location Type"
+msgstr "Tipo de localização"
+
 #: whoahqa/forms/reporting_period.py:22
 msgid "{} is not a valid date"
 msgstr ""
@@ -228,13 +256,6 @@ msgstr ""
 #: whoahqa/forms/reporting_period.py:52
 msgid "Start date must be earlier than end date"
 msgstr ""
-
-#: whoahqa/forms/reporting_period.py:59
-#: whoahqa/templates/_clinics_table.jinja2:17
-#: whoahqa/templates/_summary_scores_table.jinja2:10
-#: whoahqa/templates/reporting_periods_list.jinja2:32
-msgid "Name"
-msgstr "Nome"
 
 #: whoahqa/forms/reporting_period.py:60
 msgid "Give the reporting period a name"
@@ -260,24 +281,25 @@ msgstr ""
 
 #: whoahqa/templates/_clinics_key_indicators.jinja2:9
 #: whoahqa/templates/clinics_score_summary.jinja2:32
-#: whoahqa/templates/clinics_show.jinja2:10
+#: whoahqa/templates/clinics_summary.jinja2:7
+#: whoahqa/templates/municipality_summary.jinja2:2
 msgid "Clinics"
 msgstr "Unidade de Saúde"
 
 #: whoahqa/templates/_clinics_key_indicators.jinja2:10
 msgid "Aggregate Scores"
-msgstr ""
+msgstr "Pontuação Agregada"
 
 #: whoahqa/templates/_clinics_key_indicators.jinja2:13
 #: whoahqa/templates/clinics_characteristics_list.jinja2:59
 #: whoahqa/templates/clinics_score_summary.jinja2:39
-#: whoahqa/templates/clinics_show.jinja2:36
+#: whoahqa/templates/clinics_show.jinja2:122
 msgid "No."
 msgstr ""
 
 #: whoahqa/templates/_clinics_key_indicators.jinja2:50
 msgid "Average Score"
-msgstr ""
+msgstr "Pontuação Média"
 
 #: whoahqa/templates/_clinics_table.jinja2:6
 msgid "Register a Clinic"
@@ -291,54 +313,75 @@ msgstr "Criado"
 msgid "Actions"
 msgstr "Ações"
 
-#: whoahqa/templates/_clinics_table.jinja2:41
+#: whoahqa/templates/_clinics_table.jinja2:37
 msgid "Edit"
 msgstr "Editar"
 
-#: whoahqa/templates/_clinics_table.jinja2:51
-#: whoahqa/templates/_summary_scores_table.jinja2:62
+#: whoahqa/templates/_clinics_table.jinja2:47
+#: whoahqa/templates/_summary_scores_table.jinja2:63
 msgid "Not found."
-msgstr ""
+msgstr "Não há clínicas"
 
 #: whoahqa/templates/_summary_scores_table.jinja2:5
-msgid "Clinic Scores by Key Indicator"
+#, fuzzy
+msgid "Scores by Key Indicator"
 msgstr "Unidades de Saúde/ Indicador"
 
-#: whoahqa/templates/_summary_scores_table.jinja2:21
+#: whoahqa/templates/_summary_scores_table.jinja2:22
 msgid "Clinic Average"
-msgstr ""
+msgstr "Clínica Média"
 
 #: whoahqa/templates/base.jinja2:49
 msgid "Quality Assessment Tool: Assessing Health Services for Adolescent Clients"
-msgstr "Ferramenta de Avaliação de Qualidade da Atenção à Saúde de "
-"adolescentes na Atenção Básica"
+msgstr ""
+"Ferramenta de Avaliação de Qualidade da Atenção à Saúde de adolescentes "
+"na Atenção Básica"
 
 #: whoahqa/templates/base.jinja2:65
 msgid "Logout"
 msgstr ""
 
 #: whoahqa/templates/base.jinja2:107 whoahqa/templates/clinics_summary.jinja2:2
-#: whoahqa/templates/location_list.jinja2:2
 #: whoahqa/templates/user_clinics.jinja2:3
 #: whoahqa/templates/user_clinics.jinja2:11
 msgid "Scores"
-msgstr ""
+msgstr "Pontos Recebidos"
 
 #: whoahqa/templates/base.jinja2:114
 msgid "Users"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:121 whoahqa/templates/clinics_assess.jinja2:2
+#: whoahqa/templates/base.jinja2:119
+#: whoahqa/templates/clinics_characteristics_list.jinja2:10
+#: whoahqa/templates/reporting_periods_create.jinja2:13
+#: whoahqa/templates/reporting_periods_list.jinja2:3
+#: whoahqa/templates/user_clinics.jinja2:9
+msgid "Reporting Periods"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:126 whoahqa/templates/clinics_assess.jinja2:2
 msgid "Assessment Surveys"
 msgstr "Acesso Aos Formulários"
 
-#: whoahqa/templates/base.jinja2:128 whoahqa/templates/clinics_edit.jinja2:5
+#: whoahqa/templates/base.jinja2:133
+msgid "List Locations"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:137 whoahqa/templates/clinics_edit.jinja2:5
 msgid "Manage Clinics"
 msgstr "Gerenciar Unidades de Saúde"
 
-#: whoahqa/templates/base.jinja2:179
+#: whoahqa/templates/base.jinja2:141
+msgid "Health Information Toolbox"
+msgstr "Proteger e Cuidar de Adolescentes"
+
+#: whoahqa/templates/base.jinja2:194
 msgid "Home"
 msgstr "Casa"
+
+#: whoahqa/templates/base.jinja2:203 whoahqa/templates/clinics_show.jinja2:73
+msgid "Change dashboard date range"
+msgstr "Intervalo de datas mudança"
 
 #: whoahqa/templates/clinic_assessment_table.jinja2:20
 msgid "Stakeholder"
@@ -348,15 +391,17 @@ msgstr "Atores Envolvidos"
 msgid "Surveys done"
 msgstr "Formulários Completos "
 
-#: whoahqa/templates/clinic_assessment_table.jinja2:46
-msgid "Total"
-msgstr ""
+#: whoahqa/templates/clinic_assessment_table.jinja2:37
+#: whoahqa/templates/clinics_show.jinja2:216
+msgid "Complete"
+msgstr "Completo"
 
-#: whoahqa/templates/clinics_characteristics_list.jinja2:10
-#: whoahqa/templates/reporting_periods_create.jinja2:13
-#: whoahqa/templates/reporting_periods_list.jinja2:3
-#: whoahqa/templates/user_clinics.jinja2:9
-msgid "Reporting Periods"
+#: whoahqa/templates/clinic_assessment_table.jinja2:39
+msgid "Not Started"
+msgstr "Não Começado"
+
+#: whoahqa/templates/clinic_assessment_table.jinja2:52
+msgid "Total"
 msgstr ""
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:18
@@ -376,7 +421,7 @@ msgid "Work on selected"
 msgstr ""
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:49
-#: whoahqa/templates/clinics_show.jinja2:24
+#: whoahqa/templates/clinics_show.jinja2:108
 msgid "Characteristics"
 msgstr "Características"
 
@@ -385,22 +430,22 @@ msgid "Description"
 msgstr "Descrição"
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:61
-#: whoahqa/templates/clinics_show.jinja2:38
+#: whoahqa/templates/clinics_show.jinja2:124
 msgid "Category"
 msgstr "Categoria"
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:62
-#: whoahqa/templates/clinics_show.jinja2:39
+#: whoahqa/templates/clinics_show.jinja2:125
 msgid "Min - Max"
 msgstr "Mín - Máx Pontuação"
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:63
-#: whoahqa/templates/clinics_show.jinja2:40
+#: whoahqa/templates/clinics_show.jinja2:126
 msgid "# Respondents"
 msgstr "# Respondentes"
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:86
-#: whoahqa/templates/clinics_show.jinja2:60
+#: whoahqa/templates/clinics_show.jinja2:143
 msgid "Absolute total score"
 msgstr "Score absoluto total"
 
@@ -413,7 +458,7 @@ msgstr "Todas as Unidades de Saúde"
 #: whoahqa/templates/reporting_period_select.jinja2:3
 #: whoahqa/templates/user_clinics.jinja2:19
 msgid "My Clinics"
-msgstr ""
+msgstr "Meus Clínicas"
 
 #: whoahqa/templates/clinics_score_summary.jinja2:13
 #: whoahqa/templates/clinics_score_summary.jinja2:20
@@ -422,24 +467,35 @@ msgstr ""
 
 #: whoahqa/templates/clinics_score_summary.jinja2:33
 msgid "Characteristic Scores"
-msgstr ""
+msgstr "Scores característicos"
 
-#: whoahqa/templates/clinics_show.jinja2:25
+#: whoahqa/templates/clinics_show.jinja2:103
+msgid "Key Indicator Score"
+msgstr "Score Key Indicator"
+
+#: whoahqa/templates/clinics_show.jinja2:109
 msgid "Relative Score"
 msgstr "Score relativo"
 
-#: whoahqa/templates/clinics_show.jinja2:37
+#: whoahqa/templates/clinics_show.jinja2:123
 msgid "Description "
 msgstr "Descrição"
 
-#: whoahqa/templates/clinics_show.jinja2:41
+#: whoahqa/templates/clinics_show.jinja2:127
 msgid "Score"
 msgstr "Pontos Recebidos"
 
-#: whoahqa/templates/clinics_summary.jinja2:8
-#: whoahqa/templates/location_list.jinja2:11
-msgid "Municipalities"
-msgstr "Municípios"
+#: whoahqa/templates/clinics_show.jinja2:176
+msgid "You have finished collecting data for this tool"
+msgstr "Você terminou a coleta de dados para esta ferramenta"
+
+#: whoahqa/templates/clinics_show.jinja2:178
+msgid "You need to collect more information"
+msgstr "Você precisa coletar mais informações"
+
+#: whoahqa/templates/clinics_show.jinja2:216
+msgid "You have finished data collection for this characteristic."
+msgstr "Você terminou a coleta de dados para esta característica."
 
 #: whoahqa/templates/clinics_unassigned.jinja2:3
 msgid "Unassigned Clinics"
@@ -466,6 +522,10 @@ msgstr "Atualizar"
 msgid "Cancel"
 msgstr "Cancelar"
 
+#: whoahqa/templates/location_list.jinja2:21
+msgid "Add Location"
+msgstr ""
+
 #: whoahqa/templates/login.jinja2:16
 msgid "Login | WHO Adolescent Health Quality Assessment"
 msgstr "Login | "
@@ -485,6 +545,12 @@ msgstr ""
 #: whoahqa/templates/login.jinja2:79
 msgid "Create an account"
 msgstr ""
+
+#: whoahqa/templates/municipalities_list.jinja2:2
+#: whoahqa/templates/state_summary.jinja2:2
+#: whoahqa/templates/state_summary.jinja2:29
+msgid "Municipalities"
+msgstr "Municípios"
 
 #: whoahqa/templates/reporting_period_select.jinja2:8
 #: whoahqa/templates/reporting_period_select.jinja2:16
@@ -507,6 +573,11 @@ msgstr ""
 msgid "New Reporting Period"
 msgstr ""
 
+#: whoahqa/templates/states_list.jinja2:2
+#: whoahqa/templates/states_list.jinja2:11
+msgid "States"
+msgstr ""
+
 #: whoahqa/templates/user_clinics.jinja2:28
 msgid "Code:"
 msgstr "CNES:"
@@ -523,14 +594,15 @@ msgstr ""
 msgid "Characteristics Summary"
 msgstr ""
 
-#: whoahqa/views/clinics.py:282
+#: whoahqa/views/clinics.py:299
 msgid "Cannot find selected municipality."
 msgstr ""
 
-#: whoahqa/views/reporting_periods.py:40
+#: whoahqa/views/reporting_periods.py:43
 msgid "Please fix the errors indicated below."
 msgstr ""
 
-#: whoahqa/views/reporting_periods.py:49
+#: whoahqa/views/reporting_periods.py:52
 msgid "Reporting period created"
 msgstr ""
+
