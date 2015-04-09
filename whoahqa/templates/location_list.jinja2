@@ -15,6 +15,13 @@
 </li>
 {% endblock %}
 {% block content %}
+  <div class="table-toolbar">
+    <div class="btn-group">
+      <a class="btn btn-primary" href="{{ request.route_url('locations', traverse=('add')) }}">
+        {{gettext('Add Location')}} <i class="icon-plus"></i>
+      </a>
+    </div>
+  </div>
   <section class="container">
     {% include '_alerts.jinja2' %}
     <div class="row">

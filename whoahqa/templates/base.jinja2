@@ -134,6 +134,10 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                   {% endif %}
                   {% if request.is_super_user %}
                      <li>
+                        <a href="{{ request.route_url('locations', traverse=('')) }}">
+                        {{gettext('List Locations')}}</a>
+                     </li>
+                     <li>
                         <a href="{{ request.route_url('clinics', traverse=('manage')) }}">
                         {{gettext('Manage Clinics')}}</a>
                      </li>
