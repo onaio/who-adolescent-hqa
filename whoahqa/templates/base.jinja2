@@ -122,11 +122,6 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                    {% endif %}
                   {% if request.can_access_clinics %}
                      <li>
-                        <a href="{{ request.route_url('clinics', traverse=()) }}">
-                           {{ gettext('My Clinics') }}
-                        </a>
-                     </li>
-                     <li>
                         <a href="{{ request.route_url('clinics', traverse=('assess')) }}">
                            {{ gettext('Assessment Surveys') }}
                         </a>
