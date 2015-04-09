@@ -173,9 +173,9 @@
                                 <i class="icon-grey icon-circle"></i>
                               {% endfor %}
                               {% if pending_responses == 0 %}
-                                <i class="icon-blue icon-ok pull-right"></i>
+                                <i class="icon-blue icon-ok pull-right tooltips" data-placement='top' data-original-title="{{ gettext('You have finished collecting data for this tool') }}"></i>
                               {% elif responses == 0 or pending_responses > responses %}
-                                <i class="icon-orange icon-warning-sign pull-right"></i>
+                                <i class="icon-orange icon-warning-sign pull-right tooltips" data-placement='top' data-original-title="{{gettext('You need to collect more information') }}"></i>
                               {% endif %}
                             </td>
                         </tr>
@@ -213,7 +213,7 @@
                       {{ "%s"| format(percentage|int(0)) }}%
                     {% endif %}
                     {% if total_pending_responses == 0 %}
-                      <span class="label label-primary"> {{ gettext('Complete') }}</span>
+                      <span class="label label-primary tooltips" data-placement='top' data-original-title="{{gettext('You have finished data collection for this characteristic.') }}"> {{ gettext('Complete') }}</span>
                     {% endif %}
                 </td>
               </tr>
