@@ -71,6 +71,21 @@ class Location(Base):
     def __str__(self):
         return self.name
 
+    @property
+    def appstruct(self):
+        return {
+            'name': self.name,
+            'location_type': self.location_type,
+            'parent_id': self.parent.id if self.parent else None,
+        }
+
+    def update(self, **kwargs):
+        self.name = kwargs['name']
+        self.location_type = kwargs['location_type']
+        self.parent = Location.get(Location.id == kwargs['parent_id'])
+
+        self.save()
+
 
 class Municipality(Location):
     __mapper_args__ = {

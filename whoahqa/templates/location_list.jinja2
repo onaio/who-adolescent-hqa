@@ -1,0 +1,59 @@
+{% extends 'base.jinja2' %}
+{% block title %}Users{% endblock %}
+{% block page_title %}
+  <h3>
+     {{ self.title() }}
+  </h3>
+{% endblock %}
+{% block breadcrumbs %}
+    <li>
+      <a href="{{ request.route_url('locations', traverse=()) }}"><iclass="fa fa-desktop"></i>  Locations
+      </a>
+    </li>
+    <i class="icon-angle-right"></i>
+    <li class="active"> All Locations </li>
+</li>
+{% endblock %}
+{% block content %}
+  <section class="container">
+    {% include '_alerts.jinja2' %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="portlet">
+          <div class="portlet-title">
+            <strong>Current Locations</strong>
+          </div>
+          <div class="portlet-body">
+              <table class="table table-responsive table-hover">
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Location Type</th>
+                  <th>Parent</th>
+                  <th>Actions</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for location in locations|sort(true, attribute='id') %}
+                  <tr>
+                    <td>{{ location.name|format_location_name }}</td>
+                    <td>{{ location.location_type|capitalize }}</td>
+                    <td>{{ location.parent }}</td>
+                    <td>
+                      <a class="btn btn-default btn-xs" href="{{ request.route_path('locations', traverse=(location.id, 'edit')) }}">Edit</a>
+                    
+                      <a class="btn btn-danger btn-xs" href="{{ request.route_path('locations', traverse=(location.id, 'delete')) }}">Delete</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+          </div>
+          <!-- Portlet Body -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+{% endblock %}
