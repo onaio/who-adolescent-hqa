@@ -8,7 +8,7 @@ from whoahqa.utils import translation_string_factory as _
 
 @colander.deferred
 def parent_widget(node, kw):
-    locations = [(colander.null, '-- select parent --')]
+    locations = [('', '-- select parent --')]
     locations.extend([(l.id, l.name) for l in Location.all()])
 
     return SelectWidget(
@@ -34,7 +34,7 @@ class LocationForm(colander.MappingSchema):
         widget=location_type_widget)
     parent_id = colander.SchemaNode(
         colander.String(encoding='utf-8'), title="Parent Location",
-        widget=parent_widget)
+        widget=parent_widget, missing=None)
 
     def validator(self, node, value):
         exc = colander.Invalid(node, "")

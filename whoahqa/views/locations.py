@@ -44,6 +44,9 @@ class LocationViews(object):
                     u"Please fix the errors indicated below.", "error")
             else:
                 # add location
+                if values['parent_id'] is None:
+                    values['parent_id'] = None
+
                 location = Location(**values)
                 location.save()
                 # redirect to admin view
