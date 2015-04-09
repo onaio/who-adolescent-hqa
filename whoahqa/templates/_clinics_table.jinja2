@@ -28,11 +28,7 @@
             <input type="checkbox" name="clinic_id" class="checkboxes" value="{{ clinic.id }}">
           </td>
           <td>
-            {% if clinic.is_assigned %}
               <a href="{{ request.route_url('clinics', traverse=(clinic.id, period.id)) }}">{{ clinic.name }}</a>
-            {% else %}
-              {{ clinic.name }}
-            {% endif %}
           </td>
           <td class=" ">{{ clinic.code }}</td>
           <td class="center ">{{ clinic.date_created.strftime('%d %b %Y') }}</td>
