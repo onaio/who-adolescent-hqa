@@ -49,10 +49,16 @@ class LocationViews(object):
 
                 location = Location(**values)
                 location.save()
-                # redirect to admin view
+
+                self.request.session.flash(
+                    "{} {} saved".format(
+                        location.name, location.location_type),
+                    'success')
+
+                # Create new location
                 return HTTPFound(
                     self.request.route_url(
-                        'locations', traverse=(location.id, 'edit')))
+                        'locations', traverse=('add')))
         # return form
 
         return {'form': form}
