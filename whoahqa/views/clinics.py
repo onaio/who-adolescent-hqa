@@ -83,6 +83,7 @@ class ClinicViews(object):
     def unassigned(self):
 
         search_term = self.request.GET.get('search')
+        period = get_period_from_request(self.request)
         if search_term is not None:
             clinics = Clinic.filter_clinics(search_term, False)
             self.request.override_renderer = '_clinics_table.jinja2'
@@ -91,6 +92,7 @@ class ClinicViews(object):
 
         return {
             'clinics': clinics,
+            'period': period,
             'search_term': search_term
         }
 
