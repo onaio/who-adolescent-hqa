@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.1a\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-09 16:41+0300\n"
+"POT-Creation-Date: 2015-04-09 16:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -322,7 +322,7 @@ msgid "Manage Clinics"
 msgstr ""
 
 #: whoahqa/templates/base.jinja2:141
-msgid "Health Information Toolbox"
+msgid "Strategy for the Protection and Care of Adolescents"
 msgstr ""
 
 #: whoahqa/templates/base.jinja2:194

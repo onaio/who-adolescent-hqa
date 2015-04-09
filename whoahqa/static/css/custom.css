@@ -449,4 +449,7 @@ span.client-prop {
     overflow: hidden;
     display: block;
 }
+
+li.external-resource a {
+    font-size: 12px !important;
 }
