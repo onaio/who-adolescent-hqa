@@ -34,4 +34,4 @@ class TestClinicReports(TestBase):
         report = ClinicReport.newest()
 
         key_indicators = report.get_key_indicators()
-        self.assertEqual(key_indicators['equitable'], 9.172771672771672)
+        self.assertEqual(key_indicators['equitable'], 7.228327228327228)

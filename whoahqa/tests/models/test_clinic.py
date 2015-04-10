@@ -291,7 +291,7 @@ class TestClinic(TestBase):
 
         self.assertEqual(key_indicator_scores, {
             'accessible': 19.02777777777778,
-            'equitable': 9.172771672771672,
+            'equitable': 7.228327228327228,
             'acceptable': 22.108843537414963,
             'appropriate': 3.125,
             'effective': 6.515151515151515})
