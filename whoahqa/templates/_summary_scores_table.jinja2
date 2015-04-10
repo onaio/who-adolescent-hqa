@@ -35,13 +35,18 @@
       {% for location in locations %}
         <tr class="gradeX odd">
           <td>
-            <a href="{{ location.get_url(request, period) }}">
-              <strong>{{ location.name | replace("_", " ") | capitalize }}</strong>
-            </a>
+            
             {% if location.__class__.__name__ == "Clinic" %}
+              <a href="{{ location.get_url(request, period) }}">
+                <strong>{{ location.name }}</strong>
+              </a>
               <div>
                 {{ "CNES: " + location.code }}
               </div>
+            {% else %}
+              <a href="{{ location.get_url(request, period) }}">
+              <strong>{{ location.name | replace("_", " ") | capitalize }}</strong>
+            </a>
             {% endif %}
           </td>
           {% for id, label in key_indicators_key_labels %}
