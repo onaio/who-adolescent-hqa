@@ -42,9 +42,7 @@
                     {% endif %}
                   </td>
                   <td>
-                    {% if not is_current_user %}
-                      <a class="btn btn-default btn-xs" href="{{ request.route_path('admin', traverse=(ona_user.user.id, 'edit')) }}">Edit</a>
-                    {% endif %} 
+                    <a class="btn btn-default btn-xs" href="{{ request.route_path('admin', traverse=(ona_user.user.id, 'edit')) }}">Edit</a>
                   </td>
                 </tr>
               {% endfor %}

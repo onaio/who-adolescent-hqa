@@ -250,8 +250,14 @@ class OnaUser(Base):
                 **group_params)
 
             self.user.group = group
+        if group_name == groups.SUPER_USER:
+            # remove any location/clinic references
+            if self.location:
+                delete_user_locations(self.user, self.location)
+            if self.clinics:
+                delete_user_clinics([c.id for c in self.clinics])
 
-        if group_name == groups.CLINIC_MANAGER:
+        elif group_name == groups.CLINIC_MANAGER:
             # Remove existing location mapping
             if self.location:
                 delete_user_locations(self.user, self.location)
