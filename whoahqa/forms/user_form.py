@@ -34,7 +34,8 @@ def state_selection_widget(node, kw):
 @colander.deferred
 def clinic_selection_widget(node, kw):
     return SelectWidget(
-        values=[(c.id, key_to_label(c.name)) for c in Clinic.all()],
+        values=[(c.id, key_to_label(c.name + " - " + c.code))
+                for c in Clinic.all()],
         multiple=True)
 
 
