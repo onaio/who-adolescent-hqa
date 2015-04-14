@@ -8,6 +8,7 @@ from whoahqa.models import (
     OnaUser,
     User,
     UserFactory)
+from whoahqa.views.helpers import get_period_from_request
 
 
 @view_defaults(route_name='admin',
@@ -23,8 +24,11 @@ class AdminViews(object):
                  renderer='admin_users_list.jinja2')
     def list(self):
         users = OnaUser.all()
+        period = get_period_from_request(self.request)
+
         return {
-            'users': users
+            'users': users,
+            'period': period
         }
 
     @view_config(name='edit',
@@ -51,7 +55,11 @@ class AdminViews(object):
                 return HTTPFound(
                     self.request.route_url(
                         'admin', traverse=(user.id, 'edit')))
+
+        period = get_period_from_request(self.request)
+
         return {
             'form': form,
-            'ona_user': ona_user
+            'ona_user': ona_user,
+            'period': period
         }

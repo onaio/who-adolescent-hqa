@@ -298,9 +298,12 @@ class ClinicViews(object):
                     self.request.session.flash(
                         _("Cannot find selected municipality."), "error")
 
+        period = get_period_from_request(self.request)
+
         return {
             'form': form,
-            'clinic': clinic
+            'clinic': clinic,
+            'period': period
         }
 
     @view_config(
