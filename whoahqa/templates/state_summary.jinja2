@@ -1,5 +1,5 @@
 {% extends "base.jinja2" %}
-{% block title %}{{ gettext("Municipalities") }}{% endblock %}
+{% block title %} {{ gettext("State")}} {{ gettext("Scores") }}{% endblock %}
 {% block page_title %} {{ state.name|format_location_name }} {% endblock %}
 
 {% block sub_menu_item %}
@@ -9,25 +9,16 @@
         {{ state.location_type|capitalize }}
     </a>
   </li>
-  {% for municipality in locations %}
-    <li class="sub-location">
-      <a href="{{municipality.get_url(request, period)}}">
-          {{ municipality.name|format_location_name }}
-          {{ municipality.location_type|capitalize }}
-      </a>
-    </li>
-  {% endfor %}
 {% endblock %}
 
 {% block breadcrumbs %}
   <li>
+    <i class="icon-angle-right"></i>
     <a href="{{ state.get_url(request, period) }}">
       {{ state.name|format_location_name }}
+      {{ state.location_type|capitalize }}
     </a>
   </li>
-  <li><i class="icon-angle-right"></i></li>
-  <li>{{ gettext("Municipalities") }}</li>
-  <li><a href="#"> </a></li>
 {% endblock %}
 {% block content %}
   <div class="row">

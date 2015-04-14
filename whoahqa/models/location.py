@@ -14,6 +14,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm.exc import NoResultFound
 from whoahqa.constants import characteristics
+from whoahqa.utils import translation_string_factory as _
 from whoahqa.models import (
     Base,
     BaseModelFactory)
@@ -92,6 +93,8 @@ class Municipality(Location):
         'polymorphic_identity': Location.MUNICIPALITY
     }
 
+    child_type = _('Clinic')
+
     @property
     def __acl__(self):
         acl = [
@@ -116,6 +119,8 @@ class State(Location):
     __mapper_args__ = {
         'polymorphic_identity': Location.STATE
     }
+
+    child_type = _('Municipality')
 
     @property
     def __acl__(self):
