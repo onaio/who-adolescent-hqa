@@ -2,7 +2,10 @@
 {% block title %}{{ gettext("Assessment Surveys") }}{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
-  <li>{{ self.page_title() }}</li>
+  <li>
+    <i class="icon-angle-right"></i>
+    {{ self.page_title() }}
+  </li>
   <li><a href="#"> </a></li>
 {% endblock %}
 {% block content %}

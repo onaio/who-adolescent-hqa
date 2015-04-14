@@ -2,7 +2,9 @@ from pyramid.httpexceptions import HTTPFound
 
 from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
-from whoahqa.constants import groups
+
+from whoahqa.views.helpers import get_period_from_request
+
 from pyramid.view import view_config
 
 
@@ -10,21 +12,20 @@ from pyramid.view import view_config
 def default(request):
     ona_user = request.ona_user
 
+    period = get_period_from_request(request)
+
     user_setting = ona_user.user.settings
     if user_setting:
         request.response.set_cookie(
             '_LOCALE_', user_setting.language)
 
-    url = request.route_url('clinics', traverse=())
+    url = request.route_url('clinics', traverse=(),
+                            _query={'period': period.id})
 
-    # redirect to view depending on the group which user belongs
+    # redirect to view depending on location owned
 
     if ona_user.location:
-        if ona_user.group and ona_user.group.name == groups.STATE_OFFICIAL:
-            url = request.route_url('states', traverse=(ona_user.location.id))
-        elif ona_user.group.name == groups.MUNICIPALITY_MANAGER:
-            url = request.route_url(
-                'municipalities', traverse=(ona_user.location.id))
+        url = ona_user.location.get_url(request, period)
 
     return HTTPFound(url)
 
