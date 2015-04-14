@@ -102,7 +102,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                  <ul class="sub-menu">
                  {% block sub_menu_item %}
                      <li class="selected">
-                        <a href="{{ request.route_url('default')}}">
+                        <a href="{{ request.route_url('default', _query={'period': period.id})}}">
                            <i class="icon-user-md"></i>
                            <span class="title">{{ gettext('Scores') }}</span>
                         </a>
@@ -122,7 +122,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                    {% endif %}
                   {% if request.can_access_clinics %}
                      <li>
-                        <a href="{{ request.route_url('clinics', traverse=('assess')) }}">
+                        <a href="{{ request.route_url('clinics', traverse=('assess'), _query={'period': period.id}) }}">
                            {{ gettext('Assessment Surveys') }}
                         </a>
                      </li>
@@ -191,7 +191,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                   <ul class="page-breadcrumb">
                      <li>
                         <i class="icon-home"></i>
-                        <a href="{{ request.route_url('default')}}">{{ gettext('Scores') }}</a>
+                        <a href="{{ request.route_url('default', _query={'period': period.id})}}">{{ gettext('Scores') }}</a>
                      </li>
                      {% block breadcrumbs %}{% endblock %}
                   </ul>
