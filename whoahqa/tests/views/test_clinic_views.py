@@ -327,3 +327,12 @@ class TestClinicViewsFunctional(FunctionalTestBase):
         clinic = Clinic.get(Clinic.code == '1A2B')
 
         self.assertEqual(clinic.name, "New Clinic Name")
+
+    def test_access_clinic(self):
+        self._create_user('jonah', 'municipality_manager')
+
+        url = self.request.route_path(
+            'clinics', traverse=('assess'))
+        headers = self._login_user('jonah')
+        response = self.testapp.get(url, headers=headers)
+        self.assertEqual(response.status_code, 200)
