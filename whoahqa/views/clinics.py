@@ -66,7 +66,7 @@ class ClinicViews(object):
             clinics = Clinic.filter_clinics(search_term, True)
             self.request.override_renderer = '_summary_scores_table.jinja2'
         else:
-            clinics = Clinic.all()
+            clinics = self.request.ona_user.clinics
 
         return {
             'locations': clinics,
