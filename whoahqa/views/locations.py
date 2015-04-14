@@ -3,6 +3,7 @@ from pyramid.view import view_defaults, view_config
 from pyramid.httpexceptions import HTTPFound
 
 from whoahqa.constants import permissions as perms
+from whoahqa.views.helpers import get_period_from_request
 from whoahqa.forms import LocationForm
 from whoahqa.models import (
     DBSession,
@@ -15,6 +16,7 @@ from whoahqa.models import (
 class LocationViews(object):
     def __init__(self, request):
         self.request = request
+        self.period = get_period_from_request(self.request)
 
     @view_config(name='',
                  context=LocationFactory,
@@ -23,7 +25,8 @@ class LocationViews(object):
         locations = Location.all()
 
         return {
-            'locations': locations
+            'locations': locations,
+            'period': self.period
         }
 
     @view_config(name='add',
@@ -61,7 +64,8 @@ class LocationViews(object):
                         'locations', traverse=('add')))
         # return form
 
-        return {'form': form}
+        return {'form': form,
+                'period': self.period}
 
     @view_config(name='edit',
                  context=Location,
@@ -92,7 +96,8 @@ class LocationViews(object):
                         'locations', traverse=(location.id, 'edit')))
         return {
             'form': form,
-            'location': location
+            'location': location,
+            'period': self.period
         }
 
     @view_config(name='delete',
