@@ -8,6 +8,3 @@ class TestDefaultViewsFunctional(FunctionalTestBase):
         headers = self._login_user("manager_b")
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(
-            response.location,
-            self.request.route_url('clinics', traverse=()))

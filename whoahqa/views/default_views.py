@@ -38,6 +38,7 @@ def set_locale(request):
     user_settings = ona_user.user.settings
 
     available_languages = constants.AVAILABLE_LANGUAGES
+    period = get_period_from_request(request)
 
     if request.method == "POST":
         locale = request.POST.get("locale", "")
@@ -48,4 +49,5 @@ def set_locale(request):
 
     return {
         "available_languages": available_languages,
+        "period": period,
         "user_settings": user_settings}
