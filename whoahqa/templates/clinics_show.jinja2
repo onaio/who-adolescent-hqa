@@ -172,7 +172,7 @@
                               {% for response in range(pending_responses) %}
                                 <i class="icon-grey icon-circle"></i>
                               {% endfor %}
-                              {% if pending_responses == 0 %}
+                              {% if pending_responses <= 0 %}
                                 <i class="icon-blue icon-ok pull-right tooltips" data-placement='top' data-original-title="{{ gettext('You have finished collecting data for this tool') }}"></i>
                               {% elif responses == 0 or pending_responses > responses %}
                                 <i class="icon-orange icon-warning-sign pull-right tooltips" data-placement='top' data-original-title="{{gettext('You need to collect more information') }}"></i>
