@@ -205,6 +205,9 @@ class Clinic(Base):
                     ClinicSubmission.valid == true())\
             .all()
 
+    def has_clinic_submissions_for_period(self, period):
+        return bool(self.get_period_clinic_submissions(period))
+
     def calculate_characteristic_aggregate_scores(
             self, xpath, num_responses, submission_jsons):
         """ Gets the aggregate score for a client_tool/characteristic pair.
