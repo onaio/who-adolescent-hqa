@@ -39,19 +39,21 @@ class ClinicReportHandler(BaseSubmissionHandler):
             raise ClinicNotFound
         else:
             for characteristic in characteristics:
-                clinic_submission = ClinicSubmission(
-                    clinic_id=clinic.id,
-                    submission=self.submission,
-                    characteristic=characteristic,
-                    xform_id=xform_id,
-                    period=(
-                        self.submission.raw_data[constants.PERIOD_IDENTIFIER]),
-                    valid=(not bool(int(
-                        self.submission.raw_data
-                        [constants.INVALID_CHARACTERISTICS_FLAGS
-                            [characteristic]])))
-                )
-                DBSession.add(clinic_submission)
+                if characteristic:
+                    clinic_submission = ClinicSubmission(
+                        clinic_id=clinic.id,
+                        submission=self.submission,
+                        characteristic=characteristic,
+                        xform_id=xform_id,
+                        period=(
+                            self.submission.raw_data[
+                                constants.PERIOD_IDENTIFIER]),
+                        valid=(not bool(int(
+                            self.submission.raw_data
+                            [constants.INVALID_CHARACTERISTICS_FLAGS
+                                [characteristic]])))
+                    )
+                    DBSession.add(clinic_submission)
 
             clinic.update_reports()
 
