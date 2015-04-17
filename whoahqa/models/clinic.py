@@ -346,7 +346,8 @@ class Clinic(Base):
                     scores[characteristic][client_tool_id] = stats
                     total_questions += num_questions
                     total_responses += num_responses
-                    total_pending_responses += num_pending_responses
+                    if num_pending_responses >= 0:
+                        total_pending_responses += num_pending_responses
 
             total_percentage = None if total_responses == 0 else (
                 total_scores / float(total_questions) * 100)
