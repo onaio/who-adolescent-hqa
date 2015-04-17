@@ -214,7 +214,7 @@
                       <i class="big icon-medkit {{ class_name }}"></i>
                       {{ "%s"| format(percentage|int(0)) }}%
                     {% endif %}
-                    {% if total_pending_responses == 0 %}
+                    {% if total_pending_responses <= 0 %}
                       <span class="label label-primary tooltips" data-placement='top' data-original-title="{{gettext('You have finished data collection for this characteristic.') }}"> {{ gettext('Complete') }}</span>
                     {% endif %}
                 </td>
