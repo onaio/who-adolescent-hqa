@@ -103,7 +103,7 @@
     <div class="row">
       <h3 class="key-indicator-title">
         {{ key_indicator|capitalize }} {{ gettext('Key Indicator Score') }}:
-        {{ 0 or clinic_key_indicators[key_indicator]|round|int }} 
+        {{ 0 or clinic_key_indicators[key_indicator]|round(1) }} 
       </h3>
     </div>
     <div class="row">
@@ -193,7 +193,7 @@
                     <table class="table table-striped">
                         {{ generate_client_rows(scores, client_tools, characteristic.id, score_property='aggregate_score', characteristic_id=characteristic.id) }}
                     <tr>
-                        <td class="text-center">{{ total_scores|int }}</td>
+                        <td class="text-center">{{ total_scores|round_or_none }}</td>
                     </tr>
                     </table>
                 </td>

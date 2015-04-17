@@ -5,7 +5,7 @@
         <tr>
           {% if kwargs['score_property'] %}
             <td class="center-align">
-                {{ kwargs['output_prefix'] }}{{ score[client_tool.id][kwargs['score_property']]|int(0) }}
+                {{ kwargs['output_prefix'] }}{{ score[client_tool.id][kwargs['score_property']]|round_or_none }}
             </td>
           {% elif kwargs['client_property'] %}
             <td>

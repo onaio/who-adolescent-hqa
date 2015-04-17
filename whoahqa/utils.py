@@ -31,3 +31,10 @@ def filter_dict_list_by_attr(
 
 def check_meets_threshold(num_responses, recommended_sample_frame, ratio):
     return num_responses >= round(recommended_sample_frame * ratio)
+
+
+def round_or_none(value):
+    if value:
+        return round(value, 1)
+    else:
+        return 0
