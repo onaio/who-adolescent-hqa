@@ -7,14 +7,14 @@
     <li>
       <a href="{{state.get_url(request, period)}}">
           {{ state.name|format_location_name }}
-          {{ state.location_type|capitalize }}
+          {{ gettext(state.location_type|capitalize) }}
       </a>
     </li>
     {% for child in state.children() %}
       <li class="sub-location">
         <a href="{{child.get_url(request, period)}}">
             {{ child.name|format_location_name }}
-            {{ child.location_type|capitalize }}
+            {{ gettext(child.location_type|capitalize) }}
         </a>
       </li>
     {% endfor %}
@@ -22,7 +22,7 @@
     <li>
       <a href="{{municipality.get_url(request, period)}}">
           {{ municipality.name|format_location_name }}
-          {{ municipality.location_type|capitalize }}
+          {{ gettext(municipality.location_type|capitalize) }}
       </a>
     </li>
   {% endif %}
@@ -34,7 +34,7 @@
       <i class="icon-angle-right"></i>
       <a href="{{ state.get_url(request, period) }}">
         {{ state.name|format_location_name }}
-        {{ state.location_type|capitalize }}
+        {{ gettext(state.location_type|capitalize) }}
       </a>
     </li>
   {% endif %}
@@ -43,7 +43,7 @@
       <i class="icon-angle-right"></i>
       <a href="{{ municipality.get_url(request, period) }}">
         {{ municipality.name|format_location_name }}
-        {{ municipality.location_type|capitalize }}
+        {{ gettext(municipality.location_type|capitalize) }}
       </a>
     </li>
   {% endif %}

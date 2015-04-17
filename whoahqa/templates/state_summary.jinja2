@@ -6,7 +6,7 @@
   <li>
     <a href="{{state.get_url(request, period)}}">
         {{ state.name|format_location_name }}
-        {{ state.location_type|capitalize }}
+        {{ gettext(state.location_type|capitalize) }}
     </a>
   </li>
 {% endblock %}
@@ -16,7 +16,7 @@
     <i class="icon-angle-right"></i>
     <a href="{{ state.get_url(request, period) }}">
       {{ state.name|format_location_name }}
-      {{ state.location_type|capitalize }}
+      {{ gettext(state.location_type|capitalize) }}
     </a>
   </li>
 {% endblock %}

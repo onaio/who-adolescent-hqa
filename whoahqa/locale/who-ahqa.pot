@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.1a\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-09 16:59+0300\n"
+"POT-Creation-Date: 2015-04-17 13:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -233,10 +233,16 @@ msgstr ""
 msgid "End date is required"
 msgstr ""
 
+#: whoahqa/models/location.py:99
+msgid "Municipality"
+msgstr ""
+
+#: whoahqa/models/location.py:126 whoahqa/templates/state_summary.jinja2:2
+msgid "State"
+msgstr ""
+
 #: whoahqa/templates/_clinics_key_indicators.jinja2:9
 #: whoahqa/templates/clinics_score_summary.jinja2:32
-#: whoahqa/templates/clinics_summary.jinja2:7
-#: whoahqa/templates/municipality_summary.jinja2:2
 msgid "Clinics"
 msgstr ""
 
@@ -247,7 +253,7 @@ msgstr ""
 #: whoahqa/templates/_clinics_key_indicators.jinja2:13
 #: whoahqa/templates/clinics_characteristics_list.jinja2:59
 #: whoahqa/templates/clinics_score_summary.jinja2:39
-#: whoahqa/templates/clinics_show.jinja2:122
+#: whoahqa/templates/clinics_show.jinja2:124
 msgid "No."
 msgstr ""
 
@@ -272,7 +278,7 @@ msgid "Edit"
 msgstr ""
 
 #: whoahqa/templates/_clinics_table.jinja2:47
-#: whoahqa/templates/_summary_scores_table.jinja2:63
+#: whoahqa/templates/_summary_scores_table.jinja2:68
 msgid "Not found."
 msgstr ""
 
@@ -281,7 +287,7 @@ msgid "Scores by Key Indicator"
 msgstr ""
 
 #: whoahqa/templates/_summary_scores_table.jinja2:22
-msgid "Clinic Average"
+msgid "Average"
 msgstr ""
 
 #: whoahqa/templates/base.jinja2:49
@@ -292,8 +298,11 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:107 whoahqa/templates/clinics_summary.jinja2:2
-#: whoahqa/templates/user_clinics.jinja2:3 whoahqa/templates/user_clinics.jinja2:11
+#: whoahqa/templates/base.jinja2:107 whoahqa/templates/base.jinja2:194
+#: whoahqa/templates/clinics_summary.jinja2:2
+#: whoahqa/templates/municipality_summary.jinja2:2
+#: whoahqa/templates/state_summary.jinja2:2 whoahqa/templates/user_clinics.jinja2:3
+#: whoahqa/templates/user_clinics.jinja2:11
 msgid "Scores"
 msgstr ""
 
@@ -325,11 +334,7 @@ msgstr ""
 msgid "Strategy for the Protection and Care of Adolescents"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:194
-msgid "Home"
-msgstr ""
-
-#: whoahqa/templates/base.jinja2:203 whoahqa/templates/clinics_show.jinja2:73
+#: whoahqa/templates/base.jinja2:202 whoahqa/templates/clinics_show.jinja2:75
 msgid "Change dashboard date range"
 msgstr ""
 
@@ -342,7 +347,7 @@ msgid "Surveys done"
 msgstr ""
 
 #: whoahqa/templates/clinic_assessment_table.jinja2:37
-#: whoahqa/templates/clinics_show.jinja2:216
+#: whoahqa/templates/clinics_show.jinja2:218
 msgid "Complete"
 msgstr ""
 
@@ -371,7 +376,7 @@ msgid "Work on selected"
 msgstr ""
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:49
-#: whoahqa/templates/clinics_show.jinja2:108
+#: whoahqa/templates/clinics_show.jinja2:110
 msgid "Characteristics"
 msgstr ""
 
@@ -380,22 +385,22 @@ msgid "Description"
 msgstr ""
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:61
-#: whoahqa/templates/clinics_show.jinja2:124
+#: whoahqa/templates/clinics_show.jinja2:126
 msgid "Category"
 msgstr ""
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:62
-#: whoahqa/templates/clinics_show.jinja2:125
+#: whoahqa/templates/clinics_show.jinja2:127
 msgid "Min - Max"
 msgstr ""
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:63
-#: whoahqa/templates/clinics_show.jinja2:126
+#: whoahqa/templates/clinics_show.jinja2:128
 msgid "# Respondents"
 msgstr ""
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:86
-#: whoahqa/templates/clinics_show.jinja2:143
+#: whoahqa/templates/clinics_show.jinja2:145
 msgid "Absolute total score"
 msgstr ""
 
@@ -419,31 +424,27 @@ msgstr ""
 msgid "Characteristic Scores"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:103
-msgid "Key Indicator Score"
-msgstr ""
-
-#: whoahqa/templates/clinics_show.jinja2:109
+#: whoahqa/templates/clinics_show.jinja2:111
 msgid "Relative Score"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:123
+#: whoahqa/templates/clinics_show.jinja2:125
 msgid "Description "
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:127
+#: whoahqa/templates/clinics_show.jinja2:129
 msgid "Score"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:176
+#: whoahqa/templates/clinics_show.jinja2:178
 msgid "You have finished collecting data for this tool"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:178
+#: whoahqa/templates/clinics_show.jinja2:180
 msgid "You need to collect more information"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:216
+#: whoahqa/templates/clinics_show.jinja2:218
 msgid "You have finished data collection for this characteristic."
 msgstr ""
 
@@ -497,8 +498,6 @@ msgid "Create an account"
 msgstr ""
 
 #: whoahqa/templates/municipalities_list.jinja2:2
-#: whoahqa/templates/state_summary.jinja2:2
-#: whoahqa/templates/state_summary.jinja2:29
 msgid "Municipalities"
 msgstr ""
 
