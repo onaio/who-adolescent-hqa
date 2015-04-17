@@ -102,12 +102,12 @@
   <div class="table-responsive">
     <div class="row">
       <h3 class="key-indicator-title">
-        {{ key_indicator|capitalize }} {{ gettext('Key Indicator Score') }}:
+        {{ gettext(key_indicator|capitalize)}}:
         {{ 0 or clinic_key_indicators[key_indicator] }} 
       </h3>
     </div>
     <div class="row">
-      <div class="pull-left char-header">{{ gettext('Characteristics') }} {{ key_indicator|capitalize }}</div>
+      <div class="pull-left char-header">{{ gettext('Characteristics') }}</div>
       <div class="pull-right score-header">{{ gettext('Relative Score') }}</div>
     </div>
 
