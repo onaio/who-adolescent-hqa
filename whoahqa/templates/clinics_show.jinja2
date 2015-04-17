@@ -103,7 +103,7 @@
     <div class="row">
       <h3 class="key-indicator-title">
         {{ gettext(key_indicator|capitalize)}}:
-        {{ 0 or clinic_key_indicators[key_indicator] }} 
+        {{ 0 or clinic_key_indicators[key_indicator]|round_or_none }} 
       </h3>
     </div>
     <div class="row">
