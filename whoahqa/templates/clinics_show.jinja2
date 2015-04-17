@@ -14,7 +14,7 @@
       <li>
         <a href="{{municipality.get_url(request, period)}}">
             {{ municipality.name|format_location_name }}
-            {{ municipality.location_type|capitalize }}
+            {{ gettext(municipality.location_type|capitalize) }}
         </a>
       </li>
       {% for clinic in municipality.clinics %}
@@ -42,11 +42,11 @@
       {% if request.can_view_state %}
         <a href="{{ state.get_url(request, period)}}">
           {{ state.name|format_location_name }}
-          {{ state.location_type|capitalize }}
+          {{ gettext(state.location_type|capitalize) }}
         </a>
       {% else %}
         {{ state.name|format_location_name }}
-        {{ state.location_type|capitalize }}
+        {{ gettext(state.location_type|capitalize) }}
       {% endif %}
     </li>
   {% endif %}
@@ -56,11 +56,11 @@
       {% if request.can_view_municipality %}
         <a href="{{ municipality.get_url(request, period)}}">
           {{ municipality.name|format_location_name }}
-          {{ municipality.location_type|capitalize }}
+          {{ gettext(municipality.location_type|capitalize) }}
         </a>
       {% else %}
         {{ municipality.name|format_location_name }}
-        {{ municipality.location_type|capitalize }}
+        {{ gettext(municipality.location_type|capitalize) }}
       {% endif %}
     </li>
   {% endif %}

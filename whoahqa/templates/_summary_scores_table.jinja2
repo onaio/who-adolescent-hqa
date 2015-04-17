@@ -19,7 +19,7 @@
       {% if parent %}
         <tr class="average-row">
           <td>
-              <strong>{{ parent.child_type }} {{ gettext('Average') }}</strong>
+              <strong>{{ gettext(parent.location_type|capitalize) }} {{ gettext('Average') }}</strong>
           </td>
           {% for id, label in key_indicators_key_labels %}
           {% set key_indicators = parent.key_indicators(period) %}

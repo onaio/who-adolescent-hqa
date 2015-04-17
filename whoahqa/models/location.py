@@ -96,7 +96,7 @@ class Municipality(Location):
         'polymorphic_identity': Location.MUNICIPALITY
     }
 
-    child_type = _('Clinic')
+    child_type = _('Municipality')
 
     @property
     def __acl__(self):
@@ -123,7 +123,7 @@ class State(Location):
         'polymorphic_identity': Location.STATE
     }
 
-    child_type = _('Municipality')
+    child_type = _('State')
 
     @property
     def __acl__(self):
