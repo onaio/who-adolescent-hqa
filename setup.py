@@ -72,6 +72,7 @@ setup(name='who-ahqa',
       create_whoahqa_user = whoahqa.scripts.create_user:main
       parse_municipalities = whoahqa.scripts.submission_parser:main
       reset_submissions = whoahqa.scripts.submission_helpers:main
+      import_submissions = whoahqa.scripts.submission_importer:main
       """,
       message_extractors=extractors
       )

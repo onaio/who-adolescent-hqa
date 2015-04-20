@@ -588,5 +588,6 @@ XFORM_ID = '_xform_id_string'
 USER_ID = 'user_id'
 CLINIC_NAME = 'clinic_name'
 PERIOD_IDENTIFIER = 'period'
+UUID = "_uuid"
 
 AVAILABLE_LANGUAGES = {'en': "English"}
