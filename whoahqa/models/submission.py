@@ -8,6 +8,7 @@ from sqlalchemy import (
     String
 )
 from sqlalchemy.orm import backref, relationship
+from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.dialects.postgresql import JSON
 
 from whoahqa.constants import characteristics as constants
@@ -61,14 +62,27 @@ class Submission(Base):
     @classmethod
     def create_from_json(cls, payload):
         # TODO: check for and handle json.loads parse errors
-        submission = Submission(raw_data=json.loads(payload))
-        DBSession.add(submission)
+        if type(payload) is not dict:
+            payload = json.loads(payload)
 
-        # TODO: handle duplicates within handlers, via uuid
-        handler_class = determine_handler_class(
-            submission, cls.HANDLER_TO_XFORMS_MAPPING)
-        handler_class(submission).handle_submission()
-        return submission
+        if not Submission.exists(payload):
+            submission = Submission(raw_data=payload)
+            DBSession.add(submission)
+
+            handler_class = determine_handler_class(
+                submission, cls.HANDLER_TO_XFORMS_MAPPING)
+            handler_class(submission).handle_submission()
+            return submission
+
+    @classmethod
+    def exists(cls, payload):
+        try:
+            Submission.get(
+                Submission.raw_data[constants.UUID].astext ==
+                payload[constants.UUID])
+            return True
+        except NoResultFound:
+            return False
 
 
 class ClinicSubmission(Base):
