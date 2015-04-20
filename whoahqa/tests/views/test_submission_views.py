@@ -44,7 +44,7 @@ class TestSubmissionViews(IntegrationTestBase):
                          'Accepted pending manual matching process')
 
     def test_json_post_without_clinic_id(self):
-        response = self.post_json('{"test":"1234"}')
+        response = self.post_json('{"test":"1234", "_uuid":"1234"}')
 
         # should return a 202 response code
         self.assertEqual(response.status_code, 202)
