@@ -57,6 +57,42 @@ class ReportingPeriodViews(BaseClassViews):
         # render form
         return {'form': form}
 
+    @view_config(
+        name='edit',
+        permission=perms.CAN_CREATE_PERIOD,
+        renderer='reporting_periods_create.jinja2',
+        context=ReportingPeriod)
+    def edit(self):
+        period = self.request.context
+        form = Form(
+            ReportingPeriodForm().bind(
+                request=self.request,
+                period=period),
+            buttons=('Save',),
+            css_class='form-horizontal',
+            appstruct=period.appstruct)
+        if self.request.method == "POST":
+            post = self.request.POST.items()
+            try:
+                payload = form.validate(post)
+            except ValidationFailure:
+                self.request.session.flash(
+                    _(u"Please fix the errors indicated below."), 'error')
+            else:
+                period.update(**payload)
+
+                self.request.session.flash(
+                    _(u"Your changes have been saved"),
+                    'success')
+                return HTTPFound(
+                    self.request.route_url('periods', traverse=('list')))
+
+        # render form
+        return {
+            'form': form,
+            'period': period
+        }
+
     @view_config(name='redirect',
                  context=ReportingPeriod)
     def redirect(self):

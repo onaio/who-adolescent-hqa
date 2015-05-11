@@ -17,7 +17,7 @@ class MonthYearDate(object):
         if appstruct is colander.null:
             return colander.null
 
-        if not isinstance(appstruct, datetime.datetime):
+        if not isinstance(appstruct, datetime.date):
             raise colander.Invalid(
                 node, _(u"{} is not a valid date".format(appstruct)))
 

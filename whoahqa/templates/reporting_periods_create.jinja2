@@ -6,7 +6,14 @@
   <link rel="stylesheet" type="text/css" href="{{ request.static_url('whoahqa:static/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" />
   <link rel="stylesheet" type="text/css" href="{{ request.static_url('whoahqa:static/plugins/bootstrap-datetimepicker/css/datetimepicker.css') }}" />
 {% endblock %}
-{% block title %}{{ gettext("Create Reporting Period") }}{% endblock %}
+{% block title %}
+  {% if period.id %}
+    {{ gettext("Edit") }}
+  {% else %}
+    {{ gettext("Create") }}
+  {% endif %}
+  {{ gettext("Reporting Period") }}
+{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
   <li>
@@ -70,7 +77,11 @@
         <div class="form-actions fluid">
           <div class="col-md-offset-3 col-md-9">
             <button type="submit" class="btn btn-primary">
-              {{ gettext("Create")}}
+              {% if period.id %}
+                {{ gettext("Edit") }}
+              {% else %}
+                {{ gettext("Create") }}
+              {% endif %}
             </button>
             <a class="btn btn-default" href="{{ request.route_url('periods', traverse=()) }}">
               {{ gettext("Cancel")}}
