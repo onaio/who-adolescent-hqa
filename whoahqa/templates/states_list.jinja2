@@ -6,7 +6,7 @@
   <li><a href="#"> </a></li>
 {% endblock %}
 {% block sub_menu_item %}
-  <li>
+  <li class="selected">
     <a href="{{request.route_url('states', traverse=())}}">
         {{ gettext('States') }}
     </a>

@@ -11,24 +11,31 @@
 
 {% block sub_menu_item %}
     {% if request.can_view_municipality %}
-      <li>
+      <li class="selected">
         <a href="{{municipality.get_url(request, period)}}">
             {{ municipality.name|format_location_name }}
             {{ gettext(municipality.location_type|capitalize) }}
+            <span class="arrow open"></span>
         </a>
       </li>
-      {% for clinic in municipality.clinics %}
-        <li class="sub-location">
-          <a href="{{clinic.get_url(request, period)}}">
-              {{ clinic.name|format_location_name }}
+      {% for child in municipality.clinics %}
+        <li class="sub-location
+          {%if child.id == clinic.id%}
+            active
+          {% endif %} ">
+          <a href="{{child.get_url(request, period)}}">
+              {{ child.name|format_location_name }}
           </a>
         </li>
       {% endfor %}
     {% else %}
-      {% for clinic in request.ona_user.clinics %}
-        <li>
-          <a href="{{clinic.get_url(request, period)}}">
-              {{ clinic.name|format_location_name }}
+      {% for child in request.ona_user.clinics %}
+        <li class="
+          {%if child.id == clinic.id%}
+            active
+          {% endif %} ">
+          <a href="{{child.get_url(request, period)}}">
+              {{ child.name|format_location_name }}
           </a>
         </li>
       {% endfor %}

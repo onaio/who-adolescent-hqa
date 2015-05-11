@@ -4,14 +4,19 @@
 
 {% block sub_menu_item %}
   {% if request.can_view_state %}
-    <li>
+    <li class="selected">
       <a href="{{state.get_url(request, period)}}">
           {{ state.name|format_location_name }}
           {{ gettext(state.location_type|capitalize) }}
+          <span class="arrow open"></span>
       </a>
     </li>
     {% for child in state.children() %}
-      <li class="sub-location">
+      <li class="sub-location
+        {%if child.id == municipality.id%}
+          active
+        {% endif %}
+        ">
         <a href="{{child.get_url(request, period)}}">
             {{ child.name|format_location_name }}
             {{ gettext(child.location_type|capitalize) }}
@@ -19,7 +24,7 @@
       </li>
     {% endfor %}
   {% else %}
-    <li>
+    <li class="selected">
       <a href="{{municipality.get_url(request, period)}}">
           {{ municipality.name|format_location_name }}
           {{ gettext(municipality.location_type|capitalize) }}
