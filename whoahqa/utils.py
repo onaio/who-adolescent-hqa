@@ -35,6 +35,6 @@ def check_meets_threshold(num_responses, recommended_sample_frame, ratio):
 
 def round_or_none(value):
     if value:
-        return round(value, 1)
+        return round(value, 2)
     else:
         return 0
