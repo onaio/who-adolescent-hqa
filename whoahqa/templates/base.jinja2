@@ -102,7 +102,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                  <ul class="sub-menu">
                  {% block sub_menu_item %}
                      <li class="
-                        {%if request.url.find('clinics') != -1 %}
+                        {%if request.url.find('clinics/?') != -1 %}
                            selected
                         {% endif %}">
                         <a href="{{ request.route_url('default', _query={'period': period.id})}}">
@@ -120,25 +120,37 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                          {{ gettext('Users') }}
                        </a>
                      </li>
-                     <li>
+                     <li class="
+                        {%if request.url.find('periods') != -1 %}
+                           selected
+                        {% endif %}">
                        <a href="{{ request.route_url('periods', traverse=('list')) }}">
                          {{ gettext('Reporting Periods') }}
                        </a>
                      </li>
                    {% endif %}
                   {% if request.can_access_clinics %}
-                     <li>
+                     <li class="
+                        {%if request.url.find('assess') != -1 %}
+                           selected
+                        {% endif %}">
                         <a href="{{ request.route_url('clinics', traverse=('assess'), _query={'period': period.id}) }}">
                            {{ gettext('Assessment Surveys') }}
                         </a>
                      </li>
                   {% endif %}
                   {% if request.is_super_user %}
-                     <li>
+                     <li class="
+                        {%if request.url.find('locations') != -1 %}
+                           selected
+                        {% endif %}">
                         <a href="{{ request.route_url('locations', traverse=('')) }}">
                         {{gettext('List Locations')}}</a>
                      </li>
-                     <li>
+                     <li class="
+                        {%if request.url.find('manage') != -1 %}
+                           selected
+                        {% endif %}">
                         <a href="{{ request.route_url('clinics', traverse=('manage')) }}">
                         {{gettext('Manage Clinics')}}</a>
                      </li>
