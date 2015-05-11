@@ -3,7 +3,7 @@
 {% block page_title %} {{ state.name|format_location_name }} {% endblock %}
 
 {% block sub_menu_item %}
-  <li>
+  <li class="selected">
     <a href="{{state.get_url(request, period)}}">
         {{ state.name|format_location_name }}
         {{ gettext(state.location_type|capitalize) }}
