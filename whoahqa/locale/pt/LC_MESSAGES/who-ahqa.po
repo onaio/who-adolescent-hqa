@@ -281,7 +281,7 @@ msgstr ""
 
 #: whoahqa/models/location.py:99
 msgid "Municipality"
-msgstr "Municípios"
+msgstr "Município"
 
 #: whoahqa/models/location.py:126 whoahqa/templates/state_summary.jinja2:2
 msgid "State"
