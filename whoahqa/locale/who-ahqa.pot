@@ -554,3 +554,23 @@ msgstr ""
 msgid "Reporting period created"
 msgstr ""
 
+#: whoahqa/views/base.jinja2: 224
+msgid "Reporting period 1"
+msgstr ""
+
+#: whoahqa/views/base.jinja2: 224
+msgid "Reporting period 2"
+msgstr ""
+
+#: whoahqa/views/base.jinja2: 224
+msgid "Reporting period 3"
+msgstr ""
+
+#: whoahqa/views/base.jinja2: 224
+msgid "Reporting period 4"
+msgstr ""
+
+#: whoahqa/views/base.jinja2: 224
+msgid "Reporting period 5"
+msgstr ""
+

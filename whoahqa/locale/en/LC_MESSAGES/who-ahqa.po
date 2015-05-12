@@ -560,6 +560,21 @@ msgstr ""
 msgid "Reporting period created"
 msgstr ""
 
+msgid "Reporting period 1"
+msgstr ""
+
+msgid "Reporting period 2"
+msgstr ""
+
+msgid "Reporting period 3"
+msgstr ""
+
+msgid "Reporting period 4"
+msgstr ""
+
+msgid "Reporting period 5"
+msgstr ""
+
 #~ msgid "Clinic Scores by Key Indicator"
 #~ msgstr ""
 

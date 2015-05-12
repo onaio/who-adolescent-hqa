@@ -83,9 +83,7 @@
           <i class="icon-calendar"></i>&nbsp; 
              {% set active_period = selected_period or period%}
              <span class="thin uppercase visible-lg-inline-block">
-                {{(active_period.start_date) | format_date("long", request)}}
-                -
-                {{(active_period.end_date) | format_date("long", request)}}
+                 {{ gettext(active_period.title) }}
              </span>&nbsp; 
              <i class="icon-angle-down"></i>
        </div>
@@ -93,9 +91,7 @@
           {% for p in periods if p != period %}
              <li>
              <a href="{{ request.current_route_url(traverse=(clinic.id, p.id)) }}">
-                {{(p.start_date) | format_date('long', request)}}
-                   -
-                {{(p.end_date) | format_date('long', request)}}
+               {{ gettext(p.title) }} 
              </a>
              </li>
           {% endfor %}
