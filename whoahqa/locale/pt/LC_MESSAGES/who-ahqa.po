@@ -333,7 +333,6 @@ msgid "Scores by Key Indicator"
 msgstr "Unidades de Saúde/ Indicador"
 
 #: whoahqa/templates/_summary_scores_table.jinja2:22
-#| msgid "Average Score"
 msgid "Average"
 msgstr "Média"
 
@@ -604,6 +603,21 @@ msgstr ""
 #: whoahqa/views/reporting_periods.py:52
 msgid "Reporting period created"
 msgstr ""
+
+msgid "Reporting period 1"
+msgstr "Período da aplicação 1"
+
+msgid "Reporting period 2"
+msgstr "Período da aplicação 2"
+
+msgid "Reporting period 3"
+msgstr "Período da aplicação 3"
+
+msgid "Reporting period 4"
+msgstr "Período da aplicação 4"
+
+msgid "Reporting period 5"
+msgstr "Período da aplicação 5"
 
 #~ msgid "Clinic Average"
 #~ msgstr "Clínica Média"
