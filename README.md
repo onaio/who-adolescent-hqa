@@ -51,7 +51,7 @@ Installing
     ```
 
     ```
-    source ~/.virtualenv/whoahqa/bin/activate
+    source ~/.virtualenvs/whoahqa/bin/activate
     ```
 
 4. Clone the repo and change into the project directory and install requirements
