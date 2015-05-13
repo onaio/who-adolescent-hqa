@@ -44,8 +44,18 @@
           </div>
         </div>
         <div class="form-body">
+          {%  set field = form['form_xpath'] %}
+          <div class="form-group {% if field.error %}has-error{% endif %}">
+            <label class="col-md-3 control-label">{{ gettext(field.title) }}</label>
+
+            <div class="col-md-4">
+              {{ field.render() | safe}}
+              <span class="help-block">{{ gettext(field.description) }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-body">
           <div class="form-group {% if form.error or form['start_date'].error or form['end_date'].error %}has-error{% endif %}">
-            {%  set field = form['title'] %}
             <label class="col-md-3 control-label">{{ gettext("Reporting Period") }}</label>
 
             <div class="col-md-6">
