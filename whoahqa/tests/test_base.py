@@ -153,11 +153,13 @@ class TestBase(unittest.TestCase):
 
         reporting_period1 = ReportingPeriod(
             title='Default Period',
+            form_xpath='1jan_31mar_2015',
             start_date=datetime.datetime(2015, 1, 1),
             end_date=datetime.datetime(2015, 3, 31))
 
         reporting_period2 = ReportingPeriod(
             title='Period 1',
+            form_xpath='1may_31jul_2015',
             start_date=datetime.datetime(2015, 5, 1),
             end_date=datetime.datetime(2015, 7, 31))
 

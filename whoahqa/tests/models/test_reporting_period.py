@@ -13,54 +13,20 @@ class TestReportingPeriod(TestBase):
         super(TestReportingPeriod, self).setUp()
         self.setup_reporting_periods()
 
-    def test_generate_form_key(self):
-        """
-        1may_31jul_2015 <=> 1 May - 31 Jul 2015
-        1aug_31oct_2015 <=> 1 Aug - 31 Oct 2015
-        1nov_2015_31jan_2016  <=>  1 Nov 2015 - 31 Jan 2016
-        1feb_30apr_2016 <=> 1 Feb - 30 Apr 2016
-
-        """
-        reporting_period = ReportingPeriod(
-            title="bla",
-            start_date=datetime.date(2015, 5, 1),
-            end_date=datetime.date(2015, 7, 31))
-
-        self.assertEqual(reporting_period.generate_form_key(),
-                         "1may_31jul_2015")
-
-        reporting_period = ReportingPeriod(
-            title="ble",
-            start_date=datetime.date(2015, 8, 1),
-            end_date=datetime.date(2015, 10, 31))
-        self.assertEqual(reporting_period.generate_form_key(),
-                         "1aug_31oct_2015")
-
-        reporting_period = ReportingPeriod(
-            title="bli",
-            start_date=datetime.date(2015, 11, 1),
-            end_date=datetime.date(2016, 1, 31))
-        self.assertEqual(reporting_period.generate_form_key(),
-                         "1nov_2015_31jan_2016")
-
-        reporting_period = ReportingPeriod(
-            title="bli",
-            start_date=datetime.date(2016, 2, 1),
-            end_date=datetime.date(2016, 4, 30))
-        self.assertEqual(reporting_period.generate_form_key(),
-                         "1feb_30apr_2016")
-
     def setup_reporting_periods(self):
         self.reporting_period1 = ReportingPeriod(
             title="test 1",
+            form_xpath="jan_2015feb_2015",
             start_date=datetime.date(2015, 1, 1),
             end_date=datetime.date(2015, 2, 1))
         self.reporting_period2 = ReportingPeriod(
             title="test 2",
+            form_xpath="feb_2015mar_2015",
             start_date=datetime.date(2015, 2, 1),
             end_date=datetime.date(2015, 3, 1))
         self.reporting_period3 = ReportingPeriod(
             title="test 3",
+            form_xpath="apr_2015may_2015",
             start_date=datetime.date(2015, 4, 1),
             end_date=datetime.date(2015, 5, 1))
 
