@@ -58,6 +58,10 @@ class ReportingPeriodForm(colander.MappingSchema):
         colander.String(encoding='utf-8'),
         title=_(u"Name"),
         description=_(u"Give the reporting period a name",))
+    form_xpath = colander.SchemaNode(
+        colander.String(encoding='utf-8'),
+        title=_(u"Form Xpath"),
+        description=_(u"The Period field identifier located in the xlsforms",))
     start_date = colander.SchemaNode(
         MonthYearDate(),
         title=_(u"Start Date"),
