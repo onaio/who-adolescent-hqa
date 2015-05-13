@@ -44,6 +44,7 @@ class ReportingPeriodViews(BaseClassViews):
             else:
                 period = ReportingPeriod(
                     title=payload['title'],
+                    form_xpath=payload['form_xpath'],
                     start_date=payload['start_date'],
                     end_date=payload['end_date'])
                 DBSession.add(period)
@@ -55,7 +56,9 @@ class ReportingPeriodViews(BaseClassViews):
                     self.request.route_url('periods', traverse=('list')))
 
         # render form
-        return {'form': form}
+        return {
+            'form': form,
+            'period': ReportingPeriod.get_current_period()}
 
     @view_config(
         name='edit',

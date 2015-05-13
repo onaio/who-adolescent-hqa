@@ -7,7 +7,7 @@
   <link rel="stylesheet" type="text/css" href="{{ request.static_url('whoahqa:static/plugins/bootstrap-datetimepicker/css/datetimepicker.css') }}" />
 {% endblock %}
 {% block title %}
-  {% if period.id %}
+  {% if request.url.find('edit') != -1 %}
     {{ gettext("Edit") }}
   {% else %}
     {{ gettext("Create") }}
@@ -17,7 +17,8 @@
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
   <li>
-    <a href="{{ request.route_url('periods', traverse=()) }}">{{ gettext("Reporting Periods") }} </a>
+    <i class="icon-angle-right"></i>
+    <a href="{{ request.route_url('periods', traverse=('list')) }}">{{ gettext("Reporting Periods") }} </a>
     <i class="icon-angle-right"></i>
   </li>
   <li>{{ self.page_title() }}</li>
@@ -87,7 +88,7 @@
         <div class="form-actions fluid">
           <div class="col-md-offset-3 col-md-9">
             <button type="submit" class="btn btn-primary">
-              {% if period.id %}
+              {% if request.url.find('edit') != -1 %}
                 {{ gettext("Edit") }}
               {% else %}
                 {{ gettext("Create") }}
