@@ -12,6 +12,7 @@ from whoahqa.tests.test_base import IntegrationTestBase, FunctionalTestBase
 class TestReportingPeriods(IntegrationTestBase):
     def setUp(self):
         super(TestReportingPeriods, self).setUp()
+        self.setup_test_data()
         self.request = testing.DummyRequest()
         self.view = ReportingPeriodViews(self.request)
 
