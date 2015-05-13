@@ -80,8 +80,7 @@ class TestClinic(TestBase):
         clinic = Clinic.get(Clinic.name == 'Clinic A')
         period = ReportingPeriod.get(ReportingPeriod.title == "Period 1")
 
-        submissions = clinic.get_period_clinic_submissions(
-            period.generate_form_key())
+        submissions = clinic.get_period_clinic_submissions(period.form_xpath)
         self.assertEqual(len(submissions), 50)
 
     def test_is_assigned_returns_true_if_assigned(self):

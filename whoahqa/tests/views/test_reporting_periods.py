@@ -19,6 +19,7 @@ class TestReportingPeriods(IntegrationTestBase):
         self.request.method = "POST"
         self.request.POST = MultiDict([
             ('title', "2013/2014"),
+            ('form_xpath', "1"),
             ('start_date', '1-02-2014'),
             ('end_date', '1-01-2015')
         ])
@@ -32,6 +33,7 @@ class TestReportingPeriods(IntegrationTestBase):
         self.request.method = "POST"
         self.request.POST = MultiDict([
             ('title', "2013/2014"),
+            ('form_xpath', "1"),
             ('start_date', '02-2014'),
             ('end_date', '02-2014'),
         ])

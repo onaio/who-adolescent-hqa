@@ -1,5 +1,5 @@
 {% for clinic in clinics %}
-{% set responses_per_tool = clinic.get_num_responses_per_tool(period.generate_form_key()) %}
+{% set responses_per_tool = clinic.get_num_responses_per_tool(period.form_xpath) %}
     <div class="portlet" id="assessment-portlet">
         <div class="portlet-title">
             <div class="tools">

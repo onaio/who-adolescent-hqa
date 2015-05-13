@@ -121,7 +121,7 @@ class ClinicViews(object):
         # if not clinic.is_assigned:
         #     raise HTTPBadRequest("The clinic is not yet assigned")
 
-        scores = clinic.get_scores(period.generate_form_key())
+        scores = clinic.get_scores(period.form_xpath)
 
         return {
             'period': period,
@@ -188,7 +188,7 @@ class ClinicViews(object):
         if not clinic.is_assigned:
             raise HTTPBadRequest("The clinic is not yet assigned")
 
-        scores = clinic.get_scores(period.generate_form_key())
+        scores = clinic.get_scores(period.form_xpath)
         characteristics = tuple_to_dict_list(
             ("id", "description", "number"), constants.CHARACTERISTICS)
         clinic_characteristics = clinic.get_active_characteristics(period)

@@ -53,8 +53,7 @@ class Location(Base):
     def key_indicators(self, period):
         clinics = self.clinics
         clinics = [c for c in clinics
-                   if c.has_clinic_submissions_for_period(
-                       period.generate_form_key())]
+                   if c.has_clinic_submissions_for_period(period.form_xpath)]
         if self._key_indicators:
             return self._key_indicators
         else:

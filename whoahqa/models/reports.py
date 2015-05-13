@@ -33,7 +33,7 @@ class ClinicReport(Base):
 
     def generate_report_data(self):
         self.json_data = self.clinic.get_key_indicator_scores(
-            self.period.generate_form_key())
+            self.period.form_xpath)
 
     def update(self):
         self.generate_report_data()
@@ -47,8 +47,7 @@ class ClinicReport(Base):
         # Generate report and save it
         report = ClinicReport(clinic=clinic, period=period)
         # Pass period argument to get_key_indicator_scores
-        report.json_data = clinic.get_key_indicator_scores(
-            period.generate_form_key())
+        report.json_data = clinic.get_key_indicator_scores(period.form_xpath)
         report.save()
         return DBSession.merge(report)
 
