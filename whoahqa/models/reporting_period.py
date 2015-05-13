@@ -24,19 +24,7 @@ class ReportingPeriod(Base):
     title = Column(String(100), nullable=False)
     start_date = Column(Date(), nullable=False)
     end_date = Column(Date(), nullable=False)
-
-    def generate_form_key(self):
-        """ Generates the key used to filter out submissions belonging to this
-        reporting period for a clinic.
-        """
-        if self.end_date.year - self.start_date.year >= 1:
-            period = "{}_{}".format(self.start_date.strftime("%-d%b_%Y"),
-                                    self.end_date.strftime("%-d%b_%Y"))
-        else:
-            period = "{}_{}".format(self.start_date.strftime("%-d%b"),
-                                    self.end_date.strftime("%-d%b_%Y"))
-
-        return period.lower()
+    form_xpath = Column(String(100), nullable=True)
 
     @classmethod
     def get_active_periods(cls):
@@ -60,6 +48,7 @@ class ReportingPeriod(Base):
     def appstruct(self):
         return {
             'title': self.title,
+            'form_xpath': self.form_xpath,
             'start_date': self.start_date,
             'end_date': self.end_date,
             'id': self.id
