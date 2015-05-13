@@ -56,6 +56,7 @@ class ReportingPeriod(Base):
 
     def update(self, **kwargs):
         self.title = kwargs['title']
+        self.form_xpath = kwargs['form_xpath']
         self.start_date = kwargs['start_date']
         self.end_date = kwargs['end_date']
 
