@@ -7,7 +7,9 @@ from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.orm import (
     backref,
     relationship)
-from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm.exc import (
+    NoResultFound,
+    MultipleResultsFound)
 
 from whoahqa.models import (
     Base,
@@ -62,5 +64,9 @@ class ClinicReport(Base):
                                       ClinicReport.period == period)
         except NoResultFound:
             report = cls.generate_clinic_report(clinic, period)
+        except MultipleResultsFound:
+            reports = ClinicReport.all(ClinicReport.clinic == clinic,
+                                       ClinicReport.period == period)
+            report = reports[-1]
 
         return report
