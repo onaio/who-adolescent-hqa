@@ -69,7 +69,7 @@ def fetch_data(form_id):
                'Token 67781e149ab21afafc6a4cc7062cdd79f8618c69'
                }
 
-    url = 'https://ona.io/api/v1/data/{}'.format(form_id)
+    url = 'https://api.ona.io/api/v1/data/{}'.format(form_id)
 
     return fetch_ona_url(url, headers)
 
