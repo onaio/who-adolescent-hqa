@@ -9,7 +9,7 @@
         <tr role="row">
           <th class="clinic-name">{{ gettext('Name') }}</th>
           {% for id, label in key_indicators_key_labels %}
-            <th class="key-indicators">{{ gettext(label) }}</th> 
+            <th class="key-indicators">{{ gettext(label) }}</th>
           {% endfor %}
         </tr>
       </thead>
@@ -25,17 +25,17 @@
           {% set key_indicators = parent.key_indicators(period) %}
             <td>
                 <div class="score-bar">
-                    <div class="elapsed average" style="width: {{ key_indicators[id]|round }}%"></div>
-                    <span class="score-msg">{{ key_indicators[id]|round|int}}</span>
+                    <div class="elapsed average" style="width: {{ key_indicators[id]|round if key_indicators[id] else 0 }}%"></div>
+                    <span class="score-msg">{{ key_indicators[id]|round|int if key_indicators[id] else '' }}</span>
                 </div>
-            </td> 
+            </td>
           {% endfor %}
         </tr>
       {% endif %}
       {% for location in locations %}
         <tr class="gradeX odd">
           <td>
-            
+
             {% if location.__class__.__name__ == "Clinic" %}
               <a href="{{ location.get_url(request, period) }}">
                 <strong>{{ location.name }}</strong>
@@ -53,10 +53,10 @@
           {% set key_indicators = location.key_indicators(period) %}
             <td>
                 <div class="score-bar">
-                    <div class="elapsed" style="width: {{ key_indicators[id]|round }}%"></div>
-                    <span class="score-msg">{{ key_indicators[id]|round|int}}</span>
+                    <div class="elapsed" style="width: {{ key_indicators[id]|round if key_indicators[id] else 0 }}%"></div>
+                    <span class="score-msg">{{ key_indicators[id]|round|int if key_indicators[id] else '' }}</span>
                 </div>
-            </td> 
+            </td>
           {% endfor %}
         </tr>
       {% endfor %}
