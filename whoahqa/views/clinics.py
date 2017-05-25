@@ -2,7 +2,6 @@ import uuid
 
 from deform import Form, ValidationFailure, Button
 
-from pyramid.security import has_permission
 from pyramid.httpexceptions import (
     HTTPFound,
     HTTPBadRequest,
@@ -47,9 +46,8 @@ class ClinicViews(object):
     def list(self):
         # if the user doesnt have permissions to list all clinics,
         # redirect to his own clinics
-        if not has_permission(perms.CAN_VIEW_MUNICIPALITY,
-                              self.request.context,
-                              self.request):
+        if not self.request.has_permission(perms.CAN_VIEW_MUNICIPALITY,
+                                           self.request.context):
             return HTTPFound(
                 self.request.route_url(
                     'users', traverse=(
@@ -96,7 +94,7 @@ class ClinicViews(object):
             'search_term': search_term
         }
 
-    @view_config(name='assign', request_method='POST', check_csrf=False)
+    @view_config(name='assign', request_method='POST', require_csrf=False)
     def assign(self):
         user = self.request.ona_user.user
 
@@ -231,7 +229,7 @@ class ClinicViews(object):
         name='select_characteristics',
         context=ReportingPeriod,
         request_method='POST',
-        check_csrf=False)
+        require_csrf=False)
     def select_characteristics(self):
 
         period = self.request.context
@@ -253,9 +251,8 @@ class ClinicViews(object):
     def manage_clinics(self):
         user = self.request.ona_user.user
 
-        if has_permission(perms.SUPER_USER,
-                          self.request.context,
-                          self.request):
+        if self.request.has_permission(perms.SUPER_USER,
+                                       self.request.context):
             clinics = Clinic.all()
         else:
             clinics = user.location.clinics

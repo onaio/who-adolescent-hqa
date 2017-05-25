@@ -5,7 +5,7 @@ import transaction
 from pyramid.config import Configurator
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
-from pyramid.session import UnencryptedCookieSessionFactoryConfig
+from pyramid.session import SignedCookieSessionFactory
 from sqlalchemy import engine_from_config
 
 from whoahqa.constants import permissions as perms
@@ -53,7 +53,7 @@ def main(global_config, **settings):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.bind = engine
-    session_factory = UnencryptedCookieSessionFactoryConfig(
+    session_factory = SignedCookieSessionFactory(
         settings['secret_key'])
     config = Configurator(settings=settings,
                           root_factory='whoahqa.models.RootFactory',
