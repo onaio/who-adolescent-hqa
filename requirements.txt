@@ -49,7 +49,7 @@ requests-oauthlib==0.4.1
 six==1.7.3
 transaction==1.4.3
 translationstring==1.1
-uWSGI==2.0.9
+uWSGI==2.0.15
 venusian==1.0
 waitress==0.8.9
 wsgiref==0.1.2
