@@ -169,3 +169,12 @@ Deploy with [Vagrant](http://www.vagrantup.com/)
     Load the app in your browser at http://192.168.33.13:6543/clinics/unassigned
 
     You can now make edits from your host (read OSX) and have them reflected when you refresh the browser.
+
+### NOTE
+
+Before running the app or tests, you need to add
+
+```
+export WHOAHQA_COUNTRY_SETTING=whoahqa.constants.brazil_characteristics
+```
+to your `~/.bashrc` or `~/.zshrc` file.
