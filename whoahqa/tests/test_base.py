@@ -75,7 +75,7 @@ class TestBase(unittest.TestCase):
         registry.settings = settings
         self.config = testing.setUp(registry=registry)
         # setup db
-        DBSession.configure(bind=engine)
+        # DBSession.configure(bind=engine)
         Base.metadata.bind = engine
         # TODO: run migrations instead of create_all to test migrations
         Base.metadata.drop_all()
