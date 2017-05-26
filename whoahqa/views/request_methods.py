@@ -18,8 +18,8 @@ def get_request_user(request):
 
 
 def can_list_clinics(request):
-    return request.request.has_permission(perms.CAN_LIST_CLINICS,
-                                          ClinicFactory(request))
+    return request.has_permission(perms.CAN_LIST_CLINICS,
+                                  ClinicFactory(request))
 
 
 def can_view_clinics(request):
