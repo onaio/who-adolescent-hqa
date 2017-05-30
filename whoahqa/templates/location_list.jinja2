@@ -44,7 +44,7 @@
                 <tbody>
                 {% for location in locations|sort(true, attribute='id') %}
                   <tr>
-                    <td>{{ location.name|format_location_name }}</td>
+                    <td>{{ location }}</td>
                     <td>{{ location.location_type|capitalize }}</td>
                     <td>{{ location.parent }}</td>
                     <td>
