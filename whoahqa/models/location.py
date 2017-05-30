@@ -73,7 +73,7 @@ class Location(Base):
             return self._key_indicators
 
     def __str__(self):
-        return self.name
+        return fmt(self.name)
 
     @property
     def appstruct(self):
