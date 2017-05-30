@@ -4,12 +4,13 @@ from deform.widget import SelectWidget
 
 from whoahqa.models import Municipality
 from whoahqa.utils import translation_string_factory as _
+from ..utils import format_location_name as fmt
 
 
 @colander.deferred
 def municipality_widget(node, kw):
     return SelectWidget(
-        values=[(m.id, m.name) for m in Municipality.all()])
+        values=[(m.id, fmt(m.name)) for m in Municipality.all()])
 
 
 class ClinicForm(colander.MappingSchema):
