@@ -4,12 +4,13 @@ from deform.widget import SelectWidget
 
 from whoahqa.models import Location
 from whoahqa.utils import translation_string_factory as _
+from ..utils import format_location_name as fmt
 
 
 @colander.deferred
 def parent_widget(node, kw):
     locations = [('', '-- select parent --')]
-    locations.extend([(l.id, l.name) for l in Location.all()])
+    locations.extend([(l.id, fmt(l.name)) for l in Location.all()])
 
     return SelectWidget(
         values=locations)

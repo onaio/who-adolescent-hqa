@@ -19,6 +19,7 @@ from whoahqa.models import (
     Base,
     BaseModelFactory)
 from whoahqa.constants import permissions as perms, groups
+from ..utils import format_location_name as fmt
 
 AVERAGE_SCORE_KEY = 'average_score'
 INITIAL_SCORE_MAP = {characteristics.EQUITABLE: 0,
@@ -77,7 +78,7 @@ class Location(Base):
     @property
     def appstruct(self):
         return {
-            'name': self.name,
+            'name': fmt(self.name),
             'location_type': self.location_type,
             'parent_id': self.parent.id if self.parent else None,
         }
