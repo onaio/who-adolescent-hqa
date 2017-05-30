@@ -79,7 +79,6 @@ class LocationViews(object):
                 location=location),
             buttons=('Save', Button(name='cancel', type='button')),
             appstruct=location.appstruct)
-
         if self.request.method == 'POST':
             data = self.request.POST.items()
             try:
