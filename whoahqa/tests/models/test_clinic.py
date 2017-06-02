@@ -27,7 +27,7 @@ class TestClinic(TestBase):
         self.setup_test_data()
 
         clinics = Clinic.get_unassigned()
-        self.assertEqual(len(clinics), 2)
+        self.assertEqual(len(clinics), 3)
         self.assertEqual(clinics[0].name, "Clinic B")
 
     def test_filter_clinics(self):
@@ -161,7 +161,7 @@ class TestClinic(TestBase):
 
     def test_calculate_characteristic_scores_with_period(self):
         self.setup_test_data()
-        self.create_adolescent_client_submissions()
+        self.create_adolescent_client_submissions_v2()
         health_centre = Clinic.get(Clinic.id == 3)
 
         period = '1may_31jul_2015'
@@ -216,9 +216,64 @@ class TestClinic(TestBase):
             'score_classification': constants.BAD
         })
 
+    def test_calculate_characteristic_scores_with_period_v3(self):
+        self.setup_test_data()
+        self.create_adolescent_client_submissions_v3()
+        period = "2017"
+        clinic = Clinic.get(Clinic.id == 4)
+
+        scores = clinic.get_scores(period)
+
+        scores_1 = scores['one']
+        self.assertEqual(scores_1[constants.ADOLESCENT_CLIENT], {
+            'aggregate_score': 0.75,
+            'num_questions': 2,
+            'num_responses': 4,
+            'num_pending_responses': 2,
+        })
+        self.assertEqual(scores_1[constants.HEALTH_CARE_PROVIDER], {
+            'aggregate_score': None,
+            'num_questions': 5,
+            'num_responses': 0,
+            'num_pending_responses': 5,
+        })
+        self.assertEqual(scores_1['totals'], {
+            'total_scores': 0.75,
+            'total_questions': 13,
+            'total_responses': 4,
+            'total_pending_responses': 13,
+            'total_percentage': 5.769230769230769,
+            'meets_threshold': False,
+            'score_classification': constants.BAD
+        })
+
+        # test with invalid entry
+        scores_16 = scores['sixteen']
+        self.assertEqual(scores_16[constants.ADOLESCENT_CLIENT], {
+            'aggregate_score': 3.0,
+            'num_questions': 6,
+            'num_responses': 2,
+            'num_pending_responses': 4,
+        })
+        self.assertEqual(scores_16[constants.HEALTH_FACILITY_MANAGER], {
+            'aggregate_score': None,
+            'num_questions': 13,
+            'num_responses': 0,
+            'num_pending_responses': 1,
+        })
+        self.assertEqual(scores_16['totals'], {
+            'total_scores': 3.0,
+            'total_questions': 41,
+            'total_responses': 2,
+            'total_pending_responses': 15,
+            'total_percentage': 7.317073170731707,
+            'meets_threshold': False,
+            'score_classification': constants.BAD
+        })
+
     def test_clinic_scores_when_no_submissions_for_period(self):
         self.setup_test_data()
-        self.create_adolescent_client_submissions()
+        self.create_adolescent_client_submissions_v2()
         period = '1may_31jul_2015'
         clinic = Clinic.get(Clinic.id == 1)
 
@@ -250,7 +305,7 @@ class TestClinic(TestBase):
 
     def test_clinic_with_submissions_from_different_periods(self):
         self.setup_test_data()
-        self.create_adolescent_client_submissions()
+        self.create_adolescent_client_submissions_v2()
         health_centre = Clinic.get(Clinic.id == 3)
 
         period = '1aug_31oct_2015'
@@ -282,7 +337,7 @@ class TestClinic(TestBase):
 
     def test_calculate_key_indicator_scores_with_period(self):
         self.setup_test_data()
-        self.create_adolescent_client_submissions()
+        self.create_adolescent_client_submissions_v2()
         health_centre = Clinic.get(Clinic.id == 3)
 
         period = '1may_31jul_2015'
@@ -297,7 +352,7 @@ class TestClinic(TestBase):
 
     def test_key_indicator_scores_for_period_without_submissions(self):
         self.setup_test_data()
-        self.create_adolescent_client_submissions()
+        self.create_adolescent_client_submissions_v2()
         health_centre = Clinic.get(Clinic.id == 3)
 
         period = '1april_31jul_2015'
