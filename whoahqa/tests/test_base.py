@@ -151,23 +151,30 @@ class TestBase(unittest.TestCase):
                          code="0010731",
                          municipality=municipality)
 
-        reporting_period1 = ReportingPeriod(
+        reporting_period_v2_1 = ReportingPeriod(
             title='Default Period',
             form_xpath='1jan_31mar_2015',
             start_date=datetime.datetime(2015, 1, 1),
             end_date=datetime.datetime(2015, 3, 31))
 
-        reporting_period2 = ReportingPeriod(
+        reporting_period_v2_2 = ReportingPeriod(
             title='Period 1',
             form_xpath='1may_31jul_2015',
             start_date=datetime.datetime(2015, 5, 1),
             end_date=datetime.datetime(2015, 7, 31))
 
+        reporting_period_v3 = ReportingPeriod(
+            title='Period 2017',
+            form_xpath='2017',
+            start_date=datetime.datetime(2017, 1, 1),
+            end_date=datetime.datetime(2017, 12, 31))
+
         with transaction.manager:
             DBSession.add_all(
                 [user_setting, su_ona_user, manager_a_ona_user,
-                 manager_b_ona_user, municipality, clinic1, clinic2, clinic3,
-                 reporting_period1, reporting_period2])
+                 manager_b_ona_user, municipality, clinic1, clinic2,
+                 clinic3, reporting_period_v2_1,
+                 reporting_period_v2_2, reporting_period_v3])
 
     def create_submissions(self):
         # make submissions
