@@ -29,10 +29,16 @@ class TestReportingPeriod(TestBase):
             form_xpath="apr_2015may_2015",
             start_date=datetime.date(2015, 4, 1),
             end_date=datetime.date(2015, 5, 1))
+        self.reporting_period_v3 = ReportingPeriod(
+            title="test 4",
+            form_xpath="2017",
+            start_date=datetime.date(2017, 1, 1),
+            end_date=datetime.date(2017, 12, 31))
 
         DBSession.add_all([self.reporting_period1,
                            self.reporting_period2,
-                           self.reporting_period3])
+                           self.reporting_period3,
+                           self.reporting_period_v3])
 
     # filter reporting periods when current date is 1st March 2015
     # def test_get_active_periods_when_month_is_1st_march(self):
@@ -56,4 +62,12 @@ class TestReportingPeriod(TestBase):
         with patch('whoahqa.models.reporting_period.get_current_date') as mock:
             mock.return_value = datetime.date(2015, 5, 30)
             active_periods = ReportingPeriod.get_active_periods()
-            self.assertEqual(len(active_periods), 3)
+            self.assertEqual(len(active_periods), 4)
+
+    # filter reporting periods when current date is 10th July 2017
+    def test_get_active_period_when_month_is_jan(self):
+        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
+            mock.return_value = datetime.date(2017, 7, 10)
+            active_periods = ReportingPeriod.get_active_periods()
+            self.assertEqual(len(active_periods), 4)
+            self.assertIn(self.reporting_period_v3, active_periods)
