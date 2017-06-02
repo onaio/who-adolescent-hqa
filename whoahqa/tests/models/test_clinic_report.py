@@ -11,7 +11,7 @@ class TestClinicReports(TestBase):
     def setUp(self):
         super(TestClinicReports, self).setUp()
         self.setup_test_data()
-        self.create_adolescent_client_submissions()
+        self.create_adolescent_client_submissions_v2()
 
     def create_clinic_report(self):
         clinic = Clinic.get(Clinic.id == 3)
