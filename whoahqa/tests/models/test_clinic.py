@@ -226,10 +226,10 @@ class TestClinic(TestBase):
 
         scores_1 = scores['one']
         self.assertEqual(scores_1[constants.ADOLESCENT_CLIENT], {
-            'aggregate_score': 0.75,
+            'aggregate_score': 0.6666666666666666,
             'num_questions': 2,
-            'num_responses': 4,
-            'num_pending_responses': 2,
+            'num_responses': 3,
+            'num_pending_responses': 3,
         })
         self.assertEqual(scores_1[constants.HEALTH_CARE_PROVIDER], {
             'aggregate_score': None,
@@ -238,11 +238,11 @@ class TestClinic(TestBase):
             'num_pending_responses': 5,
         })
         self.assertEqual(scores_1['totals'], {
-            'total_scores': 0.75,
+            'total_scores': 0.6666666666666666,
             'total_questions': 13,
-            'total_responses': 4,
-            'total_pending_responses': 13,
-            'total_percentage': 5.769230769230769,
+            'total_responses': 3,
+            'total_pending_responses': 14,
+            'total_percentage': 5.128205128205128,
             'meets_threshold': False,
             'score_classification': constants.BAD
         })
@@ -335,6 +335,37 @@ class TestClinic(TestBase):
             'score_classification': constants.BAD
         })
 
+    def test_clinic_with_submissions_from_different_periods_v3(self):
+        self.setup_test_data()
+        self.create_adolescent_client_submissions_v3()
+        health_centre = Clinic.get(Clinic.id == 4)
+
+        period = '2016'
+        scores = health_centre.get_scores(period)
+
+        scores_1 = scores['one']
+        self.assertEqual(scores_1[constants.ADOLESCENT_CLIENT], {
+            'aggregate_score': 1.0,
+            'num_questions': 2,
+            'num_responses': 1,
+            'num_pending_responses': 5,
+        })
+        self.assertEqual(scores_1[constants.HEALTH_CARE_PROVIDER], {
+            'aggregate_score': None,
+            'num_questions': 5,
+            'num_responses': 0,
+            'num_pending_responses': 5,
+        })
+        self.assertEqual(scores_1['totals'], {
+            'total_scores': 1.0,
+            'total_questions': 13,
+            'total_responses': 1,
+            'total_pending_responses': 16,
+            'total_percentage': 7.6923076923076925,
+            'meets_threshold': False,
+            'score_classification': constants.BAD
+        })
+
     def test_calculate_key_indicator_scores_with_period(self):
         self.setup_test_data()
         self.create_adolescent_client_submissions_v2()
@@ -358,6 +389,35 @@ class TestClinic(TestBase):
         period = '1april_31jul_2015'
         key_indicator_scores = health_centre.get_key_indicator_scores(period)
 
+        self.assertEqual(key_indicator_scores, {
+            'accessible': 0,
+            'equitable': 0,
+            'acceptable': 0,
+            'appropriate': 0,
+            'effective': 0})
+
+    def test_calculate_key_indicator_scores_with_period_v3(self):
+        self.setup_test_data()
+        self.create_adolescent_client_submissions_v3()
+        health_centre = Clinic.get(Clinic.id == 4)
+
+        period = '2017'
+        key_indicator_scores = health_centre.get_key_indicator_scores(period)
+
+        self.assertEqual(key_indicator_scores, {
+            'accessible': 20.83333333333333,
+            'equitable': 7.000407000407002,
+            'acceptable': 22.006802721088434,
+            'appropriate': 7.317073170731707,
+            'effective': 8.806818181818182})
+
+    def test_key_indicator_scores_for_period_without_submissions_v3(self):
+        self.setup_test_data()
+        self.create_adolescent_client_submissions_v3()
+        health_centre = Clinic.get(Clinic.id == 4)
+
+        period = '2018'
+        key_indicator_scores = health_centre.get_key_indicator_scores(period)
         self.assertEqual(key_indicator_scores, {
             'accessible': 0,
             'equitable': 0,
