@@ -20,7 +20,7 @@ def user_role_widget(node, kw):
 
 
 @colander.deferred
-def muncipality_selection_widget(node, kw):
+def municipality_selection_widget(node, kw):
     return SelectWidget(
         values=[(m.id, key_to_label(m.name)) for m in Municipality.all()])
 
@@ -50,7 +50,7 @@ class UserForm(colander.MappingSchema):
 
     municipality = colander.SchemaNode(
         colander.String(encoding='utf-8'), title="Municipality",
-        widget=muncipality_selection_widget)
+        widget=municipality_selection_widget)
 
     state = colander.SchemaNode(
         colander.String(encoding='utf-8'), title="State",
