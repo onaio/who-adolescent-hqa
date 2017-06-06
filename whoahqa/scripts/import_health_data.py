@@ -3,7 +3,6 @@ import sys
 import csv
 import codecs
 import transaction
-import unicodedata
 
 from sqlalchemy import engine_from_config
 
@@ -18,6 +17,8 @@ from whoahqa.models import (
     Municipality,
     Clinic
 )
+
+from ..utils import normalizeString
 
 
 def usage(argv):
@@ -94,9 +95,3 @@ def import_health_data():
                                     code=row['CNES'],
                                     municipality=municipality)
                     DBSession.add(clinic)
-
-
-def normalizeString(row):
-    normalized_row = unicodedata.normalize('NFD', row)\
-        .encode('ascii', 'ignore').lower().replace(' ', '_')
-    return normalized_row
