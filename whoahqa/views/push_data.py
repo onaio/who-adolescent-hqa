@@ -2,7 +2,7 @@ from pyramid.view import (
     view_config,
 )
 from pyramid.security import NO_PERMISSION_REQUIRED
-from whoahqa.models import DBSession, State
+from whoahqa.models import DBSession, ReportingPeriod, State
 from ..utils import normalizeString, format_location_name as fmt
 
 
@@ -38,6 +38,26 @@ def push_facilities(request):
 
     filename = 'clinics.csv'
     request.response.content_disposition = 'attachment;filename=' + filename
+
+    return {
+        'header': header,
+        'rows': rows
+    }
+
+
+@view_config(
+    route_name='push',
+    match_param='action=report-periods',
+    request_method='GET',
+    renderer='csv',
+    permission=NO_PERMISSION_REQUIRED)
+def push_report_periods(request):
+    header = ['reporting_period']
+    rows = []
+
+    reporting_periods = ReportingPeriod.get_available_periods()
+
+    [rows.append([period.form_xpath]) for period in reporting_periods]
 
     return {
         'header': header,

@@ -44,6 +44,14 @@ class ReportingPeriod(Base):
             ReportingPeriod.start_date <= today).order_by(
             "start_date desc").limit(1).one()
 
+    # This returns current and future reporting periods
+    @classmethod
+    def get_available_periods(cls):
+        today = get_current_date()
+        return DBSession.query(ReportingPeriod).filter(
+            ReportingPeriod.end_date >= today).order_by(
+            "start_date asc").all()
+
     @property
     def appstruct(self):
         return {
