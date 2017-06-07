@@ -54,7 +54,7 @@ class UnicodeDictReader(object):
 
 
 def import_health_data():
-    file_name = os.path.relpath('whoahqa/data/New_Locations.csv')
+    file_name = os.path.relpath('whoahqa/data/clinics.csv')
     with open(file_name, 'rU') as source:
         rdr = UnicodeDictReader(source)
         existing_states = [normalizeString(state.name)
@@ -68,9 +68,9 @@ def import_health_data():
             for row in rdr:
                 state = None
                 municipality = None
-                normalized_state = normalizeString(row['State'])
+                normalized_state = normalizeString(row['state'])
                 normalized_municipality = normalizeString(
-                    row['Municipality'])
+                    row['municipality'])
 
                 if normalized_state not in existing_states:
                     existing_states.append(normalized_state)
@@ -91,7 +91,7 @@ def import_health_data():
                         municipality = Municipality.get(
                             Municipality.name == normalized_municipality)
 
-                    clinic = Clinic(name=row['Health Facility'],
+                    clinic = Clinic(name=row['facility_name'],
                                     code=row['CNES'],
                                     municipality=municipality)
                     DBSession.add(clinic)
