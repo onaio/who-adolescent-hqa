@@ -1,7 +1,5 @@
 import os
 import sys
-import csv
-import codecs
 import transaction
 
 from sqlalchemy import engine_from_config
@@ -18,7 +16,7 @@ from whoahqa.models import (
     Clinic
 )
 
-from ..utils import normalizeString
+from ..utils import normalizeString, UnicodeDictReader
 
 
 def usage(argv):
@@ -39,18 +37,6 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     import_health_data()
-
-
-class UnicodeDictReader(object):
-    def __init__(self, *args, **kw):
-        self.encoding = kw.pop('encoding', 'utf-8')
-        self.reader = csv.DictReader(*args, **kw)
-
-    def __iter__(self):
-        decode = codecs.getdecoder(self.encoding)
-        for row in self.reader:
-            t = dict((k, decode(row[k])[0]) for k in row)
-            yield t
 
 
 def import_health_data():
