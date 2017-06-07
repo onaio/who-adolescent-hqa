@@ -114,6 +114,12 @@
 
 {% for key_indicator, char_list in key_indicators %}
   <div class="table-responsive">
+    <div class="row pull-right print-row">
+        <button onclick="window.print();return false;" class="btn btn-primary">
+          <i class="icon-print"></i>
+          Print Report
+        </button>
+    </div>
     <div class="row">
       <h3 class="key-indicator-title">
         {{ gettext(key_indicator|capitalize)}}:
