@@ -1,11 +1,12 @@
 /***
 Import fonts
 ***/
-.header {
+
+.header, .btn {
 	display: none;
 }
 
-.page-sidebar {
+.page-sidebar, .page-bar {
 	display: none;
 }
 
@@ -25,11 +26,45 @@ Import fonts
 	page-break-after: avoid;
 }
 
+.page-break	{
+	display: block;
+	page-break-before: always;
+}
+
 .page-container {
 	margin: 0px;
 	padding: 0px;
 }
 
 .page-content {
+	margin: 0px;
 	min-height: auto !important;
+	padding: 0px;
+}
+
+.print-row {
+	display: none;
+}
+
+thead {
+	display: none;
+}
+
+thead:first-child {
+	display: table-header-group;
+}
+
+table.scores-table {
+	table-layout: fixed;
+	font-size: 10px !important;
+}
+
+.scores-table .client-tool-table > table {
+    border: none !important;
+}
+
+p {
+	white-space: pre-wrap;
+	width: 100px;
+	word-wrap: break-word;
 }

@@ -457,3 +457,7 @@ li.external-resource a {
 input[name=password-confirm] {
   margin-top: 15px;
 }
+
+.print-row {
+  padding-right: 20px;
+}
