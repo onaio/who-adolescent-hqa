@@ -111,15 +111,15 @@
   {% endif %}
 {% endblock %}
 {% block content %}
+<div class="row pull-right print-row">
+    <button onclick="window.print();return false;" class="btn btn-primary">
+      <i class="icon-print"></i>
+      Print Report
+    </button>
+</div>
 
 {% for key_indicator, char_list in key_indicators %}
   <div class="table-responsive">
-    <div class="row pull-right print-row">
-        <button onclick="window.print();return false;" class="btn btn-primary">
-          <i class="icon-print"></i>
-          Print Report
-        </button>
-    </div>
     <div class="row">
       <h3 class="key-indicator-title">
         {{ gettext(key_indicator|capitalize)}}:
@@ -140,22 +140,23 @@
             {% set percentage = scores[characteristic.id].totals.total_percentage %}
             {% set meets_threshold = scores[characteristic.id].totals.meets_threshold %}
             <thead>
-            <tr>
-              <th class="char-no center-align">{{ gettext('No.') }}</th>
-              <th class="char-desc">{{ gettext('Description ') }}</th>
-              <th class="char-cat">{{ gettext('Category') }}</th>
-              <th class="min-max">{{ gettext('Min - Max') }}</th>
-              <th class="char-resp">{{ gettext('# Respondents') }}</th>
-              <th class="char-score">{{ gettext('Score') }}</th>
-              <th class="char-rel-score"></th>
-            </tr>
+              <tr>
+                <th class="char-no center-align">{{ gettext('No.') }}</th>
+                <th class="char-desc">{{ gettext('Description ') }}</th>
+                <th class="char-cat">{{ gettext('Category') }}</th>
+                <th class="min-max">{{ gettext('Min - Max') }}</th>
+                <th class="char-resp">{{ gettext('# Respondents') }}</th>
+                <th class="char-score">{{ gettext('Score') }}</th>
+                <th class="char-rel-score"></th>
+              </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="center-align char-no-vals">
                   {{ characteristic.number }}
                 </td>
-                <td class="">{{ gettext(characteristic.description) }}
+                <td class="">
+                  <p>{{ gettext(characteristic.description) }}</p>
                 </td>
                 <td class="client-tool-table">
                   <table class="table table-striped">
@@ -239,9 +240,12 @@
                     {% endif %}
                 </td>
               </tr>
+            </tbody>
         {% endfor %}
-        </tbody>
       </table>
   </div>
+  {% if not loop.last %}
+    <div class="page-break"></div>
+  {% endif %}
 {% endfor %}
 {% endblock %}
