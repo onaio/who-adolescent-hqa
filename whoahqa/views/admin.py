@@ -3,8 +3,9 @@ from pyramid.view import view_defaults, view_config
 from pyramid.httpexceptions import HTTPFound
 
 from whoahqa.constants import permissions as perms
-from whoahqa.forms import UserForm
+from whoahqa.forms import UserForm, RegistrationForm
 from whoahqa.models import (
+    DBSession,
     OnaUser,
     User,
     UserFactory)
@@ -62,4 +63,30 @@ class AdminViews(object):
             'form': form,
             'ona_user': ona_user,
             'period': period
+        }
+
+    @view_config(name='register',
+                 context=UserFactory,
+                 renderer='register.jinja2')
+    def register(self):
+        form = Form(
+            RegistrationForm().bind(
+                request=self.request),
+            buttons=('Save',))
+        if self.request.method == 'POST':
+            data = self.request.POST.items()
+            try:
+                values = form.validate(data)
+            except ValidationFailure:
+                self.request.session.flash(
+                    u"Please fill all the fields", "error")
+            else:
+                self.request.session.flash(
+                    "Success!", 'success')
+                return HTTPFound(
+                    self.request.route_url(
+                        'admin', traverse=('register')))
+
+        return {
+            'form': form
         }
