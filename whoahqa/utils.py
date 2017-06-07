@@ -1,3 +1,5 @@
+import unicodedata
+
 from hashids import Hashids
 from pyenketo import Enketo
 from babel.dates import format_date
@@ -38,3 +40,9 @@ def round_or_none(value):
         return round(value, 2)
     else:
         return 0
+
+
+def normalizeString(row):
+    normalized_row = unicodedata.normalize('NFD', row)\
+        .encode('ascii', 'ignore').lower().replace(' ', '_')
+    return normalized_row
