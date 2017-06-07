@@ -13,12 +13,6 @@ from whoahqa.forms.user_form import (
 
 
 class RegistrationForm(colander.MappingSchema):
-    username = colander.SchemaNode(
-        colander.String(encoding='utf-8'),
-        validator=colander.Length(max=25),
-        widget=TextInputWidget(),
-        title="Username",
-        description="Type the username of the clinic")
     email = colander.SchemaNode(
         colander.String(encoding='utf-8'),
         widget=CheckedInputWidget(
@@ -39,6 +33,12 @@ class RegistrationForm(colander.MappingSchema):
         colander.String(encoding='utf-8'),
         title="State",
         widget=state_selection_widget)
+    username = colander.SchemaNode(
+        colander.String(encoding='utf-8'),
+        validator=colander.Length(max=25),
+        widget=TextInputWidget(),
+        title="Username",
+        description="Type the username of the clinic")
     password = colander.SchemaNode(
         colander.String(encoding='utf-8'),
         validator=colander.Length(min=5),

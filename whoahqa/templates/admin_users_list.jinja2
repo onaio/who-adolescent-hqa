@@ -12,6 +12,13 @@
   {% include "_alerts.jinja2" %}
   <div class="row">
     <div class="col-md-12">
+    <div class="table-toolbar">
+      <div class="btn-group">
+          <a id="sample_editable_1_new" class="btn btn-primary" href="{{ request.route_path('admin', traverse=('register')) }}">
+              {{ gettext('Register User') }} <i class="icon-plus"></i>
+          </a>
+      </div>
+     </div>
       <div class="portlet">
         <div class="portlet-body table-responsive no-padding">
           <form method="post">
