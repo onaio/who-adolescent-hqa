@@ -461,3 +461,7 @@ input[name=password-confirm] {
 .print-row {
   padding-right: 20px;
 }
+
+.for-print {
+	display: none;
+}
