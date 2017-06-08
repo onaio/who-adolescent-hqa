@@ -22,6 +22,10 @@ Import fonts
 	display: none;
 }
 
+.for-print {
+	display: block;
+}
+
 .no-page-break {
 	page-break-after: avoid;
 }
@@ -46,6 +50,18 @@ Import fonts
 	display: none;
 }
 
+.table-responsive {
+	border: none !important;
+	zoom: 1;
+}
+
+.char-header {
+	font-size: 12px !important;
+	font-weight: 600;
+	margin-bottom: 5px;
+	padding-left: 0px;
+}
+
 thead {
 	display: none;
 }
@@ -59,8 +75,20 @@ table.scores-table {
 	font-size: 10px !important;
 }
 
-.scores-table .client-tool-table > table {
-    border: none !important;
+.scores-table thead > tr > th {
+	font-size: 10px !important;
+	font-weight: bold;
+}
+
+.scores-table .client-tool-table > table tr td {
+    border-left: none !important;
+		border-right: none !important;
+		border-bottom: none !important;
+		zoom: 1;
+}
+
+.scores-table .client-tool-table > table tr:first-child td {
+	border-top: none !important;
 }
 
 p {

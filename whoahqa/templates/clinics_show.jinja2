@@ -128,7 +128,7 @@
     </div>
     <div class="row">
       <div class="pull-left char-header">{{ gettext('Characteristics') }}</div>
-      <div class="pull-right score-header">{{ gettext('Relative Score') }}</div>
+      <div class="pull-right score-header hidden-print">{{ gettext('Relative Score') }}</div>
     </div>
 
       <table class="table table-bordered scores-table">
@@ -147,7 +147,9 @@
                 <th class="min-max">{{ gettext('Min - Max') }}</th>
                 <th class="char-resp">{{ gettext('# Respondents') }}</th>
                 <th class="char-score">{{ gettext('Score') }}</th>
-                <th class="char-rel-score"></th>
+                <th class="char-rel-score">
+                  <span class="for-print">{{ gettext('Relative Score') }}</span>
+                </th>
               </tr>
             </thead>
             <tbody>
