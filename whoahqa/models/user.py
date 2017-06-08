@@ -148,6 +148,7 @@ class UserProfile(Base):
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True,
                      autoincrement=False)
     username = Column(String(100), nullable=False, unique=True)
+    email = Column(String(50), nullable=True, unique=True)
     pwd = Column(String(255), nullable=False)
     user = relationship('User')
 
