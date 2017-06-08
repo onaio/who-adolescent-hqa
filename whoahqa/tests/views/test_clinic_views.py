@@ -139,12 +139,6 @@ class TestClinicViews(IntegrationTestBase):
         with HTTMock(fetch_non_existent_survey_form_url):
             self.assertRaises(HTTPBadRequest, self.clinic_views.show_form)
 
-    def test_register_clinic(self):
-        self.request.ona_user = OnaUser.get(OnaUser.username == 'manager_a')
-        with HTTMock(enketo_edit_url_mock):
-            response = self.clinic_views.register_clinic()
-        self.assertIsInstance(response, HTTPFound)
-
     def test_list_override_renderer_when_search_term_exists(self):
         self.request.GET = MultiDict([
             ('search', 'clinic a')
@@ -311,6 +305,13 @@ class TestClinicViewsFunctional(FunctionalTestBase):
         headers = self._login_user('john')
         response = self.testapp.get(url, headers=headers, status=403)
         self.assertEqual(response.status_code, 403)
+
+    def test_register_clinic(self):
+        headers = self._login_user('manager_a')
+        url = self.request.route_path('clinics',
+                                      traverse=('register'))
+        response = self.testapp.get(url, headers=headers)
+        self.assertEqual(response.status_code, 200)
 
     def test_municipality_manager_can_edit_clinics(self):
         municipality = Municipality.get(Municipality.name == "Brazilia")

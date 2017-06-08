@@ -1,5 +1,3 @@
-import uuid
-
 from deform import Form, ValidationFailure, Button
 
 from pyramid.httpexceptions import (
@@ -320,7 +318,6 @@ class ClinicViews(object):
                                   municipality)
                     self.request.session.flash(
                         _("{} Clinic updated.".format(clinic.name)), "success")
-
 
                 except NoResultFound:
                     self.request.session.flash(
