@@ -282,7 +282,7 @@ class ClinicViews(object):
                 except NoResultFound:
                     self.request.session.flash(
                         _("Cannot find selected municipality."), "error")
-                except IntegrityError, e:
+                except IntegrityError:
                     DBSession.rollback()
 
                     self.request.session.flash(

@@ -241,6 +241,22 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(response.status_code, 302)
         self.assertRaises(NoResultFound, Clinic.get, Clinic.id == clinic.id)
 
+    def test_register_clinic_doesnt_save_clinics_with_same_codes(self):
+        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+        municipality = Municipality.get(Municipality.name == "Brazilia")
+        clinic = Clinic.get(Clinic.code == '1A2B')
+        params = MultiDict({'municipality': "{}".format(municipality.id),
+                            'name': "New Clinic Name",
+                            'code': clinic.code})
+        self.request.method = 'POST'
+        self.request.ona_user = ona_user
+        self.request.POST = params
+
+        self.clinic_views.register_clinic()
+
+        flash_error = self.request.session.pop_flash('error')[0]
+        self.assertTrue(flash_error.find("exists") != -1)
+
 
 class TestClinicViewsFunctional(FunctionalTestBase):
     def setUp(self):
