@@ -13,6 +13,7 @@ from pyenketo import (
 )
 
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import IntegrityError
 
 from whoahqa.utils import (
     enketo,
@@ -281,6 +282,13 @@ class ClinicViews(object):
                 except NoResultFound:
                     self.request.session.flash(
                         _("Cannot find selected municipality."), "error")
+                except IntegrityError, e:
+                    DBSession.rollback()
+
+                    self.request.session.flash(
+                        _("A clinic already exists with the \
+                          provided name or CNES."),
+                        "error")
 
         return {
             'form': form,
