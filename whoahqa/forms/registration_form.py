@@ -1,9 +1,10 @@
 import colander
 
+from whoahqa.constants.groups import GROUPS
+
 from deform.widget import (
     TextInputWidget,
-    CheckedPasswordWidget,
-    CheckedInputWidget)
+    CheckedPasswordWidget)
 
 from whoahqa.forms.user_form import (
     clinic_selection_widget,
@@ -15,9 +16,7 @@ from whoahqa.forms.user_form import (
 class RegistrationForm(colander.MappingSchema):
     email = colander.SchemaNode(
         colander.String(encoding='utf-8'),
-        widget=CheckedInputWidget(
-            subject="Email",
-            confirm_subject="Confirm Email"),
+        widget=TextInputWidget(),
         title="Email Address")
     group = colander.SchemaNode(
         colander.String(encoding='utf-8'), title="Role",
@@ -50,7 +49,7 @@ class RegistrationForm(colander.MappingSchema):
     def validator(self, node, value):
         exc = colander.Invalid(node, "")
         valid = True
-        if not value['username']:
+        if value['group'] not in GROUPS:
             valid = False
         if not valid:
             raise exc

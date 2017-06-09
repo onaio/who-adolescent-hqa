@@ -1,6 +1,8 @@
 import colander
 
-from deform.widget import SelectWidget
+from deform.widget import (
+    SelectWidget,
+    CheckedPasswordWidget)
 
 from whoahqa.constants.groups import GROUPS
 from whoahqa.models import (
@@ -55,6 +57,12 @@ class UserForm(colander.MappingSchema):
     state = colander.SchemaNode(
         colander.String(encoding='utf-8'), title="State",
         widget=state_selection_widget)
+
+    password = colander.SchemaNode(
+        colander.String(encoding='utf-8'),
+        validator=colander.Length(min=5),
+        widget=CheckedPasswordWidget(),
+        title="Change Password")
 
     def validator(self, node, value):
         exc = colander.Invalid(node, "")
