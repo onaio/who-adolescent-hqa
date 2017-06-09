@@ -22,11 +22,11 @@
                 <div class="form-group">
                   <label for="username" class="col-sm-2 control-label">Username</label>
                   <div class="col-sm-2">
-                    <p class="form-control-static">{{ ona_user }}</p>
+                    <p class="form-control-static">{{ user }}</p>
                   </div>
                   {% if has_error %}
                     {% for msg in field.error.messages() %}
-                <span class="help-block">{{ msg }}</span>
+                        <span class="help-block">{{ msg }}</span>
                     {% endfor %}
                 {% endif %}
                 </div>

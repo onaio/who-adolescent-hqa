@@ -2,6 +2,7 @@ import colander
 
 from deform.widget import (
     SelectWidget,
+    TextInputWidget,
     CheckedPasswordWidget)
 
 from whoahqa.constants.groups import GROUPS
@@ -42,6 +43,11 @@ def clinic_selection_widget(node, kw):
 
 
 class UserForm(colander.MappingSchema):
+    email = colander.SchemaNode(
+        colander.String(encoding='utf-8'),
+        widget=TextInputWidget(),
+        missing='',
+        title="Email Address")
     group = colander.SchemaNode(
         colander.String(encoding='utf-8'), title="Role",
         widget=user_role_widget)
