@@ -45,6 +45,7 @@ class AdminViews(object):
                 user=ona_user),
             buttons=('Save', Button(name='cancel', type='button')),
             appstruct=user.appstruct)
+
         if self.request.method == 'POST':
             data = self.request.POST.items()
             try:
@@ -75,22 +76,29 @@ class AdminViews(object):
             RegistrationForm().bind(
                 request=self.request),
             buttons=('Save',))
+
         if self.request.method == 'POST':
             data = self.request.POST.items()
+
             try:
                 values = form.validate(data)
+
             except ValidationFailure:
                 self.request.session.flash(
                     u"Please fill all the fields", "error")
+
             else:
-                new_user = UserProfile(**values)
-                new_user.save()
+                new_user = User()
+                new_user.update(values)
 
                 self.request.session.flash(
-                    "Success!", 'success')
+                    "Success! {} user created".format(
+                        new_user.profile.username),
+                    'success')
+
                 return HTTPFound(
                     self.request.route_url(
-                        'admin', traverse=('register')))
+                        'admin', traverse=(new_user.id, 'edit')))
 
         return {
             'form': form,
@@ -102,7 +110,6 @@ class AdminViews(object):
                  renderer='admin_users_list.jinja2')
     def delete(self):
         user = self.request.context
-        import ipdb; ipdb.set_trace()
         # DBSession.delete(user)
         self.request.session.flash(
             u"User successfully deleted", "success")
