@@ -1,9 +1,7 @@
 {% extends 'base.jinja2' %}
-{% block title %}Users{% endblock %}
+{% block title %} {{ gettext("Manage Locations") }} {% endblock %}
 {% block page_title %}
-  <h3>
-     {{ self.title() }}
-  </h3>
+  {{ self.title() }}
 {% endblock %}
 {% block breadcrumbs %}
     <li>
@@ -12,7 +10,7 @@
       </a>
     </li>
     <i class="icon-angle-right"></i>
-    <li class="active"> {{ gettext('All Locations') }} </li>
+    <li class="active"> {{ gettext("All Locations") }} </li>
 </li>
 {% endblock %}
 {% block content %}
