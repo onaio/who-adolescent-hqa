@@ -117,8 +117,8 @@ class Clinic(Base):
     @property
     def appstruct(self):
         return {
-            'name': self.name,
-            'code': self.code,
+            'name': self.name or "",
+            'code': self.code or "",
             'municipality': self.municipality_id
         }
 

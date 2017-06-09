@@ -2,9 +2,10 @@
 {% block title %}Edit User{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
+    <li><i class="icon-angle-right"></i></li>
     <li class="active">{{ gettext("Manage Clinics")}}</li>
-    <i class="icon-angle-right"></i></li>
-    <li>{{clinic.name}}</li>
+    <li><i class="icon-angle-right"></i></li>
+    <li>{{clinic.name or "New Clinic"}}</li>
 {% endblock %}
 {% block content %}
 
@@ -18,10 +19,6 @@
           <form class="form-horizontal" data-role="form" method="post">
               <div class="portlet-body">
                 <div class="form-group">
-                  <label for="clinic" class="col-sm-2 control-label">Clinic</label>
-                  <div class="col-sm-2">
-                    <p class="form-control-static">{{ clinic.name }}</p>
-                  </div>
                   {% if has_error %}
                     {% for msg in field.error.messages() %}
                       <span class="help-block">{{ msg }}</span>
@@ -47,7 +44,9 @@
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-primary">Save</button>
-                    <a class="btn btn-danger" href="{{ request.route_url('clinics', traverse=(clinic.id, 'delete')) }}">Delete</a>
+                    {% if clinic.id %}
+                      <a class="btn btn-danger" href="{{ request.route_url('clinics', traverse=(clinic.id, 'delete')) }}">Delete</a>
+                    {% endif %}
                     <a class="btn btn-default" href="{{ request.route_url('clinics', traverse=('manage')) }}">Back</a>
                   </div>
                 </div>
