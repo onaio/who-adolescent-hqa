@@ -9,8 +9,10 @@ from ..utils import format_location_name as fmt
 
 @colander.deferred
 def municipality_widget(node, kw):
+    values = [('', '---')]
+    [values.append((m.id, fmt(m.name))) for m in Municipality.all()]
     return SelectWidget(
-        values=[(m.id, fmt(m.name)) for m in Municipality.all()])
+        values=values)
 
 
 class ClinicForm(colander.MappingSchema):
@@ -19,7 +21,7 @@ class ClinicForm(colander.MappingSchema):
         title=_("Clinic Name"))
     code = colander.SchemaNode(
         colander.String(encoding='utf-8'),
-        title=_("Clinic Code"))
+        title=_("CNES Number"))
     municipality = colander.SchemaNode(
         colander.String(encoding='utf-8'), title="Municipality",
         widget=municipality_widget)

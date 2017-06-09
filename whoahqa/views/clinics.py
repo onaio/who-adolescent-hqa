@@ -1,5 +1,3 @@
-import uuid
-
 from deform import Form, ValidationFailure, Button
 
 from pyramid.httpexceptions import (
@@ -15,6 +13,7 @@ from pyenketo import (
 )
 
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import IntegrityError
 
 from whoahqa.utils import (
     enketo,
@@ -152,25 +151,6 @@ class ClinicViews(object):
 
         return HTTPFound(location=survey_url)
 
-    @view_config(name='register',
-                 context=ClinicFactory)
-    def register_clinic(self):
-        xml_instance = '<?xml version=\'1.0\' ?><clinic_registration id=\"clinic_registration\"><formhub><uuid>73242968f5754dc49c38463af658f3d2</uuid></formhub><user_id>{}</user_id><facility_info><facility_name></facility_name><facility_cnes></facility_cnes></facility_info><meta><instanceID>uuid:ec5ce15e-5a0a-4246-93fe-acf60ef69bf2</instanceID></meta></clinic_registration>'.format(   # noqa
-            self.request.ona_user.user_id)
-        server_url = self.request.registry.settings['form_server_url']
-        instance_id = uuid.uuid4()
-        return_url = self.request.route_url(
-            'default', traverse=())
-        edit_url = enketo.get_edit_url(
-            server_url,
-            constants.CLINIC_REGISTRATION,
-            xml_instance,
-            instance_id,
-            return_url
-        )
-
-        return HTTPFound(location=edit_url)
-
     @view_config(name='characteristics',
                  request_method='GET',
                  permission=perms.CAN_VIEW_CLINICS,
@@ -263,6 +243,59 @@ class ClinicViews(object):
             'period': period
         }
 
+    @view_config(name='register',
+                 context=ClinicFactory,
+                 renderer='clinics_edit.jinja2',
+                 permission=perms.CAN_EDIT_CLINICS)
+    def register_clinic(self):
+        clinic = Clinic()
+        period = get_period_from_request(self.request)
+
+        form = Form(
+            ClinicForm().bind(
+                request=self.request,
+                clinic=clinic),
+            button=('Save', Button(name='cancel', type='button')),
+            appstruct=clinic.appstruct)
+
+        if self.request.method == 'POST':
+            data = self.request.POST.items()
+            try:
+                values = form.validate(data)
+            except ValidationFailure:
+                pass
+            else:
+                try:
+                    municipality = Municipality.get(
+                        Municipality.id == values.get('municipality'))
+                    clinic.update(values.get('name'),
+                                  values.get('code'),
+                                  municipality)
+                    self.request.session.flash(
+                        _("{} Clinic saved.".format(clinic.name)), "success")
+
+                    return HTTPFound(
+                        self.request.route_url(
+                            'clinics',
+                            traverse=(clinic.id, 'edit_clinic')))
+
+                except NoResultFound:
+                    self.request.session.flash(
+                        _("Cannot find selected municipality."), "error")
+                except IntegrityError:
+                    DBSession.rollback()
+
+                    self.request.session.flash(
+                        _("A clinic already exists with the \
+                          provided name or CNES."),
+                        "error")
+
+        return {
+            'form': form,
+            'clinic': clinic,
+            'period': period
+        }
+
     @view_config(
         name='edit_clinic',
         renderer='clinics_edit.jinja2',
@@ -291,6 +324,9 @@ class ClinicViews(object):
                     clinic.update(values.get('name'),
                                   values.get('code'),
                                   municipality)
+                    self.request.session.flash(
+                        _("{} Clinic updated.".format(clinic.name)), "success")
+
                 except NoResultFound:
                     self.request.session.flash(
                         _("Cannot find selected municipality."), "error")
