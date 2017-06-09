@@ -8,6 +8,7 @@ from whoahqa.models import (
     DBSession,
     OnaUser,
     User,
+    UserProfile,
     UserFactory,
     DBSession)
 from whoahqa.views.helpers import get_period_from_request
@@ -82,6 +83,9 @@ class AdminViews(object):
                 self.request.session.flash(
                     u"Please fill all the fields", "error")
             else:
+                new_user = UserProfile(**values)
+                new_user.save()
+
                 self.request.session.flash(
                     "Success!", 'success')
                 return HTTPFound(
@@ -89,7 +93,8 @@ class AdminViews(object):
                         'admin', traverse=('register')))
 
         return {
-            'form': form
+            'form': form,
+            'period': get_period_from_request(self.request)
         }
 
     @view_config(name='delete',
@@ -97,9 +102,10 @@ class AdminViews(object):
                  renderer='admin_users_list.jinja2')
     def delete(self):
         user = self.request.context
+        import ipdb; ipdb.set_trace()
         # DBSession.delete(user)
         self.request.session.flash(
             u"User successfully deleted", "success")
         return HTTPFound(
             self.request.route_url(
-                'admin', traverse=()))
+                'admin', traverse=('delete')))
