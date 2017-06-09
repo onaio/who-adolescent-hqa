@@ -17,20 +17,24 @@ class RegistrationForm(colander.MappingSchema):
     email = colander.SchemaNode(
         colander.String(encoding='utf-8'),
         widget=TextInputWidget(),
+        missing='',
         title="Email Address")
     group = colander.SchemaNode(
         colander.String(encoding='utf-8'), title="Role",
         widget=user_role_widget)
     clinics = colander.SchemaNode(
         colander.Set(), title="Clinic",
+        missing='',
         widget=clinic_selection_widget)
     municipality = colander.SchemaNode(
         colander.String(encoding='utf-8'),
         title="Municipality",
+        missing='',
         widget=municipality_selection_widget)
     state = colander.SchemaNode(
         colander.String(encoding='utf-8'),
         title="State",
+        missing='',
         widget=state_selection_widget)
     username = colander.SchemaNode(
         colander.String(encoding='utf-8'),
@@ -51,5 +55,6 @@ class RegistrationForm(colander.MappingSchema):
         valid = True
         if value['group'] not in GROUPS:
             valid = False
+
         if not valid:
             raise exc

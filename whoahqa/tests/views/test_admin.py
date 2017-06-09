@@ -2,7 +2,7 @@ from pyramid import testing
 from webob.multidict import MultiDict
 
 from whoahqa.constants import groups
-from whoahqa.models import OnaUser
+from whoahqa.models import Municipality, OnaUser, State, User
 from whoahqa.tests import IntegrationTestBase, FunctionalTestBase
 from whoahqa.views.admin import AdminViews
 
@@ -31,6 +31,67 @@ class TestAdminViews(IntegrationTestBase):
 
         self.assertEqual(ona_user.user.group.name,
                          groups.CLINIC_MANAGER)
+
+    def test_can_register_new_clinic_users(self):
+        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+        user = ona_user.user
+        old_user_count = User.count()
+        self.request.context = user
+
+        self.request.method = 'POST'
+        params = MultiDict({'email': "test@email.com",
+                            'username': "test_user",
+                            'password': {'password': 'password',
+                                         'password-confirm': 'password'},
+                            'group': groups.CLINIC_MANAGER,
+                            'clinics': ['1']})
+        self.request.POST = params
+
+        response = self.view.register()
+        self.assertEqual(User.count(), old_user_count + 1)
+        self.assertEqual(response.status_code, 302)
+
+    def test_can_register_new_municipality_users(self):
+        self._create_municipality()
+        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+        user = ona_user.user
+        old_user_count = User.count()
+        municipality = Municipality.newest()
+        self.request.context = user
+
+        self.request.method = 'POST'
+        params = MultiDict({'email': "test@email.com",
+                            'username': "test_user",
+                            'password': {'password': 'password',
+                                         'password-confirm': 'password'},
+                            'group': groups.MUNICIPALITY_MANAGER,
+                            'municipality': "{}".format(municipality.id)})
+        self.request.POST = params
+
+        response = self.view.register()
+        self.assertEqual(User.count(), old_user_count + 1)
+        self.assertEqual(response.status_code, 302)
+
+    def test_can_register_new_state_users(self):
+        self._create_state()
+        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+        user = ona_user.user
+        old_user_count = User.count()
+        state = State.newest()
+        self.request.context = user
+
+        self.request.method = 'POST'
+        params = MultiDict({'email': "test@email.com",
+                            'username': "test_user",
+                            'password': {'password': 'password',
+                                         'password-confirm': 'password'},
+                            'group': groups.STATE_OFFICIAL,
+                            'state': "{}".format(state.id)})
+        self.request.POST = params
+
+        response = self.view.register()
+        self.assertEqual(User.count(), old_user_count + 1)
+        self.assertEqual(response.status_code, 302)
 
 
 class TestAdminViewsFunctional(FunctionalTestBase):

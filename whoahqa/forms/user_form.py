@@ -48,20 +48,24 @@ class UserForm(colander.MappingSchema):
 
     clinics = colander.SchemaNode(
         colander.Set(), title="Clinic",
+        missing='',
         widget=clinic_selection_widget)
 
     municipality = colander.SchemaNode(
         colander.String(encoding='utf-8'), title="Municipality",
+        missing='',
         widget=municipality_selection_widget)
 
     state = colander.SchemaNode(
         colander.String(encoding='utf-8'), title="State",
+        missing='',
         widget=state_selection_widget)
 
     password = colander.SchemaNode(
         colander.String(encoding='utf-8'),
         validator=colander.Length(min=5),
         widget=CheckedPasswordWidget(),
+        missing='',
         title="Change Password")
 
     def validator(self, node, value):

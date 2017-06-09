@@ -80,7 +80,54 @@ def delete_user_groups(user, group):
     statement.execute()
 
 
-class User(Base):
+class UpdateableUser(object):
+    def update(self, values):
+        group_name = values['group']
+
+        # check if new group is the same as previous group
+        # add new location selected to location table
+        # if group is clinic manager, add clinics selected to clinics list
+
+        if self.group is None or self.group.name != group_name:
+            group_criteria = Group.name == group_name
+            group_params = {'name': group_name}
+            group = Group.get_or_create(
+                group_criteria,
+                **group_params)
+
+            self.user.group = group
+        if group_name == groups.SUPER_USER:
+            # remove any location/clinic references
+            if self.location:
+                delete_user_locations(self.user, self.location)
+            if self.clinics:
+                delete_user_clinics([c.id for c in self.clinics])
+
+        elif group_name == groups.CLINIC_MANAGER:
+            # Remove existing location mapping
+            if self.location:
+                delete_user_locations(self.user, self.location)
+
+            from whoahqa.models import Clinic
+
+            clinic_id_list = values['clinics']
+            clinics = Clinic.all(Clinic.id.in_(clinic_id_list))
+
+            self.user.clinics = clinics
+            # add clinics to user
+        else:
+            # Remove existing clinic mapping
+            if self.clinics:
+                delete_user_clinics([c.id for c in self.clinics])
+
+            location_id = values[LOCATION_MAP[group_name]]
+
+            self.user.location = Location.get(Location.id == location_id)
+
+        self.save()
+
+
+class User(Base, UpdateableUser):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     clinics = relationship("Clinic", secondary=user_clinics)
@@ -100,6 +147,10 @@ class User(Base):
     def get_municipality_from_clinics(self):
         if self.clinics:
             return self.clinics[0].municipality
+
+    @property
+    def user(self):
+        return self
 
     @property
     def __acl__(self):
@@ -142,6 +193,16 @@ class User(Base):
             'state': state_id
         }
 
+    def update(self, values):
+        # Create user object and save
+        super(User, self).update(values)
+
+        user_profile = UserProfile(username=values['username'],
+                                   email=values['email'],
+                                   password=values['password'],
+                                   user=self)
+        user_profile.save()
+
 
 class UserProfile(Base):
     __tablename__ = 'user_profiles'
@@ -150,7 +211,7 @@ class UserProfile(Base):
     username = Column(String(100), nullable=False, unique=True)
     email = Column(String(50), nullable=True, unique=True)
     pwd = Column(String(255), nullable=False)
-    user = relationship('User')
+    user = relationship('User', backref=backref('profile', uselist=False))
 
     def check_password(self, password):
         # always return false if password is greater than 255 to avoid
@@ -188,7 +249,7 @@ class Group(Base):
         return self.name
 
 
-class OnaUser(Base):
+class OnaUser(Base, UpdateableUser):
     __tablename__ = 'ona_users'
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True,
                      autoincrement=False)
@@ -235,51 +296,6 @@ class OnaUser(Base):
     @property
     def clinics(self):
         return self.user.clinics
-
-    def update(self, values):
-        group_name = values['group']
-
-        # check if new group is the same as previous group
-        # add new location selected to location table
-        # if group is clinic manager, add clinics selected to clinics list
-
-        if self.group is None or self.group.name != group_name:
-            group_criteria = Group.name == group_name
-            group_params = {'name': group_name}
-            group = Group.get_or_create(
-                group_criteria,
-                **group_params)
-
-            self.user.group = group
-        if group_name == groups.SUPER_USER:
-            # remove any location/clinic references
-            if self.location:
-                delete_user_locations(self.user, self.location)
-            if self.clinics:
-                delete_user_clinics([c.id for c in self.clinics])
-
-        elif group_name == groups.CLINIC_MANAGER:
-            # Remove existing location mapping
-            if self.location:
-                delete_user_locations(self.user, self.location)
-
-            from whoahqa.models import Clinic
-
-            clinic_id_list = values['clinics']
-            clinics = Clinic.all(Clinic.id.in_(clinic_id_list))
-
-            self.user.clinics = clinics
-            # add clinics to user
-        else:
-            # Remove existing clinic mapping
-            if self.clinics:
-                delete_user_clinics([c.id for c in self.clinics])
-
-            location_id = values[LOCATION_MAP[group_name]]
-
-            self.user.location = Location.get(Location.id == location_id)
-
-        self.save()
 
 
 class UserFactory(BaseModelFactory):
