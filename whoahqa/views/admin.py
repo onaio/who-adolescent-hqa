@@ -26,7 +26,7 @@ class AdminViews(object):
                  context=UserFactory,
                  renderer='admin_users_list.jinja2')
     def list(self):
-        users = OnaUser.all()
+        users = User.all()
         period = get_period_from_request(self.request)
 
         return {
@@ -38,11 +38,15 @@ class AdminViews(object):
                  renderer='admin_users_edit.jinja2')
     def edit(self):
         user = self.request.context
-        ona_user = user.ona_user
+        dashboard_user = user
+
+        if user.ona_user is not None:
+            dashboard_user = dashboard_user.ona_user
+
         form = Form(
             UserForm().bind(
                 request=self.request,
-                user=ona_user),
+                user=dashboard_user),
             buttons=('Save', Button(name='cancel', type='button')),
             appstruct=user.appstruct)
 
@@ -53,18 +57,18 @@ class AdminViews(object):
             except ValidationFailure:
                 pass
             else:
-                ona_user.update(values)
+                dashboard_user.update(values)
                 self.request.session.flash(
                     "Your changes have been saved", 'success')
                 return HTTPFound(
                     self.request.route_url(
-                        'admin', traverse=(user.id, 'edit')))
+                        'admin', traverse=(dashboard_user.id, 'edit')))
 
         period = get_period_from_request(self.request)
 
         return {
             'form': form,
-            'ona_user': ona_user,
+            'user': dashboard_user,
             'period': period
         }
 

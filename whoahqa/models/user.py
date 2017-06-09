@@ -153,10 +153,25 @@ class User(Base, UpdateableUser):
         return self
 
     @property
+    def username(self):
+        username = ""
+
+        if self.ona_user is not None:
+            username = self.ona_user.username
+        else:
+            username = self.profile.username
+
+        return username
+
+    @property
     def __acl__(self):
         return [
             (Allow, "u:{}".format(self.id), ALL_PERMISSIONS),
         ]
+
+    def __str__(self):
+        if self.profile is not None:
+            return self.profile.username
 
     @property
     def settings(self):
@@ -284,18 +299,6 @@ class OnaUser(Base, UpdateableUser):
 
     def __str__(self):
         return self.username
-
-    @property
-    def group(self):
-        return self.user.group
-
-    @property
-    def location(self):
-        return self.user.location
-
-    @property
-    def clinics(self):
-        return self.user.clinics
 
 
 class UserFactory(BaseModelFactory):
