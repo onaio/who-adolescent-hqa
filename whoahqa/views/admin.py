@@ -110,13 +110,14 @@ class AdminViews(object):
         }
 
     @view_config(name='delete',
-                 context=UserFactory,
+                 context=User,
                  renderer='admin_users_list.jinja2')
     def delete(self):
         user = self.request.context
-        # DBSession.delete(user)
+        DBSession.delete(user)
+
         self.request.session.flash(
             u"User successfully deleted", "success")
         return HTTPFound(
             self.request.route_url(
-                'admin', traverse=('delete')))
+                'admin', traverse=()))
