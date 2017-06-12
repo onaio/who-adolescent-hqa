@@ -166,6 +166,10 @@ class User(Base, UpdateableUser):
         return username
 
     @property
+    def email(self):
+        return self.profile.email if self.profile is not None else ''
+
+    @property
     def __acl__(self):
         return [
             (Allow, "u:{}".format(self.id), ALL_PERMISSIONS),
@@ -204,8 +208,9 @@ class User(Base, UpdateableUser):
                 state_id = self.location.id
 
         return {
+            'email': self.email,
             'group': self.group,
-            'clinics': [c.id for c in self.clinics],
+            'clinics': ["{}".format(c.id) for c in self.clinics],
             'municipality': municipality_id,
             'state': state_id
         }
@@ -214,11 +219,16 @@ class User(Base, UpdateableUser):
         # Create user object and save
         super(User, self).update(values)
 
-        user_profile = UserProfile(username=values['username'],
-                                   email=values['email'],
-                                   password=values['password'],
-                                   user=self)
-        user_profile.save()
+        if self.profile is not None:
+            self.profile.email = values['email']
+            self.profile.password = values['password']
+            self.profile.save()
+        else:
+            user_profile = UserProfile(username=values['username'],
+                                       email=values['email'],
+                                       password=values['password'],
+                                       user=self)
+            user_profile.save()
 
 
 class UserProfile(Base):
@@ -243,8 +253,9 @@ class UserProfile(Base):
 
     @password.setter
     def password(self, value):
-        from whoahqa.security import pwd_context
-        self.pwd = pwd_context.encrypt(value)
+        if value != "":
+            from whoahqa.security import pwd_context
+            self.pwd = pwd_context.encrypt(value)
 
     password = synonym('_password', descriptor=password)
 
