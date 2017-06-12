@@ -29,7 +29,8 @@ from whoahqa.security import pwd_context
 
 LOCATION_MAP = {
     groups.MUNICIPALITY_MANAGER: 'municipality',
-    groups.STATE_OFFICIAL: 'state'
+    groups.STATE_OFFICIAL: 'state',
+    groups.USER: ''
 }
 
 user_clinics = Table(
@@ -120,9 +121,10 @@ class UpdateableUser(object):
             if self.user.clinics:
                 delete_user_clinics([c.id for c in self.user.clinics])
 
-            location_id = values[LOCATION_MAP[group_name]]
+            location_id = values.get(LOCATION_MAP[group_name], '')
 
-            self.user.location = Location.get(Location.id == location_id)
+            if location_id != '':
+                self.user.location = Location.get(Location.id == location_id)
 
         self.save()
 
