@@ -86,7 +86,7 @@ class TestClinicViews(IntegrationTestBase):
         # get the clinics
         clinics = Clinic.all()
         self.request.method = 'POST'
-        self.request.ona_user = ona_user
+        self.request.user = ona_user.user
         params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
         self.request.POST = params
         self.clinic_views.assign()
@@ -110,7 +110,7 @@ class TestClinicViews(IntegrationTestBase):
                 ("id", "description", "number"), constants.CHARACTERISTICS))
 
     def test_list_redirects_when_user_has_no_permissions(self):
-        self.request.ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+        self.request.user = OnaUser.get(OnaUser.username == 'manager_a').user
         self.config.testing_securitypolicy(
             userid=2, permissive=False)
         response = self.clinic_views.list()
@@ -209,7 +209,7 @@ class TestClinicViews(IntegrationTestBase):
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
 
         self.request.method = 'GET'
-        self.request.ona_user = ona_user
+        self.request.user = ona_user.user
 
         with patch('whoahqa.models.reporting_period.get_current_date') as mock:
             mock.return_value = datetime.date(2015, 6, 1)
@@ -220,7 +220,7 @@ class TestClinicViews(IntegrationTestBase):
     def test_manage_clinics_view(self):
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         self.request.method = 'GET'
-        self.request.ona_user = ona_user
+        self.request.user = ona_user.user
 
         user_clinics = ona_user.user.location.clinics
 
@@ -233,7 +233,7 @@ class TestClinicViews(IntegrationTestBase):
         user_clinics = ona_user.user.get_clinics()
         clinic = user_clinics[0]
         self.request.method = 'GET'
-        self.request.ona_user = ona_user
+        self.request.user = ona_user.user
         self.request.context = clinic
 
         response = self.clinic_views.delete()

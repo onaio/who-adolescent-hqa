@@ -88,7 +88,7 @@ class UpdateableUser(object):
         # add new location selected to location table
         # if group is clinic manager, add clinics selected to clinics list
 
-        if self.group is None or self.group.name != group_name:
+        if self.user.group is None or self.user.group.name != group_name:
             group_criteria = Group.name == group_name
             group_params = {'name': group_name}
             group = Group.get_or_create(
@@ -98,15 +98,15 @@ class UpdateableUser(object):
             self.user.group = group
         if group_name == groups.SUPER_USER:
             # remove any location/clinic references
-            if self.location:
-                delete_user_locations(self.user, self.location)
-            if self.clinics:
-                delete_user_clinics([c.id for c in self.clinics])
+            if self.user.location:
+                delete_user_locations(self.user, self.user.location)
+            if self.user.clinics:
+                delete_user_clinics([c.id for c in self.user.clinics])
 
         elif group_name == groups.CLINIC_MANAGER:
             # Remove existing location mapping
-            if self.location:
-                delete_user_locations(self.user, self.location)
+            if self.user.location:
+                delete_user_locations(self.user, self.user.location)
 
             from whoahqa.models import Clinic
 
@@ -117,8 +117,8 @@ class UpdateableUser(object):
             # add clinics to user
         else:
             # Remove existing clinic mapping
-            if self.clinics:
-                delete_user_clinics([c.id for c in self.clinics])
+            if self.user.clinics:
+                delete_user_clinics([c.id for c in self.user.clinics])
 
             location_id = values[LOCATION_MAP[group_name]]
 
@@ -170,8 +170,8 @@ class User(Base, UpdateableUser):
         ]
 
     def __str__(self):
-        if self.profile is not None:
-            return self.profile.username
+        if self.username != "":
+            return self.username
 
     @property
     def settings(self):
@@ -296,6 +296,10 @@ class OnaUser(Base, UpdateableUser):
             ona_user.user = user
         DBSession.add(ona_user)
         return ona_user
+
+    @property
+    def id(self):
+        return self.user_id
 
     def __str__(self):
         return self.username

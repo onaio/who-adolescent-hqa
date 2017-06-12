@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 
+<!--
 Template Name: Conquer - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.0
 Version: 1.5
 Author: KeenThemes
@@ -18,7 +18,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    <meta content="" name="description" />
    <meta content="" name="author" />
    <meta name="MobileOptimized" content="320">
-   <!-- BEGIN GLOBAL MANDATORY STYLES -->          
+   <!-- BEGIN GLOBAL MANDATORY STYLES -->
    <link href="{{ request.static_url('whoahqa:static/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css"/>
    <link href="{{ request.static_url('whoahqa:static/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
    <link href="{{ request.static_url('whoahqa:static/plugins/uniform/css/uniform.default.css') }}" rel="stylesheet" type="text/css"/>
@@ -27,7 +27,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    {% block page_styles %}
    {% endblock %}
    <!-- END PAGE LEVEL STYLES -->
-   <!-- BEGIN THEME STYLES --> 
+   <!-- BEGIN THEME STYLES -->
    <link href="{{ request.static_url('whoahqa:static/css/style-conquer.css') }}" rel="stylesheet" type="text/css"/>
    <link href="{{ request.static_url('whoahqa:static/css/style.css') }}" rel="stylesheet" type="text/css"/>
    <link href="{{ request.static_url('whoahqa:static/css/style-responsive.css') }}" rel="stylesheet" type="text/css"/>
@@ -44,7 +44,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
 	<div id="header-top" class="header navbar navbar-inverse navbar-fixed-top">
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
-         <!-- BEGIN LOGO -->  
+         <!-- BEGIN LOGO -->
          <a class="navbar-brand" href="{{ request.route_url('default') }}">
 			<span>{{ gettext('Quality Assessment Tool: Assessing Health Services for Adolescent Clients') }}</span>
          </a>
@@ -53,10 +53,10 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
         <!-- BEGIN USER LOGIN DROPDOWN -->
          <ul class="nav navbar-nav pull-right">
             <li class="dropdown user">
-            	<a href="#" 
+            	<a href="#"
                class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
    				   <span class="glyphicon glyphicon-user"></span> &nbsp;Signed in as
-                  <span class="bold">{{ request.ona_user.username + " (" + request.ona_user.group | capitalize | replace("_", " ") + ")" }}</span>
+                  <span class="bold">{{ request.user.username + " (" + request.user.group | capitalize | replace("_", " ") + ")" }}</span>
                </a>
                <ul class="dropdown-menu">
                   <li>
@@ -74,15 +74,15 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
       <!-- END TOP NAVIGATION BAR -->
    </div>
    <!-- END HEADER -->
-   
+
    <div class="clearfix"></div>
-   <!-- BEGIN CONTAINER -->   
+   <!-- BEGIN CONTAINER -->
    <div class="page-container">
-   
+
       <!-- BEGIN SIDEBAR -->
       <div class="page-sidebar navbar-collapse collapse">
-         <!-- BEGIN SIDEBAR MENU --> 
-         {% block sidebar_menu %}       
+         <!-- BEGIN SIDEBAR MENU -->
+         {% block sidebar_menu %}
             <ul class="page-sidebar-menu">
                <li>
                   <form class="search-form search-form-sidebar" role="form">
@@ -176,7 +176,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                      <h4 class="modal-title">Confirm Delete</h4>
                   </div>
                   <div class="modal-body">
-                    You are about to delete <strong>{{ request.ona_user }}</strong>, this procedure is irreversible.
+                    You are about to delete <strong>{{ request.user }}</strong>, this procedure is irreversible.
                      <br/>
                     Do you want to proceed?
 
@@ -221,11 +221,11 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                      {% if periods %}
                         <div class="dashboard-date-range btn-group pull-right">
                            <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-primary dropdown-toggle" data-container="body" data-placement="top" data-original-title="{{gettext('Change dashboard date range')}}" data-toggle="dropdown" aria-expanded="false">
-                              <i class="icon-calendar"></i>&nbsp; 
+                              <i class="icon-calendar"></i>&nbsp;
                                  {% set active_period = selected_period or period%}
                                  <span class="thin uppercase visible-lg-inline-block">
                                     {{gettext(active_period.title)}}
-                                 </span>&nbsp; 
+                                 </span>&nbsp;
                                  <i class="icon-angle-down"></i>
                            </div>
                            <ul class="dropdown-menu" role="menu">
@@ -249,7 +249,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
          {% block content %}{% endblock %}
          <!-- END PAGE CONTENT-->
       </div>
-      <!-- END PAGE -->    
+      <!-- END PAGE -->
    </div>
    <!-- END CONTAINER -->
    <!-- BEGIN FOOTER -->
@@ -265,11 +265,11 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    </div>
    <!-- END FOOTER -->
    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-   <!-- BEGIN CORE PLUGINS -->   
+   <!-- BEGIN CORE PLUGINS -->
    <!--[if lt IE 9]>
    <script src="{{ request.static_url('whoahqa:static/plugins/respond.min.js') }}"></script>
    <script src="{{ request.static_url('whoahqa:static/plugins/excanvas.min.js') }}"></script>
-   <![endif]-->   
+   <![endif]-->
    <script src="{{ request.static_url('whoahqa:static/plugins/jquery-1.10.2.min.js') }}" type="text/javascript"></script>
    <script src="{{ request.static_url('whoahqa:static/plugins/jquery-migrate-1.2.1.min.js') }}" type="text/javascript"></script>
    <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
