@@ -238,7 +238,10 @@ class UserProfile(Base):
     username = Column(String(100), nullable=False, unique=True)
     email = Column(String(50), nullable=True, unique=True)
     pwd = Column(String(255), nullable=False)
-    user = relationship('User', backref=backref('profile', uselist=False))
+    user = relationship('User',
+                        backref=backref('profile',
+                                        uselist=False,
+                                        cascade="all, delete-orphan"))
 
     def check_password(self, password):
         # always return false if password is greater than 255 to avoid
@@ -283,7 +286,10 @@ class OnaUser(Base, UpdateableUser):
                      autoincrement=False)
     username = Column(String(255), nullable=False, unique=True)
     refresh_token = Column(String(255), nullable=False)
-    user = relationship('User', backref=backref('ona_user', uselist=False))
+    user = relationship('User',
+                        backref=backref('ona_user',
+                                        uselist=False,
+                                        cascade="all, delete-orphan"))
 
     @classmethod
     def get_or_create_from_api_data(cls, user_data, refresh_token):
