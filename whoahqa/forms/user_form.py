@@ -24,21 +24,27 @@ def user_role_widget(node, kw):
 
 @colander.deferred
 def municipality_selection_widget(node, kw):
-    return SelectWidget(
-        values=[(m.id, key_to_label(m.name)) for m in Municipality.all()])
+    values = [('', '---')]
+    [values.append((m.id, key_to_label(m.name))) for m in Municipality.all()]
+
+    return SelectWidget(values=values)
 
 
 @colander.deferred
 def state_selection_widget(node, kw):
-    return SelectWidget(
-        values=[(m.id, key_to_label(m.name)) for m in State.all()])
+    values = [('', '---')]
+    [values.append((m.id, key_to_label(m.name))) for m in State.all()]
+
+    return SelectWidget(values=values)
 
 
 @colander.deferred
 def clinic_selection_widget(node, kw):
+    values = [('', '---')]
+    [values.append((c.id, key_to_label(c.name + " - " + c.code)))
+     for c in Clinic.all()]
     return SelectWidget(
-        values=[(c.id, key_to_label(c.name + " - " + c.code))
-                for c in Clinic.all()],
+        values=values,
         multiple=True)
 
 
