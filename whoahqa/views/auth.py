@@ -39,7 +39,7 @@ def check_post_csrf(func):
 @forbidden_view_config()
 def forbidden(context, request):
     # if not authenticated, show login screen with unauthorized status code
-    if not request.ona_user:
+    if not request.user:
         return Response(
             render_view(
                 context, request, 'login', secure=False), status=401)

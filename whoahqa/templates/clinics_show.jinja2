@@ -29,7 +29,7 @@
         </li>
       {% endfor %}
     {% else %}
-      {% for child in request.ona_user.clinics %}
+      {% for child in request.user.clinics %}
         <li class="
           {%if child.id == clinic.id%}
             active
@@ -80,18 +80,18 @@
   {% if periods %}
     <div class="dashboard-date-range btn-group pull-right">
        <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-primary dropdown-toggle" data-container="body" data-placement="top" data-original-title="{{gettext('Change dashboard date range')}}" data-toggle="dropdown" aria-expanded="false">
-          <i class="icon-calendar"></i>&nbsp; 
+          <i class="icon-calendar"></i>&nbsp;
              {% set active_period = selected_period or period%}
              <span class="thin uppercase visible-lg-inline-block">
                  {{ gettext(active_period.title) }}
-             </span>&nbsp; 
+             </span>&nbsp;
              <i class="icon-angle-down"></i>
        </div>
        <ul class="dropdown-menu" role="menu">
           {% for p in periods if p != period %}
              <li>
              <a href="{{ request.current_route_url(traverse=(clinic.id, p.id)) }}">
-               {{ gettext(p.title) }} 
+               {{ gettext(p.title) }}
              </a>
              </li>
           {% endfor %}
@@ -106,7 +106,7 @@
     <div class="row">
       <h3 class="key-indicator-title">
         {{ gettext(key_indicator|capitalize)}}:
-        {{ 0 or clinic_key_indicators[key_indicator]|round|int }} 
+        {{ 0 or clinic_key_indicators[key_indicator]|round|int }}
       </h3>
     </div>
     <div class="row">

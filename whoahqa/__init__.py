@@ -133,7 +133,7 @@ def includeme(config):
 
 def add_request_helpers(config):
     # add .user to requests and cache it with reify
-    config.add_request_method(get_request_user, 'ona_user', reify=True)
+    config.add_request_method(get_request_user, 'user', reify=True)
     config.add_request_method(
         can_access_clinics, 'can_access_clinics', reify=True)
     config.add_request_method(can_view_clinics, 'can_view_clinics', reify=True)

@@ -34,7 +34,7 @@
               </thead>
               <tbody>
               {% for user in users|sort(true, attribute='id') %}
-              {% set is_current_user = request.ona_user.user == user %}
+              {% set is_current_user = request.user == user %}
                 <tr>
                   <td>{{ user.username }}</td>
                   <td>{{ user.group|replace("_", " ")|title }}</td>

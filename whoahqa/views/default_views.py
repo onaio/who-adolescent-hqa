@@ -10,11 +10,11 @@ from pyramid.view import view_config
 
 @view_config(route_name='default')
 def default(request):
-    ona_user = request.ona_user
+    user = request.user
 
     period = get_period_from_request(request)
 
-    user_setting = ona_user.user.settings
+    user_setting = user.settings
     if user_setting:
         request.response.set_cookie(
             '_LOCALE_', user_setting.language)
@@ -24,8 +24,8 @@ def default(request):
 
     # redirect to view depending on location owned
 
-    if ona_user.location:
-        url = ona_user.location.get_url(request, period)
+    if user.location:
+        url = user.location.get_url(request, period)
 
     return HTTPFound(url)
 
@@ -34,8 +34,8 @@ def default(request):
              permission=perms.AUTHENTICATED,
              renderer='locale.jinja2')
 def set_locale(request):
-    ona_user = request.ona_user
-    user_settings = ona_user.user.settings
+    user = request.user
+    user_settings = user.settings
 
     available_languages = constants.AVAILABLE_LANGUAGES
     period = get_period_from_request(request)
