@@ -5,10 +5,7 @@ from pyramid.httpexceptions import HTTPFound
 from whoahqa.constants import permissions as perms
 from whoahqa.forms import UserForm, RegistrationForm
 from whoahqa.models import (
-    DBSession,
-    OnaUser,
     User,
-    UserProfile,
     UserFactory,
     DBSession)
 from whoahqa.views.helpers import get_period_from_request
@@ -114,6 +111,14 @@ class AdminViews(object):
                  renderer='admin_users_list.jinja2')
     def delete(self):
         user = self.request.context
+
+        if self.request.user == user:
+            self.request.session.flash(
+                u"You cannot delete yourself", "error")
+        return HTTPFound(
+            self.request.route_url(
+                'admin', traverse=()))
+
         DBSession.delete(user)
 
         self.request.session.flash(
