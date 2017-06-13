@@ -21,6 +21,7 @@ from whoahqa.models import (
     Base,
     User,
     UserSettings,
+    UserProfile,
     Group,
     Submission,
     OnaUser,
@@ -97,6 +98,19 @@ class TestBase(unittest.TestCase):
 
         with transaction.manager:
             DBSession.add(ona_user)
+
+    def _create_dash_user(self, username, password, email, group='user'):
+        user_group = Group(name=group)
+
+        user = User()
+        user.group = user_group
+        dash_user = UserProfile(user=user,
+                                username=username,
+                                password=password,
+                                email=email)
+
+        with transaction.manager:
+            DBSession.add(dash_user)
 
     def _create_municipality(self, name="Test Municipality"):
         municipality = Municipality(name=name)
