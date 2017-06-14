@@ -1,7 +1,5 @@
 import os
 import sys
-import csv
-import codecs
 import transaction
 
 from sqlalchemy import engine_from_config
@@ -18,7 +16,7 @@ from whoahqa.models import (
     Clinic
 )
 
-from ..utils import normalizeString
+from ..utils import normalizeString, UnicodeDictReader
 
 
 def usage(argv):
@@ -41,20 +39,8 @@ def main(argv=sys.argv):
     import_health_data()
 
 
-class UnicodeDictReader(object):
-    def __init__(self, *args, **kw):
-        self.encoding = kw.pop('encoding', 'utf-8')
-        self.reader = csv.DictReader(*args, **kw)
-
-    def __iter__(self):
-        decode = codecs.getdecoder(self.encoding)
-        for row in self.reader:
-            t = dict((k, decode(row[k])[0]) for k in row)
-            yield t
-
-
 def import_health_data():
-    file_name = os.path.relpath('whoahqa/data/New_Locations.csv')
+    file_name = os.path.relpath('whoahqa/data/clinics.csv')
     with open(file_name, 'rU') as source:
         rdr = UnicodeDictReader(source)
         existing_states = [normalizeString(state.name)
@@ -68,9 +54,9 @@ def import_health_data():
             for row in rdr:
                 state = None
                 municipality = None
-                normalized_state = normalizeString(row['State'])
+                normalized_state = normalizeString(row['state'])
                 normalized_municipality = normalizeString(
-                    row['Municipality'])
+                    row['municipality'])
 
                 if normalized_state not in existing_states:
                     existing_states.append(normalized_state)
@@ -79,6 +65,11 @@ def import_health_data():
 
                 if normalized_municipality not in existing_municipalities:
                     existing_municipalities.append(normalized_municipality)
+
+                    if state is None:
+                        state = State.get(
+                            State.name == normalized_state)
+
                     municipality = Municipality(name=normalized_municipality,
                                                 parent=state)
                     DBSession.add(municipality)
@@ -91,7 +82,7 @@ def import_health_data():
                         municipality = Municipality.get(
                             Municipality.name == normalized_municipality)
 
-                    clinic = Clinic(name=row['Health Facility'],
+                    clinic = Clinic(name=row['facility_name'],
                                     code=row['CNES'],
                                     municipality=municipality)
                     DBSession.add(clinic)
