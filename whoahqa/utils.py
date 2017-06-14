@@ -1,3 +1,5 @@
+import csv
+import codecs
 import unicodedata
 
 from hashids import Hashids
@@ -46,3 +48,15 @@ def normalizeString(row):
     normalized_row = unicodedata.normalize('NFD', row)\
         .encode('ascii', 'ignore').lower().replace(' ', '_')
     return normalized_row
+
+
+class UnicodeDictReader(object):
+    def __init__(self, *args, **kw):
+        self.encoding = kw.pop('encoding', 'utf-8')
+        self.reader = csv.DictReader(*args, **kw)
+
+    def __iter__(self):
+        decode = codecs.getdecoder(self.encoding)
+        for row in self.reader:
+            t = dict((k, decode(row[k])[0]) for k in row)
+            yield t
