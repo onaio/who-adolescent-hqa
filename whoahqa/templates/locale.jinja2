@@ -20,7 +20,7 @@
                         <label class="col-md-3 control-label">{{ gettext('Select default language') }}</label>
 
                         <div class="col-md-4">
-                          <select name="locale">
+                          <select name="locale" class="selectpicker">
                               {% for key, lang in available_languages.items() %}
                                 <option value="{{ key }}"
                                     {% if user_settings and user_settings.language == key %}
