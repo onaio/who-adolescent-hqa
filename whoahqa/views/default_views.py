@@ -4,6 +4,7 @@ from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
 
 from whoahqa.views.helpers import get_period_from_request
+from whoahqa.utils import translation_string_factory as _
 
 from pyramid.view import view_config
 
@@ -46,6 +47,8 @@ def set_locale(request):
             user_settings.language = locale
             user_settings.save()
             request.response.set_cookie('_LOCALE_', locale)
+            request.session.flash(
+                _("Language changed successfully"), "success")
 
     return {
         "available_languages": available_languages,
