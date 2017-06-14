@@ -65,6 +65,11 @@ def import_health_data():
 
                 if normalized_municipality not in existing_municipalities:
                     existing_municipalities.append(normalized_municipality)
+
+                    if state is None:
+                        state = State.get(
+                            State.name == normalized_state)
+
                     municipality = Municipality(name=normalized_municipality,
                                                 parent=state)
                     DBSession.add(municipality)
