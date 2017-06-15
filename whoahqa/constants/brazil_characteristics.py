@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 from whoahqa.constants.base_characteristics import *  # noqa
-
 # filter CHARACTERISTICS to remove CHARACTERISTIC 4
 
 CHARACTERISTICS = filter(
@@ -203,8 +203,8 @@ MUNICIPALITY_IDENTIFIER = 'facility_info/municipality'
 STATE_IDENTIFIER = 'facility_info/state'
 
 AVAILABLE_LANGUAGES = {
-    'en': "English",
-    'pt': "Portuguese"}
+    'en': 'English',
+    'pt': u'Português'}
 
 INVALID_CHARACTERISTICS_FLAGS = {
     ONE: 'characteristic_one/ch1_invalid',
