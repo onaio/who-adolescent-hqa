@@ -9,6 +9,7 @@ from whoahqa.models import (
     User,
     UserFactory)
 from whoahqa.views.helpers import get_period_from_request
+from whoahqa.utils import translation_string_factory as _
 
 
 @view_defaults(route_name='admin',
@@ -51,7 +52,7 @@ class AdminViews(object):
             else:
                 ona_user.update(values)
                 self.request.session.flash(
-                    "Your changes have been saved", 'success')
+                    _("Your changes have been saved"), 'success')
                 return HTTPFound(
                     self.request.route_url(
                         'admin', traverse=(user.id, 'edit')))

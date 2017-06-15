@@ -8,6 +8,7 @@
 {% endblock %}
 {% block content %}
     <div class="portlet ">
+    {% include "_alerts.jinja2" %}
         <div class="portlet-title">
           <div class="caption">
             <i class="icon-reorder"></i> {{ self.title() }}
