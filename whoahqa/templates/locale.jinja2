@@ -21,7 +21,7 @@
                         <label class="col-md-3 control-label">{{ gettext('Select default language') }}</label>
 
                         <div class="col-md-4">
-                          <select name="locale" class="selectpicker">
+                          <select name="locale" class="selectpicker show-tick" id="locale">
                               {% for key, lang in available_languages.items() %}
                                 <option value="{{ key }}"
                                     {% if user_settings and user_settings.language == key %}
@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-actions fluid">
                     <div class="col-md-offset-3 col-md-9">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" id="update" disabled>
                           {{ gettext("Update")}}
                         </button>
                         <a class="btn btn-default" href="{{ request.route_url('default', traverse=()) }}">
@@ -46,4 +46,12 @@
             </form>
         </div>
     </div>
+{% endblock %}
+{% block jquery_ready %}
+  {{ super() }}
+  var locales = ['en','pt'];
+
+  $('#locale').one('change', function() {
+       $('#update').prop('disabled', false);
+  });
 {% endblock %}
