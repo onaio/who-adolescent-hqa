@@ -38,13 +38,17 @@ class RegistrationForm(colander.MappingSchema):
         widget=state_selection_widget)
     username = colander.SchemaNode(
         colander.String(encoding='utf-8'),
-        validator=colander.Length(max=25),
+        validator=colander.Length(
+            max=25,
+            max_err='Longer than maximum length 25'),
         widget=TextInputWidget(),
         title="Username",
         description="Type the username of the clinic")
     password = colander.SchemaNode(
         colander.String(encoding='utf-8'),
-        validator=colander.Length(min=5),
+        validator=colander.Length(
+            min=5,
+            min_err='Shorter than minimum length 5'),
         widget=CheckedPasswordWidget(
             subject="Password",
             confirm_subject="Confirm Password"),
