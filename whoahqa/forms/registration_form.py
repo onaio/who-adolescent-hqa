@@ -4,13 +4,22 @@ from whoahqa.constants.groups import GROUPS
 
 from deform.widget import (
     TextInputWidget,
-    CheckedPasswordWidget)
+    CheckedPasswordWidget,
+    SelectWidget)
 
 from whoahqa.forms.user_form import (
     clinic_selection_widget,
     municipality_selection_widget,
     state_selection_widget,
-    user_role_widget)
+    key_to_label)
+
+GROUPS.remove('user')
+
+
+@colander.deferred
+def new_user_role_widget(node, kw):
+    return SelectWidget(
+        values=[(g, key_to_label(g)) for g in GROUPS])
 
 
 class RegistrationForm(colander.MappingSchema):
@@ -21,7 +30,7 @@ class RegistrationForm(colander.MappingSchema):
         title="Email Address")
     group = colander.SchemaNode(
         colander.String(encoding='utf-8'), title="Role",
-        widget=user_role_widget)
+        widget=new_user_role_widget)
     clinics = colander.SchemaNode(
         colander.Set(), title="Clinic",
         missing='',

@@ -86,7 +86,7 @@ class AdminViews(object):
 
             except ValidationFailure:
                 self.request.session.flash(
-                    u"Please fill all the fields", "error")
+                    u"Please fix the highlighted errors below", "error")
 
             else:
                 new_user = User()
