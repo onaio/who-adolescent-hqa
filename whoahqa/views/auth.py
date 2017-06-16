@@ -85,13 +85,12 @@ def password_login(context, request):
 
 
 @view_config(
-    route_name='auth',
-    match_param='action=logout',
+    route_name='logout',
     permission=NO_PERMISSION_REQUIRED)
 def logout(request):
     headers = forget(request)
     return HTTPFound(
-        request.route_url('auth', action='login'), headers=headers)
+        request.route_url('auth', action='sign-in'), headers=headers)
 
 
 @view_config(

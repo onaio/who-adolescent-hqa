@@ -60,7 +60,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                </a>
                <ul class="dropdown-menu">
                   <li>
-                     <a href="{{ request.route_url('auth', action='sign-in') }}" class="logout">
+                     <a href="{{request.route_url('logout')}}" class="logout">
                         <span class="glyphicon glyphicon-log-out"></span>
                         <span class="username"> {{ gettext('Logout')}}</span>
                      </a>
