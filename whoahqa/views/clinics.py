@@ -31,13 +31,11 @@ from whoahqa.models import (
     ReportingPeriod,
 )
 from whoahqa.forms import ClinicForm
+from whoahqa.views.base import BaseClassViews
 
 
 @view_defaults(route_name='clinics')
-class ClinicViews(object):
-    def __init__(self, request):
-        self.request = request
-
+class ClinicViews(BaseClassViews):
     @view_config(name='',
                  context=ClinicFactory,
                  renderer='clinics_summary.jinja2',
@@ -63,12 +61,21 @@ class ClinicViews(object):
         else:
             clinics = self.request.ona_user.clinics
 
+        state = None
+        municipality = None
+
+        if clinics:
+            municipality = clinics[0].municipality
+            state = municipality.parent
+
         return {
             'locations': clinics,
+            'municipality': municipality,
             'national_report': self.national_report(self.period),
             'period': self.period,
             'periods': self.periods,
-            'key_indicators_key_labels': self.key_indicators_key_labels
+            'key_indicators_key_labels': self.key_indicators_key_labels,
+            'state': state
         }
 
     @view_config(name='unassigned',
