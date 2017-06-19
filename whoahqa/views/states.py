@@ -4,7 +4,6 @@ from pyramid.view import (
     view_defaults,
 )
 
-from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
 from whoahqa.constants import groups
 from whoahqa.models import (
@@ -27,14 +26,12 @@ class StateViews(BaseClassViews):
             return HTTPFound(self.request.route_url(
                 'states', traverse=(ona_user.location.id)))
 
-        national_report = self.national_report(self.period)
-
         return {
             'locations': State.all(),
             'period': self.period,
             'periods': self.periods,
-            'national_report': national_report,
-            'key_indicators_key_labels': constants.INDICATOR_LABELS
+            'national_report': self.national_report(self.period),
+            'key_indicators_key_labels': self.key_indicators_key_labels
         }
 
     @view_config(name='',
@@ -44,12 +41,10 @@ class StateViews(BaseClassViews):
     def show(self):
         state = self.request.context
 
-        national_report = self.national_report(self.period)
-
         return {
             'locations': state.children(),
-            'key_indicators_key_labels': constants.INDICATOR_LABELS,
-            'national_report': national_report,
+            'key_indicators_key_labels': self.key_indicators_key_labels,
+            'national_report': self.national_report(self.period),
             'period': self.period,
             'periods': self.periods,
             'state': state,

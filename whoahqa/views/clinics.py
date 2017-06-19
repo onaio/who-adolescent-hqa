@@ -57,8 +57,6 @@ class ClinicViews(object):
         # TODO: change renderer only if its an xhr request
         search_term = self.request.GET.get('search')
 
-        period = get_period_from_request(self.request)
-
         if search_term is not None:
             clinics = Clinic.filter_clinics(search_term, True)
             self.request.override_renderer = '_summary_scores_table.jinja2'
@@ -67,9 +65,10 @@ class ClinicViews(object):
 
         return {
             'locations': clinics,
-            'period': period,
-            'periods': ReportingPeriod.get_active_periods(),
-            'key_indicators_key_labels': constants.INDICATOR_LABELS,
+            'national_report': self.national_report(self.period),
+            'period': self.period,
+            'periods': self.periods,
+            'key_indicators_key_labels': self.key_indicators_key_labels
         }
 
     @view_config(name='unassigned',
