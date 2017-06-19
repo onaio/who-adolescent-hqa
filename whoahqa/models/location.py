@@ -1,4 +1,3 @@
-from collections import defaultdict, Counter
 from pyramid.security import (
     Allow,
     ALL_PERMISSIONS
