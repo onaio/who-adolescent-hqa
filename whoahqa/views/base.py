@@ -1,3 +1,4 @@
+from whoahqa.constants import characteristics as constants
 from whoahqa.models import (
     Clinic,
     ClinicReport,
@@ -10,6 +11,7 @@ class BaseClassViews(object):
         self.request = request
         self.period = get_period_from_request(request)
         self.periods = ReportingPeriod.get_active_periods()
+        self.key_indicators_key_labels = constants.INDICATOR_LABELS
 
     def national_report(self, period):
         clinics = Clinic.all()
