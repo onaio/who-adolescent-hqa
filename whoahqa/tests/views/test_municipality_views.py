@@ -22,7 +22,6 @@ class TestMunicipalityViews(IntegrationTestBase):
     def setUp(self):
         super(TestMunicipalityViews, self).setUp()
         self.request = testing.DummyRequest()
-        self.view = MunicipalityViews(self.request)
         self._create_user('municipality-manager')
 
         with transaction.manager:
@@ -43,6 +42,8 @@ class TestMunicipalityViews(IntegrationTestBase):
 
         self.request.ona_user = OnaUser.get(
             OnaUser.username == 'municipality-manager')
+
+        self.view = MunicipalityViews(self.request)
 
     def test_municipality_index(self):
         with patch('whoahqa.models.reporting_period.get_current_date') as mock:
