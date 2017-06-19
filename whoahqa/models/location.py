@@ -18,6 +18,8 @@ from whoahqa.utils import translation_string_factory as _
 from whoahqa.models import (
     Base,
     BaseModelFactory)
+
+from whoahqa.models.reports import ClinicReport
 from whoahqa.constants import permissions as perms, groups
 from ..utils import format_location_name as fmt
 
@@ -55,20 +57,12 @@ class Location(Base):
         clinics = self.clinics
         clinics = [c for c in clinics
                    if c.has_clinic_submissions_for_period(period.form_xpath)]
+
         if self._key_indicators:
             return self._key_indicators
         else:
-            self._key_indicators = reduce(
-                lambda x, y: Counter(x) + Counter(y),
-                (c.key_indicators(period) for c in clinics),
-                INITIAL_SCORE_MAP)
-            self._key_indicators = {
-                key: (value / len(clinics))
-                for key, value in self._key_indicators.items()
-                if value is not 0}
-
-            if not self._key_indicators:
-                self._key_indicators = defaultdict(int)
+            self._key_indicators = ClinicReport.get_clinic_reports(
+                clinics, period)
 
             return self._key_indicators
 
