@@ -270,6 +270,9 @@ class Clinic(Base):
 
         submissions = self.get_period_clinic_submissions(period)
 
+        if submissions is None:
+            return None
+
         # filter count based on whether score is valid
         characteristics_submission_map = \
             self.get_num_responses_per_characteristic_xform_id(period)
@@ -399,17 +402,19 @@ class Clinic(Base):
 
         scores = self.get_scores(period)
 
-        for key_indicator, characteristic_list in key_indicators.iteritems():
-            total_scores = 0
-            characteristic_scores = [scores[k]
-                                     .get('totals')
-                                     .get('total_percentage') or 0
-                                     for k in characteristic_list]
+        if scores:
+            for key_indicator, characteristic_list in \
+                    key_indicators.iteritems():
+                total_scores = 0
+                characteristic_scores = [scores[k]
+                                         .get('totals')
+                                         .get('total_percentage') or 0
+                                         for k in characteristic_list]
 
-            total_scores = sum(characteristic_scores)
+                total_scores = sum(characteristic_scores)
 
-            key_indicator_scores[key_indicator] = (
-                total_scores / len(characteristic_list))
+                key_indicator_scores[key_indicator] = (
+                    total_scores / len(characteristic_list))
 
         return key_indicator_scores
 
@@ -417,7 +422,9 @@ class Clinic(Base):
         from whoahqa.models import ClinicReport
         if self._cached_key_indicators is None:
             report = ClinicReport.get_or_generate(self, period)
-            self._cached_key_indicators = report.get_key_indicators()
+
+            if report:
+                self._cached_key_indicators = report.get_key_indicators()
 
         return self._cached_key_indicators
 

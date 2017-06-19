@@ -51,9 +51,13 @@ class ClinicReport(Base):
         # Generate report and save it
         report = ClinicReport(clinic=clinic, period=period)
         # Pass period argument to get_key_indicator_scores
-        report.json_data = clinic.get_key_indicator_scores(period.form_xpath)
-        report.save()
-        return DBSession.merge(report)
+        key_indicator_scores = clinic.get_key_indicator_scores(
+            period.form_xpath)
+
+        if key_indicator_scores:
+            report.json_data = key_indicator_scores
+            report.save()
+            return DBSession.merge(report)
 
     @classmethod
     def get_or_generate(cls, clinic, period):
