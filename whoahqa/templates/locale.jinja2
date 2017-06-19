@@ -47,6 +47,9 @@
         </div>
     </div>
 {% endblock %}
+{% block page_scripts %}
+  <script src="{{ request.static_url('whoahqa:static/scripts/save-on-change.js') }}"></script>
+{% endblock %}
 {% block jquery_ready %}
   {{ super() }}
   var locales = ['en','pt'];
