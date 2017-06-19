@@ -1,5 +1,4 @@
 import datetime
-
 from webob.multidict import MultiDict
 from pyramid import testing
 from pyramid.httpexceptions import (
@@ -14,8 +13,6 @@ from sqlalchemy.orm.exc import NoResultFound
 from whoahqa.constants import characteristics as constants
 from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
-    DBSession,
-    user_clinics,
     OnaUser,
     Clinic,
     Municipality,
@@ -58,42 +55,9 @@ class TestClinicViews(IntegrationTestBase):
     def setUp(self):
         super(TestClinicViews, self).setUp()
         self.request = testing.DummyRequest()
-        self.clinic_views = ClinicViews(self.request)
         self.setup_test_data()
         self._create_municipality("Brazilia")
-
-    def test_unassigned_clinics_view(self):
-        response = self.clinic_views.unassigned()
-
-        # we should only have Clinic B in the response
-        self.assertEqual(len(response['clinics']), 2)
-        self.assertEqual(response['clinics'][0].name, "Clinic B")
-
-        # test when filter is done
-        params = MultiDict({'search': 'Clinic B'})
-        self.request.GET = params
-        response = self.clinic_views.unassigned()
-        self.assertEqual(len(response['clinics']), 1)
-        self.assertEqual(response['clinics'][0].name, "Clinic B")
-        self.assertEqual(response['search_term'], "Clinic B")
-
-    def test_assign_view(self):
-        count = DBSession.query(user_clinics).count()
-        self.assertEqual(count, 1)
-
-        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
-
-        # get the clinics
-        clinics = Clinic.all()
-        self.request.method = 'POST'
-        self.request.ona_user = ona_user
-        params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
-        self.request.POST = params
-        self.clinic_views.assign()
-
-        # both clinics should now be assigned to user
-        count = DBSession.query(user_clinics).count()
-        self.assertEqual(count, 3)
+        self.clinic_views = ClinicViews(self.request)
 
     def test_show(self):
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
@@ -108,21 +72,6 @@ class TestClinicViews(IntegrationTestBase):
             response['characteristics'],
             tuple_to_dict_list(
                 ("id", "description", "number"), constants.CHARACTERISTICS))
-
-    def test_list_redirects_when_user_has_no_permissions(self):
-        self.request.ona_user = OnaUser.get(OnaUser.username == 'manager_a')
-        self.config.testing_securitypolicy(
-            userid=2, permissive=False)
-        response = self.clinic_views.list()
-        self.assertEqual(response.status_code, 302)
-
-        # test when filter is done
-        params = MultiDict({'search': 'Clinic B'})
-        self.request.GET = params
-        response = self.clinic_views.unassigned()
-        self.assertEqual(len(response['clinics']), 1)
-        self.assertEqual(response['clinics'][0].name, "Clinic B")
-        self.assertEqual(response['search_term'], "Clinic B")
 
     def test_show_form(self):
         params = MultiDict({'form': constants.ADOLESCENT_CLIENT})
@@ -213,6 +162,7 @@ class TestClinicViews(IntegrationTestBase):
 
         with patch('whoahqa.models.reporting_period.get_current_date') as mock:
             mock.return_value = datetime.date(2015, 6, 1)
+
             response = self.clinic_views.assess_clinics()
 
             self.assertEqual(len(response['clinics']), 3)
