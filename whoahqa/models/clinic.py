@@ -196,14 +196,13 @@ class Clinic(Base):
 
     # TODO: factor in reporting period
     def get_period_clinic_submissions(self, period):
-        from whoahqa.models import ClinicSubmission, Submission
+        from whoahqa.models import ClinicSubmission
         return DBSession\
-            .query(ClinicSubmission, Submission)\
-            .outerjoin(Submission)\
+            .query(ClinicSubmission.valid)\
             .filter(ClinicSubmission.clinic_id == self.id,
                     ClinicSubmission.period == period,
                     ClinicSubmission.valid == true())\
-            .all()
+            .first()
 
     def has_clinic_submissions_for_period(self, period):
         return bool(self.get_period_clinic_submissions(period))
