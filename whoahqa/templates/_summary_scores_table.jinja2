@@ -15,7 +15,6 @@
       </thead>
 
       <tbody role="alert" aria-live="polite" aria-relevant="all">
-      {% set parent = municipality or state %}
       {% if national_report %}
         <tr class="average-row">
           <td>
@@ -31,22 +30,26 @@
           {% endfor %}
         </tr>
       {% endif %}
-      {% if parent %}
-        <tr class="average-row">
-          <td>
-              <strong>{{ gettext(parent.location_type|capitalize) }} {{ gettext('Average') }}</strong>
-          </td>
-          {% for id, label in key_indicators_key_labels %}
+      {% set parents = [state, municipality or parent] %}
+      {% for parent in parents %}
+        {% if parent %}
           {% set key_indicators = parent.key_indicators(period) %}
+          <tr class="average-row">
             <td>
-                <div class="score-bar">
-                    <div class="elapsed average" style="width: {{ key_indicators[id]|round if key_indicators[id] else 0 }}%"></div>
-                    <span class="score-msg">{{ key_indicators[id]|round|int if key_indicators[id] else '' }}</span>
-                </div>
+                <strong>{{ gettext(parent.location_type|capitalize) }} {{ gettext('Average') }}</strong>
             </td>
-          {% endfor %}
-        </tr>
-      {% endif %}
+            {% for id, label in key_indicators_key_labels %}
+              <td>
+                  <div class="score-bar">
+                      <div class="elapsed average" style="width: {{ key_indicators[id]|round if key_indicators[id] else 0 }}%"></div>
+                      <span class="score-msg">{{ key_indicators[id]|round|int if key_indicators[id] else '' }}</span>
+                  </div>
+              </td>
+            {% endfor %}
+          </tr>
+        {% endif %}
+      {% endfor %}
+
       {% for location in locations %}
         <tr class="gradeX odd">
           <td>
