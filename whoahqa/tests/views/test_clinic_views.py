@@ -215,23 +215,6 @@ class TestClinicViewsFunctional(FunctionalTestBase):
         self._create_municipality("Brazilia")
         self._create_user('john')
 
-    def test_unassigned_clinics_view_allows_authenticated(self):
-        url = self.request.route_path('clinics', traverse=('unassigned',))
-        headers = self._login_user('manager_b')
-        response = self.testapp.get(url, headers=headers)
-        self.assertEqual(response.status_code, 200)
-
-    def test_assign_clinic_view_allows_authenticated(self):
-        clinics = Clinic.all()
-        url = self.request.route_path('clinics', traverse=('assign',))
-        params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
-        headers = self._login_user('manager_a')
-        response = self.testapp.post(url, params, headers=headers)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(
-            response.location,
-            self.request.route_url('clinics', traverse=('unassigned',)))
-
     def test_clinic_show_allows_owner(self):
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.name == "Clinic A")
