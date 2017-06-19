@@ -22,7 +22,6 @@ class TestStateViews(IntegrationTestBase):
     def setUp(self):
         super(TestStateViews, self).setUp()
         self.request = testing.DummyRequest()
-        self.view = StateViews(self.request)
         self._create_user('state-official')
 
         with transaction.manager:
@@ -44,6 +43,8 @@ class TestStateViews(IntegrationTestBase):
 
         self.request.ona_user = OnaUser.get(
             OnaUser.username == 'state-official')
+
+        self.view = StateViews(self.request)
 
     def test_states_index(self):
         with patch('whoahqa.models.reporting_period.get_current_date') as mock:
