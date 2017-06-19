@@ -16,6 +16,21 @@
 
       <tbody role="alert" aria-live="polite" aria-relevant="all">
       {% set parent = municipality or state %}
+      {% if national_report %}
+        <tr class="average-row">
+          <td>
+              <strong>{{ gettext("National") }} {{ gettext('Average') }}</strong>
+          </td>
+          {% for id, label in key_indicators_key_labels %}
+            <td>
+                <div class="score-bar">
+                    <div class="elapsed average" style="width: {{ national_report[id]|round if national_report[id] else 0 }}%"></div>
+                    <span class="score-msg">{{ national_report[id]|round|int if national_report[id] else '' }}</span>
+                </div>
+            </td>
+          {% endfor %}
+        </tr>
+      {% endif %}
       {% if parent %}
         <tr class="average-row">
           <td>
