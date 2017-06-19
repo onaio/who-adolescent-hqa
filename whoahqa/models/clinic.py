@@ -194,8 +194,7 @@ class Clinic(Base):
         return tuple_to_dict_list(
             ('count', 'characteristic', 'xform_id'), result)
 
-    # TODO: factor in reporting period
-    def get_period_clinic_submissions(self, period):
+    def has_period_clinic_submissions(self, period):
         from whoahqa.models import ClinicSubmission
         return DBSession\
             .query(ClinicSubmission.valid)\
@@ -204,8 +203,18 @@ class Clinic(Base):
                     ClinicSubmission.valid == true())\
             .first()
 
+    def get_period_clinic_submissions(self, period):
+        from whoahqa.models import ClinicSubmission, Submission
+        return DBSession\
+            .query(ClinicSubmission, Submission)\
+            .outerjoin(Submission)\
+            .filter(ClinicSubmission.clinic_id == self.id,
+                    ClinicSubmission.period == period,
+                    ClinicSubmission.valid == true())\
+            .all()
+
     def has_clinic_submissions_for_period(self, period):
-        return bool(self.get_period_clinic_submissions(period))
+        return bool(self.has_period_clinic_submissions(period))
 
     def calculate_characteristic_aggregate_scores(
             self, xpath, num_responses, submission_jsons):
