@@ -183,7 +183,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
 
                     </div>
                     <div class="modal-footer">
-                       <a href="{{ request.route_url('admin', traverse=(user.id, 'delete')) }}" type="button" class="btn btn-danger">Delete</a>
+                       <a href="{{ request.route_path('admin', traverse=(user.id, 'delete')) }}" class="btn btn-danger">Delete</a>
                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                  </div>

@@ -115,9 +115,9 @@ class AdminViews(object):
         if self.request.user == user:
             self.request.session.flash(
                 u"You cannot delete yourself", "error")
-        return HTTPFound(
-            self.request.route_url(
-                'admin', traverse=()))
+            return HTTPFound(
+                self.request.route_url(
+                    'admin', traverse=()))
 
         DBSession.delete(user)
 
