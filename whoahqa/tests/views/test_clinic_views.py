@@ -66,7 +66,7 @@ class TestClinicViews(IntegrationTestBase):
         response = self.clinic_views.unassigned()
 
         # we should only have Clinic B in the response
-        self.assertEqual(len(response['clinics']), 2)
+        self.assertEqual(len(response['clinics']), 3)
         self.assertEqual(response['clinics'][0].name, "Clinic B")
 
         # test when filter is done
@@ -93,7 +93,7 @@ class TestClinicViews(IntegrationTestBase):
 
         # both clinics should now be assigned to user
         count = DBSession.query(user_clinics).count()
-        self.assertEqual(count, 3)
+        self.assertEqual(count, 4)
 
     def test_show(self):
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
@@ -215,7 +215,7 @@ class TestClinicViews(IntegrationTestBase):
             mock.return_value = datetime.date(2015, 6, 1)
             response = self.clinic_views.assess_clinics()
 
-            self.assertEqual(len(response['clinics']), 3)
+            self.assertEqual(len(response['clinics']), 4)
 
     def test_manage_clinics_view(self):
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')

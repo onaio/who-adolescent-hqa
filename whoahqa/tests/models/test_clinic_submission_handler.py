@@ -75,4 +75,4 @@ class TestClinicSubmissionHandler(TestBase):
                  'fifteen',
                  'sixteen',
                  'nineteen',
-                 'twenty'], "adolescent_client_V2",))
+                 'twenty'], "adolescent_client_V3",))
