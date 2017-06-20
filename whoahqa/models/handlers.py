@@ -40,20 +40,24 @@ class ClinicReportHandler(BaseSubmissionHandler):
         else:
             for characteristic in characteristics:
                 if characteristic:
-                    clinic_submission = ClinicSubmission(
+                    clinic_submission = ClinicSubmission.get_or_create(
+                        ClinicSubmission.submission_id == self.submission.id,
+                        ClinicSubmission.clinic_id == clinic.id,
+                        ClinicSubmission.characteristic == characteristic,
                         clinic_id=clinic.id,
                         submission=self.submission,
                         characteristic=characteristic,
-                        xform_id=xform_id,
-                        period=(
-                            self.submission.raw_data[
-                                constants.PERIOD_IDENTIFIER]),
-                        valid=(not bool(int(
-                            self.submission.raw_data
-                            [constants.INVALID_CHARACTERISTICS_FLAGS
-                                [characteristic]])))
+                        xform_id=xform_id
                     )
-                    DBSession.add(clinic_submission)
+                    clinic_submission.period = (
+                        self.submission.raw_data[
+                            constants.PERIOD_IDENTIFIER])
+                    clinic_submission.valid = (not bool(int(
+                        self.submission.raw_data
+                        [constants.INVALID_CHARACTERISTICS_FLAGS
+                            [characteristic]])))
+
+                    clinic_submission.save()
 
             clinic.update_reports()
 
