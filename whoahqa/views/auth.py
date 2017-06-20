@@ -54,7 +54,8 @@ def forbidden(context, request):
 @view_config(name='login',
              context=HTTPForbidden,
              permission=NO_PERMISSION_REQUIRED,
-             renderer='login.jinja2')
+             renderer='password_login.jinja2',
+             decorator=check_post_csrf)
 def login(request):
     return {}
 
