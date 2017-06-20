@@ -65,14 +65,30 @@ class Submission(Base):
         if type(payload) is not dict:
             payload = json.loads(payload)
 
-        if not Submission.exists(payload):
+        submission = None
+
+        if payload.get(constants.DEPRECATED_ID, None):
+            # add or update existing submission
+            try:
+                submission = Submission.get(
+                    Submission.raw_data[constants.INSTANCE_ID].astext ==
+                    payload[constants.DEPRECATED_ID])
+
+                submission.raw_data = payload
+                DBSession.add(submission)
+            except NoResultFound:
+                submission = Submission(raw_data=payload)
+                DBSession.add(submission)
+
+        elif not Submission.exists(payload):
             submission = Submission(raw_data=payload)
             DBSession.add(submission)
 
-            handler_class = determine_handler_class(
-                submission, cls.HANDLER_TO_XFORMS_MAPPING)
-            handler_class(submission).handle_submission()
-            return submission
+        handler_class = determine_handler_class(
+            submission, cls.HANDLER_TO_XFORMS_MAPPING)
+        handler_class(submission).handle_submission()
+
+        return submission
 
     @classmethod
     def exists(cls, payload):
