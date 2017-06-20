@@ -600,5 +600,7 @@ USER_ID = 'user_id'
 CLINIC_NAME = 'clinic_name'
 PERIOD_IDENTIFIER = 'period'
 UUID = "_uuid"
+INSTANCE_ID = "meta/instanceID"
+DEPRECATED_ID = "meta/deprecatedID"
 
 AVAILABLE_LANGUAGES = {'en': "English"}
