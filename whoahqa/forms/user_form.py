@@ -5,6 +5,8 @@ from deform.widget import (
     TextInputWidget,
     CheckedPasswordWidget)
 
+from whoahqa.utils import translation_string_factory as _
+
 from whoahqa.constants.groups import GROUPS
 from whoahqa.models import (
     Clinic,
@@ -53,23 +55,23 @@ class UserForm(colander.MappingSchema):
         colander.String(encoding='utf-8'),
         widget=TextInputWidget(),
         missing='',
-        title="Email Address")
+        title=_(u"Email Address"))
     group = colander.SchemaNode(
-        colander.String(encoding='utf-8'), title="Role",
+        colander.String(encoding='utf-8'), title=_(u"Role"),
         widget=user_role_widget)
 
     clinics = colander.SchemaNode(
-        colander.Set(), title="Clinic",
+        colander.Set(), title=_(u"Clinic"),
         missing='',
         widget=clinic_selection_widget)
 
     municipality = colander.SchemaNode(
-        colander.String(encoding='utf-8'), title="Municipality",
+        colander.String(encoding='utf-8'), title=_(u"Municipality"),
         missing='',
         widget=municipality_selection_widget)
 
     state = colander.SchemaNode(
-        colander.String(encoding='utf-8'), title="State",
+        colander.String(encoding='utf-8'), title=_(u"State"),
         missing='',
         widget=state_selection_widget)
 
@@ -78,7 +80,7 @@ class UserForm(colander.MappingSchema):
         validator=colander.Length(min=5),
         widget=CheckedPasswordWidget(),
         missing='',
-        title="Change Password")
+        title=_(u"Change Password"))
 
     def validator(self, node, value):
         exc = colander.Invalid(node, "")
