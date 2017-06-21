@@ -43,6 +43,7 @@ def set_locale(request):
 
     if request.method == "POST":
         locale = request.POST.get("locale", "")
+        request._LOCALE_ = locale
         if locale and locale in available_languages:
             user_settings.language = locale
             user_settings.save()
