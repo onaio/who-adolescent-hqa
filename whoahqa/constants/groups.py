@@ -6,8 +6,8 @@ STATE_OFFICIAL = 'state_official'
 NATIONAL_OFFICIAL = 'national_official'
 
 GROUPS = [USER,
-          SUPER_USER,
           CLINIC_MANAGER,
           MUNICIPALITY_MANAGER,
           STATE_OFFICIAL,
-          NATIONAL_OFFICIAL]
+          NATIONAL_OFFICIAL,
+          SUPER_USER]
