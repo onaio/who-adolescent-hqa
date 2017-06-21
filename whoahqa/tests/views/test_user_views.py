@@ -29,7 +29,7 @@ class TestUserViews(IntegrationTestBase):
         self.setup_test_data()
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         self.request.context = ona_user.user
-        self.request.ona_user = ona_user
+        self.request.user = ona_user.user
 
         response = self.user_views.clinics()
 
@@ -43,7 +43,7 @@ class TestUserViews(IntegrationTestBase):
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         request = testing.DummyRequest()
         request.context = ona_user.user
-        request.ona_user = ona_user
+        request.user = ona_user.user
         user_views = UserViews(request)
 
         with HTTMock(get_edit_url_mock):
