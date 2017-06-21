@@ -290,13 +290,13 @@ h3.key-indicator-title {
     border-bottom: 2px solid #cde3f4;
 }
 
-.scores-table .table-striped > tbody > tr:nth-child(odd) > td, 
+.scores-table .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {
     background-color: #fff;
 }
 
 #sample-frame-table > tbody > tr:nth-child(even) > td,
-.scores-table .table-striped > tbody > tr:nth-child(even) > td, 
+.scores-table .table-striped > tbody > tr:nth-child(even) > td,
 .table-striped > tbody > tr:nth-child(even) > th {
     background-color: #eceff8;
 }
@@ -452,4 +452,8 @@ span.client-prop {
 
 li.external-resource a {
     font-size: 12px !important;
+}
+
+input[name=password-confirm] {
+  margin-top: 15px;
 }

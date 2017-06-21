@@ -5,7 +5,7 @@
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
   <li>
-    <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'select-period'), _query={'came_from': request.route_path('users', traverse=(user.id, '{period_id}', 'clinics'))}) }}">
+    <a href="{{ request.route_url('users', traverse=(request.user.id, 'select-period'), _query={'came_from': request.route_path('users', traverse=(user.id, '{period_id}', 'clinics'))}) }}">
       {% trans %}Reporting Periods{% endtrans %}
     </a> <i class="icon-angle-right"></i></li>
   <li>{% trans %}Scores{% endtrans %}</li>
@@ -32,13 +32,13 @@
             {% endfor %}
             <div id="assign-new" class="bold">
                 <a href="{{ request.route_url('clinics', traverse=('unassigned')) }}">
-                    <span class="glyphicon glyphicon-home"></span> 
+                    <span class="glyphicon glyphicon-home"></span>
                     {{ gettext('Assign a new clinic to myself') }}
                 </a>
             </div>
             <div class="bold">
-                <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'summary')) }}">
-                  <i class="icon-table"></i> 
+                <a href="{{ request.route_url('users', traverse=(request.user.id, 'summary')) }}">
+                  <i class="icon-table"></i>
                     {{ gettext('View Clinics Score Summary') }}
                 </a>
             </div>

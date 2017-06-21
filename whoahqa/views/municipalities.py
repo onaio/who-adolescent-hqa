@@ -24,11 +24,11 @@ class MunicipalityViews(BaseClassViews):
                  request_method='GET')
     def index(self):
         period = get_period_from_request(self.request)
-        ona_user = self.request.ona_user
+        user = self.request.user
 
-        if ona_user.group.name == groups.MUNICIPALITY_MANAGER:
+        if user.group.name == groups.MUNICIPALITY_MANAGER:
             return HTTPFound(self.request.route_url(
-                'municipalities', traverse=(ona_user.location.id)))
+                'municipalities', traverse=(user.location.id)))
 
         return {
             'locations': Municipality.all(),

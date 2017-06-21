@@ -50,7 +50,7 @@ class ClinicViews(object):
             return HTTPFound(
                 self.request.route_url(
                     'users', traverse=(
-                        self.request.ona_user.user_id, 'clinics')))
+                        self.request.user.id, 'clinics')))
 
         # otherwise, list all clinics
         # TODO: paginate
@@ -63,7 +63,7 @@ class ClinicViews(object):
             clinics = Clinic.filter_clinics(search_term, True)
             self.request.override_renderer = '_summary_scores_table.jinja2'
         else:
-            clinics = self.request.ona_user.clinics
+            clinics = self.request.user.clinics
 
         return {
             'locations': clinics,
@@ -95,7 +95,7 @@ class ClinicViews(object):
 
     @view_config(name='assign', request_method='POST', require_csrf=False)
     def assign(self):
-        user = self.request.ona_user.user
+        user = self.request.user
 
         # get the list of requested clinics
         clinic_ids = self.request.POST.getall('clinic_id')
@@ -229,7 +229,7 @@ class ClinicViews(object):
         request_method='GET',
         permission=perms.CAN_LIST_CLINICS)
     def manage_clinics(self):
-        user = self.request.ona_user.user
+        user = self.request.user
 
         if self.request.has_permission(perms.SUPER_USER,
                                        self.request.context):
@@ -357,7 +357,7 @@ class ClinicViews(object):
         request_method='GET',
         permission=perms.CAN_ASSESS_CLINICS)
     def assess_clinics(self):
-        user = self.request.ona_user.user
+        user = self.request.user
         clinics = []
 
         if user.location:
