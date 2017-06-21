@@ -2,6 +2,8 @@ import colander
 
 from deform.widget import SelectWidget
 
+from whoahqa.utils import translation_string_factory as _
+
 from whoahqa.constants.groups import GROUPS
 from whoahqa.models import (
     Clinic,
@@ -41,19 +43,19 @@ def clinic_selection_widget(node, kw):
 
 class UserForm(colander.MappingSchema):
     group = colander.SchemaNode(
-        colander.String(encoding='utf-8'), title="Role",
+        colander.String(encoding='utf-8'), title=_(u"Role"),
         widget=user_role_widget)
 
     clinics = colander.SchemaNode(
-        colander.Set(), title="Clinic",
+        colander.Set(), title=_(u"Clinic"),
         widget=clinic_selection_widget)
 
     municipality = colander.SchemaNode(
-        colander.String(encoding='utf-8'), title="Municipality",
+        colander.String(encoding='utf-8'), title=_(u"Municipality"),
         widget=muncipality_selection_widget)
 
     state = colander.SchemaNode(
-        colander.String(encoding='utf-8'), title="State",
+        colander.String(encoding='utf-8'), title=_(u"State"),
         widget=state_selection_widget)
 
     def validator(self, node, value):
