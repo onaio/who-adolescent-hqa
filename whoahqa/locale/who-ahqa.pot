@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.1a0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-06-21 12:11+0300\n"
+"POT-Creation-Date: 2017-06-21 15:14+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -680,6 +680,22 @@ msgstr ""
 #: whoahqa/views/admin.py:60 whoahqa/views/locations.py:93
 #: whoahqa/views/reporting_periods.py:88
 msgid "Your changes have been saved"
+msgstr ""
+
+#: whoahqa/views/admin.py:90
+msgid "Please fix the highlighted errors below"
+msgstr ""
+
+#: whoahqa/views/admin.py:97
+msgid "Success! {} user created"
+msgstr ""
+
+#: whoahqa/views/admin.py:118
+msgid "You cannot delete yourself"
+msgstr ""
+
+#: whoahqa/views/admin.py:126
+msgid "User successfully deleted"
 msgstr ""
 
 #: whoahqa/views/clinics.py:275
