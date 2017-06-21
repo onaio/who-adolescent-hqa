@@ -28,13 +28,13 @@ def location_type_widget(node, kw):
 class LocationForm(colander.MappingSchema):
     name = colander.SchemaNode(
         colander.String(encoding='utf-8'),
-        title=_("Name"))
+        title=_(u"Name"))
     location_type = colander.SchemaNode(
         colander.String(encoding='utf-8'),
-        title=_("Location Type"),
+        title=_(u"Location Type"),
         widget=location_type_widget)
     parent_id = colander.SchemaNode(
-        colander.String(encoding='utf-8'), title="Parent Location",
+        colander.String(encoding='utf-8'), title=_(u"Parent Location"),
         widget=parent_widget, missing=None)
 
     def validator(self, node, value):

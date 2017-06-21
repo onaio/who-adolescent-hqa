@@ -34,6 +34,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    <link href="{{ request.static_url('whoahqa:static/css/plugins.css') }}" rel="stylesheet" type="text/css"/>
    <link href="{{ request.static_url('whoahqa:static/css/themes/blue.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
    <link href="{{ request.static_url('whoahqa:static/css/custom.css') }}" rel="stylesheet" type="text/css"/>
+   <link href="{{ request.static_url('whoahqa:static/plugins/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css"/>
    <!-- END THEME STYLES -->
    <link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -226,15 +227,15 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                               <i class="icon-calendar"></i>&nbsp;
                                  {% set active_period = selected_period or period%}
                                  <span class="thin uppercase visible-lg-inline-block">
-                                    {{gettext(active_period.title)}}
-                                 </span>&nbsp;
+                                    {{ gettext(active_period.title) }}
+                                 </span>&nbsp; 
                                  <i class="icon-angle-down"></i>
                            </div>
                            <ul class="dropdown-menu" role="menu">
                               {% for p in periods %}
                                  <li>
                                  <a href="{{ request.current_route_url(_query={'period': p.id}) }}">
-                                    {{gettext(p.title)}}
+                                    {{ gettext(p.title) }}
                                  </a>
                                  </li>
                               {% endfor %}
@@ -282,6 +283,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    <script src="{{ request.static_url('whoahqa:static/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
    <script src="{{ request.static_url('whoahqa:static/plugins/jquery.cookie.min.js') }}" type="text/javascript"></script>
    <script src="{{ request.static_url('whoahqa:static/plugins/uniform/jquery.uniform.min.js') }}" type="text/javascript" ></script>
+   <script src="{{ request.static_url('whoahqa:static/plugins/bootstrap-select/bootstrap-select.min.js') }}" type="text/javascript"></script>
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
    <script src="{{ request.static_url('whoahqa:static/scripts/app.js') }}"></script>
@@ -293,6 +295,11 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
           App.init();
         {% endblock %}
       });
+   </script>
+   <script>
+      function goBack() {
+          window.history.back();
+      }
    </script>
    <!-- END PAGE LEVEL SCRIPTS -->
    <!-- END JAVASCRIPTS -->

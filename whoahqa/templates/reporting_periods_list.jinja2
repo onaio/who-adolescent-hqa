@@ -13,7 +13,7 @@
       <div class="table-toolbar">
         <div class="btn-group">
           <a id="sample_editable_1_new" class="btn btn-primary" href="{{ request.route_url('periods', traverse=('new',)) }}">
-            {{ gettext("New Reporting Period") }} <i class="icon-plus"></i>
+            {{ gettext('New Reporting Period') }} <i class="icon-plus"></i>
           </a>
         </div>
       </div>
@@ -47,7 +47,7 @@
                   <td class=" ">{{ period.start_date|format_date('MMM Y', request) }}</td>
                   <td class="center ">{{ period.end_date|format_date('MMM Y', request) }}</td>
                   <td>
-                    <a href="{{ request.route_url('periods', traverse=(period.id, 'edit'))}}"> {{ gettext("Edit")}} </a>
+                    <a href="{{ request.route_url('periods', traverse=(period.id, 'edit'))}}"> {{ gettext('Edit')}} </a>
                   </td>
                 </tr>
               {% endfor %}

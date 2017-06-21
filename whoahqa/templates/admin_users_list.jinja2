@@ -26,10 +26,10 @@
             <table class="table table-hover">
               <thead>
               <tr>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Location List / Clinic</th>
-                <th>Actions</th>
+                <th>{{ gettext('Username')}}</th>
+                <th>{{ gettext('Role')}}</th>
+                <th>{{ gettext('Location List / Clinic')}}</th>
+                <th>{{ gettext('Actions')}}</th>
               </tr>
               </thead>
               <tbody>
@@ -49,7 +49,7 @@
                     {% endif %}
                   </td>
                   <td>
-                    <a class="btn btn-default btn-xs" href="{{ request.route_path('admin', traverse=(user.id, 'edit')) }}">Edit</a>
+                    <a class="btn btn-default btn-xs" href="{{ request.route_path('admin', traverse=(user.id, 'edit')) }}">{{ gettext('Edit')}}</a>
                   </td>
                 </tr>
               {% endfor %}
