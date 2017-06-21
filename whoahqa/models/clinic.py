@@ -18,7 +18,7 @@ from sqlalchemy.orm import (
     relationship)
 
 from whoahqa.constants import characteristics as constants
-from whoahqa.constants import permissions as perms
+from whoahqa.constants import permissions as perms, groups
 from whoahqa.models import (
     Base,
     BaseModelFactory,
@@ -73,7 +73,9 @@ class Clinic(Base):
 
     @property
     def __acl__(self):
-        acl = []
+        acl = [
+            (Allow, groups.NATIONAL_OFFICIAL, perms.CAN_VIEW_CLINICS)
+        ]
         if self.user is not None:
             acl.append((Allow, "u:{}".format(self.user.id),
                         perms.CAN_VIEW_CLINICS))

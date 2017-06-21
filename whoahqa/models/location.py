@@ -123,8 +123,6 @@ class State(Location):
         acl = [
             (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
             (Allow, groups.NATIONAL_OFFICIAL, perms.CAN_VIEW_STATE),
-            (Allow, groups.NATIONAL_OFFICIAL, perms.CAN_LIST_MUNICIPALITY),
-            (Allow, groups.NATIONAL_OFFICIAL, perms.CAN_VIEW_MUNICIPALITY),
         ]
         if self.user is not None:
             children_perms = [
@@ -163,9 +161,7 @@ class LocationFactory(BaseModelFactory):
 
     @property
     def __acl__(self):
-        acl = [
-            (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
-        ]
+        acl = super(LocationFactory, self).__parent__.__acl__
 
         try:
             traversal_args = self.request.traversed
