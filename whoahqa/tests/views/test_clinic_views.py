@@ -10,9 +10,10 @@ from mock import patch
 
 from sqlalchemy.orm.exc import NoResultFound
 
-from whoahqa.constants import characteristics as constants
+from whoahqa.constants import characteristics as constants, groups
 from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
+    User,
     OnaUser,
     Clinic,
     Municipality,
@@ -154,19 +155,6 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(response['characteristic_indicator_mapping'],
                          constants.CHARACTERISTIC_INDICATOR_MAPPING)
 
-    def test_access_clinics_view(self):
-        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
-
-        self.request.method = 'GET'
-        self.request.user = ona_user.user
-
-        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
-            mock.return_value = datetime.date(2015, 6, 1)
-
-            response = self.clinic_views.assess_clinics()
-
-            self.assertEqual(len(response['clinics']), 4)
-
     def test_manage_clinics_view(self):
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         self.request.method = 'GET'
@@ -221,6 +209,20 @@ class TestClinicViewsFunctional(FunctionalTestBase):
         url = self.request.route_path(
             'clinics', traverse=(clinic.id, period.id))
         headers = self._login_user('manager_a')
+        response = self.testapp.get(url, headers=headers)
+        self.assertEqual(response.status_code, 200)
+
+    def test_national_official_can_view_clinics(self):
+        self._create_dash_user(
+            "national", "national", "national@email.com",
+            groups.NATIONAL_OFFICIAL)
+        user = User.newest()
+
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
+        clinic = Clinic.get(Clinic.name == "Clinic A")
+        url = self.request.route_path(
+            'clinics', traverse=(clinic.id, period.id))
+        headers = self._login_dashboard_user(user)
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
 
