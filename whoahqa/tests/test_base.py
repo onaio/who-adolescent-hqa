@@ -247,6 +247,14 @@ class FunctionalTestBase(IntegrationTestBase):
             lambda i: i.split('=')[0] == 'auth_tkt', cookie_parts)[0]
         return {'Cookie': cookie}
 
+    def _login_dashboard_user(self, user):
+        policy = self.testapp.app.registry.queryUtility(IAuthenticationPolicy)
+        headers = policy.remember(self.request, user.id)
+        cookie_parts = dict(headers)['Set-Cookie'].split('; ')
+        cookie = filter(
+            lambda i: i.split('=')[0] == 'auth_tkt', cookie_parts)[0]
+        return {'Cookie': cookie}
+
     def setUp(self):
         super(FunctionalTestBase, self).setUp()
         current_dir = os.getcwd()
