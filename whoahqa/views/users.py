@@ -1,21 +1,19 @@
+from pyramid.httpexceptions import HTTPFound
 from pyramid.view import (
     view_config,
     view_defaults,
 )
 
-from whoahqa.constants import characteristics as constants
-from whoahqa.constants import permissions as perms
+from whoahqa.constants import permissions as perms, groups
 from whoahqa.models import (
     User,
     ReportingPeriod
 )
-from whoahqa.views.helpers import get_period_from_request
+from whoahqa.views.base import BaseClassViews
 
 
 @view_defaults(route_name='users')
-class UserViews(object):
-    def __init__(self, request):
-        self.request = request
+class UserViews(BaseClassViews):
 
     @view_config(name='clinics',
                  renderer='clinics_summary.jinja2',
@@ -23,17 +21,22 @@ class UserViews(object):
                  context=User)
     def clinics(self):
         user = self.request.context
+
+        if user.group.name == groups.NATIONAL_OFFICIAL:
+            url = self.request.route_url('states', traverse=(),
+                                         _query={'period': self.period.id})
+            HTTPFound(url)
+
         clinics = user.get_clinics()
-        period = get_period_from_request(self.request)
 
         municipality = user.get_municipality_from_clinics()
 
         return {
-            'period': period,
-            'periods': ReportingPeriod.get_active_periods(),
+            'period': self.period,
+            'periods': self.periods,
             'municipality': municipality,
             'locations': clinics,
-            'key_indicators_key_labels': constants.INDICATOR_LABELS
+            'key_indicators_key_labels': self.key_indicators_key_labels
         }
 
     @view_config(name='select-period',
