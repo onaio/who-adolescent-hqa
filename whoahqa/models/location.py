@@ -121,7 +121,10 @@ class State(Location):
     @property
     def __acl__(self):
         acl = [
-            (Allow, groups.SUPER_USER, ALL_PERMISSIONS)
+            (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
+            (Allow, groups.NATIONAL_OFFICIAL, perms.CAN_VIEW_STATE),
+            (Allow, groups.NATIONAL_OFFICIAL, perms.CAN_LIST_MUNICIPALITY),
+            (Allow, groups.NATIONAL_OFFICIAL, perms.CAN_VIEW_MUNICIPALITY),
         ]
         if self.user is not None:
             children_perms = [
