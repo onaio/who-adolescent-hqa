@@ -73,6 +73,21 @@ class TestClinicViews(IntegrationTestBase):
             tuple_to_dict_list(
                 ("id", "description", "number"), constants.CHARACTERISTICS))
 
+    def test_list_redirects_when_user_has_no_permissions(self):
+        self.request.user = OnaUser.get(OnaUser.username == 'manager_a').user
+        self.config.testing_securitypolicy(
+            userid=2, permissive=False)
+        response = self.clinic_views.list()
+        self.assertEqual(response.status_code, 302)
+
+        # test when filter is done
+        params = MultiDict({'search': 'Clinic B'})
+        self.request.GET = params
+        response = self.clinic_views.unassigned()
+        self.assertEqual(len(response['clinics']), 1)
+        self.assertEqual(response['clinics'][0].name, "Clinic B")
+        self.assertEqual(response['search_term'], "Clinic B")
+
     def test_show_form(self):
         params = MultiDict({'form': constants.ADOLESCENT_CLIENT})
         self.request.GET = params
@@ -158,19 +173,19 @@ class TestClinicViews(IntegrationTestBase):
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
 
         self.request.method = 'GET'
-        self.request.ona_user = ona_user
+        self.request.user = ona_user.user
 
         with patch('whoahqa.models.reporting_period.get_current_date') as mock:
             mock.return_value = datetime.date(2015, 6, 1)
 
             response = self.clinic_views.assess_clinics()
 
-            self.assertEqual(len(response['clinics']), 3)
+            self.assertEqual(len(response['clinics']), 4)
 
     def test_manage_clinics_view(self):
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         self.request.method = 'GET'
-        self.request.ona_user = ona_user
+        self.request.user = ona_user.user
 
         user_clinics = ona_user.user.location.clinics
 
@@ -183,7 +198,7 @@ class TestClinicViews(IntegrationTestBase):
         user_clinics = ona_user.user.get_clinics()
         clinic = user_clinics[0]
         self.request.method = 'GET'
-        self.request.ona_user = ona_user
+        self.request.user = ona_user.user
         self.request.context = clinic
 
         response = self.clinic_views.delete()

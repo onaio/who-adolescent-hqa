@@ -20,11 +20,11 @@ class MunicipalityViews(BaseClassViews):
                  renderer='municipalities_list.jinja2',
                  request_method='GET')
     def index(self):
-        ona_user = self.request.ona_user
+        user = self.request.user
 
-        if ona_user.group.name == groups.MUNICIPALITY_MANAGER:
+        if user.group.name == groups.MUNICIPALITY_MANAGER:
             return HTTPFound(self.request.route_url(
-                'municipalities', traverse=(ona_user.location.id)))
+                'municipalities', traverse=(user.location.id)))
 
         return {
             'locations': Municipality.all(),

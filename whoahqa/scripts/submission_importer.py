@@ -17,14 +17,14 @@ from whoahqa.models import (
     Submission)
 
 FORM_MAP = {
-    'adolescent_client_V2': 37869,
-    'health_care_provider_V2': 37883,
-    'support_staff_V2': 38123,
-    'health_facility_manager_V2': 37899,
-    'outreach_worker_V2': 44964,
-    'community_member_V2': 37875,
-    'adolescent_in_community_V2': 37871,
-    'observation_guide_V2': 37931,
+    'adolescent_client_V3': 208464,
+    'health_care_provider_V3': 208467,
+    'support_staff_V3': 208471,
+    'health_facility_manager_V3': 208468,
+    'outreach_worker_V3': 208470,
+    'community_member_V3': 208466,
+    'adolescent_in_community_V3': 211975,
+    'observation_guide_V3': 208469,
 }
 
 

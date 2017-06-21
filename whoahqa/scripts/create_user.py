@@ -28,7 +28,7 @@ def usage(argv):
 
 
 def main(argv=sys.argv):
-    if len(argv) != 4:
+    if len(argv) != 5:
         usage(argv)
     config_uri = argv[1]
     setup_logging(config_uri)

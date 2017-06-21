@@ -39,7 +39,7 @@ def check_post_csrf(func):
 @forbidden_view_config()
 def forbidden(context, request):
     # if not authenticated, show login screen with unauthorized status code
-    if not request.ona_user:
+    if not request.user:
         return Response(
             render_view(
                 context, request, 'login', secure=False), status=401)
@@ -54,7 +54,8 @@ def forbidden(context, request):
 @view_config(name='login',
              context=HTTPForbidden,
              permission=NO_PERMISSION_REQUIRED,
-             renderer='login.jinja2')
+             renderer='password_login.jinja2',
+             decorator=check_post_csrf)
 def login(request):
     return {}
 
@@ -85,13 +86,12 @@ def password_login(context, request):
 
 
 @view_config(
-    route_name='auth',
-    match_param='action=logout',
+    route_name='logout',
     permission=NO_PERMISSION_REQUIRED)
 def logout(request):
     headers = forget(request)
     return HTTPFound(
-        request.route_url('auth', action='login'), headers=headers)
+        request.route_url('auth', action='sign-in'), headers=headers)
 
 
 @view_config(

@@ -20,11 +20,11 @@ class StateViews(BaseClassViews):
                  renderer='states_list.jinja2',
                  request_method='GET')
     def index(self):
-        ona_user = self.request.ona_user
+        user = self.request.user
 
-        if ona_user.group.name == groups.STATE_OFFICIAL:
+        if user.group.name == groups.STATE_OFFICIAL:
             return HTTPFound(self.request.route_url(
-                'states', traverse=(ona_user.location.id)))
+                'states', traverse=(user.location.id)))
 
         return {
             'locations': State.all(),

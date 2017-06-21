@@ -125,7 +125,7 @@ class TestAuth(IntegrationTestBase):
         response = logout(request)
         self.assertIsInstance(response, HTTPFound)
         self.assertEqual(
-            response.location, request.route_url('auth', action='login'))
+            response.location, request.route_url('auth', action='sign-in'))
 
     def test_password_login(self):
         # create the user profile
