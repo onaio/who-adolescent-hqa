@@ -73,21 +73,6 @@ class TestClinicViews(IntegrationTestBase):
             tuple_to_dict_list(
                 ("id", "description", "number"), constants.CHARACTERISTICS))
 
-    def test_list_redirects_when_user_has_no_permissions(self):
-        self.request.user = OnaUser.get(OnaUser.username == 'manager_a').user
-        self.config.testing_securitypolicy(
-            userid=2, permissive=False)
-        response = self.clinic_views.list()
-        self.assertEqual(response.status_code, 302)
-
-        # test when filter is done
-        params = MultiDict({'search': 'Clinic B'})
-        self.request.GET = params
-        response = self.clinic_views.unassigned()
-        self.assertEqual(len(response['clinics']), 1)
-        self.assertEqual(response['clinics'][0].name, "Clinic B")
-        self.assertEqual(response['search_term'], "Clinic B")
-
     def test_show_form(self):
         params = MultiDict({'form': constants.ADOLESCENT_CLIENT})
         self.request.GET = params
