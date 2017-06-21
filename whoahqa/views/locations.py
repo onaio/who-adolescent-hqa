@@ -9,6 +9,7 @@ from whoahqa.models import (
     DBSession,
     Location,
     LocationFactory)
+from whoahqa.utils import translation_string_factory as _
 
 
 @view_defaults(route_name='locations',
@@ -44,7 +45,7 @@ class LocationViews(object):
                 values = form.validate(data)
             except ValidationFailure:
                 self.request.session.flash(
-                    u"Please fix the errors indicated below.", "error")
+                    _(u"Please fix the errors indicated below."), "error")
             else:
                 # add location
                 if values['parent_id'] is None:
@@ -54,7 +55,7 @@ class LocationViews(object):
                 location.save()
 
                 self.request.session.flash(
-                    "{} {} saved".format(
+                    _("{} {} saved").format(
                         location.name, location.location_type),
                     'success')
 
@@ -89,7 +90,7 @@ class LocationViews(object):
                 location.update(**values)
 
                 self.request.session.flash(
-                    "Your changes have been saved", 'success')
+                    _("Your changes have been saved"), 'success')
                 return HTTPFound(
                     self.request.route_url(
                         'locations', traverse=(location.id, 'edit')))
@@ -108,7 +109,7 @@ class LocationViews(object):
             DBSession.delete(location)
         else:
             self.request.session.flash(
-                "Cannot delete location with Children", 'error')
+                _("Cannot delete location with Children"), 'error')
 
         return HTTPFound(
             self.request.route_url('locations', traverse=('')))
