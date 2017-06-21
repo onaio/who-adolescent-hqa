@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-06-21 09:18+0300\n"
+"POT-Creation-Date: 2017-06-21 12:11+0300\n"
 "PO-Revision-Date: 2014-03-04 12:22+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -196,8 +196,8 @@ msgstr ""
 msgid "CNES Number"
 msgstr ""
 
-#: whoahqa/forms/clinic_form.py:26 whoahqa/forms/user_form.py:54
-#: whoahqa/models/location.py:99
+#: whoahqa/forms/clinic_form.py:26 whoahqa/forms/registration_form.py:43
+#: whoahqa/forms/user_form.py:69 whoahqa/models/location.py:99
 msgid "Municipality"
 msgstr ""
 
@@ -211,6 +211,54 @@ msgstr ""
 
 #: whoahqa/forms/location_form.py:34 whoahqa/templates/location_list.jinja2:38
 msgid "Location Type"
+msgstr ""
+
+#: whoahqa/forms/location_form.py:37
+msgid "Parent Location"
+msgstr ""
+
+#: whoahqa/forms/registration_form.py:32 whoahqa/forms/user_form.py:58
+msgid "Email Address"
+msgstr ""
+
+#: whoahqa/forms/registration_form.py:35 whoahqa/forms/user_form.py:60
+#: whoahqa/templates/admin_users_list.jinja2:30
+msgid "Role"
+msgstr ""
+
+#: whoahqa/forms/registration_form.py:38 whoahqa/forms/user_form.py:64
+msgid "Clinic"
+msgstr ""
+
+#: whoahqa/forms/registration_form.py:48 whoahqa/forms/user_form.py:74
+#: whoahqa/models/location.py:126 whoahqa/templates/state_summary.jinja2:2
+msgid "State"
+msgstr ""
+
+#: whoahqa/forms/registration_form.py:55
+msgid "Longer than maximum length 25"
+msgstr ""
+
+#: whoahqa/forms/registration_form.py:57
+#: whoahqa/templates/admin_users_edit.jinja2:23
+#: whoahqa/templates/admin_users_list.jinja2:29
+msgid "Username"
+msgstr ""
+
+#: whoahqa/forms/registration_form.py:58
+msgid "Type the username of the clinic"
+msgstr ""
+
+#: whoahqa/forms/registration_form.py:63
+msgid "Shorter than minimum length 5"
+msgstr ""
+
+#: whoahqa/forms/registration_form.py:65 whoahqa/forms/registration_form.py:67
+msgid "Password"
+msgstr ""
+
+#: whoahqa/forms/registration_form.py:66
+msgid "Confirm Password"
 msgstr ""
 
 #: whoahqa/forms/reporting_period.py:22
@@ -251,17 +299,8 @@ msgstr ""
 msgid "End date is required"
 msgstr ""
 
-#: whoahqa/forms/user_form.py:46 whoahqa/templates/admin_users_list.jinja2:23
-msgid "Role"
-msgstr ""
-
-#: whoahqa/forms/user_form.py:50
-msgid "Clinic"
-msgstr ""
-
-#: whoahqa/forms/user_form.py:58 whoahqa/models/location.py:126
-#: whoahqa/templates/state_summary.jinja2:2
-msgid "State"
+#: whoahqa/forms/user_form.py:83
+msgid "Change Password"
 msgstr ""
 
 #: whoahqa/templates/_clinics_key_indicators.jinja2:9
@@ -297,13 +336,13 @@ msgid "Created"
 msgstr ""
 
 #: whoahqa/templates/_clinics_table.jinja2:20
-#: whoahqa/templates/admin_users_list.jinja2:25
+#: whoahqa/templates/admin_users_list.jinja2:32
 #: whoahqa/templates/location_list.jinja2:40
 msgid "Actions"
 msgstr ""
 
 #: whoahqa/templates/_clinics_table.jinja2:37
-#: whoahqa/templates/admin_users_list.jinja2:45
+#: whoahqa/templates/admin_users_list.jinja2:52
 #: whoahqa/templates/location_list.jinja2:51
 #: whoahqa/templates/reporting_periods_create.jinja2:11
 #: whoahqa/templates/reporting_periods_create.jinja2:92
@@ -325,7 +364,7 @@ msgid "Average"
 msgstr ""
 
 #: whoahqa/templates/admin_users_edit.jinja2:6
-#: whoahqa/templates/base.jinja2:121
+#: whoahqa/templates/base.jinja2:121 whoahqa/templates/register.jinja2:9
 msgid "Users"
 msgstr ""
 
@@ -333,21 +372,25 @@ msgstr ""
 msgid "Edit User"
 msgstr ""
 
-#: whoahqa/templates/admin_users_edit.jinja2:23
-#: whoahqa/templates/admin_users_list.jinja2:22
-msgid "Username"
-msgstr ""
-
-#: whoahqa/templates/admin_users_edit.jinja2:53
+#: whoahqa/templates/admin_users_edit.jinja2:56
 #: whoahqa/templates/location_form.jinja2:53
 msgid "Save"
 msgstr ""
 
-#: whoahqa/templates/admin_users_edit.jinja2:54
+#: whoahqa/templates/admin_users_edit.jinja2:58
+#: whoahqa/templates/location_list.jinja2:53
+msgid "Delete"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:60
 msgid "Back"
 msgstr ""
 
-#: whoahqa/templates/admin_users_list.jinja2:24
+#: whoahqa/templates/admin_users_list.jinja2:18
+msgid "Register User"
+msgstr ""
+
+#: whoahqa/templates/admin_users_list.jinja2:31
 msgid "Location List / Clinic"
 msgstr ""
 
@@ -359,7 +402,7 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:111 whoahqa/templates/base.jinja2:213
+#: whoahqa/templates/base.jinja2:111 whoahqa/templates/base.jinja2:218
 #: whoahqa/templates/clinics_summary.jinja2:2
 #: whoahqa/templates/municipality_summary.jinja2:2
 #: whoahqa/templates/state_summary.jinja2:2
@@ -392,7 +435,7 @@ msgstr ""
 msgid "Strategy for the Protection and Care of Adolescents"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:221 whoahqa/templates/clinics_show.jinja2:82
+#: whoahqa/templates/base.jinja2:226 whoahqa/templates/clinics_show.jinja2:82
 msgid "Change dashboard date range"
 msgstr ""
 
@@ -527,8 +570,17 @@ msgid "Update"
 msgstr ""
 
 #: whoahqa/templates/locale.jinja2:42 whoahqa/templates/location_form.jinja2:54
+#: whoahqa/templates/register.jinja2:50
 #: whoahqa/templates/reporting_periods_create.jinja2:98
 msgid "Cancel"
+msgstr ""
+
+#: whoahqa/templates/location_form.jinja2:15
+msgid "Edit Location"
+msgstr ""
+
+#: whoahqa/templates/location_form.jinja2:17
+msgid "New Location"
 msgstr ""
 
 #: whoahqa/templates/location_form.jinja2:30
@@ -555,10 +607,6 @@ msgstr ""
 msgid "Parent"
 msgstr ""
 
-#: whoahqa/templates/location_list.jinja2:53
-msgid "Delete"
-msgstr ""
-
 #: whoahqa/templates/login.jinja2:16
 msgid "Login | WHO Adolescent Health Quality Assessment"
 msgstr ""
@@ -581,6 +629,18 @@ msgstr ""
 
 #: whoahqa/templates/municipalities_list.jinja2:2
 msgid "Municipalities"
+msgstr ""
+
+#: whoahqa/templates/register.jinja2:14
+msgid "New User"
+msgstr ""
+
+#: whoahqa/templates/register.jinja2:26
+msgid "Registration Form"
+msgstr ""
+
+#: whoahqa/templates/register.jinja2:49
+msgid "Sign Up"
 msgstr ""
 
 #: whoahqa/templates/reporting_period_select.jinja2:8
@@ -623,7 +683,7 @@ msgstr ""
 msgid "Characteristics Summary"
 msgstr ""
 
-#: whoahqa/views/admin.py:55 whoahqa/views/locations.py:93
+#: whoahqa/views/admin.py:60 whoahqa/views/locations.py:93
 #: whoahqa/views/reporting_periods.py:88
 msgid "Your changes have been saved"
 msgstr ""

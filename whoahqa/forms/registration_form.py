@@ -13,6 +13,8 @@ from whoahqa.forms.user_form import (
     state_selection_widget,
     key_to_label)
 
+from whoahqa.utils import translation_string_factory as _
+
 GROUPS.remove('user')
 
 
@@ -27,41 +29,42 @@ class RegistrationForm(colander.MappingSchema):
         colander.String(encoding='utf-8'),
         widget=TextInputWidget(),
         missing='',
-        title="Email Address")
+        title=_(u"Email Address"))
     group = colander.SchemaNode(
-        colander.String(encoding='utf-8'), title="Role",
+        colander.String(encoding='utf-8'),
+        title=_(u"Role"),
         widget=new_user_role_widget)
     clinics = colander.SchemaNode(
-        colander.Set(), title="Clinic",
+        colander.Set(), title=_(u"Clinic"),
         missing='',
         widget=clinic_selection_widget)
     municipality = colander.SchemaNode(
         colander.String(encoding='utf-8'),
-        title="Municipality",
+        title=_(u"Municipality"),
         missing='',
         widget=municipality_selection_widget)
     state = colander.SchemaNode(
         colander.String(encoding='utf-8'),
-        title="State",
+        title=_(u"State"),
         missing='',
         widget=state_selection_widget)
     username = colander.SchemaNode(
         colander.String(encoding='utf-8'),
         validator=colander.Length(
             max=25,
-            max_err='Longer than maximum length 25'),
+            max_err=_(u'Longer than maximum length 25')),
         widget=TextInputWidget(),
-        title="Username",
-        description="Type the username of the clinic")
+        title=_(u"Username"),
+        description=_(u"Type the username of the clinic"))
     password = colander.SchemaNode(
         colander.String(encoding='utf-8'),
         validator=colander.Length(
             min=5,
-            min_err='Shorter than minimum length 5'),
+            min_err=_(u'Shorter than minimum length 5')),
         widget=CheckedPasswordWidget(
-            subject="Password",
-            confirm_subject="Confirm Password"),
-        title="Password")
+            subject=_(u"Password"),
+            confirm_subject=_(u"Confirm Password")),
+        title=_(u"Password"))
 
     def validator(self, node, value):
         exc = colander.Invalid(node, "")

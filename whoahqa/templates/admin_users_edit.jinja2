@@ -22,7 +22,7 @@
                 <div class="form-group">
                   <label for="username" class="col-sm-2 control-label">{{ gettext('Username') }}</label>
                   <div class="col-sm-2">
-                    <p class="form-control-static">{{ gettext(ona_user) }}</p>
+                    <p class="form-control-static">{{ user }}</p>
                   </div>
                   {% if has_error %}
                     {% for msg in field.error.messages() %}
