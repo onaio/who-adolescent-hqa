@@ -7,24 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-06-14 16:42+0300\n"
+"POT-Creation-Date: 2017-06-21 09:18+0300\n"
 "PO-Revision-Date: 2014-03-04 12:22+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
-
-#: whoahqa/models/location.py:99
-msgid "Municipality"
-msgstr ""
-
-#: whoahqa/models/location.py:126
-msgid "State"
-msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:19
 msgid "Adolescent Client"
@@ -60,8 +51,8 @@ msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:51
 msgid ""
-"Policies and procedures are in place that do not restrict the provision of "
-"health services on any terms"
+"Policies and procedures are in place that do not restrict the provision "
+"of health services on any terms"
 msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:53
@@ -78,8 +69,8 @@ msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:57
 msgid ""
-"Policies and procedures are in place that ensure that health services are "
-"either free or affordable to adolescents"
+"Policies and procedures are in place that ensure that health services are"
+" either free or affordable to adolescents"
 msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:59
@@ -101,13 +92,12 @@ msgstr ""
 #: whoahqa/constants/base_characteristics.py:66
 msgid ""
 "Some health services and health-related commodities are provided to "
-"adolescents in the community by selected community members, outreach workers "
-"and adolescents themselves"
+"adolescents in the community by selected community members, outreach "
+"workers and adolescents themselves"
 msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:70
-msgid ""
-"Policies and procedures are in place that guarantee client confidentiality"
+msgid "Policies and procedures are in place that guarantee client confidentiality"
 msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:72
@@ -116,19 +106,21 @@ msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:73
 msgid ""
-"Health-care providers are non-judgemental, considerate and easy to relate to"
+"Health-care providers are non-judgemental, considerate and easy to relate"
+" to"
 msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:75
 msgid ""
-"The point of health service delivery ensures consultations occur in a short "
-"waiting time. with or without an appointment, and (where necessary) with "
-"referral"
+"The point of health service delivery ensures consultations occur in a "
+"short waiting time. with or without an appointment, and (where necessary)"
+" with referral"
 msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:78
 msgid ""
-"The point of health service delivery has an appealing and clean environment"
+"The point of health service delivery has an appealing and clean "
+"environment"
 msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:80
@@ -145,9 +137,9 @@ msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:84
 msgid ""
-"The required package of health care is provided to fulfil the needs of all "
-"adolescents either at the point of health service delivery or through "
-"referral linkages"
+"The required package of health care is provided to fulfil the needs of "
+"all adolescents either at the point of health service delivery or through"
+" referral linkages"
 msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:87
@@ -158,8 +150,8 @@ msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:90
 msgid ""
-"Health-care providers use evidence-based protocols and guidelines to provide "
-"health services"
+"Health-care providers use evidence-based protocols and guidelines to "
+"provide health services"
 msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:92
@@ -170,8 +162,8 @@ msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:94
 msgid ""
-"The point of health service delivery has the required equipment, supplies "
-"and basic services necessary to deliver the required health services"
+"The point of health service delivery has the required equipment, supplies"
+" and basic services necessary to deliver the required health services"
 msgstr ""
 
 #: whoahqa/constants/base_characteristics.py:514
@@ -194,33 +186,9 @@ msgstr ""
 msgid "Effective"
 msgstr ""
 
-#: whoahqa/views/default_views.py:51
-msgid "Language changed successfully"
-msgstr ""
-
-#: whoahqa/views/reporting_periods.py:53
-msgid "Reporting period created"
-msgstr ""
-
-#: whoahqa/views/reporting_periods.py:88
-msgid "Your changes have been saved"
-msgstr ""
-
-#: whoahqa/views/reporting_periods.py:43 whoahqa/views/reporting_periods.py:83
-msgid "Please fix the errors indicated below."
-msgstr ""
-
-#: whoahqa/views/clinics.py:284 whoahqa/views/clinics.py:332
-msgid "Cannot find selected municipality."
-msgstr ""
-
-#: whoahqa/views/clinics.py:289
-msgid ""
-"A clinic already exists with the                           provided name or "
-"CNES."
-msgstr ""
-
 #: whoahqa/forms/clinic_form.py:21
+#: whoahqa/templates/_clinics_key_indicators.jinja2:14
+#: whoahqa/templates/clinics_score_summary.jinja2:44
 msgid "Clinic Name"
 msgstr ""
 
@@ -228,8 +196,29 @@ msgstr ""
 msgid "CNES Number"
 msgstr ""
 
-#: whoahqa/forms/reporting_period.py:59 whoahqa/forms/location_form.py:31
+#: whoahqa/forms/clinic_form.py:26 whoahqa/forms/user_form.py:54
+#: whoahqa/models/location.py:99
+msgid "Municipality"
+msgstr ""
+
+#: whoahqa/forms/location_form.py:31 whoahqa/forms/reporting_period.py:59
+#: whoahqa/templates/_clinics_table.jinja2:17
+#: whoahqa/templates/_summary_scores_table.jinja2:10
+#: whoahqa/templates/location_list.jinja2:37
+#: whoahqa/templates/reporting_periods_list.jinja2:32
 msgid "Name"
+msgstr ""
+
+#: whoahqa/forms/location_form.py:34 whoahqa/templates/location_list.jinja2:38
+msgid "Location Type"
+msgstr ""
+
+#: whoahqa/forms/reporting_period.py:22
+msgid "{} is not a valid date"
+msgstr ""
+
+#: whoahqa/forms/reporting_period.py:52
+msgid "Start date must be earlier than end date"
 msgstr ""
 
 #: whoahqa/forms/reporting_period.py:60
@@ -245,6 +234,7 @@ msgid "The identifier located in the XLSForms"
 msgstr ""
 
 #: whoahqa/forms/reporting_period.py:67
+#: whoahqa/templates/reporting_periods_list.jinja2:33
 msgid "Start Date"
 msgstr ""
 
@@ -253,6 +243,7 @@ msgid "Start date is required"
 msgstr ""
 
 #: whoahqa/forms/reporting_period.py:72
+#: whoahqa/templates/reporting_periods_list.jinja2:34
 msgid "End Date"
 msgstr ""
 
@@ -260,10 +251,419 @@ msgstr ""
 msgid "End date is required"
 msgstr ""
 
-#: whoahqa/forms/reporting_period.py:52
-msgid "Start date must be earlier than end date"
+#: whoahqa/forms/user_form.py:46 whoahqa/templates/admin_users_list.jinja2:23
+msgid "Role"
 msgstr ""
 
-#: whoahqa/forms/location_form.py:34
-msgid "Location Type"
+#: whoahqa/forms/user_form.py:50
+msgid "Clinic"
 msgstr ""
+
+#: whoahqa/forms/user_form.py:58 whoahqa/models/location.py:126
+#: whoahqa/templates/state_summary.jinja2:2
+msgid "State"
+msgstr ""
+
+#: whoahqa/templates/_clinics_key_indicators.jinja2:9
+#: whoahqa/templates/clinics_score_summary.jinja2:32
+msgid "Clinics"
+msgstr ""
+
+#: whoahqa/templates/_clinics_key_indicators.jinja2:10
+msgid "Aggregate Scores"
+msgstr ""
+
+#: whoahqa/templates/_clinics_key_indicators.jinja2:13
+#: whoahqa/templates/clinics_characteristics_list.jinja2:59
+#: whoahqa/templates/clinics_score_summary.jinja2:39
+#: whoahqa/templates/clinics_show.jinja2:127
+msgid "No."
+msgstr ""
+
+#: whoahqa/templates/_clinics_key_indicators.jinja2:50
+msgid "Average Score"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:6
+msgid "Register a Clinic"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:18
+msgid "Clinic Code"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:19
+msgid "Created"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:20
+#: whoahqa/templates/admin_users_list.jinja2:25
+#: whoahqa/templates/location_list.jinja2:40
+msgid "Actions"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:37
+#: whoahqa/templates/admin_users_list.jinja2:45
+#: whoahqa/templates/location_list.jinja2:51
+#: whoahqa/templates/reporting_periods_create.jinja2:11
+#: whoahqa/templates/reporting_periods_create.jinja2:92
+#: whoahqa/templates/reporting_periods_list.jinja2:50
+msgid "Edit"
+msgstr ""
+
+#: whoahqa/templates/_clinics_table.jinja2:47
+#: whoahqa/templates/_summary_scores_table.jinja2:68
+msgid "Not found."
+msgstr ""
+
+#: whoahqa/templates/_summary_scores_table.jinja2:5
+msgid "Scores by Key Indicator"
+msgstr ""
+
+#: whoahqa/templates/_summary_scores_table.jinja2:22
+msgid "Average"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:6
+#: whoahqa/templates/base.jinja2:121
+msgid "Users"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:9
+msgid "Edit User"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:23
+#: whoahqa/templates/admin_users_list.jinja2:22
+msgid "Username"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:53
+#: whoahqa/templates/location_form.jinja2:53
+msgid "Save"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:54
+msgid "Back"
+msgstr ""
+
+#: whoahqa/templates/admin_users_list.jinja2:24
+msgid "Location List / Clinic"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:50
+msgid "Quality Assessment Tool: Assessing Health Services for Adolescent Clients"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:66
+msgid "Logout"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:111 whoahqa/templates/base.jinja2:213
+#: whoahqa/templates/clinics_summary.jinja2:2
+#: whoahqa/templates/municipality_summary.jinja2:2
+#: whoahqa/templates/state_summary.jinja2:2
+#: whoahqa/templates/user_clinics.jinja2:3
+#: whoahqa/templates/user_clinics.jinja2:11
+msgid "Scores"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:129
+#: whoahqa/templates/clinics_characteristics_list.jinja2:10
+#: whoahqa/templates/reporting_periods_create.jinja2:21
+#: whoahqa/templates/reporting_periods_list.jinja2:3
+#: whoahqa/templates/user_clinics.jinja2:9
+msgid "Reporting Periods"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:139 whoahqa/templates/clinics_assess.jinja2:2
+msgid "Assessment Surveys"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:149
+msgid "List Locations"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:156 whoahqa/templates/clinics_edit.jinja2:6
+msgid "Manage Clinics"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:160
+msgid "Strategy for the Protection and Care of Adolescents"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:221 whoahqa/templates/clinics_show.jinja2:82
+msgid "Change dashboard date range"
+msgstr ""
+
+#: whoahqa/templates/clinic_assessment_table.jinja2:20
+msgid "Stakeholder"
+msgstr ""
+
+#: whoahqa/templates/clinic_assessment_table.jinja2:21
+msgid "Surveys done"
+msgstr ""
+
+#: whoahqa/templates/clinic_assessment_table.jinja2:37
+#: whoahqa/templates/clinics_show.jinja2:221
+msgid "Complete"
+msgstr ""
+
+#: whoahqa/templates/clinic_assessment_table.jinja2:39
+msgid "Not Started"
+msgstr ""
+
+#: whoahqa/templates/clinic_assessment_table.jinja2:52
+msgid "Total"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:18
+msgid "Select Characteristics"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:27
+msgid "Filter by Characteristic Type"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:31
+msgid "All"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:41
+msgid "Work on selected"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:49
+#: whoahqa/templates/clinics_show.jinja2:113
+msgid "Characteristics"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:60
+msgid "Description"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:61
+#: whoahqa/templates/clinics_show.jinja2:129
+msgid "Category"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:62
+#: whoahqa/templates/clinics_show.jinja2:130
+msgid "Min - Max"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:63
+#: whoahqa/templates/clinics_show.jinja2:131
+msgid "# Respondents"
+msgstr ""
+
+#: whoahqa/templates/clinics_characteristics_list.jinja2:86
+#: whoahqa/templates/clinics_show.jinja2:148
+msgid "Absolute total score"
+msgstr ""
+
+#: whoahqa/templates/clinics_list.jinja2:2
+msgid "All Clinics"
+msgstr ""
+
+#: whoahqa/templates/clinics_score_summary.jinja2:3
+#: whoahqa/templates/clinics_score_summary.jinja2:9
+#: whoahqa/templates/reporting_period_select.jinja2:3
+#: whoahqa/templates/user_clinics.jinja2:19
+msgid "My Clinics"
+msgstr ""
+
+#: whoahqa/templates/clinics_score_summary.jinja2:13
+#: whoahqa/templates/clinics_score_summary.jinja2:20
+msgid "Score Summary"
+msgstr ""
+
+#: whoahqa/templates/clinics_score_summary.jinja2:33
+msgid "Characteristic Scores"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:114
+msgid "Relative Score"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:128
+msgid "Description "
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:132
+msgid "Score"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:181
+msgid "You have finished collecting data for this tool"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:183
+msgid "You need to collect more information"
+msgstr ""
+
+#: whoahqa/templates/clinics_show.jinja2:221
+msgid "You have finished data collection for this characteristic."
+msgstr ""
+
+#: whoahqa/templates/clinics_unassigned.jinja2:3
+msgid "Unassigned Clinics"
+msgstr ""
+
+#: whoahqa/templates/clinics_unassigned.jinja2:20
+msgid "Assign Selected to Myself"
+msgstr ""
+
+#: whoahqa/templates/locale.jinja2:2 whoahqa/templates/locale.jinja2:6
+msgid "User Settings"
+msgstr ""
+
+#: whoahqa/templates/locale.jinja2:21
+msgid "Select default language"
+msgstr ""
+
+#: whoahqa/templates/locale.jinja2:39
+msgid "Update"
+msgstr ""
+
+#: whoahqa/templates/locale.jinja2:42 whoahqa/templates/location_form.jinja2:54
+#: whoahqa/templates/reporting_periods_create.jinja2:98
+msgid "Cancel"
+msgstr ""
+
+#: whoahqa/templates/location_form.jinja2:30
+msgid "Location Form"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:10
+msgid "Locations"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:14
+msgid "All Locations"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:21
+msgid "Add Location"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:31
+msgid "Current Locations"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:39
+msgid "Parent"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:53
+msgid "Delete"
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:16
+msgid "Login | WHO Adolescent Health Quality Assessment"
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:67
+msgid "Login to your account"
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:72
+msgid "Login with your Ona Account"
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:77
+msgid "Don't have an account yet?"
+msgstr ""
+
+#: whoahqa/templates/login.jinja2:79
+msgid "Create an account"
+msgstr ""
+
+#: whoahqa/templates/municipalities_list.jinja2:2
+msgid "Municipalities"
+msgstr ""
+
+#: whoahqa/templates/reporting_period_select.jinja2:8
+#: whoahqa/templates/reporting_period_select.jinja2:16
+msgid "Select Reporting Period"
+msgstr ""
+
+#: whoahqa/templates/reporting_periods_create.jinja2:13
+#: whoahqa/templates/reporting_periods_create.jinja2:94
+msgid "Create"
+msgstr ""
+
+#: whoahqa/templates/reporting_periods_create.jinja2:15
+#: whoahqa/templates/reporting_periods_create.jinja2:60
+msgid "Reporting Period"
+msgstr ""
+
+#: whoahqa/templates/reporting_periods_list.jinja2:16
+msgid "New Reporting Period"
+msgstr ""
+
+#: whoahqa/templates/states_list.jinja2:2
+#: whoahqa/templates/states_list.jinja2:11
+msgid "States"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:28
+msgid "Code:"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:36
+msgid "Assign a new clinic to myself"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:42
+msgid "View Clinics Score Summary"
+msgstr ""
+
+#: whoahqa/templates/user_clinics.jinja2:50
+msgid "Characteristics Summary"
+msgstr ""
+
+#: whoahqa/views/admin.py:55 whoahqa/views/locations.py:93
+#: whoahqa/views/reporting_periods.py:88
+msgid "Your changes have been saved"
+msgstr ""
+
+#: whoahqa/views/clinics.py:275
+msgid "{} Clinic saved."
+msgstr ""
+
+#: whoahqa/views/clinics.py:284 whoahqa/views/clinics.py:332
+msgid "Cannot find selected municipality."
+msgstr ""
+
+#: whoahqa/views/clinics.py:289
+msgid ""
+"A clinic already exists with the                           provided name "
+"or CNES."
+msgstr ""
+
+#: whoahqa/views/clinics.py:328
+msgid "{} Clinic updated."
+msgstr ""
+
+#: whoahqa/views/default_views.py:52
+msgid "Language changed successfully"
+msgstr ""
+
+#: whoahqa/views/locations.py:48 whoahqa/views/reporting_periods.py:43
+#: whoahqa/views/reporting_periods.py:83
+msgid "Please fix the errors indicated below."
+msgstr ""
+
+#: whoahqa/views/locations.py:58
+msgid "{} {} saved"
+msgstr ""
+
+#: whoahqa/views/locations.py:112
+msgid "Cannot delete location with Children"
+msgstr ""
+
+#: whoahqa/views/reporting_periods.py:53
+msgid "Reporting period created"
+msgstr ""
+

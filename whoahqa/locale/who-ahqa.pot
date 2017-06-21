@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.1a0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-06-14 17:48+0300\n"
+"POT-Creation-Date: 2017-06-21 09:18+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -192,14 +192,20 @@ msgstr ""
 msgid "CNES Number"
 msgstr ""
 
+#: whoahqa/forms/clinic_form.py:26 whoahqa/forms/user_form.py:54
+#: whoahqa/models/location.py:99
+msgid "Municipality"
+msgstr ""
+
 #: whoahqa/forms/location_form.py:31 whoahqa/forms/reporting_period.py:59
 #: whoahqa/templates/_clinics_table.jinja2:17
 #: whoahqa/templates/_summary_scores_table.jinja2:10
+#: whoahqa/templates/location_list.jinja2:37
 #: whoahqa/templates/reporting_periods_list.jinja2:32
 msgid "Name"
 msgstr ""
 
-#: whoahqa/forms/location_form.py:34
+#: whoahqa/forms/location_form.py:34 whoahqa/templates/location_list.jinja2:38
 msgid "Location Type"
 msgstr ""
 
@@ -241,11 +247,16 @@ msgstr ""
 msgid "End date is required"
 msgstr ""
 
-#: whoahqa/models/location.py:99
-msgid "Municipality"
+#: whoahqa/forms/user_form.py:46 whoahqa/templates/admin_users_list.jinja2:23
+msgid "Role"
 msgstr ""
 
-#: whoahqa/models/location.py:126 whoahqa/templates/state_summary.jinja2:2
+#: whoahqa/forms/user_form.py:50
+msgid "Clinic"
+msgstr ""
+
+#: whoahqa/forms/user_form.py:58 whoahqa/models/location.py:126
+#: whoahqa/templates/state_summary.jinja2:2
 msgid "State"
 msgstr ""
 
@@ -282,10 +293,14 @@ msgid "Created"
 msgstr ""
 
 #: whoahqa/templates/_clinics_table.jinja2:20
+#: whoahqa/templates/admin_users_list.jinja2:25
+#: whoahqa/templates/location_list.jinja2:40
 msgid "Actions"
 msgstr ""
 
 #: whoahqa/templates/_clinics_table.jinja2:37
+#: whoahqa/templates/admin_users_list.jinja2:45
+#: whoahqa/templates/location_list.jinja2:51
 #: whoahqa/templates/reporting_periods_create.jinja2:11
 #: whoahqa/templates/reporting_periods_create.jinja2:92
 #: whoahqa/templates/reporting_periods_list.jinja2:50
@@ -305,6 +320,32 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
+#: whoahqa/templates/admin_users_edit.jinja2:6 whoahqa/templates/base.jinja2:121
+msgid "Users"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:9
+msgid "Edit User"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:23
+#: whoahqa/templates/admin_users_list.jinja2:22
+msgid "Username"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:53
+#: whoahqa/templates/location_form.jinja2:53
+msgid "Save"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:54
+msgid "Back"
+msgstr ""
+
+#: whoahqa/templates/admin_users_list.jinja2:24
+msgid "Location List / Clinic"
+msgstr ""
+
 #: whoahqa/templates/base.jinja2:50
 msgid "Quality Assessment Tool: Assessing Health Services for Adolescent Clients"
 msgstr ""
@@ -319,10 +360,6 @@ msgstr ""
 #: whoahqa/templates/state_summary.jinja2:2 whoahqa/templates/user_clinics.jinja2:3
 #: whoahqa/templates/user_clinics.jinja2:11
 msgid "Scores"
-msgstr ""
-
-#: whoahqa/templates/base.jinja2:121
-msgid "Users"
 msgstr ""
 
 #: whoahqa/templates/base.jinja2:129
@@ -475,21 +512,45 @@ msgstr ""
 msgid "User Settings"
 msgstr ""
 
-#: whoahqa/templates/locale.jinja2:20
+#: whoahqa/templates/locale.jinja2:21
 msgid "Select default language"
 msgstr ""
 
-#: whoahqa/templates/locale.jinja2:38
+#: whoahqa/templates/locale.jinja2:39
 msgid "Update"
 msgstr ""
 
-#: whoahqa/templates/locale.jinja2:41
+#: whoahqa/templates/locale.jinja2:42 whoahqa/templates/location_form.jinja2:54
 #: whoahqa/templates/reporting_periods_create.jinja2:98
 msgid "Cancel"
 msgstr ""
 
+#: whoahqa/templates/location_form.jinja2:30
+msgid "Location Form"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:10
+msgid "Locations"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:14
+msgid "All Locations"
+msgstr ""
+
 #: whoahqa/templates/location_list.jinja2:21
 msgid "Add Location"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:31
+msgid "Current Locations"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:39
+msgid "Parent"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:53
+msgid "Delete"
 msgstr ""
 
 #: whoahqa/templates/login.jinja2:16
@@ -555,6 +616,11 @@ msgstr ""
 msgid "Characteristics Summary"
 msgstr ""
 
+#: whoahqa/views/admin.py:55 whoahqa/views/locations.py:93
+#: whoahqa/views/reporting_periods.py:88
+msgid "Your changes have been saved"
+msgstr ""
+
 #: whoahqa/views/clinics.py:275
 msgid "{} Clinic saved."
 msgstr ""
@@ -573,19 +639,24 @@ msgstr ""
 msgid "{} Clinic updated."
 msgstr ""
 
-#: whoahqa/views/default_views.py:51
+#: whoahqa/views/default_views.py:52
 msgid "Language changed successfully"
 msgstr ""
 
-#: whoahqa/views/reporting_periods.py:43 whoahqa/views/reporting_periods.py:83
+#: whoahqa/views/locations.py:48 whoahqa/views/reporting_periods.py:43
+#: whoahqa/views/reporting_periods.py:83
 msgid "Please fix the errors indicated below."
+msgstr ""
+
+#: whoahqa/views/locations.py:58
+msgid "{} {} saved"
+msgstr ""
+
+#: whoahqa/views/locations.py:112
+msgid "Cannot delete location with Children"
 msgstr ""
 
 #: whoahqa/views/reporting_periods.py:53
 msgid "Reporting period created"
-msgstr ""
-
-#: whoahqa/views/reporting_periods.py:88
-msgid "Your changes have been saved"
 msgstr ""
 

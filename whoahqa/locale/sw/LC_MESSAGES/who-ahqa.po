@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: who-ahqa 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-17 13:22+0300\n"
+"POT-Creation-Date: 2017-06-21 09:18+0300\n"
 "PO-Revision-Date: 2014-03-06 14:17+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: sw <LL@li.org>\n"
@@ -186,24 +186,30 @@ msgstr ""
 msgid "Effective"
 msgstr ""
 
-#: whoahqa/forms/clinic_form.py:18
+#: whoahqa/forms/clinic_form.py:21
 #: whoahqa/templates/_clinics_key_indicators.jinja2:14
 #: whoahqa/templates/clinics_score_summary.jinja2:44
 msgid "Clinic Name"
 msgstr ""
 
-#: whoahqa/forms/clinic_form.py:21 whoahqa/templates/_clinics_table.jinja2:18
-msgid "Clinic Code"
+#: whoahqa/forms/clinic_form.py:24
+msgid "CNES Number"
 msgstr ""
 
-#: whoahqa/forms/location_form.py:30 whoahqa/forms/reporting_period.py:59
+#: whoahqa/forms/clinic_form.py:26 whoahqa/forms/user_form.py:54
+#: whoahqa/models/location.py:99
+msgid "Municipality"
+msgstr ""
+
+#: whoahqa/forms/location_form.py:31 whoahqa/forms/reporting_period.py:59
 #: whoahqa/templates/_clinics_table.jinja2:17
 #: whoahqa/templates/_summary_scores_table.jinja2:10
+#: whoahqa/templates/location_list.jinja2:37
 #: whoahqa/templates/reporting_periods_list.jinja2:32
 msgid "Name"
 msgstr ""
 
-#: whoahqa/forms/location_form.py:33
+#: whoahqa/forms/location_form.py:34 whoahqa/templates/location_list.jinja2:38
 msgid "Location Type"
 msgstr ""
 
@@ -220,28 +226,41 @@ msgid "Give the reporting period a name"
 msgstr ""
 
 #: whoahqa/forms/reporting_period.py:63
+msgid "Form Xpath"
+msgstr ""
+
+#: whoahqa/forms/reporting_period.py:64
+msgid "The identifier located in the XLSForms"
+msgstr ""
+
+#: whoahqa/forms/reporting_period.py:67
 #: whoahqa/templates/reporting_periods_list.jinja2:33
 msgid "Start Date"
 msgstr ""
 
-#: whoahqa/forms/reporting_period.py:65
+#: whoahqa/forms/reporting_period.py:69
 msgid "Start date is required"
 msgstr ""
 
-#: whoahqa/forms/reporting_period.py:68
+#: whoahqa/forms/reporting_period.py:72
 #: whoahqa/templates/reporting_periods_list.jinja2:34
 msgid "End Date"
 msgstr ""
 
-#: whoahqa/forms/reporting_period.py:70
+#: whoahqa/forms/reporting_period.py:74
 msgid "End date is required"
 msgstr ""
 
-#: whoahqa/models/location.py:99
-msgid "Municipality"
+#: whoahqa/forms/user_form.py:46 whoahqa/templates/admin_users_list.jinja2:23
+msgid "Role"
 msgstr ""
 
-#: whoahqa/models/location.py:126 whoahqa/templates/state_summary.jinja2:2
+#: whoahqa/forms/user_form.py:50
+msgid "Clinic"
+msgstr ""
+
+#: whoahqa/forms/user_form.py:58 whoahqa/models/location.py:126
+#: whoahqa/templates/state_summary.jinja2:2
 msgid "State"
 msgstr ""
 
@@ -257,7 +276,7 @@ msgstr ""
 #: whoahqa/templates/_clinics_key_indicators.jinja2:13
 #: whoahqa/templates/clinics_characteristics_list.jinja2:59
 #: whoahqa/templates/clinics_score_summary.jinja2:39
-#: whoahqa/templates/clinics_show.jinja2:124
+#: whoahqa/templates/clinics_show.jinja2:127
 msgid "No."
 msgstr ""
 
@@ -269,15 +288,26 @@ msgstr ""
 msgid "Register a Clinic"
 msgstr ""
 
+#: whoahqa/templates/_clinics_table.jinja2:18
+msgid "Clinic Code"
+msgstr ""
+
 #: whoahqa/templates/_clinics_table.jinja2:19
 msgid "Created"
 msgstr ""
 
 #: whoahqa/templates/_clinics_table.jinja2:20
+#: whoahqa/templates/admin_users_list.jinja2:25
+#: whoahqa/templates/location_list.jinja2:40
 msgid "Actions"
 msgstr ""
 
 #: whoahqa/templates/_clinics_table.jinja2:37
+#: whoahqa/templates/admin_users_list.jinja2:45
+#: whoahqa/templates/location_list.jinja2:51
+#: whoahqa/templates/reporting_periods_create.jinja2:11
+#: whoahqa/templates/reporting_periods_create.jinja2:92
+#: whoahqa/templates/reporting_periods_list.jinja2:50
 msgid "Edit"
 msgstr ""
 
@@ -294,15 +324,42 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:49
+#: whoahqa/templates/admin_users_edit.jinja2:6
+#: whoahqa/templates/base.jinja2:121
+msgid "Users"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:9
+msgid "Edit User"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:23
+#: whoahqa/templates/admin_users_list.jinja2:22
+msgid "Username"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:53
+#: whoahqa/templates/location_form.jinja2:53
+msgid "Save"
+msgstr ""
+
+#: whoahqa/templates/admin_users_edit.jinja2:54
+msgid "Back"
+msgstr ""
+
+#: whoahqa/templates/admin_users_list.jinja2:24
+msgid "Location List / Clinic"
+msgstr ""
+
+#: whoahqa/templates/base.jinja2:50
 msgid "Quality Assessment Tool: Assessing Health Services for Adolescent Clients"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:65
+#: whoahqa/templates/base.jinja2:66
 msgid "Logout"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:107 whoahqa/templates/base.jinja2:194
+#: whoahqa/templates/base.jinja2:111 whoahqa/templates/base.jinja2:213
 #: whoahqa/templates/clinics_summary.jinja2:2
 #: whoahqa/templates/municipality_summary.jinja2:2
 #: whoahqa/templates/state_summary.jinja2:2
@@ -311,35 +368,31 @@ msgstr ""
 msgid "Scores"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:114
-msgid "Users"
-msgstr ""
-
-#: whoahqa/templates/base.jinja2:119
+#: whoahqa/templates/base.jinja2:129
 #: whoahqa/templates/clinics_characteristics_list.jinja2:10
-#: whoahqa/templates/reporting_periods_create.jinja2:13
+#: whoahqa/templates/reporting_periods_create.jinja2:21
 #: whoahqa/templates/reporting_periods_list.jinja2:3
 #: whoahqa/templates/user_clinics.jinja2:9
 msgid "Reporting Periods"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:126 whoahqa/templates/clinics_assess.jinja2:2
+#: whoahqa/templates/base.jinja2:139 whoahqa/templates/clinics_assess.jinja2:2
 msgid "Assessment Surveys"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:133
+#: whoahqa/templates/base.jinja2:149
 msgid "List Locations"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:137 whoahqa/templates/clinics_edit.jinja2:5
+#: whoahqa/templates/base.jinja2:156 whoahqa/templates/clinics_edit.jinja2:6
 msgid "Manage Clinics"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:141
+#: whoahqa/templates/base.jinja2:160
 msgid "Strategy for the Protection and Care of Adolescents"
 msgstr ""
 
-#: whoahqa/templates/base.jinja2:202 whoahqa/templates/clinics_show.jinja2:75
+#: whoahqa/templates/base.jinja2:221 whoahqa/templates/clinics_show.jinja2:82
 msgid "Change dashboard date range"
 msgstr ""
 
@@ -352,7 +405,7 @@ msgid "Surveys done"
 msgstr ""
 
 #: whoahqa/templates/clinic_assessment_table.jinja2:37
-#: whoahqa/templates/clinics_show.jinja2:218
+#: whoahqa/templates/clinics_show.jinja2:221
 msgid "Complete"
 msgstr ""
 
@@ -381,7 +434,7 @@ msgid "Work on selected"
 msgstr ""
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:49
-#: whoahqa/templates/clinics_show.jinja2:110
+#: whoahqa/templates/clinics_show.jinja2:113
 msgid "Characteristics"
 msgstr ""
 
@@ -390,22 +443,22 @@ msgid "Description"
 msgstr ""
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:61
-#: whoahqa/templates/clinics_show.jinja2:126
+#: whoahqa/templates/clinics_show.jinja2:129
 msgid "Category"
 msgstr ""
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:62
-#: whoahqa/templates/clinics_show.jinja2:127
+#: whoahqa/templates/clinics_show.jinja2:130
 msgid "Min - Max"
 msgstr ""
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:63
-#: whoahqa/templates/clinics_show.jinja2:128
+#: whoahqa/templates/clinics_show.jinja2:131
 msgid "# Respondents"
 msgstr ""
 
 #: whoahqa/templates/clinics_characteristics_list.jinja2:86
-#: whoahqa/templates/clinics_show.jinja2:145
+#: whoahqa/templates/clinics_show.jinja2:148
 msgid "Absolute total score"
 msgstr ""
 
@@ -429,27 +482,27 @@ msgstr ""
 msgid "Characteristic Scores"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:111
+#: whoahqa/templates/clinics_show.jinja2:114
 msgid "Relative Score"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:125
+#: whoahqa/templates/clinics_show.jinja2:128
 msgid "Description "
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:129
+#: whoahqa/templates/clinics_show.jinja2:132
 msgid "Score"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:178
+#: whoahqa/templates/clinics_show.jinja2:181
 msgid "You have finished collecting data for this tool"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:180
+#: whoahqa/templates/clinics_show.jinja2:183
 msgid "You need to collect more information"
 msgstr ""
 
-#: whoahqa/templates/clinics_show.jinja2:218
+#: whoahqa/templates/clinics_show.jinja2:221
 msgid "You have finished data collection for this characteristic."
 msgstr ""
 
@@ -465,21 +518,45 @@ msgstr ""
 msgid "User Settings"
 msgstr ""
 
-#: whoahqa/templates/locale.jinja2:20
+#: whoahqa/templates/locale.jinja2:21
 msgid "Select default language"
 msgstr ""
 
-#: whoahqa/templates/locale.jinja2:38
+#: whoahqa/templates/locale.jinja2:39
 msgid "Update"
 msgstr ""
 
-#: whoahqa/templates/locale.jinja2:41
-#: whoahqa/templates/reporting_periods_create.jinja2:76
+#: whoahqa/templates/locale.jinja2:42 whoahqa/templates/location_form.jinja2:54
+#: whoahqa/templates/reporting_periods_create.jinja2:98
 msgid "Cancel"
+msgstr ""
+
+#: whoahqa/templates/location_form.jinja2:30
+msgid "Location Form"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:10
+msgid "Locations"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:14
+msgid "All Locations"
 msgstr ""
 
 #: whoahqa/templates/location_list.jinja2:21
 msgid "Add Location"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:31
+msgid "Current Locations"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:39
+msgid "Parent"
+msgstr ""
+
+#: whoahqa/templates/location_list.jinja2:53
+msgid "Delete"
 msgstr ""
 
 #: whoahqa/templates/login.jinja2:16
@@ -511,16 +588,14 @@ msgstr ""
 msgid "Select Reporting Period"
 msgstr ""
 
-#: whoahqa/templates/reporting_periods_create.jinja2:9
-msgid "Create Reporting Period"
-msgstr ""
-
-#: whoahqa/templates/reporting_periods_create.jinja2:42
-msgid "Reporting Period"
-msgstr ""
-
-#: whoahqa/templates/reporting_periods_create.jinja2:73
+#: whoahqa/templates/reporting_periods_create.jinja2:13
+#: whoahqa/templates/reporting_periods_create.jinja2:94
 msgid "Create"
+msgstr ""
+
+#: whoahqa/templates/reporting_periods_create.jinja2:15
+#: whoahqa/templates/reporting_periods_create.jinja2:60
+msgid "Reporting Period"
 msgstr ""
 
 #: whoahqa/templates/reporting_periods_list.jinja2:16
@@ -548,31 +623,48 @@ msgstr ""
 msgid "Characteristics Summary"
 msgstr ""
 
-#: whoahqa/views/clinics.py:299
+#: whoahqa/views/admin.py:55 whoahqa/views/locations.py:93
+#: whoahqa/views/reporting_periods.py:88
+msgid "Your changes have been saved"
+msgstr ""
+
+#: whoahqa/views/clinics.py:275
+msgid "{} Clinic saved."
+msgstr ""
+
+#: whoahqa/views/clinics.py:284 whoahqa/views/clinics.py:332
 msgid "Cannot find selected municipality."
 msgstr ""
 
-#: whoahqa/views/reporting_periods.py:43
+#: whoahqa/views/clinics.py:289
+msgid ""
+"A clinic already exists with the                           provided name "
+"or CNES."
+msgstr ""
+
+#: whoahqa/views/clinics.py:328
+msgid "{} Clinic updated."
+msgstr ""
+
+#: whoahqa/views/default_views.py:52
+msgid "Language changed successfully"
+msgstr ""
+
+#: whoahqa/views/locations.py:48 whoahqa/views/reporting_periods.py:43
+#: whoahqa/views/reporting_periods.py:83
 msgid "Please fix the errors indicated below."
 msgstr ""
 
-#: whoahqa/views/reporting_periods.py:52
+#: whoahqa/views/locations.py:58
+msgid "{} {} saved"
+msgstr ""
+
+#: whoahqa/views/locations.py:112
+msgid "Cannot delete location with Children"
+msgstr ""
+
+#: whoahqa/views/reporting_periods.py:53
 msgid "Reporting period created"
-msgstr ""
-
-msgid "Reporting period 1"
-msgstr ""
-
-msgid "Reporting period 2"
-msgstr ""
-
-msgid "Reporting period 3"
-msgstr ""
-
-msgid "Reporting period 4"
-msgstr ""
-
-msgid "Reporting period 5"
 msgstr ""
 
 #~ msgid "Clinic Scores by Key Indicator"
@@ -585,5 +677,23 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Key Indicator Score"
+#~ msgstr ""
+
+#~ msgid "Create Reporting Period"
+#~ msgstr ""
+
+#~ msgid "Reporting period 1"
+#~ msgstr ""
+
+#~ msgid "Reporting period 2"
+#~ msgstr ""
+
+#~ msgid "Reporting period 3"
+#~ msgstr ""
+
+#~ msgid "Reporting period 4"
+#~ msgstr ""
+
+#~ msgid "Reporting period 5"
 #~ msgstr ""
 
