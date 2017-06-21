@@ -8,17 +8,17 @@
 {% endblock %}
 {% block title %}
   {% if request.url.find('edit') != -1 %}
-    {{ gettext("Edit") }}
+    {{ gettext('Edit') }}
   {% else %}
-    {{ gettext("Create") }}
+    {{ gettext('Create') }}
   {% endif %}
-  {{ gettext("Reporting Period") }}
+  {{ gettext('Reporting Period') }}
 {% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
   <li>
     <i class="icon-angle-right"></i>
-    <a href="{{ request.route_url('periods', traverse=('list')) }}">{{ gettext("Reporting Periods") }} </a>
+    <a href="{{ request.route_url('periods', traverse=('list')) }}">{{ gettext('Reporting Periods') }} </a>
     <i class="icon-angle-right"></i>
   </li>
   <li>{{ self.page_title() }}</li>
@@ -57,7 +57,7 @@
         </div>
         <div class="form-body">
           <div class="form-group {% if form.error or form['start_date'].error or form['end_date'].error %}has-error{% endif %}">
-            <label class="col-md-3 control-label">{{ gettext("Reporting Period") }}</label>
+            <label class="col-md-3 control-label">{{ gettext('Reporting Period') }}</label>
 
             <div class="col-md-6">
               <div class="input-group input-large date-picker input-daterange"
@@ -89,13 +89,13 @@
           <div class="col-md-offset-3 col-md-9">
             <button type="submit" class="btn btn-primary">
               {% if request.url.find('edit') != -1 %}
-                {{ gettext("Edit") }}
+                {{ gettext('Edit') }}
               {% else %}
-                {{ gettext("Create") }}
+                {{ gettext('Create') }}
               {% endif %}
             </button>
             <a class="btn btn-default" href="{{ request.route_url('periods', traverse=('list')) }}">
-              {{ gettext("Cancel")}}
+              {{ gettext('Cancel')}}
             </a>
           </div>
         </div>

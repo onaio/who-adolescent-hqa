@@ -7,11 +7,11 @@
 {% endblock %}
 {% block breadcrumbs %}
     <li>
-      <a href="{{ request.route_url('locations', traverse=()) }}"><iclass="fa fa-desktop"></i>  Locations
+      <a href="{{ request.route_url('locations', traverse=()) }}"><iclass="fa fa-desktop"></i>  {{ gettext('Locations') }}
       </a>
     </li>
     <i class="icon-angle-right"></i>
-    <li class="active"> All Locations </li>
+    <li class="active"> {{ gettext('All Locations') }} </li>
 </li>
 {% endblock %}
 {% block content %}
@@ -28,16 +28,16 @@
       <div class="col-md-12">
         <div class="portlet">
           <div class="portlet-title">
-            <strong>Current Locations</strong>
+            <strong>{{ gettext('Current Locations') }}</strong>
           </div>
           <div class="portlet-body">
               <table class="table table-responsive table-hover">
                 <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Location Type</th>
-                  <th>Parent</th>
-                  <th>Actions</th>
+                  <th>{{ gettext('Name') }}</th>
+                  <th>{{ gettext('Location Type') }}</th>
+                  <th>{{ gettext('Parent') }}</th>
+                  <th>{{ gettext('Actions') }}</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -48,9 +48,9 @@
                     <td>{{ location.location_type|capitalize }}</td>
                     <td>{{ location.parent }}</td>
                     <td>
-                      <a class="btn btn-default btn-xs" href="{{ request.route_path('locations', traverse=(location.id, 'edit')) }}">Edit</a>
+                      <a class="btn btn-default btn-xs" href="{{ request.route_path('locations', traverse=(location.id, 'edit')) }}">{{ gettext('Edit') }}</a>
                     
-                      <a class="btn btn-danger btn-xs" href="{{ request.route_path('locations', traverse=(location.id, 'delete')) }}">Delete</a>
+                      <a class="btn btn-danger btn-xs" href="{{ request.route_path('locations', traverse=(location.id, 'delete')) }}">{{ gettext('Delete') }}</a>
                     </td>
                   </tr>
                 {% endfor %}
