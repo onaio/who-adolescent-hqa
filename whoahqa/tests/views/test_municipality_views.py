@@ -41,8 +41,8 @@ class TestMunicipalityViews(IntegrationTestBase):
                                 municipality=municipality)
                 DBSession.add(clinic)
 
-        self.request.ona_user = OnaUser.get(
-            OnaUser.username == 'municipality-manager')
+        self.request.user = OnaUser.get(
+            OnaUser.username == 'municipality-manager').user
 
     def test_municipality_index(self):
         with patch('whoahqa.models.reporting_period.get_current_date') as mock:

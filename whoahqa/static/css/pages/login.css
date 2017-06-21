@@ -47,7 +47,7 @@ Login page
 }
 
 .login .content .register-form {
-  display: none;
+  display: block;
 }
 
 .login .content .form-title {

@@ -29,7 +29,8 @@ from whoahqa.security import pwd_context
 
 LOCATION_MAP = {
     groups.MUNICIPALITY_MANAGER: 'municipality',
-    groups.STATE_OFFICIAL: 'state'
+    groups.STATE_OFFICIAL: 'state',
+    groups.USER: ''
 }
 
 user_clinics = Table(
@@ -80,7 +81,55 @@ def delete_user_groups(user, group):
     statement.execute()
 
 
-class User(Base):
+class UpdateableUser(object):
+    def update(self, values):
+        group_name = values['group']
+
+        # check if new group is the same as previous group
+        # add new location selected to location table
+        # if group is clinic manager, add clinics selected to clinics list
+
+        if self.user.group is None or self.user.group.name != group_name:
+            group_criteria = Group.name == group_name
+            group_params = {'name': group_name}
+            group = Group.get_or_create(
+                group_criteria,
+                **group_params)
+
+            self.user.group = group
+        if group_name == groups.SUPER_USER:
+            # remove any location/clinic references
+            if self.user.location:
+                delete_user_locations(self.user, self.user.location)
+            if self.user.clinics:
+                delete_user_clinics([c.id for c in self.user.clinics])
+
+        elif group_name == groups.CLINIC_MANAGER:
+            # Remove existing location mapping
+            if self.user.location:
+                delete_user_locations(self.user, self.user.location)
+
+            from whoahqa.models import Clinic
+
+            clinic_id_list = values['clinics']
+            clinics = Clinic.all(Clinic.id.in_(clinic_id_list))
+
+            self.user.clinics = clinics
+            # add clinics to user
+        else:
+            # Remove existing clinic mapping
+            if self.user.clinics:
+                delete_user_clinics([c.id for c in self.user.clinics])
+
+            location_id = values.get(LOCATION_MAP[group_name], '')
+
+            if location_id != '':
+                self.user.location = Location.get(Location.id == location_id)
+
+        self.save()
+
+
+class User(Base, UpdateableUser):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     clinics = relationship("Clinic", secondary=user_clinics)
@@ -102,10 +151,33 @@ class User(Base):
             return self.clinics[0].municipality
 
     @property
+    def user(self):
+        return self
+
+    @property
+    def username(self):
+        username = ""
+
+        if self.ona_user is not None:
+            username = self.ona_user.username
+        else:
+            username = self.profile.username
+
+        return username
+
+    @property
+    def email(self):
+        return self.profile.email if self.profile is not None else ''
+
+    @property
     def __acl__(self):
         return [
             (Allow, "u:{}".format(self.id), ALL_PERMISSIONS),
         ]
+
+    def __str__(self):
+        if self.username != "":
+            return self.username
 
     @property
     def settings(self):
@@ -136,11 +208,27 @@ class User(Base):
                 state_id = self.location.id
 
         return {
+            'email': self.email,
             'group': self.group,
-            'clinics': [c.id for c in self.clinics],
+            'clinics': ["{}".format(c.id) for c in self.clinics],
             'municipality': municipality_id,
             'state': state_id
         }
+
+    def update(self, values):
+        # Create user object and save
+        super(User, self).update(values)
+
+        if self.profile is not None:
+            self.profile.email = values['email']
+            self.profile.password = values['password']
+            self.profile.save()
+        else:
+            user_profile = UserProfile(username=values['username'],
+                                       email=values['email'],
+                                       password=values['password'],
+                                       user=self)
+            user_profile.save()
 
 
 class UserProfile(Base):
@@ -148,8 +236,12 @@ class UserProfile(Base):
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True,
                      autoincrement=False)
     username = Column(String(100), nullable=False, unique=True)
+    email = Column(String(50), nullable=True, unique=True)
     pwd = Column(String(255), nullable=False)
-    user = relationship('User')
+    user = relationship('User',
+                        backref=backref('profile',
+                                        uselist=False,
+                                        cascade="all, delete-orphan"))
 
     def check_password(self, password):
         # always return false if password is greater than 255 to avoid
@@ -164,8 +256,9 @@ class UserProfile(Base):
 
     @password.setter
     def password(self, value):
-        from whoahqa.security import pwd_context
-        self.pwd = pwd_context.encrypt(value)
+        if value != "":
+            from whoahqa.security import pwd_context
+            self.pwd = pwd_context.encrypt(value)
 
     password = synonym('_password', descriptor=password)
 
@@ -187,13 +280,16 @@ class Group(Base):
         return self.name
 
 
-class OnaUser(Base):
+class OnaUser(Base, UpdateableUser):
     __tablename__ = 'ona_users'
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True,
                      autoincrement=False)
     username = Column(String(255), nullable=False, unique=True)
     refresh_token = Column(String(255), nullable=False)
-    user = relationship('User', backref=backref('ona_user', uselist=False))
+    user = relationship('User',
+                        backref=backref('ona_user',
+                                        uselist=False,
+                                        cascade="all, delete-orphan"))
 
     @classmethod
     def get_or_create_from_api_data(cls, user_data, refresh_token):
@@ -220,65 +316,12 @@ class OnaUser(Base):
         DBSession.add(ona_user)
         return ona_user
 
+    @property
+    def id(self):
+        return self.user_id
+
     def __str__(self):
         return self.username
-
-    @property
-    def group(self):
-        return self.user.group
-
-    @property
-    def location(self):
-        return self.user.location
-
-    @property
-    def clinics(self):
-        return self.user.clinics
-
-    def update(self, values):
-        group_name = values['group']
-
-        # check if new group is the same as previous group
-        # add new location selected to location table
-        # if group is clinic manager, add clinics selected to clinics list
-
-        if self.group is None or self.group.name != group_name:
-            group_criteria = Group.name == group_name
-            group_params = {'name': group_name}
-            group = Group.get_or_create(
-                group_criteria,
-                **group_params)
-
-            self.user.group = group
-        if group_name == groups.SUPER_USER:
-            # remove any location/clinic references
-            if self.location:
-                delete_user_locations(self.user, self.location)
-            if self.clinics:
-                delete_user_clinics([c.id for c in self.clinics])
-
-        elif group_name == groups.CLINIC_MANAGER:
-            # Remove existing location mapping
-            if self.location:
-                delete_user_locations(self.user, self.location)
-
-            from whoahqa.models import Clinic
-
-            clinic_id_list = values['clinics']
-            clinics = Clinic.all(Clinic.id.in_(clinic_id_list))
-
-            self.user.clinics = clinics
-            # add clinics to user
-        else:
-            # Remove existing clinic mapping
-            if self.clinics:
-                delete_user_clinics([c.id for c in self.clinics])
-
-            location_id = values[LOCATION_MAP[group_name]]
-
-            self.user.location = Location.get(Location.id == location_id)
-
-        self.save()
 
 
 class UserFactory(BaseModelFactory):

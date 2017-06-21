@@ -1,0 +1,69 @@
+{% extends 'base.jinja2' %}
+{% block title %}Users{% endblock %}
+{% block page_title %}
+    <h3>{{ self.title() }}</h3>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <li>
+      <a href="{{ request.route_url('admin', traverse=()) }}"><iclass="fa fa-desktop"></i>  Users
+      </a>
+    </li>
+    <i class="icon-angle-right"></i>
+    <li class="active">
+      New User
+    </li>
+</li>
+{% endblock %}
+
+{% block content %}
+<section class="container">
+    {% include '_alerts.jinja2' %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet">
+                <div class="portlet-title">
+                    <strong>Registration Form</strong>
+                </div>
+                <div class="portlet-body form">
+                    <form class="form-horizontal" method="post">
+                        <div class="form-body">
+                        {% for field in form %}
+                            {% set has_error = not not field.error %}
+                            <div class="form-group {% if has_error %}has-error{% endif %}">
+                                <label for="inputEmail3" class="col-sm-2 control-label">{{ field.title }}</label>
+
+                                <div class="col-sm-5">
+                                  {{ field.serialize()|safe }}
+                                </div>
+                                {% if has_error %}
+                                  {% for msg in field.error.messages() %}
+                                <span class="help-block">{{ msg }}</span>
+                                  {% endfor %}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">Sign Up</button>
+                                <a class="btn btn-default" href="{{ request.route_url('admin', traverse=()) }}">Cancel</a>
+                            </div>
+                        </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block page_scripts %}
+  <script src="{{ request.static_url('whoahqa:static/scripts/custom.js') }}"></script>
+{% endblock %}
+{% block jquery_ready %}
+  {{ super() }}
+  $('select[name!=group]').closest('div.form-group').hide();
+  Custom.userFormValidation();
+
+  /* Show clinic select since it is the default selected option */
+  $('select[name=group]').trigger('change');
+{% endblock %}

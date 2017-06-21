@@ -110,6 +110,7 @@ def includeme(config):
     config.get_jinja2_environment().filters['round_or_none'] = round_or_none
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('default', '/')
+    config.add_route('logout', '/logout/')
     config.add_route('push', '/push/{action}')
     config.add_route('locale', '/locale/')
     config.add_route('admin', '/admin/*traverse', factory=UserFactory)
@@ -133,7 +134,7 @@ def includeme(config):
 
 def add_request_helpers(config):
     # add .user to requests and cache it with reify
-    config.add_request_method(get_request_user, 'ona_user', reify=True)
+    config.add_request_method(get_request_user, 'user', reify=True)
     config.add_request_method(
         can_access_clinics, 'can_access_clinics', reify=True)
     config.add_request_method(can_view_clinics, 'can_view_clinics', reify=True)
