@@ -87,15 +87,15 @@ class AdminViews(object):
 
             except ValidationFailure:
                 self.request.session.flash(
-                    u"Please fix the highlighted errors below", "error")
+                    _(u"Please fix the highlighted errors below"), "error")
 
             else:
                 new_user = User()
                 new_user.update(values)
 
                 self.request.session.flash(
-                    "Success! {} user created".format(
-                        new_user.profile.username),
+                    _(u"Success! {} user created".format(
+                        new_user.profile.username)),
                     'success')
 
                 return HTTPFound(
@@ -115,7 +115,7 @@ class AdminViews(object):
 
         if self.request.user == user:
             self.request.session.flash(
-                u"You cannot delete yourself", "error")
+                _(u"You cannot delete yourself"), "error")
             return HTTPFound(
                 self.request.route_url(
                     'admin', traverse=()))
@@ -123,7 +123,7 @@ class AdminViews(object):
         DBSession.delete(user)
 
         self.request.session.flash(
-            u"User successfully deleted", "success")
+            _(u"User successfully deleted"), "success")
         return HTTPFound(
             self.request.route_url(
                 'admin', traverse=()))

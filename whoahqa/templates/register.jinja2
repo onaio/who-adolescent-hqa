@@ -38,7 +38,7 @@
                                 </div>
                                 {% if has_error %}
                                   {% for msg in field.error.messages() %}
-                                <span class="help-block">{{ gettext(msg) }}</span>
+                                <span class="help-block">{{ msg }}</span>
                                   {% endfor %}
                                 {% endif %}
                             </div>
