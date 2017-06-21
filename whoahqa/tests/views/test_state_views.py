@@ -41,8 +41,8 @@ class TestStateViews(IntegrationTestBase):
                                 municipality=municipality1)
                 DBSession.add(clinic)
 
-        self.request.ona_user = OnaUser.get(
-            OnaUser.username == 'state-official')
+        self.request.user = OnaUser.get(
+            OnaUser.username == 'state-official').user
 
         self.view = StateViews(self.request)
 

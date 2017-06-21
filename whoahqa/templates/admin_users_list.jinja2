@@ -1,7 +1,7 @@
 {% extends 'base.jinja2' %}
 {% block title %}Users{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
-  
+
 {% block breadcrumbs %}
     <li><a href="#">Users</a></li>
 {% endblock %}
@@ -12,6 +12,13 @@
   {% include "_alerts.jinja2" %}
   <div class="row">
     <div class="col-md-12">
+    <div class="table-toolbar">
+      <div class="btn-group">
+          <a id="sample_editable_1_new" class="btn btn-primary" href="{{ request.route_path('admin', traverse=('register')) }}">
+              {{ gettext('Register User') }} <i class="icon-plus"></i>
+          </a>
+      </div>
+     </div>
       <div class="portlet">
         <div class="portlet-body table-responsive no-padding">
           <form method="post">
@@ -26,23 +33,23 @@
               </tr>
               </thead>
               <tbody>
-              {% for ona_user in users|sort(true, attribute='user.id') %}
-              {% set is_current_user = request.ona_user == ona_user %}
+              {% for user in users|sort(true, attribute='id') %}
+              {% set is_current_user = request.user == user %}
                 <tr>
-                  <td>{{ ona_user.username }}</td>
-                  <td>{{ ona_user.group|capitalize }}</td>
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.group|replace("_", " ")|title }}</td>
                   <td>
-                    {% if ona_user.location is not none%}
-                      {{ ona_user.location.name|format_location_name }} 
-                      {{ ona_user.location.location_type|format_location_name }}
+                    {% if user.location is not none%}
+                      {{ user.location.name|format_location_name }}
+                      {{ user.location.location_type|format_location_name }}
                     {% else %}
-                      {% for clinic in ona_user.clinics %}
+                      {% for clinic in user.clinics %}
                         {{ clinic.name|format_location_name }}
                       {% endfor %}
                     {% endif %}
                   </td>
                   <td>
-                    <a class="btn btn-default btn-xs" href="{{ request.route_path('admin', traverse=(ona_user.user.id, 'edit')) }}">Edit</a>
+                    <a class="btn btn-default btn-xs" href="{{ request.route_path('admin', traverse=(user.id, 'edit')) }}">Edit</a>
                   </td>
                 </tr>
               {% endfor %}

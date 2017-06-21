@@ -12,7 +12,7 @@ class TestLocale(IntegrationTestBase):
         super(TestLocale, self).setUp()
         self.setup_test_data()
         self.request = testing.DummyRequest()
-        self.request.ona_user = OnaUser.get(OnaUser.username == "super")
+        self.request.user = OnaUser.get(OnaUser.username == "super").user
 
     def test_locale_settings(self):
         params = MultiDict({'locale': 'pt'})

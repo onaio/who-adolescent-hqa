@@ -2,14 +2,14 @@ import operator
 from whoahqa.utils import translation_string_factory as _
 
 # Client Tool Constants
-ADOLESCENT_CLIENT = 'adolescent_client_V2'
-HEALTH_CARE_PROVIDER = 'health_care_provider_V2'
-SUPPORT_STAFF = 'support_staff_V2'
-HEALTH_FACILITY_MANAGER = 'health_facility_manager_V2'
-OUTREACH_WORKER = 'outreach_worker_V2'
-COMMUNITY_MEMBER = 'community_member_V2'
-ADOLESCENT_IN_COMMUNITY = 'adolescent_in_community_V2'
-OBSERVATION_GUIDE = 'observation_guide_V2'
+ADOLESCENT_CLIENT = 'adolescent_client_V3'
+HEALTH_CARE_PROVIDER = 'health_care_provider_V3'
+SUPPORT_STAFF = 'support_staff_V3'
+HEALTH_FACILITY_MANAGER = 'health_facility_manager_V3'
+OUTREACH_WORKER = 'outreach_worker_V3'
+COMMUNITY_MEMBER = 'community_member_V3'
+ADOLESCENT_IN_COMMUNITY = 'adolescent_in_community_V3'
+OBSERVATION_GUIDE = 'observation_guide_V3'
 
 # Clinic registration
 CLINIC_REGISTRATION = 'clinic_registration'
