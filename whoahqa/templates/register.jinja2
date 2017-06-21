@@ -6,12 +6,12 @@
 
 {% block breadcrumbs %}
     <li>
-      <a href="{{ request.route_url('admin', traverse=()) }}"><iclass="fa fa-desktop"></i>  Users
+      <a href="{{ request.route_url('admin', traverse=()) }}"><iclass="fa fa-desktop"></i>  {{ gettext('Users') }}
       </a>
     </li>
     <i class="icon-angle-right"></i>
     <li class="active">
-      New User
+      {{ gettext('New User') }}
     </li>
 </li>
 {% endblock %}
@@ -23,7 +23,7 @@
         <div class="col-md-12">
             <div class="portlet">
                 <div class="portlet-title">
-                    <strong>Registration Form</strong>
+                    <strong>{{ gettext('Registration Form') }}</strong>
                 </div>
                 <div class="portlet-body form">
                     <form class="form-horizontal" method="post">
@@ -31,14 +31,14 @@
                         {% for field in form %}
                             {% set has_error = not not field.error %}
                             <div class="form-group {% if has_error %}has-error{% endif %}">
-                                <label for="inputEmail3" class="col-sm-2 control-label">{{ field.title }}</label>
+                                <label for="inputEmail3" class="col-sm-2 control-label">{{ gettext(field.title) }}</label>
 
                                 <div class="col-sm-5">
                                   {{ field.serialize()|safe }}
                                 </div>
                                 {% if has_error %}
                                   {% for msg in field.error.messages() %}
-                                <span class="help-block">{{ msg }}</span>
+                                <span class="help-block">{{ gettext(msg) }}</span>
                                   {% endfor %}
                                 {% endif %}
                             </div>
@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-primary">{{ gettext("Register User") }}</button>
-                                <a class="btn btn-default" href="{{ request.route_url('admin', traverse=()) }}">Cancel</a>
+                                <a class="btn btn-default" href="{{ request.route_url('admin', traverse=()) }}">{{ gettext('Cancel') }}</a>
                             </div>
                         </div>
                         </form>

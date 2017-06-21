@@ -3,10 +3,10 @@
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
     <li>
-      <a href="{{ request.route_url('admin', traverse=()) }}"><iclass="fa fa-desktop"></i> Users</a>
+      <a href="{{ request.route_url('admin', traverse=()) }}"><iclass="fa fa-desktop"></i> {{gettext('Users')}}</a>
     </li>
       <i class="icon-angle-right"></i>
-      <li class="active">Edit User</li>
+      <li class="active">{{ gettext('Edit User')}}</li>
 {% endblock %}
 {% block content %}
 
@@ -20,7 +20,7 @@
           <form class="form-horizontal" data-role="form" method="post">
               <div class="portlet-body">
                 <div class="form-group">
-                  <label for="username" class="col-sm-2 control-label">Username</label>
+                  <label for="username" class="col-sm-2 control-label">{{ gettext('Username') }}</label>
                   <div class="col-sm-2">
                     <p class="form-control-static">{{ user }}</p>
                   </div>
@@ -36,8 +36,7 @@
                   {% else %}
                     {% set has_error = not not field.error %}
                     <div class="form-group {% if has_error %}has-error{% endif %}">
-                      <label for="inputEmail3" class="col-sm-2 control-label">{{ field.title }}</label>
-
+                      <label for="inputEmail3" class="col-sm-2 control-label">{{ gettext(field.title) }}</label>
                       <div class="col-sm-6">
                         {{ field.serialize()|safe }}
                       </div>
@@ -54,11 +53,11 @@
               <div class="portlet-footer">
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary">{{ gettext('Save') }}</button>
                     <button class="btn btn-danger" data-toggle="modal" data-target="#delete-confirm">
-                      Delete
+                      {{ gettext('Delete') }}
                     </button>
-                    <a class="btn btn-default" href="{{ request.route_url('admin', traverse=()) }}">Back</a>
+                    <a class="btn btn-default" href="{{ request.route_url('admin', traverse=()) }}">{{ gettext('Back') }}</a>
                   </div>
                 </div>
               </div>

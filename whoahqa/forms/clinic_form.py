@@ -23,7 +23,7 @@ class ClinicForm(colander.MappingSchema):
         colander.String(encoding='utf-8'),
         title=_("CNES Number"))
     municipality = colander.SchemaNode(
-        colander.String(encoding='utf-8'), title="Municipality",
+        colander.String(encoding='utf-8'), title=_("Municipality"),
         widget=municipality_widget)
 
     def validator(self, node, value):
