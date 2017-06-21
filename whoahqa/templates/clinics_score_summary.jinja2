@@ -5,7 +5,7 @@
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
   <li>
-    <a href="{{ request.route_url('users', traverse=(request.ona_user.user_id, 'clinics')) }}">
+    <a href="{{ request.route_url('users', traverse=(request.user.id, 'clinics')) }}">
        {% trans %}My Clinics{% endtrans %}
     </a>
   <i class="icon-angle-right"></i>

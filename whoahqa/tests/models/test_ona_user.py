@@ -93,7 +93,7 @@ class TestOnaUser(TestBase):
 
         manager.update(values)
 
-        self.assertEqual(manager.location, municipality)
+        self.assertEqual(manager.user.location, municipality)
 
     def test_update_new_user_group(self):
         user = User()
@@ -108,8 +108,8 @@ class TestOnaUser(TestBase):
 
         ona_user.update(values)
 
-        self.assertEqual(ona_user.group.name, groups.MUNICIPALITY_MANAGER)
-        self.assertEqual(ona_user.location, municipality)
+        self.assertEqual(ona_user.user.group.name, groups.MUNICIPALITY_MANAGER)
+        self.assertEqual(ona_user.user.location, municipality)
 
     def test_update_user_to_state_official(self):
         self.setup_test_data()
@@ -122,7 +122,7 @@ class TestOnaUser(TestBase):
         manager = OnaUser.get(OnaUser.username == 'manager_a')
 
         manager.update(values)
-        self.assertEqual(manager.location, state)
+        self.assertEqual(manager.user.location, state)
 
     def test_add_clinics_to_user(self):
         self.setup_test_data()
