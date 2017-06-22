@@ -204,7 +204,7 @@ class TestBase(unittest.TestCase):
 
     def create_submissions(self):
         # make submissions
-        for i in range(5):
+        for i in range(len(self.submissions)):
             Submission.create_from_json(self.submissions[i])
         transaction.commit()
 
