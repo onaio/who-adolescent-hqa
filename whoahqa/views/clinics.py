@@ -31,13 +31,11 @@ from whoahqa.models import (
     ReportingPeriod,
 )
 from whoahqa.forms import ClinicForm
+from whoahqa.views.base import BaseClassViews
 
 
 @view_defaults(route_name='clinics')
-class ClinicViews(object):
-    def __init__(self, request):
-        self.request = request
-
+class ClinicViews(BaseClassViews):
     @view_config(name='',
                  context=ClinicFactory,
                  renderer='clinics_summary.jinja2',
@@ -57,53 +55,28 @@ class ClinicViews(object):
         # TODO: change renderer only if its an xhr request
         search_term = self.request.GET.get('search')
 
-        period = get_period_from_request(self.request)
-
         if search_term is not None:
             clinics = Clinic.filter_clinics(search_term, True)
             self.request.override_renderer = '_summary_scores_table.jinja2'
         else:
             clinics = self.request.user.clinics
 
+        state = None
+        municipality = None
+
+        if clinics:
+            municipality = clinics[0].municipality
+            state = municipality.parent
+
         return {
             'locations': clinics,
-            'period': period,
-            'periods': ReportingPeriod.get_active_periods(),
-            'key_indicators_key_labels': constants.INDICATOR_LABELS,
+            'municipality': municipality,
+            'national_report': self.national_report(self.period),
+            'period': self.period,
+            'periods': self.periods,
+            'key_indicators_key_labels': self.key_indicators_key_labels,
+            'state': state
         }
-
-    @view_config(name='unassigned',
-                 context=ClinicFactory,
-                 renderer='clinics_unassigned.jinja2',
-                 request_method='GET'
-                 )
-    def unassigned(self):
-
-        search_term = self.request.GET.get('search')
-        period = get_period_from_request(self.request)
-        if search_term is not None:
-            clinics = Clinic.filter_clinics(search_term, False)
-            self.request.override_renderer = '_clinics_table.jinja2'
-        else:
-            clinics = Clinic.get_unassigned()
-
-        return {
-            'clinics': clinics,
-            'period': period,
-            'search_term': search_term
-        }
-
-    @view_config(name='assign', request_method='POST', require_csrf=False)
-    def assign(self):
-        user = self.request.user
-
-        # get the list of requested clinics
-        clinic_ids = self.request.POST.getall('clinic_id')
-        clinics = Clinic.all(Clinic.id.in_(clinic_ids))
-        for clinic in clinics:
-            clinic.assign_to(user)
-        return HTTPFound(
-            self.request.route_url('clinics', traverse=('unassigned',)))
 
     @view_config(name='',
                  request_method='GET',

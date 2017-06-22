@@ -1,7 +1,7 @@
 from pyramid.httpexceptions import HTTPFound
 
 from whoahqa.constants import characteristics as constants
-from whoahqa.constants import permissions as perms
+from whoahqa.constants import permissions as perms, groups
 
 from whoahqa.views.helpers import get_period_from_request
 from whoahqa.utils import translation_string_factory as _
@@ -24,6 +24,9 @@ def default(request):
                             _query={'period': period.id})
 
     # redirect to view depending on location owned
+    if user.group.name == groups.NATIONAL_OFFICIAL:
+        url = request.route_url('states', traverse=(),
+                                _query={'period': period.id})
 
     if user.location:
         url = user.location.get_url(request, period)
