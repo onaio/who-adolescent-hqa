@@ -308,14 +308,17 @@ class Clinic(Base):
                     num_questions = (constants.QUESTION_COUNT
                                      [characteristic][client_tool_id])
 
-                    submission_jsons = [s.raw_data
-                                        for c, s in submissions
-                                        if c.characteristic == characteristic
-                                        and c.xform_id == client_tool_id]
+                    submission_jsons = [
+                        s.raw_data
+                        for c, s in submissions
+                        if c.characteristic == characteristic
+                        and c.xform_id.find(
+                            constants.CLIENT_TOOL_IDS[client_tool_id]) != -1]
 
                     current_submission_map = filter(
                         lambda c: c['characteristic'] == characteristic
-                        and c['xform_id'] == client_tool_id,
+                        and c['xform_id'].find(
+                            constants.CLIENT_TOOL_IDS[client_tool_id]) != -1,
                         characteristics_submission_map)
 
                     num_responses = 0

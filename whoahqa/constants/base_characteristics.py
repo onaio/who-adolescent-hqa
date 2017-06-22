@@ -26,6 +26,17 @@ CLIENT_TOOLS = [
     (OBSERVATION_GUIDE, _("Observation Guide"))
 ]
 
+CLIENT_TOOL_IDS = {
+    ADOLESCENT_CLIENT: 'adolescent_client',
+    HEALTH_CARE_PROVIDER: 'health_care_provider',
+    SUPPORT_STAFF: 'support_staff',
+    HEALTH_FACILITY_MANAGER: 'health_facility_manager',
+    OUTREACH_WORKER: 'outreach_worker',
+    COMMUNITY_MEMBER: 'community_member',
+    ADOLESCENT_IN_COMMUNITY: 'adolescent_in_community',
+    OBSERVATION_GUIDE: 'observation_guide'
+}
+
 ONE = 'one'
 TWO = 'two'
 THREE = 'three'
