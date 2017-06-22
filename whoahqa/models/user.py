@@ -30,6 +30,7 @@ from whoahqa.security import pwd_context
 LOCATION_MAP = {
     groups.MUNICIPALITY_MANAGER: 'municipality',
     groups.STATE_OFFICIAL: 'state',
+    groups.NATIONAL_OFFICIAL: '',
     groups.USER: ''
 }
 
@@ -97,7 +98,8 @@ class UpdateableUser(object):
                 **group_params)
 
             self.user.group = group
-        if group_name == groups.SUPER_USER:
+        if group_name == groups.SUPER_USER or\
+                group_name == groups.NATIONAL_OFFICIAL:
             # remove any location/clinic references
             if self.user.location:
                 delete_user_locations(self.user, self.user.location)

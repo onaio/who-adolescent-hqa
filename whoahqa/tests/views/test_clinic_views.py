@@ -1,5 +1,4 @@
 import datetime
-
 from webob.multidict import MultiDict
 from pyramid import testing
 from pyramid.httpexceptions import (
@@ -11,11 +10,10 @@ from mock import patch
 
 from sqlalchemy.orm.exc import NoResultFound
 
-from whoahqa.constants import characteristics as constants
+from whoahqa.constants import characteristics as constants, groups
 from whoahqa.utils import tuple_to_dict_list
 from whoahqa.models import (
-    DBSession,
-    user_clinics,
+    User,
     OnaUser,
     Clinic,
     Municipality,
@@ -58,42 +56,9 @@ class TestClinicViews(IntegrationTestBase):
     def setUp(self):
         super(TestClinicViews, self).setUp()
         self.request = testing.DummyRequest()
-        self.clinic_views = ClinicViews(self.request)
         self.setup_test_data()
         self._create_municipality("Brazilia")
-
-    def test_unassigned_clinics_view(self):
-        response = self.clinic_views.unassigned()
-
-        # we should only have Clinic B in the response
-        self.assertEqual(len(response['clinics']), 3)
-        self.assertEqual(response['clinics'][0].name, "Clinic B")
-
-        # test when filter is done
-        params = MultiDict({'search': 'Clinic B'})
-        self.request.GET = params
-        response = self.clinic_views.unassigned()
-        self.assertEqual(len(response['clinics']), 1)
-        self.assertEqual(response['clinics'][0].name, "Clinic B")
-        self.assertEqual(response['search_term'], "Clinic B")
-
-    def test_assign_view(self):
-        count = DBSession.query(user_clinics).count()
-        self.assertEqual(count, 1)
-
-        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
-
-        # get the clinics
-        clinics = Clinic.all()
-        self.request.method = 'POST'
-        self.request.user = ona_user.user
-        params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
-        self.request.POST = params
-        self.clinic_views.assign()
-
-        # both clinics should now be assigned to user
-        count = DBSession.query(user_clinics).count()
-        self.assertEqual(count, 4)
+        self.clinic_views = ClinicViews(self.request)
 
     def test_show(self):
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
@@ -108,21 +73,6 @@ class TestClinicViews(IntegrationTestBase):
             response['characteristics'],
             tuple_to_dict_list(
                 ("id", "description", "number"), constants.CHARACTERISTICS))
-
-    def test_list_redirects_when_user_has_no_permissions(self):
-        self.request.user = OnaUser.get(OnaUser.username == 'manager_a').user
-        self.config.testing_securitypolicy(
-            userid=2, permissive=False)
-        response = self.clinic_views.list()
-        self.assertEqual(response.status_code, 302)
-
-        # test when filter is done
-        params = MultiDict({'search': 'Clinic B'})
-        self.request.GET = params
-        response = self.clinic_views.unassigned()
-        self.assertEqual(len(response['clinics']), 1)
-        self.assertEqual(response['clinics'][0].name, "Clinic B")
-        self.assertEqual(response['search_term'], "Clinic B")
 
     def test_show_form(self):
         params = MultiDict({'form': constants.ADOLESCENT_CLIENT})
@@ -205,18 +155,6 @@ class TestClinicViews(IntegrationTestBase):
         self.assertEqual(response['characteristic_indicator_mapping'],
                          constants.CHARACTERISTIC_INDICATOR_MAPPING)
 
-    def test_access_clinics_view(self):
-        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
-
-        self.request.method = 'GET'
-        self.request.user = ona_user.user
-
-        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
-            mock.return_value = datetime.date(2015, 6, 1)
-            response = self.clinic_views.assess_clinics()
-
-            self.assertEqual(len(response['clinics']), 4)
-
     def test_manage_clinics_view(self):
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         self.request.method = 'GET'
@@ -265,29 +203,26 @@ class TestClinicViewsFunctional(FunctionalTestBase):
         self._create_municipality("Brazilia")
         self._create_user('john')
 
-    def test_unassigned_clinics_view_allows_authenticated(self):
-        url = self.request.route_path('clinics', traverse=('unassigned',))
-        headers = self._login_user('manager_b')
-        response = self.testapp.get(url, headers=headers)
-        self.assertEqual(response.status_code, 200)
-
-    def test_assign_clinic_view_allows_authenticated(self):
-        clinics = Clinic.all()
-        url = self.request.route_path('clinics', traverse=('assign',))
-        params = MultiDict([('clinic_id', clinic.id) for clinic in clinics])
-        headers = self._login_user('manager_a')
-        response = self.testapp.post(url, params, headers=headers)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(
-            response.location,
-            self.request.route_url('clinics', traverse=('unassigned',)))
-
     def test_clinic_show_allows_owner(self):
         period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
         clinic = Clinic.get(Clinic.name == "Clinic A")
         url = self.request.route_path(
             'clinics', traverse=(clinic.id, period.id))
         headers = self._login_user('manager_a')
+        response = self.testapp.get(url, headers=headers)
+        self.assertEqual(response.status_code, 200)
+
+    def test_national_official_can_view_clinics(self):
+        self._create_dash_user(
+            "national", "national", "national@email.com",
+            groups.NATIONAL_OFFICIAL)
+        user = User.newest()
+
+        period = ReportingPeriod.get(ReportingPeriod.title == 'Period 1')
+        clinic = Clinic.get(Clinic.name == "Clinic A")
+        url = self.request.route_path(
+            'clinics', traverse=(clinic.id, period.id))
+        headers = self._login_dashboard_user(user)
         response = self.testapp.get(url, headers=headers)
         self.assertEqual(response.status_code, 200)
 

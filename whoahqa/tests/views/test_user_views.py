@@ -23,10 +23,10 @@ class TestUserViews(IntegrationTestBase):
     def setUp(self):
         super(TestUserViews, self).setUp()
         self.request = testing.DummyRequest()
+        self.setup_test_data()
         self.user_views = UserViews(self.request)
 
     def test_user_clinics_view(self):
-        self.setup_test_data()
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         self.request.context = ona_user.user
         self.request.user = ona_user.user
@@ -39,7 +39,6 @@ class TestUserViews(IntegrationTestBase):
         self.assertEqual(response['locations'][0].name, "Clinic A")
 
     def select_reporting_period(self):
-        self.setup_test_data()
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         request = testing.DummyRequest()
         request.context = ona_user.user

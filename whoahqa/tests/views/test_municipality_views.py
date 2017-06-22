@@ -3,6 +3,7 @@ import transaction
 from pyramid import testing
 from mock import patch
 
+from whoahqa.constants import groups
 from whoahqa.models import (
     Clinic,
     DBSession,
@@ -22,7 +23,6 @@ class TestMunicipalityViews(IntegrationTestBase):
     def setUp(self):
         super(TestMunicipalityViews, self).setUp()
         self.request = testing.DummyRequest()
-        self.view = MunicipalityViews(self.request)
         self._create_user('municipality-manager')
 
         with transaction.manager:
@@ -43,6 +43,8 @@ class TestMunicipalityViews(IntegrationTestBase):
 
         self.request.user = OnaUser.get(
             OnaUser.username == 'municipality-manager').user
+
+        self.view = MunicipalityViews(self.request)
 
     def test_municipality_index(self):
         with patch('whoahqa.models.reporting_period.get_current_date') as mock:
@@ -99,6 +101,37 @@ class TestMunicipalityViewsFunctional(FunctionalTestBase):
         url = self.request.route_path(
             'municipalities', traverse=(municipality.id))
         headers = self._login_user("m-official")
+
+        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
+            mock.return_value = datetime.date(2015, 6, 1)
+            response = self.testapp.get(url, headers=headers)
+            self.assertEqual(response.status_code, 200)
+
+    def test_national_official_can_list_municipalities(self):
+        self._create_dash_user(
+            "national", "national", "national@email.com",
+            groups.NATIONAL_OFFICIAL)
+        user = User.newest()
+
+        url = self.request.route_path(
+            'municipalities', traverse=())
+        headers = self._login_dashboard_user(user)
+
+        with patch('whoahqa.models.reporting_period.get_current_date') as mock:
+            mock.return_value = datetime.date(2015, 6, 1)
+            response = self.testapp.get(url, headers=headers)
+            self.assertEqual(response.status_code, 200)
+
+    def test_national_official_can_access_municipality(self):
+        self._create_dash_user(
+            "national", "national", "national@email.com",
+            groups.NATIONAL_OFFICIAL)
+        user = User.newest()
+
+        municipality = Municipality.get(Municipality.name == "Brasillia")
+        url = self.request.route_path(
+            'municipalities', traverse=(municipality.id))
+        headers = self._login_dashboard_user(user)
 
         with patch('whoahqa.models.reporting_period.get_current_date') as mock:
             mock.return_value = datetime.date(2015, 6, 1)

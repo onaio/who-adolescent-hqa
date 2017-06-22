@@ -18,7 +18,7 @@ from sqlalchemy.orm import (
     relationship)
 
 from whoahqa.constants import characteristics as constants
-from whoahqa.constants import permissions as perms
+from whoahqa.constants import permissions as perms, groups
 from whoahqa.models import (
     Base,
     BaseModelFactory,
@@ -73,7 +73,9 @@ class Clinic(Base):
 
     @property
     def __acl__(self):
-        acl = []
+        acl = [
+            (Allow, groups.NATIONAL_OFFICIAL, perms.CAN_VIEW_CLINICS)
+        ]
         if self.user is not None:
             acl.append((Allow, "u:{}".format(self.user.id),
                         perms.CAN_VIEW_CLINICS))
@@ -194,7 +196,15 @@ class Clinic(Base):
         return tuple_to_dict_list(
             ('count', 'characteristic', 'xform_id'), result)
 
-    # TODO: factor in reporting period
+    def has_period_clinic_submissions(self, period):
+        from whoahqa.models import ClinicSubmission
+        return DBSession\
+            .query(ClinicSubmission.valid)\
+            .filter(ClinicSubmission.clinic_id == self.id,
+                    ClinicSubmission.period == period,
+                    ClinicSubmission.valid == true())\
+            .first()
+
     def get_period_clinic_submissions(self, period):
         from whoahqa.models import ClinicSubmission, Submission
         return DBSession\
@@ -206,7 +216,7 @@ class Clinic(Base):
             .all()
 
     def has_clinic_submissions_for_period(self, period):
-        return bool(self.get_period_clinic_submissions(period))
+        return bool(self.has_period_clinic_submissions(period))
 
     def calculate_characteristic_aggregate_scores(
             self, xpath, num_responses, submission_jsons):
@@ -270,6 +280,9 @@ class Clinic(Base):
         """
 
         submissions = self.get_period_clinic_submissions(period)
+
+        if submissions is None:
+            return None
 
         # filter count based on whether score is valid
         characteristics_submission_map = \
@@ -400,17 +413,19 @@ class Clinic(Base):
 
         scores = self.get_scores(period)
 
-        for key_indicator, characteristic_list in key_indicators.iteritems():
-            total_scores = 0
-            characteristic_scores = [scores[k]
-                                     .get('totals')
-                                     .get('total_percentage') or 0
-                                     for k in characteristic_list]
+        if scores:
+            for key_indicator, characteristic_list in \
+                    key_indicators.iteritems():
+                total_scores = 0
+                characteristic_scores = [scores[k]
+                                         .get('totals')
+                                         .get('total_percentage') or 0
+                                         for k in characteristic_list]
 
-            total_scores = sum(characteristic_scores)
+                total_scores = sum(characteristic_scores)
 
-            key_indicator_scores[key_indicator] = (
-                total_scores / len(characteristic_list))
+                key_indicator_scores[key_indicator] = (
+                    total_scores / len(characteristic_list))
 
         return key_indicator_scores
 
@@ -418,7 +433,9 @@ class Clinic(Base):
         from whoahqa.models import ClinicReport
         if self._cached_key_indicators is None:
             report = ClinicReport.get_or_generate(self, period)
-            self._cached_key_indicators = report.get_key_indicators()
+
+            if report:
+                self._cached_key_indicators = report.get_key_indicators()
 
         return self._cached_key_indicators
 

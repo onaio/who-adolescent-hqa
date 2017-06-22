@@ -4,13 +4,10 @@ from pyramid.view import (
     view_defaults,
 )
 
-from whoahqa.constants import characteristics as constants
 from whoahqa.constants import permissions as perms
 from whoahqa.constants import groups
-from whoahqa.views.helpers import get_period_from_request
 from whoahqa.models import (
     LocationFactory,
-    ReportingPeriod,
     State)
 from whoahqa.views.base import BaseClassViews
 
@@ -23,7 +20,6 @@ class StateViews(BaseClassViews):
                  renderer='states_list.jinja2',
                  request_method='GET')
     def index(self):
-        period = get_period_from_request(self.request)
         user = self.request.user
 
         if user.group.name == groups.STATE_OFFICIAL:
@@ -32,9 +28,10 @@ class StateViews(BaseClassViews):
 
         return {
             'locations': State.all(),
-            'period': period,
-            'periods': ReportingPeriod.get_active_periods(),
-            'key_indicators_key_labels': constants.INDICATOR_LABELS,
+            'period': self.period,
+            'periods': self.periods,
+            'national_report': self.national_report(self.period),
+            'key_indicators_key_labels': self.key_indicators_key_labels
         }
 
     @view_config(name='',
@@ -43,12 +40,12 @@ class StateViews(BaseClassViews):
                  request_method='GET')
     def show(self):
         state = self.request.context
-        period = get_period_from_request(self.request)
 
         return {
             'locations': state.children(),
+            'key_indicators_key_labels': self.key_indicators_key_labels,
+            'national_report': self.national_report(self.period),
+            'period': self.period,
+            'periods': self.periods,
             'state': state,
-            'period': period,
-            'periods': ReportingPeriod.get_active_periods(),
-            'key_indicators_key_labels': constants.INDICATOR_LABELS,
         }

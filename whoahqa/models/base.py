@@ -61,6 +61,10 @@ Base = declarative_base(cls=BaseModel)
 class RootFactory(object):
     __acl__ = [
         (Allow, groups.SUPER_USER, ALL_PERMISSIONS),
+        (Allow, groups.NATIONAL_OFFICIAL, perms.CAN_LIST_STATE),
+        (Allow, groups.NATIONAL_OFFICIAL, perms.CAN_VIEW_STATE),
+        (Allow, groups.NATIONAL_OFFICIAL, perms.CAN_LIST_MUNICIPALITY),
+        (Allow, groups.NATIONAL_OFFICIAL, perms.CAN_VIEW_MUNICIPALITY),
         (Allow, groups.STATE_OFFICIAL, perms.CAN_VIEW_STATE),
         (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_CREATE_PERIOD),
         (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_LIST_CLINICS),
