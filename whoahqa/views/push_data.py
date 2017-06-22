@@ -8,7 +8,7 @@ from ..utils import normalizeString, format_location_name as fmt
 
 @view_config(
     route_name='push',
-    match_param='action=facilities',
+    match_param='action=clinics',
     request_method='GET',
     renderer='csv',
     permission=NO_PERMISSION_REQUIRED)
@@ -47,7 +47,7 @@ def push_facilities(request):
 
 @view_config(
     route_name='push',
-    match_param='action=report-periods',
+    match_param='action=periods',
     request_method='GET',
     renderer='csv',
     permission=NO_PERMISSION_REQUIRED)
