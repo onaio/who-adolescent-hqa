@@ -1,8 +1,6 @@
 from sqlalchemy.orm.exc import NoResultFound
 from whoahqa.constants import characteristics as constants
-from whoahqa.models import (
-    DBSession,
-    Clinic)
+from whoahqa.models import Clinic
 
 
 class BaseSubmissionHandler(object):
