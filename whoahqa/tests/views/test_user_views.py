@@ -28,8 +28,10 @@ class TestUserViews(IntegrationTestBase):
 
     def test_user_clinics_view(self):
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+
         self.request.context = ona_user.user
         self.request.user = ona_user.user
+        self.request.user.group = ona_user.user.group
 
         response = self.user_views.clinics()
 
