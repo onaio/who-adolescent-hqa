@@ -24,7 +24,9 @@ def default(request):
                             _query={'period': period.id})
 
     # redirect to view depending on location owned
-    if user.group.name == groups.NATIONAL_OFFICIAL:
+    group = user.group
+
+    if group and group.name == groups.NATIONAL_OFFICIAL:
         url = request.route_url('states', traverse=(),
                                 _query={'period': period.id})
 
