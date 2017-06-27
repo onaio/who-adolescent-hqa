@@ -89,7 +89,8 @@
 {% endblock %}
 {% block period_selector %}
   {% if periods %}
-    <div class="dashboard-date-range btn-group pull-right">
+    <div class="row" style="position: absolute; top: 7em; margin-left: 10px;">
+      <div class="dashboard-date-range btn-group pull-left">
        <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-primary dropdown-toggle" data-container="body" data-placement="top" data-original-title="{{gettext('Change dashboard date range')}}" data-toggle="dropdown" aria-expanded="false">
           <i class="icon-calendar"></i>&nbsp;
              {% set active_period = selected_period or period%}
@@ -108,16 +109,16 @@
           {% endfor %}
        </ul>
     </div>
+    <div class="pull-left print-row">
+    <button onclick="window.print();return false;" class="btn btn-default">
+      <i class="icon-print"></i>
+      Print
+    </button>
+  </div>
+</div>
   {% endif %}
 {% endblock %}
 {% block content %}
-<div class="row pull-right print-row">
-    <button onclick="window.print();return false;" class="btn btn-primary">
-      <i class="icon-print"></i>
-      Print Report
-    </button>
-</div>
-
 {% for key_indicator, char_list in key_indicators %}
   <div class="table-responsive">
     <div class="row">
