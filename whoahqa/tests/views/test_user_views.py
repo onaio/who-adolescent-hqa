@@ -28,6 +28,7 @@ class TestUserViews(IntegrationTestBase):
 
     def test_user_clinics_view(self):
         ona_user = OnaUser.get(OnaUser.username == 'manager_a')
+
         self.request.context = ona_user.user
         self.request.user = ona_user.user
 
@@ -69,6 +70,17 @@ class TestUserViewsFunctional(FunctionalTestBase):
         headers = self._login_user('super')
         # get the manager user
         user = OnaUser.get(OnaUser.username == "manager_a").user
+        url = self.request.route_path(
+            'users', traverse=(user.id, 'clinics'))
+        with HTTMock(get_edit_url_mock):
+            response = self.testapp.get(url, headers=headers)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_clinics_view_allows_none_role_user(self):
+        self.setup_test_data()
+        headers = self._login_user('none_role')
+        # get the none role user user
+        user = OnaUser.get(OnaUser.username == "none_role").user
         url = self.request.route_path(
             'users', traverse=(user.id, 'clinics'))
         with HTTMock(get_edit_url_mock):

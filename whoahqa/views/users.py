@@ -21,8 +21,9 @@ class UserViews(BaseClassViews):
                  context=User)
     def clinics(self):
         user = self.request.context
+        group = user.group
 
-        if user.group.name == groups.NATIONAL_OFFICIAL:
+        if group and group.name == groups.NATIONAL_OFFICIAL:
             url = self.request.route_url('states', traverse=(),
                                          _query={'period': self.period.id})
             HTTPFound(url)

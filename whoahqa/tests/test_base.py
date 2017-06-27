@@ -154,6 +154,11 @@ class TestBase(unittest.TestCase):
             user=manager_b, username='manager_b', refresh_token="c563e9")
         manager_b.group = clinic_managers_group
 
+        none_role = User(location=municipality)
+        none_role_ona_user = OnaUser(
+            user=none_role, username='none_role', refresh_token="d789f0")
+        none_role.group = None
+
         # add a couple of clinics
         clinic1 = Clinic(id=1,
                          name="Clinic A",
@@ -198,7 +203,8 @@ class TestBase(unittest.TestCase):
         with transaction.manager:
             DBSession.add_all(
                 [user_setting, su_ona_user, manager_a_ona_user,
-                 manager_b_ona_user, municipality, clinic1, clinic2,
+                 manager_b_ona_user, none_role_ona_user,
+                 municipality, clinic1, clinic2,
                  clinic3, clinic4, reporting_period_v2_1,
                  reporting_period_v2_2, reporting_period_v3])
 
