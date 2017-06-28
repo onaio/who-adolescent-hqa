@@ -12,13 +12,6 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-  <li>
-    <i class="icon-angle-right"></i>
-    <a href="{{ state.get_url(request, period) }}">
-      {{ state.name|format_location_name }}
-      {{ gettext(state.location_type|capitalize) }}
-    </a>
-  </li>
 {% endblock %}
 {% block content %}
   <div class="row">
