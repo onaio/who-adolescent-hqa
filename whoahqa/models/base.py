@@ -55,6 +55,7 @@ class BaseModel(object):
 
         return instance
 
+
 Base = declarative_base(cls=BaseModel)
 
 
@@ -73,6 +74,7 @@ class RootFactory(object):
         (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_EDIT_CLINICS),
         (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_VIEW_MUNICIPALITY),
         (Allow, groups.CLINIC_MANAGER, perms.CAN_LIST_CLINICS),
+        (Allow, groups.CLINIC_MANAGER, perms.CAN_VIEW_CLINICS),
         (Allow, Authenticated, perms.AUTHENTICATED),
     ]
 
