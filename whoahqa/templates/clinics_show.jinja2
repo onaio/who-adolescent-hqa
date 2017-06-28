@@ -45,34 +45,27 @@
 {% block breadcrumbs %}
   {% if state is not none %}
     <li>
-      <i class="icon-angle-right"></i>
       {% if request.can_view_state %}
         <a href="{{ state.get_url(request, period)}}">
           {{ state.name|format_location_name }}
           {{ gettext(state.location_type|capitalize) }}
         </a>
-      {% else %}
-        {{ state.name|format_location_name }}
-        {{ gettext(state.location_type|capitalize) }}
+        <i class="icon-angle-right"></i>
       {% endif %}
     </li>
   {% endif %}
   {% if municipality is not none %}
     <li>
-      <i class="icon-angle-right"></i>
       {% if request.can_view_municipality %}
         <a href="{{ municipality.get_url(request, period)}}">
           {{ municipality.name|format_location_name }}
           {{ gettext(municipality.location_type|capitalize) }}
         </a>
-      {% else %}
-        {{ municipality.name|format_location_name }}
-        {{ gettext(municipality.location_type|capitalize) }}
+        <i class="icon-angle-right"></i>
       {% endif %}
     </li>
   {% endif %}
   <li>
-    <i class="icon-angle-right"></i>
     {{ clinic.name }}
   </li>
 {% endblock %}
