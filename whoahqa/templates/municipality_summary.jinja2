@@ -36,20 +36,17 @@
 {% block breadcrumbs %}
   {% if request.can_view_state %}
     <li>
-      <i class="icon-angle-right"></i>
       <a href="{{ state.get_url(request, period) }}">
         {{ state.name|format_location_name }}
         {{ gettext(state.location_type|capitalize) }}
       </a>
+      <i class="icon-angle-right"></i>
     </li>
   {% endif %}
   {% if request.can_view_municipality %}
     <li>
-      <i class="icon-angle-right"></i>
-      <a href="{{ municipality.get_url(request, period) }}">
         {{ municipality.name|format_location_name }}
         {{ gettext(municipality.location_type|capitalize) }}
-      </a>
     </li>
   {% endif %}
 {% endblock %}
