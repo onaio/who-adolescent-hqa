@@ -204,6 +204,12 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                </div>
                <div class="page-bar">
                   <ul class="page-breadcrumb">
+                  {% if request.is_super_user %}
+                  <li>
+                    <i class="icon-home"></i>
+                      <a href="{{ request.route_url('default', _query={'period': period.id})}}">{{ gettext('Scores') }}</a>
+                  </li>
+                  {% endif %}
                      {% block breadcrumbs %}{% endblock %}
                   </ul>
                   <!-- END PAGE TITLE & BREADCRUMB-->
