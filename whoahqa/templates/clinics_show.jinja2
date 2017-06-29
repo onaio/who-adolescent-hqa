@@ -44,7 +44,7 @@
 
 {% block breadcrumbs %}
   {% if request.can_list_state %}
-  <li><a href="{{request.route_url('states', traverse=())}}">{{ gettext('Scores') }}</a></li>
+  <li><a href="{{request.route_url('states', traverse=())}}">{{ gettext('States') }}</a></li>
   <li><a href="#"> </a></li>
   <i class="icon-angle-right"></i>
   {% endif %}
