@@ -52,3 +52,11 @@ def can_view_state(request):
         return True
 
     return False
+
+
+def can_list_state(request):
+    user = request.user
+    if user.group.name == groups.NATIONAL_OFFICIAL:
+        return True
+
+    return False
