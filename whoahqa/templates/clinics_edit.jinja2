@@ -1,9 +1,13 @@
 {% extends 'base.jinja2' %}
-{% block title %}Edit User{% endblock %}
+{% block title %}Edit Clinic{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
     <li><i class="icon-angle-right"></i></li>
-    <li class="active">{{ gettext("Manage Clinics")}}</li>
+    <li class="active">
+    <a href="{{ request.route_url('clinics', traverse=('manage')) }}">
+      {{ gettext("Manage Clinics")}}
+    </a>
+    </li>
     <li><i class="icon-angle-right"></i></li>
     <li>{{clinic.name or "New Clinic"}}</li>
 {% endblock %}
