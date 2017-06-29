@@ -34,7 +34,12 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-  {% if request.can_view_state %}
+{% if request.can_list_state %}
+<li><a href="{{request.route_url('states', traverse=())}}">{{ self.page_title() }}</a></li>
+<li><a href="#"> </a></li>
+<i class="icon-angle-right"></i>
+{% endif %}
+  {% if request.can_view_state or request.can_list_state %}
     <li>
       <a href="{{ state.get_url(request, period) }}">
         {{ state.name|format_location_name }}
@@ -43,7 +48,7 @@
       <i class="icon-angle-right"></i>
     </li>
   {% endif %}
-  {% if request.can_view_municipality %}
+  {% if request.can_view_municipality or request.can_list_state %}
     <li>
         {{ municipality.name|format_location_name }}
         {{ gettext(municipality.location_type|capitalize) }}
