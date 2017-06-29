@@ -10,6 +10,12 @@
 {% set state = municipality.parent if municipality else None %}
 
 {% block sub_menu_item %}
+  {% if not request.can_view_municipality and not request.can_view_state and not request.is_super_user and not request.can_list_state %}
+  <li class="">
+  <a href="{{request.route_url('clinics', traverse=())}}">
+  {{ gettext('Scores') }}</a>
+  </li>
+  {% endif %}
     {% if request.can_view_municipality %}
       <li class="selected">
         <a href="{{municipality.get_url(request, period)}}">
@@ -70,8 +76,15 @@
       {% endif %}
     </li>
   {% endif %}
+  {% if not request.can_view_municipality and not request.can_view_state and not request.is_super_user and not request.can_list_state %}
   <li>
-    {{ clinic.name }}
+  <i class="icon-home"></i>
+  <a href="{{request.route_url('clinics', traverse=())}}">{{ gettext('Scores') }}</a></li>
+  <li><a href="#"> </a></li>
+  <i class="icon-angle-right"></i>
+  {% endif %}
+  <li>
+  {{ clinic.name }}
   </li>
 {% endblock %}
 {% block period_selector %}
