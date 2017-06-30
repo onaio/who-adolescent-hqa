@@ -3006,9 +3006,10 @@ textarea.placeholder {
   padding: 0 !important;
 }
 
-form .required:after {
+label.required:after,
+p.required:before {
   color: #e32;
-  content: '*';
+  content: '* ';
   display: inline;
 }
 
