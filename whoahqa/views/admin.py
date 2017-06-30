@@ -1,6 +1,7 @@
 from deform import Form, ValidationFailure, Button
 from pyramid.view import view_defaults, view_config
 from pyramid.httpexceptions import HTTPFound
+from sqlalchemy.exc import IntegrityError
 
 from whoahqa.constants import permissions as perms
 from whoahqa.forms import UserForm, RegistrationForm
@@ -90,17 +91,23 @@ class AdminViews(object):
                     _(u"Please fix the highlighted errors below"), "error")
 
             else:
-                new_user = User()
-                new_user.update(values)
+                try:
+                    new_user = User()
+                    new_user.update(values)
 
-                self.request.session.flash(
-                    _(u"Success! {} user created".format(
-                        new_user.profile.username)),
-                    'success')
+                    self.request.session.flash(
+                        _(u"Success! {} user created".format(
+                            new_user.profile.username)),
+                        'success')
 
-                return HTTPFound(
-                    self.request.route_url(
-                        'admin', traverse=(new_user.id, 'edit')))
+                    return HTTPFound(
+                        self.request.route_url(
+                            'admin', traverse=(new_user.id, 'edit')))
+
+                except IntegrityError:
+                    DBSession.rollback()
+                    self.request.session.flash(
+                        _("Username already in use"), "error")
 
         return {
             'form': form,
