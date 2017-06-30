@@ -36,7 +36,7 @@
                   {% else %}
                     {% set has_error = not not field.error %}
                     <div class="form-group {% if has_error %}has-error{% endif %}">
-                      <label for="inputEmail3" class="col-sm-2 control-label">{{ gettext(field.title) }}</label>
+                      <label for="inputEmail3" class="col-sm-2 control-label required">{{ gettext(field.title) }}</label>
                       <div class="col-sm-6">
                         {{ field.serialize()|safe }}
                       </div>
