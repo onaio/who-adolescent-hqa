@@ -87,8 +87,10 @@ var Custom = function () {
                 $('select[name=municipality]').closest('div.form-group').show();
             } else if(value === 'state_official'){
                 $('select[name=state]').closest('div.form-group').show();
-            } else {
+            } else if (value == 'clinic_manager'){
                 $('select[name=clinics]').closest('div.form-group').show();
+            } else {
+                $('select[name=clinics]').closest('div.form-group').hide();
             }
         });
     }
