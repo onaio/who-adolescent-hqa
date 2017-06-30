@@ -245,7 +245,7 @@ class ClinicViews(BaseClassViews):
                                   values.get('code'),
                                   municipality)
                     self.request.session.flash(
-                        _("{} Clinic saved.".format(clinic.name)), "success")
+                        _("{} saved.".format(clinic.name)), "success")
 
                     return HTTPFound(
                         self.request.route_url(
@@ -255,12 +255,13 @@ class ClinicViews(BaseClassViews):
                 except NoResultFound:
                     self.request.session.flash(
                         _("Cannot find selected municipality."), "error")
+
                 except IntegrityError:
                     DBSession.rollback()
 
                     self.request.session.flash(
                         _("A clinic already exists with the \
-                          provided name or CNES."),
+                          provided CNES."),
                         "error")
 
         return {
@@ -298,11 +299,19 @@ class ClinicViews(BaseClassViews):
                                   values.get('code'),
                                   municipality)
                     self.request.session.flash(
-                        _("{} Clinic updated.".format(clinic.name)), "success")
+                        _("{} updated.".format(clinic.name)), "success")
 
                 except NoResultFound:
                     self.request.session.flash(
                         _("Cannot find selected municipality."), "error")
+
+                except IntegrityError:
+                    DBSession.rollback()
+
+                    self.request.session.flash(
+                        ("A clinic already exists with the \
+                          provided CNES."),
+                        "error")
 
         period = get_period_from_request(self.request)
 
