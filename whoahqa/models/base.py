@@ -75,6 +75,8 @@ class RootFactory(object):
         (Allow, groups.MUNICIPALITY_MANAGER, perms.CAN_VIEW_MUNICIPALITY),
         (Allow, groups.CLINIC_MANAGER, perms.CAN_LIST_CLINICS),
         (Allow, groups.CLINIC_MANAGER, perms.CAN_VIEW_CLINICS),
+        (Allow, groups.CLINIC_MANAGER, perms.CAN_VIEW_MUNICIPALITY),
+        (Allow, groups.CLINIC_MANAGER, perms.CAN_VIEW_STATE),
         (Allow, Authenticated, perms.AUTHENTICATED),
     ]
 
