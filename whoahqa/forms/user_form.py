@@ -2,7 +2,6 @@ import colander
 
 from deform.widget import (
     SelectWidget,
-    TextInputWidget,
     CheckedPasswordWidget)
 
 from whoahqa.utils import translation_string_factory as _
@@ -49,11 +48,6 @@ def clinic_selection_widget(node, kw):
 
 
 class UserForm(colander.MappingSchema):
-    email = colander.SchemaNode(
-        colander.String(encoding='utf-8'),
-        widget=TextInputWidget(),
-        missing='',
-        title=_(u"Email Address"))
     group = colander.SchemaNode(
         colander.String(encoding='utf-8'), title=_(u"Role"),
         widget=user_role_widget)

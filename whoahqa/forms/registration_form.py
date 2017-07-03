@@ -25,12 +25,6 @@ def new_user_role_widget(node, kw):
 
 
 class RegistrationForm(colander.MappingSchema):
-    email = colander.SchemaNode(
-        colander.String(),
-        widget=TextInputWidget(),
-        validator=colander.Email(),
-        missing=colander.required,
-        title=_(u"Email Address"))
     group = colander.SchemaNode(
         colander.String(encoding='utf-8'),
         title=_(u"Role"),
