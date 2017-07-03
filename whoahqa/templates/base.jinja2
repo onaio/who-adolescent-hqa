@@ -102,16 +102,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                <li class="active last">
                  <ul class="sub-menu">
                  {% block sub_menu_item %}
-                     <li class="
-                        {%if request.url.find('clinics/?') != -1 %}
-                           selected
-                        {% endif %}">
-                        <a href="{{ request.route_url('default', _query={'period': period.id})}}">
-                           <i class="icon-user-md"></i>
-                           <span class="title">{{ gettext('Scores') }}</span>
-                        </a>
-                     </li>
-                  {% endblock %}
+                 {% endblock %}
                    {% if request.is_super_user %}
                      <li class="
                         {%if request.path_info_peek() == 'admin' %}
@@ -213,10 +204,12 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                </div>
                <div class="page-bar">
                   <ul class="page-breadcrumb">
-                     <li>
-                        <i class="icon-home"></i>
-                        <a href="{{ request.route_url('default', _query={'period': period.id})}}">{{ gettext('Scores') }}</a>
-                     </li>
+                  {% if request.is_super_user %}
+                  <li>
+                    <i class="icon-home"></i>
+                      <a href="{{ request.route_url('default', _query={'period': period.id})}}">{{ gettext('Scores') }}</a>
+                  </li>
+                  {% endif %}
                      {% block breadcrumbs %}{% endblock %}
                   </ul>
                   <!-- END PAGE TITLE & BREADCRUMB-->

@@ -12,13 +12,15 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-  <li>
-    <i class="icon-angle-right"></i>
-    <a href="{{ state.get_url(request, period) }}">
-      {{ state.name|format_location_name }}
-      {{ gettext(state.location_type|capitalize) }}
-    </a>
-  </li>
+{% if request.can_list_state %}
+<li><a href="{{request.route_url('states', traverse=())}}">{{ gettext('States') }}</a></li>
+<li><a href="#"> </a></li>
+<i class="icon-angle-right"></i>
+<li>
+       {{ state.name|format_location_name }}
+       {{ gettext(state.location_type|capitalize) }}
+</li>
+{% endif %}
 {% endblock %}
 {% block content %}
   <div class="row">

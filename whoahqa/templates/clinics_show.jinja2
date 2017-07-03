@@ -10,6 +10,12 @@
 {% set state = municipality.parent if municipality else None %}
 
 {% block sub_menu_item %}
+  {% if not request.can_view_municipality and not request.can_view_state and not request.is_super_user and not request.can_list_state %}
+  <li class="">
+  <a href="{{request.route_url('clinics', traverse=())}}">
+  {{ gettext('Scores') }}</a>
+  </li>
+  {% endif %}
     {% if request.can_view_municipality %}
       <li class="selected">
         <a href="{{municipality.get_url(request, period)}}">
@@ -43,37 +49,42 @@
   {% endblock %}
 
 {% block breadcrumbs %}
+  {% if request.can_list_state %}
+  <li><a href="{{request.route_url('states', traverse=())}}">{{ gettext('States') }}</a></li>
+  <li><a href="#"> </a></li>
+  <i class="icon-angle-right"></i>
+  {% endif %}
   {% if state is not none %}
     <li>
-      <i class="icon-angle-right"></i>
-      {% if request.can_view_state %}
+      {% if request.can_view_state or request.can_list_state %}
         <a href="{{ state.get_url(request, period)}}">
           {{ state.name|format_location_name }}
           {{ gettext(state.location_type|capitalize) }}
         </a>
-      {% else %}
-        {{ state.name|format_location_name }}
-        {{ gettext(state.location_type|capitalize) }}
+        <i class="icon-angle-right"></i>
       {% endif %}
     </li>
   {% endif %}
   {% if municipality is not none %}
     <li>
-      <i class="icon-angle-right"></i>
-      {% if request.can_view_municipality %}
+      {% if request.can_view_municipality or request.can_list_state %}
         <a href="{{ municipality.get_url(request, period)}}">
           {{ municipality.name|format_location_name }}
           {{ gettext(municipality.location_type|capitalize) }}
         </a>
-      {% else %}
-        {{ municipality.name|format_location_name }}
-        {{ gettext(municipality.location_type|capitalize) }}
+        <i class="icon-angle-right"></i>
       {% endif %}
     </li>
   {% endif %}
+  {% if not request.can_view_municipality and not request.can_view_state and not request.is_super_user and not request.can_list_state %}
   <li>
-    <i class="icon-angle-right"></i>
-    {{ clinic.name }}
+  <i class="icon-home"></i>
+  <a href="{{request.route_url('clinics', traverse=())}}">{{ gettext('Scores') }}</a></li>
+  <li><a href="#"> </a></li>
+  <i class="icon-angle-right"></i>
+  {% endif %}
+  <li>
+  {{ clinic.name }}
   </li>
 {% endblock %}
 {% block period_selector %}

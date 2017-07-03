@@ -1,17 +1,16 @@
 {% extends 'base.jinja2' %}
-{% block title %}Users{% endblock %}
+{% block title %} {{ gettext("Manage Locations") }} {% endblock %}
 {% block page_title %}
-  <h3>
-     {{ self.title() }}
-  </h3>
+  {{ self.title() }}
 {% endblock %}
 {% block breadcrumbs %}
     <li>
+      <i class="icon-home"></i>
       <a href="{{ request.route_url('locations', traverse=()) }}"><iclass="fa fa-desktop"></i>  {{ gettext('Locations') }}
       </a>
     </li>
     <i class="icon-angle-right"></i>
-    <li class="active"> {{ gettext('All Locations') }} </li>
+    <li class="active"> {{ gettext("All Locations") }} </li>
 </li>
 {% endblock %}
 {% block content %}
@@ -44,7 +43,11 @@
                 <tbody>
                 {% for location in locations|sort(true, attribute='id') %}
                   <tr>
-                    <td>{{ location }}</td>
+                    <td>
+                      <a href="{{ location.get_url(request, period) }}">
+                      {{ location }}
+                    </a>
+                    </td>
                     <td>{{ location.location_type|capitalize }}</td>
                     <td>{{ location.parent }}</td>
                     <td>
@@ -58,7 +61,6 @@
               </table>
           </div>
           <!-- Portlet Body -->
-        </div>
       </div>
     </div>
   </section>
