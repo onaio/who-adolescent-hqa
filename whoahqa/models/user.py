@@ -227,7 +227,6 @@ class User(Base, UpdateableUser):
             self.profile.save()
         else:
             user_profile = UserProfile(username=values['username'],
-                                       email=values['email'],
                                        password=values['password'],
                                        user=self)
             user_profile.save()
