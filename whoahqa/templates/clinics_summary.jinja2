@@ -1,6 +1,9 @@
 {% extends "base.jinja2" %}
 {% block title %}{{ gettext("Scores") }}{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
+{% block breadcrumb %}
+<li><a href="{{request.route_url('states', traverse=())}}">{{ gettext('Scores') }}</a></li>
+{% endblock %}
 {% block content %}
   <div class="row">
     <!--

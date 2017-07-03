@@ -2,9 +2,18 @@
 {% block title %}{{ gettext("User Settings") }}{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
-  <li>
-    <a href="{{ request.route_url('locale', traverse=()) }}">{{ gettext('User Settings') }} </a>
+<li>
+  <a href="{{ request.route_url('locale', traverse=()) }}">{{ gettext('User Settings') }} </a>
+</li>
+{% endblock %}
+{% block sub_menu_item %}
+  {% if request.can_list_state %}
+  <li class="">
+    <a href="{{request.route_url('states', traverse=())}}">
+        {{ gettext('States') }}
+    </a>
   </li>
+  {% endif %}
 {% endblock %}
 {% block content %}
     <div class="portlet ">

@@ -34,22 +34,24 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-  {% if request.can_view_state %}
+{% if request.can_list_state %}
+<li><a href="{{request.route_url('states', traverse=())}}">{{ gettext('States') }}</a></li>
+<li><a href="#"> </a></li>
+<i class="icon-angle-right"></i>
+{% endif %}
+  {% if request.can_view_state or request.can_list_state %}
     <li>
-      <i class="icon-angle-right"></i>
       <a href="{{ state.get_url(request, period) }}">
         {{ state.name|format_location_name }}
         {{ gettext(state.location_type|capitalize) }}
       </a>
+      <i class="icon-angle-right"></i>
     </li>
   {% endif %}
-  {% if request.can_view_municipality %}
+  {% if request.can_view_state or request.can_list_state %}
     <li>
-      <i class="icon-angle-right"></i>
-      <a href="{{ municipality.get_url(request, period) }}">
         {{ municipality.name|format_location_name }}
         {{ gettext(municipality.location_type|capitalize) }}
-      </a>
     </li>
   {% endif %}
 {% endblock %}
