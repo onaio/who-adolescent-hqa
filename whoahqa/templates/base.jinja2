@@ -61,10 +61,12 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                </a>
                <ul class="dropdown-menu">
                   <li>
+                     {% if request.user is not none or request.user.ona_user is not none %}
                      <a href="{{request.route_url('logout')}}" class="logout">
                         <span class="glyphicon glyphicon-log-out"></span>
                         <span class="username"> {{ gettext('Logout')}}</span>
                      </a>
+                     {% endif %}
                   </li>
                </ul>
             </li>
