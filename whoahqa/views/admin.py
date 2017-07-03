@@ -11,6 +11,7 @@ from whoahqa.models import (
     DBSession)
 from whoahqa.views.helpers import get_period_from_request
 from whoahqa.utils import translation_string_factory as _
+import transaction
 
 
 @view_defaults(route_name='admin',
@@ -105,7 +106,7 @@ class AdminViews(object):
                             'admin', traverse=(new_user.id, 'edit')))
 
                 except IntegrityError:
-                    DBSession.rollback()
+                    transaction.abort()
                     self.request.session.flash(
                         _("Username already in use"), "error")
 
