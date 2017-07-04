@@ -37,6 +37,11 @@ def can_access_clinics(request):
                                   ClinicFactory(request))
 
 
+def can_create_period(request):
+    return request.has_permission(perms.CAN_CREATE_PERIOD,
+                                  ClinicFactory(request))
+
+
 def can_view_municipality(request):
     user = request.user
     if user.group.name == groups.MUNICIPALITY_MANAGER or (
