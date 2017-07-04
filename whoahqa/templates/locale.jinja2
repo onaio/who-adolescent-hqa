@@ -2,6 +2,45 @@
 {% block title %}{{ gettext("User Settings") }}{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
+{% if request.can_list_state %}
+  <li class="">
+    <i class="icon-home"></i>
+    <a href="{{request.route_url('states', traverse=())}}">
+        {{ gettext('States') }}
+    </a>
+  </li>
+  <i class="icon-angle-right"></i>
+{% endif %}
+{% if request.can_view_state %}
+  <li class="">
+    <i class="icon-home"></i>
+    <a href="{{request.route_url('states', traverse=())}}">
+        {{ gettext('State') }}
+    </a>
+  </li>
+  <i class="icon-angle-right"></i>
+{% endif %}
+{% if request.can_view_municipality and request.can_create_period %}
+  {% if request.user %}
+    <li class="">
+      <i class="icon-home"></i>
+      <a href="{{request.route_url('municipalities', traverse=(request.user.location.id))}}">
+          {{ gettext('Municipality') }}
+      </a>
+    </li>
+    <i class="icon-angle-right"></i>
+  {% endif %}
+{% endif %}
+{% if request.user.group.name == 'clinic_manager' %}
+    <li class="">
+      <i class="icon-home"></i>
+      <a href="{{request.route_url('clinics', traverse=(), _query={'period': period.id})}}">
+          {{ gettext('Clinic') }}
+      </a>
+    </li>
+    <i class="icon-angle-right"></i>
+{% endif %}
+
 <li>
   <a href="{{ request.route_url('locale', traverse=()) }}">{{ gettext('User Settings') }} </a>
 </li>
@@ -11,6 +50,13 @@
   <li class="">
     <a href="{{request.route_url('states', traverse=())}}">
         {{ gettext('States') }}
+    </a>
+  </li>
+  {% endif %}
+  {% if request.can_view_state %}
+  <li class="">
+    <a href="{{request.route_url('states', traverse=())}}">
+        {{ gettext('State') }}
     </a>
   </li>
   {% endif %}

@@ -7,6 +7,7 @@ from whoahqa.views.request_methods import can_view_clinics  # noqa
 from whoahqa.views.request_methods import is_super_user  # noqa
 from whoahqa.views.request_methods import can_access_clinics  # noqa
 from whoahqa.views.request_methods import can_view_municipality  # noqa
+from whoahqa.views.request_methods import can_create_period  # noqa
 from whoahqa.views.request_methods import can_view_state  # noqa
 from whoahqa.views.request_methods import can_list_state  # noqa
 from whoahqa.views.submissions import SubmissionViews  # noqa

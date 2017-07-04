@@ -45,7 +45,6 @@ def set_locale(request):
 
     available_languages = constants.AVAILABLE_LANGUAGES
     period = get_period_from_request(request)
-
     if request.method == "POST":
         locale = request.POST.get("locale", "")
         request._LOCALE_ = locale

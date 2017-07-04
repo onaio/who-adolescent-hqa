@@ -22,7 +22,7 @@
         <div class="panel-body">
             {% for clinic in clinics %}
                 <div class="btn-group clinic-button">
-                  <a href="{{ request.route_url('clinics', traverse=(clinic.id, period.id)) }}">
+                  <a href="{{ request.route_url('clinics', _query={'period': period.id} }}">
                     <button class="btn btn-primary btn-sm">
                       <span class="text-left" id="clinic-name">{{ clinic.name }}</span>
                       <span class="text-right" id="clinic-code">{{ gettext('Code:') }} {{ clinic.code }}</span>
