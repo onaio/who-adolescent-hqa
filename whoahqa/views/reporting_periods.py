@@ -11,6 +11,8 @@ from whoahqa.models import DBSession, ReportingPeriod
 from whoahqa.forms import ReportingPeriodForm
 from whoahqa.views.base import BaseClassViews
 
+ALLOWED_XPATHS = ['1', '2', '3', '4', '5']
+
 
 @view_defaults(route_name='periods')
 class ReportingPeriodViews(BaseClassViews):
@@ -43,8 +45,7 @@ class ReportingPeriodViews(BaseClassViews):
                 self.request.session.flash(
                     _(u"Please fix the errors indicated below."), 'error')
             else:
-                available_xpaths = [1, 2, 3, 4, 5]
-                if payload['form_xpath'] not in available_xpaths and \
+                if payload['form_xpath'] not in ALLOWED_XPATHS and \
                    valid_year(payload['form_xpath']) is None:
                     self.request.session.flash(
                         _(u"Only numeric values 1-5 and calendar "
@@ -90,8 +91,7 @@ class ReportingPeriodViews(BaseClassViews):
                 self.request.session.flash(
                     _(u"Please fix the errors indicated below."), 'error')
             else:
-                available_xpaths = [1, 2, 3, 4, 5]
-                if payload['form_xpath'] not in available_xpaths and \
+                if payload['form_xpath'] not in ALLOWED_XPATHS and \
                    valid_year(payload['form_xpath']) is None:
                     self.request.session.flash(
                         _(u"Only numeric values 1-5 and calendar "

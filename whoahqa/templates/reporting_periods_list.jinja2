@@ -45,8 +45,8 @@
                            value="{{ period.id }}">
                   </td>
                   <td>{{ period.title }}</td>
-                  <td class=" ">{{ period.start_date|format_date('MMM Y', request) }}</td>
-                  <td class="center ">{{ period.end_date|format_date('MMM Y', request) }}</td>
+                  <td class=" "> {{ period.start_date.day }} {{ period.start_date|format_date('MMM Y', request) }}</td>
+                  <td class="center ">{{ period.end_date.day }} {{ period.end_date|format_date('MMM Y', request) }}</td>
                   <td>
                     <a href="{{ request.route_url('periods', traverse=(period.id, 'edit'))}}"> {{ gettext('Edit')}} </a>
                   </td>

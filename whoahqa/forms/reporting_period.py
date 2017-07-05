@@ -4,7 +4,6 @@ import colander
 from deform.widget import TextInputWidget
 
 from whoahqa.utils import translation_string_factory as _
-from whoahqa.utils import valid_year
 
 
 DATE_FORMAT = "%d-%m-%Y"
