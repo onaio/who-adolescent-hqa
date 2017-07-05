@@ -25,10 +25,8 @@ class TestReportingPeriods(IntegrationTestBase):
             ('end_date', '1-01-2015')
         ])
         response = self.view.create()
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(
-            response.location,
-            self.request.route_url('periods', traverse=('list')))
+        self.assertIn('form', response)
+        self.assertIsInstance(response['form'], deform.Form)
 
     def test_create_invalid_POST_response(self):
         self.request.method = "POST"
