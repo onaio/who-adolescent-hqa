@@ -39,6 +39,7 @@ Login page
 .login .content p.ona-login {
   position: relative;
   top: 45px;
+  width: 200px;
 }
 
 
