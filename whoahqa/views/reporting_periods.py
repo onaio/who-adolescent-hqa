@@ -6,6 +6,7 @@ from deform import Form, ValidationFailure
 
 from whoahqa.constants import permissions as perms
 from whoahqa.utils import translation_string_factory as _
+from whoahqa.utils import valid_year
 from whoahqa.models import DBSession, ReportingPeriod
 from whoahqa.forms import ReportingPeriodForm
 from whoahqa.views.base import BaseClassViews
@@ -42,18 +43,25 @@ class ReportingPeriodViews(BaseClassViews):
                 self.request.session.flash(
                     _(u"Please fix the errors indicated below."), 'error')
             else:
-                period = ReportingPeriod(
-                    title=payload['title'],
-                    form_xpath=payload['form_xpath'],
-                    start_date=payload['start_date'],
-                    end_date=payload['end_date'])
-                DBSession.add(period)
-                DBSession.flush()
-                self.request.session.flash(
-                    _(u"Reporting period created"),
-                    'success')
-                return HTTPFound(
-                    self.request.route_url('periods', traverse=('list')))
+                available_xpaths = [1, 2, 3, 4, 5]
+                if payload['form_xpath'] not in available_xpaths and \
+                   valid_year(payload['form_xpath']) is None:
+                    self.request.session.flash(
+                        _(u"Only numeric values 1-5 and calendar "
+                          "years (YYYY) allowed."), 'error')
+                else:
+                    period = ReportingPeriod(
+                        title=payload['title'],
+                        form_xpath=payload['form_xpath'],
+                        start_date=payload['start_date'],
+                        end_date=payload['end_date'])
+                    DBSession.add(period)
+                    DBSession.flush()
+                    self.request.session.flash(
+                        _(u"Reporting period created"),
+                        'success')
+                    return HTTPFound(
+                        self.request.route_url('periods', traverse=('list')))
 
         # render form
         return {
@@ -82,13 +90,20 @@ class ReportingPeriodViews(BaseClassViews):
                 self.request.session.flash(
                     _(u"Please fix the errors indicated below."), 'error')
             else:
-                period.update(**payload)
+                available_xpaths = [1, 2, 3, 4, 5]
+                if payload['form_xpath'] not in available_xpaths and \
+                   valid_year(payload['form_xpath']) is None:
+                    self.request.session.flash(
+                        _(u"Only numeric values 1-5 and calendar "
+                          "years (YYYY) allowed."), 'error')
+                else:
+                    period.update(**payload)
 
-                self.request.session.flash(
-                    _(u"Your changes have been saved"),
-                    'success')
-                return HTTPFound(
-                    self.request.route_url('periods', traverse=('list')))
+                    self.request.session.flash(
+                        _(u"Your changes have been saved"),
+                        'success')
+                    return HTTPFound(
+                        self.request.route_url('periods', traverse=('list')))
 
         # render form
         return {
