@@ -42,14 +42,19 @@ class ReportingPeriodViews(BaseClassViews):
             try:
                 payload = form.validate(post)
             except ValidationFailure:
-                self.request.session.flash(
-                    _(u"Please fix the errors indicated below."), 'error')
+                pass
             else:
                 if payload['form_xpath'] not in ALLOWED_XPATHS and \
                    valid_year(payload['form_xpath']) is None:
                     self.request.session.flash(
                         _(u"Only numeric values 1-5 and calendar "
-                          "years (YYYY) allowed."), 'error')
+                          "years (YYYY) allowed For Form Xpath"), 'error')
+
+                elif DBSession.query(ReportingPeriod).filter_by(
+                        form_xpath=payload['form_xpath']).first():
+                    self.request.session.flash(
+                        _(u"Form Xpath Exists"), 'error')
+
                 else:
                     period = ReportingPeriod(
                         title=payload['title'],
@@ -62,7 +67,8 @@ class ReportingPeriodViews(BaseClassViews):
                         _(u"Reporting period created"),
                         'success')
                     return HTTPFound(
-                        self.request.route_url('periods', traverse=('list')))
+                        self.request.route_url(
+                            'periods', traverse=('list')))
 
         # render form
         return {
@@ -96,6 +102,12 @@ class ReportingPeriodViews(BaseClassViews):
                     self.request.session.flash(
                         _(u"Form Xpath Only allows numeric values 1-5 and"
                           " calendar years (YYYY)."), 'error')
+
+                elif DBSession.query(ReportingPeriod).filter_by(
+                        form_xpath=payload['form_xpath']).first():
+                    self.request.session.flash(
+                        _(u"Form Xpath Exists"), 'error')
+
                 else:
                     period.update(**payload)
 
