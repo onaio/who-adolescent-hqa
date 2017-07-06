@@ -90,8 +90,12 @@ def password_login(context, request):
     permission=NO_PERMISSION_REQUIRED)
 def logout(request):
     headers = forget(request)
+    if request.user.ona_user is None:
+        return HTTPFound(
+            request.route_url('auth', action='sign-in'), headers=headers)
+
     return HTTPFound(
-        request.route_url('auth', action='sign-in'), headers=headers)
+        request.route_url('auth', action='login'), headers=headers)
 
 
 @view_config(

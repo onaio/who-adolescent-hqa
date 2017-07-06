@@ -222,12 +222,10 @@ class User(Base, UpdateableUser):
         super(User, self).update(values)
 
         if self.profile is not None:
-            self.profile.email = values['email']
             self.profile.password = values['password']
             self.profile.save()
         else:
             user_profile = UserProfile(username=values['username'],
-                                       email=values['email'],
                                        password=values['password'],
                                        user=self)
             user_profile.save()

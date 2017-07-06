@@ -120,8 +120,23 @@ class TestAuth(IntegrationTestBase):
             response = oauth_callback(request)
         self.assertEqual(response.status_code, 302)
 
-    def test_logout(self):
+    def test_ona_user_logout(self):
+        self.setup_test_data()
+        ona_user = OnaUser.get(OnaUser.username == 'manager_a')
         request = testing.DummyRequest()
+        request.context = ona_user.user
+        request.user = ona_user.user
+        response = logout(request)
+        self.assertIsInstance(response, HTTPFound)
+        self.assertEqual(
+            response.location, request.route_url('auth', action='login'))
+
+    def test_dashboard_user_logout(self):
+        dashboard_user = UserProfile(
+            user=User(), username="dash", password="dash")
+        request = testing.DummyRequest()
+        request.context = dashboard_user.user
+        request.user = dashboard_user.user
         response = logout(request)
         self.assertIsInstance(response, HTTPFound)
         self.assertEqual(

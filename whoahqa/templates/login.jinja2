@@ -71,10 +71,18 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
     <a class="btn btn-info" href="{{ request.route_url('auth', action='authorize') }}">
     {{ gettext('Login with your Ona Account') }}
     </a>
+    <div class="dashboard-login">
+      <p>
+      <a href="{{ request.route_url('auth', action='sign-in')}}" id="register-btn">
+        {{ gettext('Click Here') }}
+      </a>
+      {{ gettext("To log in as a dashboard user") }}
+    </p>
+    </div>
   </div>
   <div class="create-account">
     <p>
-      {{ gettext("Don't have an account yet?") }}
+      {{ gettext("Don't have an ONA account yet?") }}
       <a href="https://api.ona.io/accounts/register/" id="register-btn">
         {{ gettext('Create an account') }}
       </a>
