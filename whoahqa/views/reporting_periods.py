@@ -94,8 +94,8 @@ class ReportingPeriodViews(BaseClassViews):
                 if payload['form_xpath'] not in ALLOWED_XPATHS and \
                    valid_year(payload['form_xpath']) is None:
                     self.request.session.flash(
-                        _(u"Only numeric values 1-5 and calendar "
-                          "years (YYYY) allowed."), 'error')
+                        _(u"Form Xpath Only allows numeric values 1-5 and"
+                          " calendar years (YYYY)."), 'error')
                 else:
                     period.update(**payload)
 
