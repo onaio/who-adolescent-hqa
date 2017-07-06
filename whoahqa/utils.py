@@ -51,8 +51,7 @@ def normalizeString(row):
 
 
 def valid_year(year):
-    if year and year.isdigit():
-        if int(year) >= 1900 and int(year) <= 2099:
+    if year and year.isdigit() and int(year) >= 1900 and int(year) <= 2099:
             return int(year)
 
 
