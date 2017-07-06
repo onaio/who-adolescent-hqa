@@ -3,6 +3,7 @@
 {% block page_title %} {{ self.title() }} {% endblock %}
 
 {% block breadcrumbs %}
+    <i class="icon-angle-right"></i>
     <li><a href="#">Users</a></li>
 {% endblock %}
 
@@ -35,6 +36,7 @@
               <tbody>
               {% for user in users|sort(true, attribute='id') %}
               {% set is_current_user = request.user == user %}
+              {% if user.username != null %}
                 <tr>
                   <td>{{ user.username }}</td>
                   <td>{{ user.group|replace("_", " ")|title }}</td>
@@ -52,6 +54,7 @@
                     <a class="btn btn-default btn-xs" href="{{ request.route_path('admin', traverse=(user.id, 'edit')) }}">{{ gettext('Edit')}}</a>
                   </td>
                 </tr>
+                {% endif %}
               {% endfor %}
               </tbody>
             </table>

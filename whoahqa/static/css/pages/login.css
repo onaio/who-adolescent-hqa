@@ -16,7 +16,7 @@ Login page
 
 .login .content {
   background-color:#fff; 
-  width: 360px;
+  width: 370px;
   margin: 0 auto; 
   margin-bottom: 0px;
   padding: 30px;  
@@ -35,6 +35,13 @@ Login page
 .login .content p {
   color: #222;
 }
+
+.login .content p.ona-login {
+  position: relative;
+  top: 45px;
+  width: 200px;
+}
+
 
 .login .content .login-form,
 .login .content .forget-form {
@@ -60,9 +67,10 @@ Login page
   clear: both;
   border: 0px;
   border-bottom: 1px solid #eee;
-  padding: 0px 30px 25px 30px;
+  padding: 0px 22px 26px 30px;
   margin-left: -30px;
   margin-right: -30px;
+  margin-top: -20px;
 }
 
 .login .content .form-actions .checkbox {
@@ -88,15 +96,15 @@ Login page
 }
 
 .login .content .form-actions .btn {
-  margin-top: 1px;
+  margin-top: 10px;
 }
 
 .login .content .forget-password {
   margin-top: 25px;
 }
 
-.login .content .create-account {
-  border-top: 1px dotted #eee;
+.login .content .create-account,
+.login .content .dashboard-login {
   padding-top: 10px;
   margin-top: 15px;
 }

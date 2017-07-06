@@ -4,11 +4,6 @@
   {{ self.title() }}
 {% endblock %}
 {% block breadcrumbs %}
-    <li>
-      <i class="icon-home"></i>
-      <a href="{{ request.route_url('locations', traverse=()) }}"><iclass="fa fa-desktop"></i>  {{ gettext('Locations') }}
-      </a>
-    </li>
     <i class="icon-angle-right"></i>
     <li class="active"> {{ gettext("All Locations") }} </li>
 </li>
