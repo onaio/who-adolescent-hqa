@@ -345,6 +345,10 @@ i.icon-green {
     color: #35cc03;
 }
 
+i.icon-blue {
+    color: #1175cb;
+}
+
 td.relative-score {
     font-size: 16px;
 }
@@ -409,6 +413,10 @@ tr.average-row {
 
 .scores-table tbody tr.average-row td {
     background-color: #eff0f1;
+}
+
+.legend {
+    display: none;
 }
 
 tr.average-row span.score-msg {
