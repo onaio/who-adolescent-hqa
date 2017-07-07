@@ -50,6 +50,11 @@ def normalizeString(row):
     return normalized_row
 
 
+def valid_year(year):
+    if year and year.isdigit() and int(year) >= 1900 and int(year) <= 2099:
+            return int(year)
+
+
 class UnicodeDictReader(object):
     def __init__(self, *args, **kw):
         self.encoding = kw.pop('encoding', 'utf-8')
