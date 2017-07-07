@@ -84,6 +84,10 @@
     width: 25%;
 }
 
+table.borderless {
+    display: none;
+}
+
 h3.key-indicator-title {
     margin-left: 15px;
     color: #1175cb;
@@ -122,6 +126,10 @@ h3.key-indicator-title {
 #header-top .dropdown-toggle{
 	padding-top:0.8em;
 	padding-bottom:0.7em;
+}
+
+hr,br {
+    display: none;
 }
 
 .underline{ text-decoration:underline; }
