@@ -119,6 +119,33 @@
   {% endif %}
 {% endblock %}
 {% block content %}
+<div class="table-responsive">
+    <table class="borderless">
+      <tbody>
+        <tr>
+          <td>Clinic: </td>
+          <td>{{ self.title() }}</td>
+        </tr>
+        <tr>
+          <td>CNES number: </td>
+          <td>{{ clinic.code }}</td>
+        </tr>
+        <tr>
+          <td>Reporting period: </td>
+          {% if periods %}
+            {% set active_period = selected_period or period%}
+            <td>{{ gettext(active_period.title) }} </td>
+          {% endif %}
+        </tr>
+        <tr>
+          <td>Date printed: </td>
+          <td id="date"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+<hr/>
+<br/>
 {% for key_indicator, char_list in key_indicators %}
   <div class="table-responsive">
     <div class="row">
