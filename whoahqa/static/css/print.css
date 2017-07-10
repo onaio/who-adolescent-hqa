@@ -117,6 +117,15 @@ table.borderless tr td {
 	display: block;
 }
 
+.print-scores {
+	display: block;
+	height: 14px;
+}
+
+.print-scores i {
+	padding-left: 5px;
+}
+
 thead {
 	display: none;
 }
@@ -142,6 +151,16 @@ table.scores-table {
 	zoom: 1;
 }
 
+.scores-table .client-tool-table > table tr td i.icon-blue {
+	display: none;
+}
+
+.scores-table .client-tool-table > table.respondents tr td {
+	text-align: center;
+	font-size: 10px;
+	height: 10px;
+}
+
 .scores-table .client-tool-table > table tr:first-child td {
 	border-top: none !important;
 }
@@ -151,8 +170,31 @@ table.scores-table {
     margin-top: 5px;
 }
 
-i.icon-grey {
+.print-relative-score {
+	display: grid;
+}
+
+.print-relative-score span.print-classification {
+	padding-bottom: 5px;
+	font-size: 10px;
+}
+
+.print-relative-score span.print-complete {
+	margin: 0 auto;
+}
+
+.print-hyphen {
 	display: none;
+}
+
+td.relative-score i.icon-medkit {
+	display: none;
+}
+
+i.icon-grey.icon-circle, i.icon-blue.icon-circle,
+i.icon-orange.icon-warning-sign.pull-right.tooltips {
+	display: none;
+	visibility: hidden;
 }
 
 p {

@@ -445,6 +445,14 @@ tr.average-row span.score-msg {
     width: 12%
 }
 
+.print-scores {
+    display: none;
+}
+
+.print-relative-score {
+    display: none;
+}
+
 ul.page-sidebar-menu > li.active > ul.sub-menu > li.selected {
     background: #084e78 !important;
 }

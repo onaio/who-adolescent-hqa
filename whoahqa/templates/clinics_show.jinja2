@@ -217,6 +217,17 @@
                             <td>
                               {% set responses = score[client_tool.id]['num_responses']|int(0) %}
                               {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
+                              {% set all = responses + pending_responses %}
+                              <div class="print-scores">
+                                {{ responses }}
+                                of
+                                {{ all }}
+                                {% if pending_responses <= 0 %}
+                                <i class="icon-blue icon-ok"></i>
+                                {% elif responses == 0 or pending_responses > responses %}
+                                <i class="icon-orange icon-warning-sign"></i>
+                                {% endif %}
+                              </div>
                               {% if responses %}
                                 {% for response in range(responses) %}
                                   <i class="icon-blue icon-circle"></i>
@@ -263,11 +274,34 @@
                         {% endif %}
                       {% endif %}
                       <i class="big icon-medkit {{ class_name }}"></i>
+                      <span class="hidden-print">
                       {{ "%s"| format(percentage|int(0)) }}%
+                      </span>
                     {% endif %}
                     {% if total_pending_responses <= 0 %}
-                      <span class="label label-primary tooltips" data-placement='top' data-original-title="{{gettext('You have finished data collection for this characteristic.') }}"> {{ gettext('Complete') }}</span>
+                      <span class="label label-primary tooltips hidden-print" data-placement='top' data-original-title="{{gettext('You have finished data collection for this characteristic.') }}"> {{ gettext('Complete') }}</span>
                     {% endif %}
+                    <div class="print-relative-score">
+                      {% if total_responses == 0 %}
+                      <div class="print-hyphen"> - </div>
+                      {% else %}
+                      <span>{{ "%s"| format(percentage|int(0)) }}%</span>
+                        <span class="print-classification">
+                        {% if meets_threshold %}
+                          {% if score_classification == 'great' %}
+                            Strong characteristic
+                          {% elif score_classification == 'good' %}
+                            Characteristic to be improved
+                          {% else %}
+                            Challenge
+                          {% endif %}
+                        {% endif %}
+                        </span>
+                      {% endif %}
+                      {% if total_pending_responses <= 0 %}
+                      <span class="label label-primary tooltips print-complete" data-placement='top' data-original-title="{{gettext('You have finished data collection for this characteristic.') }}"> {{ gettext('Complete') }}</span>
+                      {% endif %}
+                    </div>
                 </td>
               </tr>
             </tbody>
