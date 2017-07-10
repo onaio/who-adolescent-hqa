@@ -217,11 +217,10 @@
                             <td>
                               {% set responses = score[client_tool.id]['num_responses']|int(0) %}
                               {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
-                              {% set all = responses + pending_responses %}
                               <div class="print-scores">
                                 {{ responses }}
                                 of
-                                {{ all }}
+                                {{ responses + pending_responses }}
                                 {% if pending_responses <= 0 %}
                                 <i class="icon-blue icon-ok"></i>
                                 {% elif responses == 0 or pending_responses > responses %}
@@ -237,7 +236,7 @@
                                 <i class="icon-grey icon-circle"></i>
                               {% endfor %}
                               {% if pending_responses <= 0 %}
-                                <i class="icon-blue icon-ok pull-right tooltips" data-placement='top' data-original-title="{{ gettext('You have finished collecting data for this tool') }}"></i>
+                                <i class="icon-blue icon-ok pull-right tooltips hidden-print" data-placement='top' data-original-title="{{ gettext('You have finished collecting data for this tool') }}"></i>
                               {% elif responses == 0 or pending_responses > responses %}
                                 <i class="icon-orange icon-warning-sign pull-right tooltips" data-placement='top' data-original-title="{{gettext('You need to collect more information') }}"></i>
                               {% endif %}
@@ -292,9 +291,11 @@
                             Strong characteristic
                           {% elif score_classification == 'good' %}
                             Characteristic to be improved
-                          {% else %}
+                          {% elif score_classification == 'bad' %}
                             Challenge
                           {% endif %}
+                        {% else %}
+                          Insufficient result
                         {% endif %}
                         </span>
                       {% endif %}

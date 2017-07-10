@@ -123,7 +123,7 @@ table.borderless tr td {
 }
 
 .print-scores i {
-	padding-left: 5px;
+	margin-left: 5px;
 }
 
 thead {
@@ -191,7 +191,7 @@ td.relative-score i.icon-medkit {
 	display: none;
 }
 
-i.icon-grey.icon-circle, i.icon-blue.icon-circle,
+i.icon-grey.icon-circle,
 i.icon-orange.icon-warning-sign.pull-right.tooltips {
 	display: none;
 	visibility: hidden;
