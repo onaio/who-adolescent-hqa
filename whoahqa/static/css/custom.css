@@ -88,6 +88,10 @@ table.borderless {
     display: none;
 }
 
+.key-indicator-section {
+    margin-top: 15px;
+}
+
 h3.key-indicator-title {
     margin-left: 15px;
     color: #1175cb;
@@ -392,6 +396,11 @@ td.enclosed-table table tr:first-child td {
 }
 .navbar-nav > li > a.logout:hover {
     background: #1175cb;
+}
+
+.pull-right>.dropdown-menu {
+    right: inherit;
+    left: 0 !important;
 }
 
 /* scores bars  */

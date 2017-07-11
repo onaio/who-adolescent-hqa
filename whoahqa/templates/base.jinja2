@@ -217,9 +217,11 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                      {% block breadcrumbs %}{% endblock %}
                   </ul>
                   <!-- END PAGE TITLE & BREADCRUMB-->
-                  {% block period_selector %}
+               </div>
+               {% block period_selector %}
                      {% if periods %}
-                        <div class="dashboard-date-range btn-group pull-right">
+                        <div class="row pull-left date-range-dropdown">
+                          <div class="dashboard-date-range btn-group pull-right">
                            <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-primary dropdown-toggle" data-container="body" data-placement="top" data-original-title="{{gettext('Change dashboard date range')}}" data-toggle="dropdown" aria-expanded="false">
                               <i class="icon-calendar"></i>&nbsp;
                                  {% set active_period = selected_period or period%}
@@ -238,9 +240,9 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                               {% endfor %}
                            </ul>
                         </div>
+                        </div>
                      {% endif %}
                   {% endblock %}
-               </div>
             </div>
          </div>
          <!-- END PAGE HEADER-->

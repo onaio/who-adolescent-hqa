@@ -187,6 +187,10 @@ table.scores-table {
 	display: none;
 }
 
+.invisible {
+	visibility: hidden;
+}
+
 td.relative-score i.icon-medkit {
 	display: none;
 }

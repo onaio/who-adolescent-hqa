@@ -89,7 +89,7 @@
 {% endblock %}
 {% block period_selector %}
   {% if periods %}
-    <div class="row" style="position: absolute; top: 7em; margin-left: 10px;">
+    <div class="row clinics-date-range-dropdown">
       <div class="dashboard-date-range btn-group pull-left">
        <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-primary dropdown-toggle" data-container="body" data-placement="top" data-original-title="{{gettext('Change dashboard date range')}}" data-toggle="dropdown" aria-expanded="false">
           <i class="icon-calendar"></i>&nbsp;
@@ -123,7 +123,7 @@
     <table class="borderless">
       <tbody>
         <tr>
-          <td>{{ gettext('Clinic:') }}</td>
+          <td>{{ gettext('Clinic')}}:</td>
           <td>{{ self.title() }}</td>
         </tr>
         <tr>
@@ -131,10 +131,10 @@
           <td>{{ clinic.code }}</td>
         </tr>
         <tr>
-          <td>{{ gettext('Reporting period:') }} </td>
+          <td>{{ gettext('Reporting period')}}: </td>
           {% if periods %}
-            {% set active_period = selected_period or period%}
-            <td>{{ gettext(active_period.title) }} </td>
+            {% set active_period = selected_period or period %}
+            <td>{{ gettext(active_period.title)}} </td>
           {% endif %}
         </tr>
         <tr>
@@ -148,7 +148,7 @@
 <br/>
 {% for key_indicator, char_list in key_indicators %}
   <div class="table-responsive">
-    <div class="row">
+    <div class="row key-indicator-section">
       <h3 class="key-indicator-title">
         {{ gettext(key_indicator|capitalize)}}:
         {{ 0 or clinic_key_indicators[key_indicator]|round|int }}%
@@ -229,6 +229,8 @@
                                 <i class="icon-orange icon-ok"></i>
                                 {% elif responses == 0 or pending_responses > responses %}
                                 <i class="icon-orange icon-warning-sign"></i>
+                                {% else %}
+                                <i class="icon-orange icon-ok invisible"></i>
                                 {% endif %}
                               </div>
                               {% if responses %}
