@@ -220,9 +220,13 @@
                               <div class="print-scores">
                                 {{ responses }}
                                 of
+                                {% if pending_responses <=0 %}
+                                {{ responses }}
+                                {% else %}
                                 {{ responses + pending_responses }}
+                                {% endif %}
                                 {% if pending_responses <= 0 %}
-                                <i class="icon-blue icon-ok"></i>
+                                <i class="icon-orange icon-ok"></i>
                                 {% elif responses == 0 or pending_responses > responses %}
                                 <i class="icon-orange icon-warning-sign"></i>
                                 {% endif %}
