@@ -267,8 +267,7 @@ msgid "Role"
 msgstr "Função"
 
 #: whoahqa/forms/registration_form.py:33 whoahqa/forms/user_form.py:56
-#: whoahqa/templates/locale.jinja2:38
-#, fuzzy
+#: whoahqa/templates/locale.jinja2:38 whoahqa/templates/clinics_show.jinja2:126
 msgid "Clinic"
 msgstr "Clínicas"
 
@@ -446,7 +445,6 @@ msgid "Location List / Clinic"
 msgstr "Lista de localização / Clínica"
 
 #: whoahqa/templates/base.jinja2:15
-#, fuzzy
 msgid "WHO Adolescent Health Quality Assessment"
 msgstr "Avaliação da qualidade da saúde do adolescente"
 
@@ -464,7 +462,6 @@ msgstr "Sair"
 #: whoahqa/templates/clinics_characteristics_list.jinja2:10
 #: whoahqa/templates/reporting_periods_create.jinja2:21
 #: whoahqa/templates/reporting_periods_list.jinja2:3
-#, fuzzy
 msgid "Reporting Periods"
 msgstr "Período de relatório criado"
 
@@ -473,9 +470,8 @@ msgid "Assessment Surveys"
 msgstr "Pesquisa de Avaliação"
 
 #: whoahqa/templates/base.jinja2:143 whoahqa/templates/location_list.jinja2:2
-#, fuzzy
 msgid "Manage Locations"
-msgstr "Gerenciar Clínicas"
+msgstr "Gerenciar Localizações"
 
 #: whoahqa/templates/base.jinja2:150 whoahqa/templates/clinics_edit.jinja2:8
 msgid "Manage Clinics"
@@ -609,9 +605,8 @@ msgid "CNES number"
 msgstr "Número CNES"
 
 #: whoahqa/templates/clinics_show.jinja2:134
-#, fuzzy
-msgid "Reporting period:"
-msgstr "Período de relatório:"
+msgid "Reporting period"
+msgstr "Período de relatório"
 
 #: whoahqa/templates/clinics_show.jinja2:141
 msgid "Date printed"
@@ -650,14 +645,12 @@ msgid "You have finished data collection for this characteristic."
 msgstr "Você concluiu a coleta de dados para essa característica."
 
 #: whoahqa/templates/clinics_show.jinja2:295
-#, fuzzy
 msgid "Strong characteristic"
-msgstr "Características"
+msgstr "Característica forte"
 
 #: whoahqa/templates/clinics_show.jinja2:297
-#, fuzzy
 msgid "Characteristic to be improved"
-msgstr "Pontuações características"
+msgstr "Característica a melhorar"
 
 #: whoahqa/templates/clinics_show.jinja2:299
 msgid "Challenge"
@@ -786,7 +779,6 @@ msgstr "Crio"
 
 #: whoahqa/templates/reporting_periods_create.jinja2:15
 #: whoahqa/templates/reporting_periods_create.jinja2:60
-#, fuzzy
 msgid "Reporting Period"
 msgstr "Período de relatório"
 
@@ -1000,7 +992,7 @@ msgstr "Período de relatório criado"
 #~ msgid "Clinic"
 #~ msgstr "Clínicas"
 
-#~ msgid "Reporting perio"
+#~ msgid "Reporting period"
 #~ msgstr "Período da aplicação"
 
 #~ msgid "Reporting period 1"

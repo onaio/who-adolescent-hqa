@@ -37,8 +37,9 @@ a[href]:after {
 	display: none;
 }
 
-hr,br {
+hr {
 	display: block;
+	margin: -10px 0 10px 0;
 }
 
 .theme-panel {
