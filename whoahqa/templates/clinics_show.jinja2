@@ -112,7 +112,7 @@
     <div class="pull-left print-row">
     <button onclick="window.print();return false;" class="btn btn-default">
       <i class="icon-print"></i>
-      Print
+      {{ gettext('Print') }}
     </button>
   </div>
 </div>
@@ -123,22 +123,22 @@
     <table class="borderless">
       <tbody>
         <tr>
-          <td>Clinic: </td>
+          <td>{{ gettext('Clinic:') }}</td>
           <td>{{ self.title() }}</td>
         </tr>
         <tr>
-          <td>CNES number: </td>
+          <td>{{ gettext('CNES number')}}: </td>
           <td>{{ clinic.code }}</td>
         </tr>
         <tr>
-          <td>Reporting period: </td>
+          <td>{{ gettext('Reporting period:') }} </td>
           {% if periods %}
             {% set active_period = selected_period or period%}
             <td>{{ gettext(active_period.title) }} </td>
           {% endif %}
         </tr>
         <tr>
-          <td>Date printed: </td>
+          <td>{{ gettext('Date printed')}}: </td>
           <td id="date"></td>
         </tr>
       </tbody>
@@ -219,7 +219,7 @@
                               {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
                               <div class="print-scores">
                                 {{ responses }}
-                                of
+                                {{ gettext('of') }}
                                 {% if pending_responses <=0 %}
                                 {{ responses }}
                                 {% else %}
@@ -292,14 +292,14 @@
                         <span class="print-classification">
                         {% if meets_threshold %}
                           {% if score_classification == 'great' %}
-                            Strong characteristic
+                            {{ gettext('Strong characteristic')}}
                           {% elif score_classification == 'good' %}
-                            Characteristic to be improved
+                            {{ gettext('Characteristic to be improved')}}
                           {% elif score_classification == 'bad' %}
-                            Challenge
+                            {{ gettext('Challenge') }}
                           {% endif %}
                         {% else %}
-                          Insufficient result
+                          {{ gettext('Insufficient result') }}
                         {% endif %}
                         </span>
                       {% endif %}
@@ -313,8 +313,8 @@
         {% endfor %}
       </table>
       <div class="legend">
-        <i class="icon-orange icon-warning-sign"> – You need to collect more information</i>
-        <i class="icon-blue icon-ok"> – You have finished collecting data for this tool</i>
+        <i class="icon-orange icon-warning-sign"> – {{ gettext('You need to collect more information')}}</i>
+        <i class="icon-blue icon-ok"> – {{ gettext('You have finished collecting data for this tool')}}</i>
       </div>
   </div>
   {% if not loop.last %}
