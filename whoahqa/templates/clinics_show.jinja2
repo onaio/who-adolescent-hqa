@@ -89,7 +89,8 @@
 {% endblock %}
 {% block period_selector %}
   {% if periods %}
-    <div class="dashboard-date-range btn-group pull-right">
+    <div class="row clinics-date-range-dropdown">
+      <div class="dashboard-date-range btn-group pull-left">
        <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-primary dropdown-toggle" data-container="body" data-placement="top" data-original-title="{{gettext('Change dashboard date range')}}" data-toggle="dropdown" aria-expanded="false">
           <i class="icon-calendar"></i>&nbsp;
              {% set active_period = selected_period or period%}
@@ -108,21 +109,54 @@
           {% endfor %}
        </ul>
     </div>
+    <div class="pull-left print-row">
+    <button onclick="window.print();return false;" class="btn btn-default">
+      <i class="icon-print"></i>
+      {{ gettext('Print') }}
+    </button>
+  </div>
+</div>
   {% endif %}
 {% endblock %}
 {% block content %}
-
+<div class="table-responsive">
+    <table class="borderless">
+      <tbody>
+        <tr>
+          <td>{{ gettext('Clinic')}}:</td>
+          <td>{{ self.title() }}</td>
+        </tr>
+        <tr>
+          <td>{{ gettext('CNES number')}}: </td>
+          <td>{{ clinic.code }}</td>
+        </tr>
+        <tr>
+          <td>{{ gettext('Reporting period')}}: </td>
+          {% if periods %}
+            {% set active_period = selected_period or period %}
+            <td>{{ gettext(active_period.title)}} </td>
+          {% endif %}
+        </tr>
+        <tr>
+          <td>{{ gettext('Date printed')}}: </td>
+          <td id="date"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+<hr/>
+<br/>
 {% for key_indicator, char_list in key_indicators %}
   <div class="table-responsive">
-    <div class="row">
+    <div class="row key-indicator-section">
       <h3 class="key-indicator-title">
         {{ gettext(key_indicator|capitalize)}}:
-        {{ 0 or clinic_key_indicators[key_indicator]|round|int }}
+        {{ 0 or clinic_key_indicators[key_indicator]|round|int }}%
       </h3>
     </div>
     <div class="row">
       <div class="pull-left char-header">{{ gettext('Characteristics') }}</div>
-      <div class="pull-right score-header">{{ gettext('Relative Score') }}</div>
+      <div class="pull-right score-header hidden-print">{{ gettext('Relative Score') }}</div>
     </div>
 
       <table class="table table-bordered scores-table">
@@ -134,22 +168,25 @@
             {% set percentage = scores[characteristic.id].totals.total_percentage %}
             {% set meets_threshold = scores[characteristic.id].totals.meets_threshold %}
             <thead>
-            <tr>
-              <th class="char-no center-align">{{ gettext('No.') }}</th>
-              <th class="char-desc">{{ gettext('Description ') }}</th>
-              <th class="char-cat">{{ gettext('Category') }}</th>
-              <th class="min-max">{{ gettext('Min - Max') }}</th>
-              <th class="char-resp">{{ gettext('# Respondents') }}</th>
-              <th class="char-score">{{ gettext('Score') }}</th>
-              <th class="char-rel-score"></th>
-            </tr>
+              <tr>
+                <th class="char-no center-align">{{ gettext('No.') }}</th>
+                <th class="char-desc">{{ gettext('Description ') }}</th>
+                <th class="char-cat">{{ gettext('Category') }}</th>
+                <th class="min-max">{{ gettext('Min - Max') }}</th>
+                <th class="char-resp">{{ gettext('# Respondents') }}</th>
+                <th class="char-score">{{ gettext('Score') }}</th>
+                <th class="char-rel-score">
+                  <span class="for-print">{{ gettext('Relative Score') }}</span>
+                </th>
+              </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="center-align char-no-vals">
                   {{ characteristic.number }}
                 </td>
-                <td class="">{{ gettext(characteristic.description) }}
+                <td class="">
+                  <p>{{ gettext(characteristic.description) }}</p>
                 </td>
                 <td class="client-tool-table">
                   <table class="table table-striped">
@@ -180,6 +217,22 @@
                             <td>
                               {% set responses = score[client_tool.id]['num_responses']|int(0) %}
                               {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
+                              <div class="print-scores">
+                                {{ responses }}
+                                {{ gettext('of') }}
+                                {% if pending_responses <=0 %}
+                                {{ responses }}
+                                {% else %}
+                                {{ responses + pending_responses }}
+                                {% endif %}
+                                {% if pending_responses <= 0 %}
+                                <i class="icon-orange icon-ok"></i>
+                                {% elif responses == 0 or pending_responses > responses %}
+                                <i class="icon-orange icon-warning-sign"></i>
+                                {% else %}
+                                <i class="icon-orange icon-ok invisible"></i>
+                                {% endif %}
+                              </div>
                               {% if responses %}
                                 {% for response in range(responses) %}
                                   <i class="icon-blue icon-circle"></i>
@@ -189,7 +242,7 @@
                                 <i class="icon-grey icon-circle"></i>
                               {% endfor %}
                               {% if pending_responses <= 0 %}
-                                <i class="icon-blue icon-ok pull-right tooltips" data-placement='top' data-original-title="{{ gettext('You have finished collecting data for this tool') }}"></i>
+                                <i class="icon-blue icon-ok pull-right tooltips hidden-print" data-placement='top' data-original-title="{{ gettext('You have finished collecting data for this tool') }}"></i>
                               {% elif responses == 0 or pending_responses > responses %}
                                 <i class="icon-orange icon-warning-sign pull-right tooltips" data-placement='top' data-original-title="{{gettext('You need to collect more information') }}"></i>
                               {% endif %}
@@ -226,16 +279,48 @@
                         {% endif %}
                       {% endif %}
                       <i class="big icon-medkit {{ class_name }}"></i>
+                      <span class="hidden-print">
                       {{ "%s"| format(percentage|int(0)) }}%
+                      </span>
                     {% endif %}
                     {% if total_pending_responses <= 0 %}
-                      <span class="label label-primary tooltips" data-placement='top' data-original-title="{{gettext('You have finished data collection for this characteristic.') }}"> {{ gettext('Complete') }}</span>
+                      <span class="label label-primary tooltips hidden-print" data-placement='top' data-original-title="{{gettext('You have finished data collection for this characteristic.') }}"> {{ gettext('Complete') }}</span>
                     {% endif %}
+                    <div class="print-relative-score">
+                      {% if total_responses == 0 %}
+                      <div class="print-hyphen"> - </div>
+                      {% else %}
+                      <span>{{ "%s"| format(percentage|int(0)) }}%</span>
+                        <span class="print-classification">
+                        {% if meets_threshold %}
+                          {% if score_classification == 'great' %}
+                            {{ gettext('Strong characteristic')}}
+                          {% elif score_classification == 'good' %}
+                            {{ gettext('Characteristic to be improved')}}
+                          {% elif score_classification == 'bad' %}
+                            {{ gettext('Challenge') }}
+                          {% endif %}
+                        {% else %}
+                          {{ gettext('Insufficient result') }}
+                        {% endif %}
+                        </span>
+                      {% endif %}
+                      {% if total_pending_responses <= 0 %}
+                      <span class="label label-primary tooltips print-complete" data-placement='top' data-original-title="{{gettext('You have finished data collection for this characteristic.') }}"> {{ gettext('Complete') }}</span>
+                      {% endif %}
+                    </div>
                 </td>
               </tr>
+            </tbody>
         {% endfor %}
-        </tbody>
       </table>
+      <div class="legend">
+        <i class="icon-orange icon-warning-sign"> – {{ gettext('You need to collect more information')}}</i>
+        <i class="icon-blue icon-ok"> – {{ gettext('You have finished collecting data for this tool')}}</i>
+      </div>
   </div>
+  {% if not loop.last %}
+    <div class="page-break"></div>
+  {% endif %}
 {% endfor %}
 {% endblock %}

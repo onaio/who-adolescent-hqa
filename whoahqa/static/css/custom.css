@@ -84,6 +84,14 @@
     width: 25%;
 }
 
+table.borderless {
+    display: none;
+}
+
+.key-indicator-section {
+    margin-top: 15px;
+}
+
 h3.key-indicator-title {
     margin-left: 15px;
     color: #1175cb;
@@ -122,6 +130,10 @@ h3.key-indicator-title {
 #header-top .dropdown-toggle{
 	padding-top:0.8em;
 	padding-bottom:0.7em;
+}
+
+hr,br {
+    display: none;
 }
 
 .underline{ text-decoration:underline; }
@@ -337,6 +349,10 @@ i.icon-green {
     color: #35cc03;
 }
 
+i.icon-blue {
+    color: #1175cb;
+}
+
 td.relative-score {
     font-size: 16px;
 }
@@ -382,6 +398,11 @@ td.enclosed-table table tr:first-child td {
     background: #1175cb;
 }
 
+.pull-right>.dropdown-menu {
+    right: inherit;
+    left: 0 !important;
+}
+
 /* scores bars  */
 .score-bar, .elapsed, .score-msg{
     height:1.5em;
@@ -401,6 +422,10 @@ tr.average-row {
 
 .scores-table tbody tr.average-row td {
     background-color: #eff0f1;
+}
+
+.legend {
+    display: none;
 }
 
 tr.average-row span.score-msg {
@@ -427,6 +452,14 @@ tr.average-row span.score-msg {
 
 .scores-table-horizontal .key-indicators {
     width: 12%
+}
+
+.print-scores {
+    display: none;
+}
+
+.print-relative-score {
+    display: none;
 }
 
 ul.page-sidebar-menu > li.active > ul.sub-menu > li.selected {
@@ -456,4 +489,13 @@ li.external-resource a {
 
 input[name=password-confirm] {
   margin-top: 15px;
+}
+
+.print-row {
+  padding-right: 20px;
+  padding-left: 15px;
+}
+
+.for-print {
+	display: none;
 }
