@@ -6,7 +6,7 @@
     {% if request.user %}
     <li class="">
       <a href="{{request.route_url('municipalities', traverse=(request.user.location.id))}}">
-          {{ request.user.location.name|format_location_name }}
+          {{ request.user.location.name|title }}
           {{ request.user.location.location_type|capitalize }}
       </a>
     </li>
@@ -20,7 +20,7 @@
 	    <li class="">
 	      <i class="icon-home"></i>
 	      <a href="{{request.route_url('municipalities', traverse=(request.user.location.id))}}">
-	      {{ request.user.location.name|format_location_name }}
+	      {{ request.user.location.name|title }}
 	      {{ request.user.location.location_type|capitalize }}
 	      </a>
 	      <i class="icon-angle-right"></i>
