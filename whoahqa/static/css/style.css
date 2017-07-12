@@ -1251,7 +1251,8 @@ Portlets
     height: 100% !important; 
 }
   
-.ui-sortable-placeholder * { 
+.ui-sortable-placeholder *,
+a.show-form { 
   visibility: hidden; 
 }
 
@@ -1721,7 +1722,6 @@ Star rating
   content: "\f005";
   color: #e3cf7a;
 }
-
 
 /***
 Item block with details shown on hover
