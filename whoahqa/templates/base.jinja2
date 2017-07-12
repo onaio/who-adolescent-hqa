@@ -12,7 +12,8 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>{% block title %}{% endblock %} | WHO Adolescent Health Quality Assessment</title>
+   <title>{% block title %}{% endblock %} | 
+   {{ gettext('WHO Adolescent Health Quality Assessment') }}</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -35,6 +36,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    <link href="{{ request.static_url('whoahqa:static/css/themes/blue.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
    <link href="{{ request.static_url('whoahqa:static/css/custom.css') }}" rel="stylesheet" type="text/css"/>
    <link href="{{ request.static_url('whoahqa:static/plugins/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css"/>
+   <link href="{{ request.static_url('whoahqa:static/css/print.css') }}" rel="stylesheet" type="text/css" media="print">
    <!-- END THEME STYLES -->
    <link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -215,15 +217,17 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                      {% block breadcrumbs %}{% endblock %}
                   </ul>
                   <!-- END PAGE TITLE & BREADCRUMB-->
-                  {% block period_selector %}
+               </div>
+               {% block period_selector %}
                      {% if periods %}
-                        <div class="dashboard-date-range btn-group pull-right">
+                        <div class="row pull-left date-range-dropdown">
+                          <div class="dashboard-date-range btn-group pull-right">
                            <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-primary dropdown-toggle" data-container="body" data-placement="top" data-original-title="{{gettext('Change dashboard date range')}}" data-toggle="dropdown" aria-expanded="false">
                               <i class="icon-calendar"></i>&nbsp;
                                  {% set active_period = selected_period or period%}
                                  <span class="thin uppercase visible-lg-inline-block">
                                     {{ gettext(active_period.title) }}
-                                 </span>&nbsp; 
+                                 </span>&nbsp;
                                  <i class="icon-angle-down"></i>
                            </div>
                            <ul class="dropdown-menu" role="menu">
@@ -236,9 +240,9 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                               {% endfor %}
                            </ul>
                         </div>
+                        </div>
                      {% endif %}
                   {% endblock %}
-               </div>
             </div>
          </div>
          <!-- END PAGE HEADER-->
@@ -296,6 +300,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
           window.history.back();
       }
    </script>
+   <script>document.getElementById("date").innerHTML = new Date().toJSON().slice(0,10).split('-').reverse().join('/') ;</script>
    <!-- END PAGE LEVEL SCRIPTS -->
    <!-- END JAVASCRIPTS -->
 </body>

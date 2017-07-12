@@ -1,28 +1,85 @@
 /***
 Import fonts
 ***/
-.header {
+.btn {
 	display: none;
 }
 
-.page-sidebar {
+.page-sidebar, .page-bar {
 	display: none;
+}
+
+#header-top {
+	display: block;
+	border-bottom: none;
+	font-size: 19px !important;
+	font-weight: 600;
+	width: 1400px;
+	margin-top: -10px;
+	margin-bottom: -40px;
+	top: 10px;
+	z-index: 1000;
+}
+
+.page-title {
+	display: none;
+}
+
+a.nav-brand {
+	display: none;
+}
+
+a[href]:after {
+    content: none !important;
+}
+
+#header-top .dropdown-toggle {
+	display: none;
+}
+
+hr {
+	display: block;
+	margin: -10px 0 10px 0;
 }
 
 .theme-panel {
-	display: none;
+	display: block;
 }
 
 .hidden-print {
 	display: none;
 }
 
+div.table-responsive {
+	margin-top: -25px;
+	margin-bottom: 25px;
+}
+
+table.borderless {
+	display: block;
+	margin-top: 1px;
+}
+
+table.borderless tr td {
+	font-size: 17px !important;
+	padding: 5px;
+}
+
 .footer {
 	display: none;
 }
 
+.for-print {
+	display: block;
+}
+
 .no-page-break {
 	page-break-after: avoid;
+}
+
+.page-break	{
+	display: block;
+	page-break-before: always;
 }
 
 .page-container {
@@ -31,5 +88,123 @@ Import fonts
 }
 
 .page-content {
+	margin: 0px;
 	min-height: auto !important;
+	padding: 0px;
+}
+
+.print-row {
+	display: none;
+}
+
+.table-responsive {
+	border: none !important;
+	zoom: 1;
+	overflow-x: hidden;
+}
+
+.char-header {
+	font-size: 12px !important;
+	font-weight: 600;
+	margin-bottom: 5px;
+	padding-left: 0px;
+}
+
+.score-header {
+	font-size: 12px !important;
+	font-weight: 600;
+	margin-bottom: 5px;
+	padding-left: 0px;
+	display: block;
+}
+
+.print-scores {
+	display: block;
+	height: 14px;
+}
+
+.print-scores i {
+	margin-left: 5px;
+}
+
+thead {
+	display: none;
+}
+
+thead:first-child {
+	display: table-header-group;
+}
+
+table.scores-table {
+	table-layout: fixed;
+	font-size: 10px !important;
+}
+
+.scores-table thead > tr > th {
+	font-size: 10px !important;
+	font-weight: bold;
+}
+
+.scores-table .client-tool-table > table tr td {
+    border-left: none !important;
+	border-right: none !important;
+	border-bottom: none !important;
+	zoom: 1;
+}
+
+.scores-table .client-tool-table > table tr td i.icon-blue {
+	display: none;
+}
+
+.scores-table .client-tool-table > table.respondents tr td {
+	text-align: center;
+	font-size: 10px;
+	height: 10px;
+}
+
+.scores-table .client-tool-table > table tr:first-child td {
+	border-top: none !important;
+}
+
+.legend {
+    display: grid;
+    margin-top: 5px;
+}
+
+.print-relative-score {
+	display: grid;
+}
+
+.print-relative-score span.print-classification {
+	padding-bottom: 5px;
+	font-size: 10px;
+}
+
+.print-relative-score span.print-complete {
+	margin: 0 auto;
+}
+
+.print-hyphen {
+	display: none;
+}
+
+.invisible {
+	visibility: hidden;
+}
+
+td.relative-score i.icon-medkit {
+	display: none;
+}
+
+i.icon-grey.icon-circle,
+i.icon-orange.icon-warning-sign.pull-right.tooltips {
+	display: none;
+	visibility: hidden;
+}
+
+p {
+	white-space: normal;
+	width: 100px;
+	word-wrap: break-word;
+	font-size: 10px !important;
 }

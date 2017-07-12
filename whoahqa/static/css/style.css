@@ -862,13 +862,26 @@ Page breadcrumb
 /* Page breadcrumb */
 .page-bar {
   border: 0;
+  height: 36px;
   padding: 0px;
   background-color: #eee;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   margin-left: -20px;
   margin-right: -20px;
   padding-left: 10px;
   padding-right: 20px;
+}
+
+.date-range-dropdown {
+  position: relative;
+  bottom: 1.3em;
+  left: 1.2em;
+}
+
+.clinics-date-range-dropdown {
+  position: absolute;
+  top: 7em;
+  margin: 0;
 }
 
 .page-boxed .page-bar {
