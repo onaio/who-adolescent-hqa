@@ -34,6 +34,18 @@ from whoahqa.forms import ClinicForm
 from whoahqa.views.base import BaseClassViews
 
 
+FORM_MAP = {
+    'adolescent_client_V3': 215285,
+    'health_care_provider_V3': 215288,
+    'support_staff_V3': 215292,
+    'health_facility_manager_V3': 215289,
+    'outreach_worker_V3': 215291,
+    'community_member_V3': 215287,
+    'adolescent_in_community_V3': 215286,
+    'observation_guide_V3': 215290,
+}
+
+
 @view_defaults(route_name='clinics')
 class ClinicViews(BaseClassViews):
     @view_config(name='',
@@ -112,10 +124,13 @@ class ClinicViews(BaseClassViews):
     def show_form(self):
         # redirects to the survey form for specified survey
         survey_form = self.request.GET.get('form')
+        survey_id = FORM_MAP.get(survey_form)
         # get enketo edit url
         try:
             survey_url = enketo.get_survey_url(
-                self.request.registry.settings['form_server_url'],
+                "%s/%s" % (
+                    self.request.registry.settings['form_server_url'],
+                    survey_id),
                 survey_form)
         except Http404:
             # Since enketo doesn't have the specified form throw a
