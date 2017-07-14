@@ -125,7 +125,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                        </a>
                      </li>
                    {% endif %}
-                  {% if request.can_access_clinics %}
+                  {% if request.can_access_clinics and not request.is_super_user %}
                      <li class="
                         {%if request.url.find('assess') != -1 %}
                            selected

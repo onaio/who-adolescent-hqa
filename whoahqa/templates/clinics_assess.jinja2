@@ -1,12 +1,35 @@
 {% extends "base.jinja2" %}
 {% block title %}{{ gettext("Assessment Surveys") }}{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
+{% block sub_menu_item %}
+  {% if not request.can_assess_clinics %}
+    {% if request.user %}
+    <li class="">
+      <a href="{{request.route_url('municipalities', traverse=(request.user.location.id))}}">
+          {{ request.user.location.name|title }}
+          {{ request.user.location.location_type|capitalize }}
+      </a>
+    </li>
+    {% endif %}
+  {% endif %}
+{% endblock %}
 {% block breadcrumbs %}
-  <li>
-    <i class="icon-angle-right"></i>
-    {{ self.page_title() }}
-  </li>
-  <li><a href="#"> </a></li>
+<li>
+{% if request.can_view_municipality and request.can_create_period %}
+	{% if request.user %}
+	    <li class="">
+	      <i class="icon-home"></i>
+	      <a href="{{request.route_url('municipalities', traverse=(request.user.location.id))}}">
+	      {{ request.user.location.name|title }}
+	      {{ request.user.location.location_type|capitalize }}
+	      </a>
+	      <i class="icon-angle-right"></i>
+	    </li>
+  {% endif %}
+{% endif %}
+{{ self.page_title() }}
+</li>
+<li><a href="#"> </a></li>
 {% endblock %}
 {% block content %}
     {% include 'clinic_assessment_table.jinja2' %}
