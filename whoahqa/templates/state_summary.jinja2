@@ -4,11 +4,33 @@
 
 {% block sub_menu_item %}
   <li class="selected">
+  <div style="display: none;">
+    <input id="group" type="checkbox" hidden />
+  </div>
     <a href="{{state.get_url(request, period)}}">
         {{ state.name|format_location_name }}
         {{ gettext(state.location_type|capitalize) }}
+        <span class="icon-angle-left" style="width: 0; float: right; margin-right: 15px;"></span>
     </a>
   </li>
+  {% for municipality in state.children() %}
+      <li class="sub-location">
+      <div style="display: none;">
+        <input id="sub-group" type="checkbox" hidden />
+      </div>
+        <a href="{{municipality.get_url(request, period)}}">
+            {{ municipality.name|format_location_name }}
+            {{ gettext(municipality.location_type|capitalize) }}
+        </a>
+      </li>
+      {% for clinic in municipality.children() %}
+      <li class="sub-sub-location">
+          <a href="{{clinic.get_url(request, period)}}">
+              {{ clinic.name|format_location_name }}
+          </a>
+      </li>
+      {% endfor %}
+    {% endfor %}
 {% endblock %}
 
 {% block breadcrumbs %}
