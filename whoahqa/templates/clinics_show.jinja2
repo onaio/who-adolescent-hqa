@@ -269,16 +269,20 @@
                       -
                     {% else %}
                       {% set class_name = "icon-grey" %}
+                      {% set tooltip_text = "Insufficient Result" %}
                       {% if meets_threshold %}
                         {% if score_classification == 'great' %}
                           {% set class_name = "icon-green" %}
+                          {% set tooltip_text = "Strong characteristic" %}
                         {% elif score_classification == 'good' %}
                           {% set class_name = "icon-orange" %}
+                          {% set tooltip_text = "Characteristic to be improved" %}
                         {% else %}
                           {% set class_name = "icon-red" %}
+                          {% set tooltip_text = "Challenge" %}
                         {% endif %}
                       {% endif %}
-                      <i class="big icon-medkit {{ class_name }}"></i>
+                      <i class="big icon-medkit {{ class_name }} tooltips" data-placement='top' data-original-title="{{ gettext(tooltip_text) }}"></i>
                       <span class="hidden-print">
                       {{ "%s"| format(percentage|int(0)) }}%
                       </span>
