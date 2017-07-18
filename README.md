@@ -57,7 +57,7 @@ Installing
 4. Clone the repo and change into the project directory and install requirements
 
     ```
-    clone git@github.com:onaio/who-adolescent-hqa.git
+    git clone git@github.com:onaio/who-adolescent-hqa.git
     ```
     ```
     cd who-adolescent-hqa
