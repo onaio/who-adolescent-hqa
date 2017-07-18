@@ -24,7 +24,11 @@
             <td>
                 <div class="score-bar">
                     <div class="elapsed average" style="width: {{ national_report[id]|round if national_report[id] else 0 }}%"></div>
-                    <span class="score-msg">{{ national_report[id]|round|int if national_report[id] else '' }}</span>
+                    <span class="score-msg">
+                      {% if national_report[id] %}
+                        {{ national_report[id]|round|int }}%
+                      {% endif %}
+                    </span>
                 </div>
             </td>
           {% endfor %}
@@ -42,7 +46,11 @@
               <td>
                   <div class="score-bar">
                       <div class="elapsed average" style="width: {{ key_indicators[id]|round if key_indicators[id] else 0 }}%"></div>
-                      <span class="score-msg">{{ key_indicators[id]|round|int if key_indicators[id] else '' }}</span>
+                      <span class="score-msg">
+                      {% if key_indicators[id] %}
+                        {{ key_indicators[id]|round|int }}%
+                      {% endif %}
+                      </span>
                   </div>
               </td>
             {% endfor %}
@@ -72,7 +80,11 @@
             <td>
                 <div class="score-bar">
                     <div class="elapsed" style="width: {{ key_indicators[id]|round if key_indicators[id] else 0 }}%"></div>
-                    <span class="score-msg">{{ key_indicators[id]|round|int if key_indicators[id] else '' }}</span>
+                    <span class="score-msg">
+                    {% if key_indicators[id] %}
+                        {{ key_indicators[id]|round|int }}%
+                      {% endif %}
+                    </span>
                 </div>
             </td>
           {% endfor %}
