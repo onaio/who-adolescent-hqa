@@ -344,7 +344,8 @@ class ClinicViews(BaseClassViews):
     def delete(self):
         clinic = self.request.context
         DBSession.delete(clinic)
-
+        self.request.session.flash(
+            _(u"Clinic successfully deleted"), "success")
         return HTTPFound(
             location=self.request.route_url('clinics', traverse=('manage')))
 
