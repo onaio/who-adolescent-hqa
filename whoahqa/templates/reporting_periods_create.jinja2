@@ -119,7 +119,7 @@
               {% endif %}
             </button>
             {% if request.url.find('edit') != -1 %}
-            <button class="btn btn-danger" data-toggle="modal" data-target="#delete-confirm">
+            <button class="btn btn-danger tooltips {% if period.reports %} disabled {% endif %}" data-toggle="modal" data-target="#delete-confirm" {% if period.reports %} data-placement='top' data-original-title="{{ gettext('Cannot delete reporting period with data') }}"{% endif %}>
               {{ gettext('Delete') }}
             </button>
             {% endif %}

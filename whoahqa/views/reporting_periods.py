@@ -138,8 +138,12 @@ class ReportingPeriodViews(BaseClassViews):
                  renderer='reporting_periods_create.jinja2')
     def delete(self):
         period = self.request.context
-        DBSession.delete(period)
-        self.request.session.flash(
-            _(u"Reporting period successfully deleted"), "success")
+        if not period.reports:
+            DBSession.delete(period)
+            self.request.session.flash(
+                _(u"Reporting period successfully deleted"), "success")
+        else:
+            self.request.session.flash(
+                _(u"Cannot delete reporting period with data"), "error")
         return HTTPFound(
             self.request.route_url('periods', traverse=('list')))
