@@ -66,6 +66,14 @@ Installing
     pip install -r requirements.txt
     ```
 
+    > If you are on macOS and see the above fail with "error linking uwsgi" try running
+    >
+    > ```
+    > CFLAGS="-I/usr/local/opt/openssl/include" LDFLAGS="-L/usr/local/opt/openssl/lib" UWSGI_PROFILE_OVERRIDE=ssl=true pip install uwsgi -Iv
+    > ```
+
+    > Then rerun the previous command.
+
     Install the requirements in `development` mode
 
     ```
