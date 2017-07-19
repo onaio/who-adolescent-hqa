@@ -2929,7 +2929,8 @@ Demo Utils
   font-size: 18px;
 }
 
-.fontawesome-demo li {
+.fontawesome-demo li,
+.period-delete {
   padding-top: 5px;
   padding-bottom: 5px;
 }

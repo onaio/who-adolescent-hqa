@@ -36,7 +36,7 @@
           You are about to delete
           <strong>
           {{ period.title }}
-          </strong>, this procedure is irreversible.
+          </strong>. This procedure is irreversible.
             <br/>
           Do you wish to proceed?
         </div>
@@ -119,9 +119,11 @@
               {% endif %}
             </button>
             {% if request.url.find('edit') != -1 %}
-            <button class="btn btn-danger tooltips {% if period.reports %} disabled {% endif %}" data-toggle="modal" data-target="#delete-confirm" {% if period.reports %} data-placement='top' data-original-title="{{ gettext('Cannot delete reporting period with data') }}"{% endif %}>
+            <span class="period-delete tooltips" {% if period.reports %} data-placement='top' data-original-title="{{ gettext('Cannot delete a reporting period with data') }}" {% endif %}>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#delete-confirm" {% if period.reports %} disabled {% endif %}>
               {{ gettext('Delete') }}
-            </button>
+              </button>
+            </span>
             {% endif %}
             <a class="btn btn-default" href="{{ request.route_url('periods', traverse=('list')) }}">
               {{ gettext('Cancel')}}
