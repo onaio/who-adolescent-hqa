@@ -47,8 +47,6 @@
                     <td>{{ location.parent }}</td>
                     <td>
                       <a class="btn btn-default btn-xs" href="{{ request.route_path('locations', traverse=(location.id, 'edit')) }}">{{ gettext('Edit') }}</a>
-                    
-                      <a class="btn btn-danger btn-xs" href="{{ request.route_path('locations', traverse=(location.id, 'delete')) }}">{{ gettext('Delete') }}</a>
                     </td>
                   </tr>
                 {% endfor %}
