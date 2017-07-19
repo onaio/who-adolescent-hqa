@@ -7,7 +7,9 @@ from deform import Form, ValidationFailure
 from whoahqa.constants import permissions as perms
 from whoahqa.utils import translation_string_factory as _
 from whoahqa.utils import valid_year
-from whoahqa.models import DBSession, ReportingPeriod
+from whoahqa.models import (
+    DBSession,
+    ReportingPeriod)
 from whoahqa.forms import ReportingPeriodForm
 from whoahqa.views.base import BaseClassViews
 
@@ -130,3 +132,14 @@ class ReportingPeriodViews(BaseClassViews):
         came_from = self.request.GET.get('came_from')
         target_url = urlparse.unquote(came_from).format(period_id=period.id)
         return HTTPFound(target_url)
+
+    @view_config(name='delete',
+                 context=ReportingPeriod,
+                 renderer='reporting_periods_create.jinja2')
+    def delete(self):
+        period = self.request.context
+        DBSession.delete(period)
+        self.request.session.flash(
+            _(u"Reporting period successfully deleted"), "success")
+        return HTTPFound(
+            self.request.route_url('periods', traverse=('list')))
