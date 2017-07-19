@@ -25,6 +25,30 @@
   <li><a href="#"> </a></li>
 {% endblock %}
 {% block content %}
+<div class="modal fade" id="delete-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title">Confirm Delete</h4>
+        </div>
+        <div class="modal-body">
+          You are about to delete
+          <strong>
+          {{ period.title }}
+          </strong>, this procedure is irreversible.
+            <br/>
+          Do you wish to proceed?
+
+        </div>
+        <div class="modal-footer">
+          <a href="{{ request.route_url('periods', traverse=(period.id, 'delete'))}}" class="btn btn-danger">Delete</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+                 <!-- /.modal-content -->
+    </div>        <!-- /.modal-dialog -->
+</div>
   <div class="portlet ">
     <div class="portlet-title">
       <div class="caption">
@@ -94,6 +118,11 @@
                 {{ gettext('Create') }}
               {% endif %}
             </button>
+            {% if request.url.find('edit') != -1 %}
+            <button class="btn btn-danger" data-toggle="modal" data-target="#delete-confirm">
+              {{ gettext('Delete') }}
+            </button>
+            {% endif %}
             <a class="btn btn-default" href="{{ request.route_url('periods', traverse=('list')) }}">
               {{ gettext('Cancel')}}
             </a>
