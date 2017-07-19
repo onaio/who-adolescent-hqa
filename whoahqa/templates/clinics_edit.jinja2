@@ -24,10 +24,9 @@
           You are about to delete
           <strong>
           {{ clinic.name }}
-          </strong>, this procedure is irreversible.
+          </strong>. This procedure is irreversible.
             <br/>
           Do you wish to proceed?
-
         </div>
         <div class="modal-footer">
           <a href="{{ request.route_url('clinics', traverse=(clinic.id, 'delete')) }}" class="btn btn-danger">Delete</a>
