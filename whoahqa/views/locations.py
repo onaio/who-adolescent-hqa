@@ -102,11 +102,13 @@ class LocationViews(object):
 
     @view_config(name='delete',
                  context=Location,
-                 request_method='GET')
+                 renderer='location_list.jinja2')
     def delete(self):
         location = self.request.context
         if not location.children():
             DBSession.delete(location)
+            self.request.session.flash(
+                _("Location deleted successfully"), 'success')
         else:
             self.request.session.flash(
                 _("Cannot delete location with Children"), 'error')
