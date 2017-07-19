@@ -31,7 +31,10 @@ class ClinicReport(Base):
                           single_parent=True)
 
     period_id = Column(Integer, ForeignKey('reporting_periods.id'))
-    period = relationship('ReportingPeriod')
+    period = relationship(
+        'ReportingPeriod',
+        backref=backref('reports',
+                        cascade="all, delete, delete-orphan"))
 
     json_data = Column(JSON, nullable=False)
 
