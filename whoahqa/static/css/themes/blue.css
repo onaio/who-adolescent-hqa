@@ -18,13 +18,13 @@ Page header
 }
 .header .navbar-nav .dropdown-toggle:hover,
 .header .navbar-nav .dropdown.open .dropdown-toggle {
-  background-color: #0d77b6 !important;
+  background-color: rgba(169, 169, 169, 0.15); !important;
 }
 .header .navbar-nav li.dropdown .dropdown-toggle i {
-  color: #7fc9f6 !important;
+  color: #999ba2 !important;
 }
 .header .navbar-nav > li.devider {
-  border-left: 1px solid #0b6aa3 !important;
+  border-left: 1px solid #484a4f !important;
 }
 .header .navbar-nav > li.dropdown.user .dropdown-toggle .username {
   color: #4fb6f3;
