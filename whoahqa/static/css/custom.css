@@ -110,24 +110,26 @@ h3.key-indicator-title {
 }
 
 #header-top{
-	color:#333333!important;
-	height:0!important;
-	min-height:40px!important;
+    background: #0e3145;
+    color:#333333!important;
+    height:0!important;
+    min-height:40px!important;
 }
+
 .header.navbar{
 	background:#EFEFEF;
-	border-bottom:1px solid #D7D7D7;
 }
 .glyphicon .glyphicon-user{
 	color:#999999;
 }
 #header-top .navbar-brand{
-	color:#333333;
+	color: #f0f0f0;
 	font-size:1.12em;
 	padding:.6em 0 0 1.7em;
 	width:60%;
 }
 #header-top .dropdown-toggle{
+    color: #e5e5e5;
 	padding-top:0.8em;
 	padding-bottom:0.7em;
 }
