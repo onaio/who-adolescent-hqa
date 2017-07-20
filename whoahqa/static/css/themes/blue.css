@@ -179,6 +179,9 @@ Landscape phone to portrait tablet
     -moz-border-radius: 4px !important;
     border-radius: 4px !important;
   }
+  .page-sidebar.navbar-collapse {
+    padding-top: 2em !important;
+  }
   ul.page-sidebar-menu > li > a {
     border-top: 1px solid #095786;
     border-bottom: 1px solid #063856;
