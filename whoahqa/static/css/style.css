@@ -281,6 +281,12 @@ Header and header elements.
   width: 215px;
 }
 
+.header .navbar-brand div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .header .navbar-brand img {
   margin-left: 20px;
 }
@@ -347,7 +353,7 @@ Header and header elements.
 .header .navbar-nav > li.devider {
   margin-left: 10px !important;
   margin-right: 5px !important;
-  height: 45px;
+  height: 40px;
   width: 1px !important;
 }
 
@@ -390,7 +396,7 @@ Header and header elements.
   display: inline-block;
   margin-top: 5px;
   margin: 0;
-  font-size: 16px;
+  font-size: 13px;
 }
 
 .header .navbar-nav > li.dropdown.user .dropdown-menu i {
@@ -407,6 +413,10 @@ Header and header elements.
   height: 15px;
   margin-top: -6px;
   margin-left: -3px;
+}
+
+span.glyphicon {
+  color: #acacac;
 }
 
 /* language bar */

@@ -49,17 +49,24 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
       <div class="header-inner">
          <!-- BEGIN LOGO -->
          <a class="navbar-brand" href="{{ request.route_url('default') }}">
-			<span>{{ gettext('Quality Assessment Tool: Assessing Health Services for Adolescent Clients') }}</span>
+			<div>{{ gettext('Quality Assessment Tool: Assessing Health Services for Adolescent Clients') }}</div>
          </a>
+        <label class="hamburger-menu" data-toggle="collapse" data-target="#sidebar">
+        </label>
          <!-- END LOGO -->
 
         <!-- BEGIN USER LOGIN DROPDOWN -->
          <ul class="nav navbar-nav pull-right">
+            <li class="devider">
+              &nbsp;
+            </li>
             <li class="dropdown user">
             	<a href="#"
                class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
    				   <span class="glyphicon glyphicon-user"></span> &nbsp;Signed in as
                   <span class="bold">{{ request.user.username + " (" + request.user.group | capitalize | replace("_", " ") + ")" }}</span>
+                <i class="icon-angle-down">
+                </i>
                </a>
                <ul class="dropdown-menu">
                   <li>
@@ -85,7 +92,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    <div class="page-container">
 
       <!-- BEGIN SIDEBAR -->
-      <div class="page-sidebar navbar-collapse collapse">
+      <div class="page-sidebar navbar-collapse collapse" id="sidebar">
          <!-- BEGIN SIDEBAR MENU -->
          {% block sidebar_menu %}
             <ul class="page-sidebar-menu">
