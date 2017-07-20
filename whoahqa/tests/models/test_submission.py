@@ -43,3 +43,24 @@ class TestSubmission(TestBase):
 
         # check that a clinic record was still created
         self.assertEqual(Clinic.count(), clinic_count + 1)
+
+    def test_check_if_submission_exists(self):
+        # create a clinic with matching id
+        clinic_code = "1A2B"
+        clinic = Clinic(code=clinic_code, name="Clinic A")
+        DBSession.add(clinic)
+
+        # check current counts
+        count = Submission.count()
+        clinic_submission_count = ClinicSubmission.count()
+        _submission = self.submissions[1]
+
+        if type(_submission) is not dict:
+            payload = json.loads(_submission)
+
+        if Submission.exists(payload):
+            submission = Submission.newest()
+            self.assertEqual(Submission.count(), count)
+            self.assertEqual(
+                ClinicSubmission.count(), clinic_submission_count)
+            self.assertIsInstance(submission, Submission)
