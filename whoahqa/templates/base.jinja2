@@ -51,8 +51,8 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
          <a class="navbar-brand" href="{{ request.route_url('default') }}">
 			<span>{{ gettext('Quality Assessment Tool: Assessing Health Services for Adolescent Clients') }}</span>
          </a>
-      <label class="hamburger-menu" for="collapse">
-      </label>
+        <label class="hamburger-menu" data-toggle="collapse" data-target="#sidebar">
+        </label>
          <!-- END LOGO -->
 
         <!-- BEGIN USER LOGIN DROPDOWN -->
@@ -92,7 +92,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
    <div class="page-container">
 
       <!-- BEGIN SIDEBAR -->
-      <div class="page-sidebar navbar-collapse collapse">
+      <div class="page-sidebar navbar-collapse collapse" id="sidebar">
          <!-- BEGIN SIDEBAR MENU -->
          {% block sidebar_menu %}
             <ul class="page-sidebar-menu">
