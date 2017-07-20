@@ -281,6 +281,12 @@ Header and header elements.
   width: 215px;
 }
 
+.header .navbar-brand div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .header .navbar-brand img {
   margin-left: 20px;
 }
