@@ -3,34 +3,28 @@
 {% block page_title %} {{ state.name|format_location_name }} {% endblock %}
 
 {% block sub_menu_item %}
-  <li class="selected">
-  <div style="display: none;">
-    <input id="group" type="checkbox" hidden />
-  </div>
-    <a href="{{state.get_url(request, period)}}">
+  <li class="selected" data-toggle="collapse" data-target="#municipality-list">
+    <a href="{{state.get_url(request, period)}}" style="pointer-events: none; cursor: default;">
         {{ state.name|format_location_name }}
         {{ gettext(state.location_type|capitalize) }}
-        <span class="icon-angle-left" style="width: 0; float: right; margin-right: 15px;"></span>
+        <span class="arrow open"></span>
     </a>
   </li>
+  <li class="sub-location collapse" id="municipality-list">
   {% for municipality in state.children() %}
-      <li class="sub-location">
-      <div style="display: none;">
-        <input id="sub-group" type="checkbox" hidden />
-      </div>
         <a href="{{municipality.get_url(request, period)}}">
             {{ municipality.name|format_location_name }}
             {{ gettext(municipality.location_type|capitalize) }}
         </a>
-      </li>
-      {% for clinic in municipality.children() %}
+      {# {% for clinic in municipality.children() %}
       <li class="sub-sub-location">
           <a href="{{clinic.get_url(request, period)}}">
               {{ clinic.name|format_location_name }}
           </a>
       </li>
-      {% endfor %}
-    {% endfor %}
+      {% endfor %} #}
+  {% endfor %}
+  </li>
 {% endblock %}
 
 {% block breadcrumbs %}

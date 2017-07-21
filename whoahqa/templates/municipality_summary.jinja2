@@ -24,11 +24,19 @@
       </li>
     {% endfor %}
   {% else %}
-    <li class="selected">
-      <a href="{{municipality.get_url(request, period)}}">
+    <li class="selected" data-toggle="collapse" data-target="#clinics-list">
+      <a href="{{municipality.get_url(request, period)}}" style="pointer-events: none; cursor: default;">
           {{ municipality.name|format_location_name }}
           {{ gettext(municipality.location_type|capitalize) }}
+        <span class="arrow open"></span>
       </a>
+    </li>
+    <li class="sub-sub-location collapse" id="clinics-list">
+    {% for clinic in municipality.children() %}
+          <a href="{{clinic.get_url(request, period)}}">
+              {{ clinic.name|format_location_name }}
+          </a>
+      {% endfor %}
     </li>
   {% endif %}
 {% endblock %}
