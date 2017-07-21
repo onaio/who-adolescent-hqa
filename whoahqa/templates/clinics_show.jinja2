@@ -16,24 +16,21 @@
   {{ gettext('Scores') }}</a>
   </li>
   {% endif %}
-    {% if request.can_view_municipality %}
-      <li class="selected">
-        <a href="{{municipality.get_url(request, period)}}">
+    {% if request.can_view_municipality or request.can_list_state %}
+      <li class="selected" data-toggle="collapse" data-target="#clinic">
+        <a href="{{municipality.get_url(request, period)}}" style="pointer-events: none; cursor: default;">
             {{ municipality.name|format_location_name }}
             {{ gettext(municipality.location_type|capitalize) }}
             <span class="arrow open"></span>
         </a>
       </li>
+      <li class="sub-location collapse" id="clinic">
       {% for child in municipality.clinics %}
-        <li class="sub-location
-          {%if child.id == clinic.id%}
-            active
-          {% endif %} ">
-          <a href="{{child.get_url(request, period)}}">
+            <a href="{{child.get_url(request, period)}}">
               {{ child.name|format_location_name }}
           </a>
-        </li>
       {% endfor %}
+      </li>
     {% else %}
       {% for child in request.user.clinics %}
         <li class="
