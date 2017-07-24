@@ -504,10 +504,6 @@ ul.page-sidebar-menu > li.active > ul.sub-menu > li.selected > a i {
     color: #fff;
 }
 
-.page-sidebar-menu > li > ul.sub-menu > li.sub-location {
-    margin-left: 10px;
-}
-
 .page-sidebar-menu > li > ul.sub-menu > li.sub-sub-location {
     margin-left: 20px;
 }
