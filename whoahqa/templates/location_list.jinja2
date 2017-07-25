@@ -9,6 +9,13 @@
 </li>
 {% endblock %}
 {% block content %}
+<div class="row">
+  <div style="margin-left:0px; margin-bottom:5px;" class="row">
+        <div class="col-md-2 form-group">
+           <input id="search_term" name="search_term" type="search" class="form-control light-table-filter" placeholder="Search locations..." data-table="locations-table"/>
+        </div>
+  </div>
+</div>
   <div class="table-toolbar">
     <div class="btn-group">
       <a class="btn btn-primary" href="{{ request.route_url('locations', traverse=('add')) }}">
@@ -16,7 +23,7 @@
       </a>
     </div>
   </div>
-  <section class="container">
+  <section class="content">
     {% include '_alerts.jinja2' %}
     <div class="row">
       <div class="col-md-12">
@@ -25,7 +32,7 @@
             <strong>{{ gettext('Current Locations') }}</strong>
           </div>
           <div class="portlet-body">
-              <table class="table table-responsive table-hover">
+              <table class="table table-responsive table-hover locations-table">
                 <thead>
                 <tr>
                   <th>{{ gettext('Name') }}</th>

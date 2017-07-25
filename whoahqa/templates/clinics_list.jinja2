@@ -7,6 +7,11 @@
 {% endblock %}
 {% block content %}
   <div class="row">
+  <div style="margin-left:0px; margin-bottom:5px;" class="row">
+        <div class="col-md-2 form-group">
+           <input id="search_term" name="search_term" type="search" class="form-control light-table-filter" placeholder="Search clinics..." data-table="clinics-table"/>
+        </div>
+  </div>
     <div class="col-md-12">
       <div class="clinics_table">
         {% include '_clinics_table.jinja2' %}
