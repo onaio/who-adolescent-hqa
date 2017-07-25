@@ -3090,6 +3090,11 @@ p.required:before {
   margin-top: 5px;
 }
 
+section.clinics {
+  margin-left: 15px;
+  padding-right: 1%;
+}
+
 .help-inline {
   font-size: 13px;
   color: #737373;
