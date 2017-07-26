@@ -335,6 +335,10 @@ td.client-tool-table > table.respondents > tbody > tr > td > i.icon-blue.icon-pl
     color: #1175cb;
 }
 
+i.icon-white {
+    color: #fff;
+}
+
 i.icon-grey {
     color: #ccc;
 }
