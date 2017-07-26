@@ -234,9 +234,15 @@
                                 {% endif %}
                               </div>
                               {% if responses %}
-                                {% for response in range(responses) %}
-                                  <i class="icon-blue icon-circle"></i>
+                                {% set required_responses = responses + pending_responses %}
+                                {% for response in range(required_responses) %}
+                                    <i class="icon-blue icon-circle">
+                                    </i>
                                 {% endfor %}
+                                {% if responses > required_responses %}
+                                  <i class="icon-green icon-plus-sign tooltips" data-placement='top' data-original-title="{{gettext('Total No. of Responses :')}} {{ responses }}">
+                                    </i>
+                                {% endif %}
                               {% endif %}
                               {% for response in range(pending_responses) %}
                                 <i class="icon-grey icon-circle"></i>

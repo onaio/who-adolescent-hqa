@@ -352,6 +352,12 @@ Up To Medium Devices
 /***
 From Small Devices Up To Medium Devices
 ***/
+
+@media (max-width: 768px) {
+	.table-responsive>.table>tbody>tr>td {
+		white-space: initial !important;
+	}
+}
  
 @media (min-width: 768px) and (max-width: 991px) { 
 
