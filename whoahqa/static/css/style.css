@@ -3101,6 +3101,44 @@ section.clinics {
   display: inline-block;
   padding: 5px;
 }
+/* back to top button */
+#return-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #666;
+    width: 34px;
+    height: 34px;
+    display: block;
+    text-decoration: none;
+    -webkit-border-radius: 35px;
+    -moz-border-radius: 35px;
+    border-radius: 35px;
+    display: none;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+#return-to-top i {
+    color: #ddd;
+    margin: 0;
+    position: relative;
+    left: 11px;
+    top: 8px;
+    font-size: 15px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+#return-to-top:hover {
+    opacity: 0.7;
+}
 
 /* left, right aligned form actions */
 .form-actions.right {
