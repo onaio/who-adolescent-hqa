@@ -309,10 +309,6 @@ hr,br {
     background-color: #fff;
 }
 
-.scores-table .table-striped > tbody > tr > td {
-    white-space: nowrap;
-}
-
 #sample-frame-table > tbody > tr:nth-child(even) > td,
 .scores-table .table-striped > tbody > tr:nth-child(even) > td,
 .table-striped > tbody > tr:nth-child(even) > th {
