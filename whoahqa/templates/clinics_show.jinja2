@@ -217,6 +217,7 @@
                             <td>
                               {% set responses = score[client_tool.id]['num_responses']|int(0) %}
                               {% set pending_responses = score[client_tool.id]['num_pending_responses'] %}
+                              {% set required_responses = responses + pending_responses %}
                               <div class="print-scores">
                                 {{ responses }}
                                 {{ gettext('of') }}
@@ -233,16 +234,18 @@
                                 <i class="icon-orange icon-ok invisible"></i>
                                 {% endif %}
                               </div>
-                              {% if responses %}
-                                {% set required_responses = responses + pending_responses %}
-                                {% for response in range(required_responses) %}
+                              {% if responses <= required_responses %}
+                                {% for response in range(responses) %}
                                     <i class="icon-blue icon-circle">
                                     </i>
                                 {% endfor %}
-                                {% if responses > required_responses %}
-                                  <i class="icon-green icon-plus-sign tooltips" data-placement='top' data-original-title="{{gettext('Total No. of Responses :')}} {{ responses }}">
+                              {% elif responses > required_responses %}
+                                {% for response in range(required_responses) %}
+                                  <i class="icon-blue icon-circle">
                                     </i>
-                                {% endif %}
+                                {% endfor %}
+                                <i class="icon-grey icon-plus-sign tooltips hidden-print" data-placement='top' data-original-title="{{gettext('Total No. of Responses :')}} {{ responses }}">
+                                    </i>
                               {% endif %}
                               {% for response in range(pending_responses) %}
                                 <i class="icon-grey icon-circle"></i>
