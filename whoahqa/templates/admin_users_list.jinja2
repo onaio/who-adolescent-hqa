@@ -4,7 +4,7 @@
 
 {% block breadcrumbs %}
     <i class="icon-angle-right"></i>
-    <li><a href="#">Users</a></li>
+    <li><a href="#">{{ gettext('Users') }}</a></li>
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@
   <div class="row">
   <div style="margin-left:0px; margin-bottom:5px;" class="row">
         <div class="col-md-2 form-group">
-           <input id="search_term" name="search_term" type="search" class="form-control light-table-filter" placeholder="Search users..." data-table="users-table"/>
+           <input id="search_term" name="search_term" type="search" class="form-control light-table-filter" placeholder="{{ gettext('Search users')}}..." data-table="users-table"/>
         </div>
     </div>
     <div class="col-md-12">
@@ -48,7 +48,7 @@
                   <td>
                     {% if user.location is not none%}
                       {{ user.location.name|format_location_name }}
-                      {{ user.location.location_type|format_location_name }}
+                      {{ gettext(user.location.location_type|format_location_name) }}
                     {% else %}
                       {% for clinic in user.clinics %}
                         {{ clinic.name|format_location_name }}

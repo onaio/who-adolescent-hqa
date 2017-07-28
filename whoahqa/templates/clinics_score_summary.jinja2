@@ -47,7 +47,7 @@
                  {% for characteristic in characteristics %}
                     <th class="sorting_disabled score" role="columnheader" rowspan="1"
                     colspan="1" aria-label="Characteristic" data-toggle="tooltip" data-placement="right"
-                    title="{{ characteristic.description}}">
+                    title="{{ gettext(characteristic.description) }}">
                     <div style="width:40px">
                         {{ loop.index }}
                     </div>
@@ -70,7 +70,7 @@
                     {% for characteristic in characteristics %}
                     <td>
                         <div style="width:50px;" class="score" data-toggle="tooltip" data-placement="top"
-                            title="{{ characteristic.description}}">
+                            title="{{ gettext(characteristic.description) }}">
                             {{score_class(clinic_scores[clinic.id][characteristic.id]['total_percentage'], score_limits)}}
                         </div>
                     </td>

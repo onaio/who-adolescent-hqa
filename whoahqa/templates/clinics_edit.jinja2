@@ -18,19 +18,19 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-          <h4 class="modal-title">Confirm Delete</h4>
+          <h4 class="modal-title">{{ gettext('Confirm Delete')}}</h4>
         </div>
         <div class="modal-body">
-          You are about to delete
+          {{ gettext('You are about to delete')}}
           <strong>
           {{ clinic.name }}
-          </strong>. This procedure is irreversible.
+          </strong>. {{ gettext('This procedure is irreversible')}}.
             <br/>
-          Do you wish to proceed?
+          {{ gettext('Do you wish to proceed?')}}
         </div>
         <div class="modal-footer">
-          <a href="{{ request.route_url('clinics', traverse=(clinic.id, 'delete')) }}" class="btn btn-danger">Delete</a>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <a href="{{ request.route_url('clinics', traverse=(clinic.id, 'delete')) }}" class="btn btn-danger">{{ gettext('Delete') }}</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{ gettext('Close')}}</button>
         </div>
         <!-- /.modal-content -->
       </div>
@@ -57,7 +57,7 @@
                 {% for field in form %}
                   {% set has_error = field.error %}
                   <div class="form-group {% if has_error %}has-error{% endif %}">
-                      <label class="col-sm-2 control-label">{{ field.title }}</label>
+                      <label class="col-sm-2 control-label">{{ gettext(field.title) }}</label>
                       <div class="col-sm-2">
                           {{ field.serialize()|safe }}
                       </div>
@@ -72,11 +72,11 @@
               <div class="portlet-footer">
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary">{{ gettext('Save')}}</button>
                     {% if clinic.id %}
-                      <button class="btn btn-danger" data-toggle="modal" data-target="#delete-confirm">Delete</button>
+                      <button class="btn btn-danger" data-toggle="modal" data-target="#delete-confirm">{{ gettext('Delete')}}</button>
                     {% endif %}
-                    <a class="btn btn-default" href="{{ request.route_url('clinics', traverse=('manage')) }}">Back</a>
+                    <a class="btn btn-default" href="{{ request.route_url('clinics', traverse=('manage')) }}">{{ gettext('Back')}}</a>
                   </div>
                 </div>
               </div>
