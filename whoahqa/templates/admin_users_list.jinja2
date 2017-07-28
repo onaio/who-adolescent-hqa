@@ -44,7 +44,7 @@
               {% if user.username != null %}
                 <tr>
                   <td>{{ user.username }}</td>
-                  <td>{{ user.group|replace("_", " ")|title }}</td>
+                  <td>{{ gettext(user.group|replace("_", " ")|title) }}</td>
                   <td>
                     {% if user.location is not none%}
                       {{ user.location.name|format_location_name }}

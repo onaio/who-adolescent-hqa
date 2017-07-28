@@ -417,6 +417,10 @@ msgstr "Média"
 msgid "Users"
 msgstr "Comercial"
 
+#: whoahqa/templates/base.jinja2:67
+msgid "Signed in as"
+msgstr "Assinado como"
+
 #: whoahqa/templates/admin_users_edit.jinja2:9
 msgid "Edit User"
 msgstr "Editar usuário"
@@ -986,6 +990,9 @@ msgstr "Dê um nome ao período de relatório"
 
 #~ msgid ""
 #~ msgstr ""
+
+#~ msgid "State Official"
+#~ msgstr "Oficial do Estado"
 
 #~ msgid "Scores"
 #~ msgstr "Pontos Recebidos"
