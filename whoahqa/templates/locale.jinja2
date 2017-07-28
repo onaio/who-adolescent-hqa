@@ -40,10 +40,6 @@
     </li>
     <i class="icon-angle-right"></i>
 {% endif %}
-
-<li>
-  <a href="{{ request.route_url('locale', traverse=()) }}">{{ gettext('User Settings') }} </a>
-</li>
 {% endblock %}
 {% block sub_menu_item %}
   {% if request.can_list_state %}
@@ -66,14 +62,14 @@
     {% include "_alerts.jinja2" %}
         <div class="portlet-title">
           <div class="caption">
-            <i class="icon-reorder"></i> {{ self.title() }}
+            <i class="icon-reorder"></i> {{ gettext('Change language') }}
           </div>
         </div>
         <div class="portlet-body form">
             <form class="form-horizontal" method="post">
                 <div class="form-body">
                     <div class="form-group">
-                        <label class="col-md-3 control-label">{{ gettext('Select default language') }}</label>
+                        <label class="col-md-3 control-label">{{ gettext('Select language') }}</label>
 
                         <div class="col-md-4">
                           <select name="locale" class="selectpicker show-tick" id="locale">
@@ -93,7 +89,7 @@
                         <button type="submit" class="btn btn-primary" id="update" disabled>
                           {{ gettext("Update")}}
                         </button>
-                        <a class="btn btn-default" href="{{ request.route_url('default', traverse=()) }}" onclick="return goBack();">
+                        <a class="btn btn-default" href="{{ request.referrer }}">
                           {{ gettext("Cancel")}}
                         </a>
                     </div>
