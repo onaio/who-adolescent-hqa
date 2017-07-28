@@ -177,16 +177,17 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                  <div class="modal-content">
                     <div class="modal-header">
                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                       <h4 class="modal-title">Confirm Delete</h4>
+                       <h4 class="modal-title">{{ gettext('Confirm Delete')}}</h4>
                     </div>
                     <div class="modal-body">
-                      You are about to delete <strong>{{ user }}</strong>. This procedure is irreversible.
+                      {{ gettext('You are about to delete')}} <strong>{{ user }}</strong>. 
+                      {{ gettext('This procedure is irreversible') }}.
                        <br/>
-                      Do you want to proceed?
+                      {{ gettext('Do you wish to proceed') }}?
                     </div>
                     <div class="modal-footer">
-                       <a href="{{ request.route_path('admin', traverse=(user.id, 'delete')) }}" class="btn btn-danger">Delete</a>
-                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                       <a href="{{ request.route_path('admin', traverse=(user.id, 'delete')) }}" class="btn btn-danger">{{ gettext('Delete')}}</a>
+                       <button type="button" class="btn btn-default" data-dismiss="modal">{{ gettext('Close') }}</button>
                     </div>
                  </div>
                  <!-- /.modal-content -->

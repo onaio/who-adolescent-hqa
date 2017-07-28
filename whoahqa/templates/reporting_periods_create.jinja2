@@ -30,19 +30,19 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-          <h4 class="modal-title">Confirm Delete</h4>
+          <h4 class="modal-title">{{ gettext('Confirm Delete') }}</h4>
         </div>
         <div class="modal-body">
-          You are about to delete
+          {{ gettext('You are about to delete') }}
           <strong>
           {{ period.title }}
-          </strong>. This procedure is irreversible.
+          </strong>. {{ gettext('This procedure is irreversible') }}.
             <br/>
-          Do you wish to proceed?
+          {{ gettext('Do you wish to proceed') }}?
         </div>
         <div class="modal-footer">
-          <a href="{{ request.route_url('periods', traverse=(period.id, 'delete'))}}" class="btn btn-danger">Delete</a>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <a href="{{ request.route_url('periods', traverse=(period.id, 'delete'))}}" class="btn btn-danger">{{ gettext('Delete')}}</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{ gettext('Close') }}</button>
         </div>
         <!-- /.modal-content -->
       </div>
