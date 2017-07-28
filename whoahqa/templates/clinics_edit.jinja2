@@ -1,5 +1,11 @@
 {% extends 'base.jinja2' %}
-{% block title %}Edit Clinic{% endblock %}
+{% block title %}
+{% if clinic.id is none%}
+  {{ gettext('New Clinic') }}
+{% else %}
+  {{ gettext('Edit Clinic') }}
+{% endif %}
+{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
     <li><i class="icon-angle-right"></i></li>
@@ -9,7 +15,13 @@
     </a>
     </li>
     <li><i class="icon-angle-right"></i></li>
-    <li>{{clinic.name or "New Clinic"}}</li>
+    <li>
+    {% if clinic.id is none%}
+      {{ gettext('New Clinic') }}
+    {% else %}
+      {{ gettext('Edit Clinic') }}
+    {% endif %}
+    </li>
 {% endblock %}
 {% block content %}
 <!-- Delete confirmation modal -->

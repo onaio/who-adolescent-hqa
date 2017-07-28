@@ -89,7 +89,7 @@
 {% endblock %}
 {% block period_selector %}
   {% if periods %}
-    <div class="row clinics-date-range-dropdown">
+    <div class="row pull-left date-range-dropdown">
       <div class="dashboard-date-range btn-group pull-left">
        <div id="dashboard-report-range" class="tooltips btn btn-fit-height btn-primary dropdown-toggle" data-container="body" data-placement="top" data-original-title="{{gettext('Change dashboard date range')}}" data-toggle="dropdown" aria-expanded="false">
           <i class="icon-calendar"></i>&nbsp;
@@ -119,7 +119,7 @@
   {% endif %}
 {% endblock %}
 {% block content %}
-<div class="table-responsive">
+<div class="table-responsive" style="margin-top: -30px;">
     <table class="borderless">
       <tbody>
         <tr>
@@ -240,7 +240,7 @@
                                     </i>
                                 {% endfor %}
                                 {% if responses > required_responses %}
-                                  <i class="icon-green icon-plus-sign tooltips" data-placement='top' data-original-title="{{gettext('Total No. of Responses :')}} {{ responses }}">
+                                  <i class="icon-green icon-plus-sign tooltips" data-placement='top' data-original-title="{{ gettext('Total No. of Responses :')}} {{ responses }}">
                                     </i>
                                 {% endif %}
                               {% endif %}
