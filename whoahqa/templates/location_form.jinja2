@@ -1,5 +1,11 @@
 {% extends 'base.jinja2' %}
-{% block title %}Users{% endblock %}
+{% block title %}
+{% if location.id is none %}
+  {{ gettext('New Location') }}
+{% else %}
+  {{ gettext('Edit Location') }}
+{% endif %}
+{% endblock %}
 {% block page_title %}
     <h3>{{ self.title() }}</h3>
 {% endblock %}
@@ -11,10 +17,10 @@
     </li>
     <i class="icon-angle-right"></i>
     <li class="active">
-      {% if location %}
-        {{ gettext('Edit Location') }}
-      {% else %}
+      {% if location.id is none %}
         {{ gettext('New Location') }}
+      {% else %}
+        {{ gettext('Edit Location') }}
       {% endif %}
     </li>
 </li>
