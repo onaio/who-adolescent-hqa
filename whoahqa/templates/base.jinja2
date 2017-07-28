@@ -63,8 +63,8 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
             <li class="dropdown user">
             	<a href="#"
                class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-   				   <span class="glyphicon glyphicon-user"></span> &nbsp;Signed in as
-                  <span class="bold">{{ request.user.username + " (" + request.user.group | capitalize | replace("_", " ") + ")" }}</span>
+               <span class="glyphicon glyphicon-user"></span> &nbsp;{{ gettext('Signed in as')}}
+             <span class="bold">{{ request.user.username + " (" + request.user.group | capitalize | replace("_", " ") + ")" }}</span>
                 <i class="icon-angle-down">
                 </i>
                </a>

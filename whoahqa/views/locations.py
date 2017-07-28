@@ -34,6 +34,7 @@ class LocationViews(object):
                  context=LocationFactory,
                  renderer='location_form.jinja2')
     def add(self):
+        location = Location()
         form = Form(
             LocationForm().bind(
                 request=self.request),
@@ -62,11 +63,14 @@ class LocationViews(object):
                 # Create new location
                 return HTTPFound(
                     self.request.route_url(
-                        'locations', traverse=('add')))
+                        'locations', traverse=(location.id, 'edit')))
         # return form
 
-        return {'form': form,
-                'period': self.period}
+        return {
+            'form': form,
+            'location': location,
+            'period': self.period
+        }
 
     @view_config(name='edit',
                  context=Location,
