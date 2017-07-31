@@ -319,6 +319,10 @@ hr,br {
     background-color: #fff;
 }
 
+.scores-table-responsive {
+    margin-top: -25px;
+}
+
 td.client-tool-table > table > tbody > tr:first-child > td {
     border-top: 0px;
 }
