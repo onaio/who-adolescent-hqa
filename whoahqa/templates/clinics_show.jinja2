@@ -154,12 +154,17 @@
         {{ 0 or clinic_key_indicators[key_indicator]|round|int }}%
       </h3>
     </div>
-    <div class="row">
-      <div class="pull-left char-header">{{ gettext('Characteristics') }}</div>
-      <div class="pull-right score-header hidden-print">{{ gettext('Relative Score') }}</div>
-    </div>
-
       <table class="table table-bordered scores-table">
+        <thead>
+          <tr style="height: auto;">
+              <td colspan="2" class="char-header">{{ gettext('Characteristics') }}</td>
+              <td colspan="1" class="transparent-cell"></td>
+              <td colspan="1" class="transparent-cell"></td>
+              <td colspan="1" class="transparent-cell"></td>
+              <td colspan="1" class="transparent-cell"></td>
+              <td colspan="2" class="char-header">{{ gettext('Relative Score') }}</td>
+        </tr>
+        </thead>
         {% for characteristic in characteristics if characteristic.id in char_list %}
             {% set total_responses = scores[characteristic.id].totals.total_responses %}
             {% set total_pending_responses = scores[characteristic.id].totals.total_pending_responses %}
