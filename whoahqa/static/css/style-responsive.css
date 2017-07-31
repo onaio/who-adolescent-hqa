@@ -357,6 +357,10 @@ From Small Devices Up To Medium Devices
 	.table-responsive>.table>tbody>tr>td {
 		white-space: initial !important;
 	}
+
+	.scores-table-responsive {
+		margin-top: 0px !important;
+	}
 }
  
 @media (min-width: 768px) and (max-width: 991px) { 
