@@ -451,7 +451,6 @@ Extra Small Devices Only
 	Page title
 	***/
 	.page-title {
-		margin-bottom: 20px;
 		font-size: 18px;
 	}
 
@@ -547,7 +546,7 @@ The Most Extra Small Devices Landscape Mode Only
 
 	.header .navbar-nav {
 		display: block !important;
-		margin-top: 0px !important;
+		margin-top: 14px !important;
 	}
 
   	/***
@@ -626,6 +625,10 @@ The Most Extra Small Devices Portrait Mode Only
 	***/
 	.hidden-320 {
 		display: none;
+	}
+
+	.header .navbar-nav > li {
+		margin: -5px !important;
 	}
 
 	.header .navbar-brand {
