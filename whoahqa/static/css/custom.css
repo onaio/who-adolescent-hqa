@@ -80,8 +80,18 @@
     margin-left: 15px;
 }
 .char-header {
+    border: 1px solid #fafafa !important;
     margin-left: 15px;
+    padding: 1px 1px 1px 6px !important;
     width: 25%;
+}
+
+.transparent-cell {
+    background-color: #FaFaFa !important;
+    border-top: solid !important;
+    border-top-color: transparent !important;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
 }
 
 table.borderless {
