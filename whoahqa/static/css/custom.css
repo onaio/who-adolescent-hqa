@@ -88,7 +88,7 @@
 
 .transparent-cell {
     background-color: #FaFaFa !important;
-    border-top: solid !important;
+    border-top: 1px solid #fafafa !important;
     border-top-color: transparent !important;
     border-left-color: transparent !important;
     border-right-color: transparent !important;
@@ -343,6 +343,11 @@ td.client-tool-table > table.respondents > tbody > tr > td > i.icon-blue {
 
 td.client-tool-table > table.respondents > tbody > tr > td > i.icon-blue.icon-plus-sign {
     color: #1175cb;
+}
+
+.respondents-row {
+    min-width: 120px;
+    white-space: normal;
 }
 
 i.icon-white {
