@@ -244,6 +244,10 @@ msgstr "Número CNES"
 msgid "Municipality"
 msgstr "Município"
 
+#: whoahqa/forms/location_form.py:12
+msgid "select parent"
+msgstr "selecione o pai"
+
 #: whoahqa/forms/location_form.py:31 whoahqa/forms/reporting_period.py:59
 #: whoahqa/templates/_clinics_table.jinja2:15
 #: whoahqa/templates/_summary_scores_table.jinja2:10
@@ -258,7 +262,7 @@ msgstr "Tipo de localização"
 
 #: whoahqa/forms/location_form.py:37
 msgid "Parent Location"
-msgstr "Localizações da lista"
+msgstr "Localização dos pais"
 
 #: whoahqa/forms/registration_form.py:30 whoahqa/forms/user_form.py:52
 #: whoahqa/templates/admin_users_list.jinja2:36
@@ -429,7 +433,7 @@ msgstr "Editar usuário"
 #: whoahqa/templates/clinics_edit.jinja2:75
 #: whoahqa/templates/location_form.jinja2:79
 msgid "Save"
-msgstr "Salve "
+msgstr "Salve"
 
 #: whoahqa/templates/admin_users_edit.jinja2:58
 #: whoahqa/templates/clinics_edit.jinja2:32
@@ -642,7 +646,7 @@ msgstr "Estado"
 
 #: whoahqa/templates/clinics_show.jinja2:115
 msgid "Print"
-msgstr "impressão"
+msgstr "Impressão"
 
 #: whoahqa/templates/clinics_show.jinja2:130
 msgid "CNES number"
@@ -740,30 +744,29 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #: whoahqa/templates/location_form.jinja2:9
-#| msgid "All Locations"
 msgid "Locations"
-msgstr "Localizações da lista"
+msgstr "Localizações"
 
 #: whoahqa/templates/location_form.jinja2:15
 msgid "Edit Location"
-msgstr "Localizações da lista"
+msgstr "Editar Localização"
 
 #: whoahqa/templates/location_form.jinja2:17
 msgid "New Location"
-msgstr "Ações"
+msgstr "Nova localização"
 
 #: whoahqa/templates/location_form.jinja2:56
 msgid "Location Form"
-msgstr "Tipo de localização"
+msgstr "Formulário de localização"
 
 #: whoahqa/templates/location_list.jinja2:8
 msgid "All Locations"
-msgstr "Localizações da lista"
+msgstr "Todos os lugares"
 
 #: whoahqa/templates/location_list.jinja2:15
 #| msgid "Parent Location"
 msgid "Search locations"
-msgstr "Localizações da lista"
+msgstr "Locais de pesquisa"
 
 #: whoahqa/templates/location_list.jinja2:22
 msgid "Add Location"
@@ -771,7 +774,7 @@ msgstr "Adicionar local"
 
 #: whoahqa/templates/location_list.jinja2:32
 msgid "Current Locations"
-msgstr "Localizações da lista"
+msgstr "Localizações atuais"
 
 #: whoahqa/templates/location_list.jinja2:40
 msgid "Parent"
@@ -827,7 +830,7 @@ msgstr "Novo usuário"
 
 #: whoahqa/templates/register.jinja2:26
 msgid "Registration Form"
-msgstr "Tipo de localização"
+msgstr "Formulário de registro"
 
 #: whoahqa/templates/register.jinja2:49
 #| msgid "End date is required"
@@ -907,6 +910,11 @@ msgstr "{} Clínica atualizada."
 #| msgid "User successfully deleted"
 msgid "Clinic successfully deleted"
 msgstr "Usuário excluído com êxito"
+
+#: whoahqa/templates/clinics_edit.jinja2:4
+#: whoahqa/templates/clinics_edit.jinja2:20
+msgid "New Clinic"
+msgstr "Nova clínica"
 
 #: whoahqa/views/default_views.py:58
 msgid "Language changed successfully"
@@ -1149,4 +1157,7 @@ msgstr "Dê um nome ao período de relatório"
 
 #~ msgid "Clinic:"
 #~ msgstr "Clínicas:"
+
+#~ msgid "-- select parent --"
+#~ msgstr "selecione o pai"
 
