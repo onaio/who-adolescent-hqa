@@ -239,6 +239,7 @@
                                 <i class="icon-orange icon-ok invisible"></i>
                                 {% endif %}
                               </div>
+                              <div class="respondents-row">
                               {% if responses <= required_responses %}
                                 {% for response in range(responses) %}
                                     <i class="icon-blue icon-circle">
@@ -260,6 +261,7 @@
                               {% elif responses == 0 or pending_responses > responses %}
                                 <i class="icon-orange icon-warning-sign pull-right tooltips" data-placement='top' data-original-title="{{gettext('You need to collect more information') }}"></i>
                               {% endif %}
+                              </div>
                             </td>
                         </tr>
                     {% endif %}

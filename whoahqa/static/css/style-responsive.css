@@ -240,7 +240,7 @@ Up To Medium Devices
 	.header .navbar-nav {
 		display: inline-block;
     	float: right;
-    	margin: 13px -20px 0px 0px;
+    	margin: 45px -40px 0px 0px;
   	}
   
  	.header .navbar-nav > li {
@@ -360,6 +360,17 @@ From Small Devices Up To Medium Devices
 
 	.scores-table-responsive {
 		margin-top: 0px !important;
+		border: none;
+	}
+
+	.key-indicator-section {
+    	margin-top: -15px !important;
+	}
+}
+
+@media (max-width: 749px) {
+	.header .navbar-nav {
+		margin: 15px -40px 0px 0px;
 	}
 }
  
@@ -458,6 +469,10 @@ Extra Small Devices Only
 		font-size: 18px;
 	}
 
+	.page-title div a {
+		font-size: 10px;
+	}
+
 	.page-title small {
 		font-size: 13px;
 		padding-top: 3px;
@@ -538,9 +553,11 @@ Extra Small Devices Only
   	}
 }
 
+
 /***
 The Most Extra Small Devices Landscape Mode Only
 ***/
+
 
 @media (max-width: 480px) {
 
