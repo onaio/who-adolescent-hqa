@@ -9,7 +9,7 @@ from ..utils import format_location_name as fmt
 
 @colander.deferred
 def parent_widget(node, kw):
-    locations = [('', '-- select parent --')]
+    locations = [('', '---')]
     locations.extend([(l.id, fmt(l.name)) for l in Location.all()])
 
     return SelectWidget(
