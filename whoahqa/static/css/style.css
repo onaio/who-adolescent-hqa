@@ -872,7 +872,7 @@ Page breadcrumb
 /* Page breadcrumb */
 .page-bar {
   border: 0;
-  height: 36px;
+  height: auto;
   padding: 0px;
   background-color: #eee;
   margin-bottom: 30px;
@@ -2330,6 +2330,12 @@ Dashboard stats
   background: #e6e6e6;
 }
 
+.icon-plus:before {
+  bottom: 1.5px;
+  font-size: 10px !important;
+  position: relative;
+  vertical-align: baseline;
+}
 
 /* charts & stats */
 .chart, .pie, .bars {
