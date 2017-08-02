@@ -56,8 +56,10 @@ def set_locale(request):
             request.response.set_cookie('_LOCALE_', locale)
             request.session.flash(
                 _("Language changed successfully"), "success")
-            return HTTPFound(
-                location=referrer, headers=headers)
+
+            if referrer:
+                return HTTPFound(
+                    location=referrer, headers=headers)
 
     if request.method == "GET":
         referrer = request.referrer
