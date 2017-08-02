@@ -131,7 +131,7 @@ thead {
 	display: none;
 }
 
-thead:first-child {
+thead:nth-child(2) {
 	display: table-header-group;
 }
 
@@ -143,6 +143,10 @@ table.scores-table {
 .scores-table thead > tr > th {
 	font-size: 10px !important;
 	font-weight: bold;
+}
+
+.scores-table thead > tr > th.min-max div {
+	text-align: left;
 }
 
 .scores-table .client-tool-table > table tr td {

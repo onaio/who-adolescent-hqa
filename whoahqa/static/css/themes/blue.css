@@ -195,8 +195,3 @@ Landscape phone to portrait tablet
     background: #052f48;
   }
 }
-@media (max-width: 480px) {
-  .header .navbar-nav > li.devider {
-    border-left: 1px solid #0d77b6 !important;
-  }
-}

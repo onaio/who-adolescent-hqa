@@ -240,7 +240,7 @@ Up To Medium Devices
 	.header .navbar-nav {
 		display: inline-block;
     	float: right;
-    	margin: 13px -20px 0px 0px;
+    	margin: 15px -40px 0px 0px;
   	}
   
  	.header .navbar-nav > li {
@@ -357,6 +357,21 @@ From Small Devices Up To Medium Devices
 	.table-responsive>.table>tbody>tr>td {
 		white-space: initial !important;
 	}
+
+	.scores-table-responsive {
+		margin-top: 0px !important;
+		border: none;
+	}
+
+	.key-indicator-section {
+    	margin-top: -15px !important;
+	}
+}
+
+@media (max-width: 749px) {
+	.header .navbar-nav {
+		margin: 15px -40px 0px 0px;
+	}
 }
  
 @media (min-width: 768px) and (max-width: 991px) { 
@@ -451,8 +466,11 @@ Extra Small Devices Only
 	Page title
 	***/
 	.page-title {
-		margin-bottom: 20px;
 		font-size: 18px;
+	}
+
+	.page-title div a {
+		font-size: 10px;
 	}
 
 	.page-title small {
@@ -535,9 +553,11 @@ Extra Small Devices Only
   	}
 }
 
+
 /***
 The Most Extra Small Devices Landscape Mode Only
 ***/
+
 
 @media (max-width: 480px) {
 
@@ -547,7 +567,7 @@ The Most Extra Small Devices Landscape Mode Only
 
 	.header .navbar-nav {
 		display: block !important;
-		margin-top: 0px !important;
+		margin-top: 14px !important;
 	}
 
   	/***
@@ -626,6 +646,10 @@ The Most Extra Small Devices Portrait Mode Only
 	***/
 	.hidden-320 {
 		display: none;
+	}
+
+	.header .navbar-nav > li {
+		margin: -5px !important;
 	}
 
 	.header .navbar-brand {
