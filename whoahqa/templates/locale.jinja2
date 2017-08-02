@@ -75,7 +75,7 @@
                           <select name="locale" class="selectpicker show-tick" id="locale">
                               {% for key, lang in available_languages.items() %}
                                 <option value="{{ key }}"
-                                    {% if user_settings and user_settings.language == key %}
+                                    {% if user_settings and user_settings.language != key %}
                                         selected="selected"
                                     {% endif %}
                                     >{{lang}}</option>
@@ -85,11 +85,11 @@
                     </div>
                 </div>
                 <div class="form-actions fluid">
-                    <div class="col-md-offset-3 col-md-9">
+                    <div class="col-md-offset-3 col-md-9" id="buttons">
                         <button type="submit" class="btn btn-primary" id="update" disabled>
                           {{ gettext("Update")}}
                         </button>
-                        <a class="btn btn-default" href="{{ request.referrer }}">
+                        <a class="btn btn-default" href="{{ request.referrer }}" id="cancel">
                           {{ gettext("Cancel")}}
                         </a>
                     </div>
