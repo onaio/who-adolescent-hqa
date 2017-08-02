@@ -269,6 +269,14 @@ hr,br {
 .scores-table thead > tr > th.min-max {
     width: 7%;
 }
+
+.scores-table thead > tr > th.min-max div {
+    display: block;
+    width: 80px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .scores-table thead > tr > th.char-resp {
     width: 17%;
 }
