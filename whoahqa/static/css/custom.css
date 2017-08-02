@@ -80,8 +80,18 @@
     margin-left: 15px;
 }
 .char-header {
+    border: 1px solid #fafafa !important;
     margin-left: 15px;
+    padding: 1px 1px 1px 6px !important;
     width: 25%;
+}
+
+.transparent-cell {
+    background-color: #FaFaFa !important;
+    border-top: 1px solid #fafafa !important;
+    border-top-color: transparent !important;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
 }
 
 table.borderless {
@@ -259,6 +269,14 @@ hr,br {
 .scores-table thead > tr > th.min-max {
     width: 7%;
 }
+
+.scores-table thead > tr > th.min-max div {
+    display: block;
+    width: 80px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .scores-table thead > tr > th.char-resp {
     width: 17%;
 }
@@ -319,6 +337,10 @@ hr,br {
     background-color: #fff;
 }
 
+.scores-table-responsive {
+    margin-top: -25px;
+}
+
 td.client-tool-table > table > tbody > tr:first-child > td {
     border-top: 0px;
 }
@@ -329,6 +351,11 @@ td.client-tool-table > table.respondents > tbody > tr > td > i.icon-blue {
 
 td.client-tool-table > table.respondents > tbody > tr > td > i.icon-blue.icon-plus-sign {
     color: #1175cb;
+}
+
+.respondents-row {
+    min-width: 120px;
+    white-space: normal;
 }
 
 i.icon-white {
