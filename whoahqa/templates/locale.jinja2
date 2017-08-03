@@ -114,20 +114,23 @@
   }
 
   input.onchange = function() {
-    if (input.value === 'en') {
-        $("button#update").text("Update")
-        $("a#cancel").text("Cancel")
-    }
-      if (input.value === 'pt') {
-        $("button#update").text("Atualizar")
-        $("a#cancel").text("Cancelar")
+    var localeObj = {
+      'en': {
+        'updateText': "Update",
+        'cancelText': "Cancel"
+      },
+      'pt': {
+        'updateText': "Atualizar",
+        'cancelText': "Cancelar"
+      }
     }
 
-    if (localStorage['locale'] === input.value) {
-      $('#update').prop('disabled', true);
-    }
-    else {
-      $('#update').prop('disabled', false);
-    }
+    $("button#update").text(localeObj[input.value]['updateText'])
+    $("a#cancel").text(localeObj[input.value]['cancelText'])
+
+    $('#update').prop(
+      'disabled',
+      (localStorage['locale'] === input.value)? true : false
+    );
   }
 {% endblock %}

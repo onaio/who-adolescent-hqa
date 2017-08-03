@@ -93,7 +93,6 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
 <!-- END LOGIN -->
 <!-- BEGIN COPYRIGHT -->
 <div class="copyright">
-  <script type="text/javascript">document.write(new Date().getFullYear());</script> &copy;
 </div>
 <!-- END COPYRIGHT -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
@@ -130,6 +129,11 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
 <script>
   jQuery(document).ready(function () {
   });
+</script>
+<script type="text/javascript">
+  var myDate = new Date().getFullYear();
+  var copyright = myDate + " &copy;";
+  $(".copyright").html(copyright);
 </script>
 <!-- END JAVASCRIPTS -->
 </body>
