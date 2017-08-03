@@ -107,23 +107,23 @@
 
   localStorage['locale'] = optionKey;
 
-  if (localStorage['locale'] == optionKey) {
+  if (localStorage['locale'] === optionKey) {
     $('#locale').one('change', function() {
        $('#update').prop('disabled', false);
     });
   }
 
   input.onchange = function() {
-    if (input.value == 'en') {
+    if (input.value === 'en') {
         $("button#update").text("Update")
         $("a#cancel").text("Cancel")
     }
-      if (input.value == 'pt') {
+      if (input.value === 'pt') {
         $("button#update").text("Atualizar")
         $("a#cancel").text("Cancelar")
     }
 
-    if (localStorage['locale'] == input.value) {
+    if (localStorage['locale'] === input.value) {
       $('#update').prop('disabled', true);
     }
     else {
