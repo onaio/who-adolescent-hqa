@@ -75,7 +75,7 @@
                           <select name="locale" class="selectpicker show-tick" id="locale">
                               {% for key, lang in available_languages.items() %}
                                 <option value="{{ key }}"
-                                    {% if user_settings and user_settings.language != key %}
+                                    {% if user_settings and user_settings.language == key %}
                                         selected="selected"
                                     {% endif %}
                                     >{{lang}}</option>
@@ -98,14 +98,36 @@
         </div>
     </div>
 {% endblock %}
-{% block page_scripts %}
-  <script src="{{ request.static_url('whoahqa:static/scripts/save-on-change.js') }}"></script>
-{% endblock %}
 {% block jquery_ready %}
   {{ super() }}
-  var locales = ['en','pt'];
 
-  $('#locale').one('change', function() {
+  var optionKey = $('#locale').find(":selected").val();
+
+  var input = document.getElementById('locale');
+
+  localStorage['locale'] = optionKey;
+
+  if (localStorage['locale'] == optionKey) {
+    $('#locale').one('change', function() {
        $('#update').prop('disabled', false);
-  });
+    });
+  }
+
+  input.onchange = function() {
+    if (input.value == 'en') {
+        $("button#update").text("Update")
+        $("a#cancel").text("Cancel")
+    }
+      if (input.value == 'pt') {
+        $("button#update").text("Atualizar")
+        $("a#cancel").text("Cancelar")
+    }
+
+    if (localStorage['locale'] == input.value) {
+      $('#update').prop('disabled', true);
+    }
+    else {
+      $('#update').prop('disabled', false);
+    }
+  }
 {% endblock %}
