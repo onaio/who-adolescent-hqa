@@ -1,3 +1,4 @@
+from collections import Counter
 from sqlalchemy import (
     Column,
     ForeignKey,
@@ -18,6 +19,11 @@ from whoahqa.models import (
     DBSession)
 
 AVERAGE_SCORE_KEY = 'average_score'
+INITIAL_SCORE_MAP = {characteristics.EQUITABLE: 0,
+                     characteristics.ACCESSIBLE: 0,
+                     characteristics.ACCEPTABLE: 0,
+                     characteristics.APPROPRIATE: 0,
+                     characteristics.EFFECTIVE: 0}
 
 
 class ClinicReport(Base):
@@ -83,33 +89,18 @@ class ClinicReport(Base):
     @classmethod
     def get_clinic_reports(cls, clinics, period):
         reports = None
-        clinic_ids = [c.id for c in clinics]
         clinic_count = len(clinics)
 
-        results = DBSession.query(
-            func.sum(
-                ClinicReport.json_data['equitable'].astext.cast(Numeric)),
-            func.sum(
-                ClinicReport.json_data['accessible'].astext.cast(Numeric)),
-            func.sum(
-                ClinicReport.json_data['acceptable'].astext.cast(Numeric)),
-            func.sum(
-                ClinicReport.json_data['appropriate'].astext.cast(Numeric)),
-            func.sum(ClinicReport.json_data['effective'].astext.cast(Numeric))
-        ).filter(ClinicReport.clinic_id.in_(clinic_ids))\
-         .filter(ClinicReport.period == period).first()
-
-        report_data = {characteristics.EQUITABLE: results[0] or 0,
-                       characteristics.ACCESSIBLE: results[1] or 0,
-                       characteristics.ACCEPTABLE: results[2] or 0,
-                       characteristics.APPROPRIATE: results[3] or 0,
-                       characteristics.EFFECTIVE: results[4] or 0}
+        results = reduce(lambda x, y: Counter(x) + Counter(y),
+                         (c.key_indicators(period) for c in clinics),
+                         INITIAL_SCORE_MAP)
 
         if clinic_count > 0:
             reports = {
                 key: (value / clinic_count)
-                for key, value in report_data.items()}
+                for key, value in results.items()
+                if value is not 0}
         else:
-            reports = report_data
+            reports = INITIAL_SCORE_MAP
 
         return reports
