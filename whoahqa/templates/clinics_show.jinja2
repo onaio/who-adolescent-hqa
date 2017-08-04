@@ -51,8 +51,9 @@
 {% block breadcrumbs %}
   {% if request.can_list_state %}
   <li><a href="{{request.route_url('states', traverse=())}}">{{ gettext('States') }}</a></li>
-  <li><a href="#"> </a></li>
+  <li><a href="#"> </a>
   <i class="icon-angle-right"></i>
+  </li>
   {% endif %}
   {% if state is not none %}
     <li>
@@ -79,11 +80,29 @@
   {% if not request.can_view_municipality and not request.can_view_state and not request.is_super_user and not request.can_list_state %}
   <li>
   <i class="icon-home"></i>
-  <a href="{{request.route_url('clinics', traverse=())}}">{{ gettext('Scores') }}</a></li>
+  <a href="{{request.route_url('clinics', traverse=())}}">{{ gettext('Scores') }}</a>
+  </li>
   <li><a href="#"> </a></li>
-  <i class="icon-angle-right"></i>
+  <li>
+    <i class="icon-angle-right"></i>
+  </li>
   {% endif %}
   <li>
+  {% if request.is_super_user and state is not none %}
+    <i class="icon-angle-right"></i>
+    <a href="{{ state.get_url(request, period)}}">
+          {{ state.name|format_location_name }}
+          {{ gettext(state.location_type|capitalize) }}
+        </a>
+  {% endif %}
+  {% if request.is_super_user and municipality is not none %}
+    <i class="icon-angle-right"></i>
+    <a href="{{ municipality.get_url(request, period)}}">
+          {{ municipality.name|format_location_name }}
+          {{ gettext(municipality.location_type|capitalize) }}
+        </a>
+    <i class="icon-angle-right"></i>
+  {% endif %}
   {{ clinic.name }}
   </li>
 {% endblock %}
