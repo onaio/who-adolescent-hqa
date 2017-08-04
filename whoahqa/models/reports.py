@@ -2,9 +2,7 @@ from collections import Counter
 from sqlalchemy import (
     Column,
     ForeignKey,
-    func,
-    Integer,
-    Numeric)
+    Integer)
 from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.orm import (
     backref,
