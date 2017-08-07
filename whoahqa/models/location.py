@@ -1,4 +1,4 @@
-from collections import defaultdict, Counter
+from collections import defaultdict
 from pyramid.security import (
     Allow,
     ALL_PERMISSIONS
@@ -15,6 +15,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.orm.exc import NoResultFound
 from whoahqa.constants import characteristics
 from whoahqa.utils import translation_string_factory as _
+from whoahqa.utils import clinics_report
 from whoahqa.models import (
     Base,
     BaseModelFactory)
@@ -60,10 +61,7 @@ class Location(Base):
         if self._key_indicators:
             return self._key_indicators
         else:
-            self._key_indicators = reduce(
-                lambda x, y: Counter(x) + Counter(y),
-                (c.key_indicators(period) for c in clinics),
-                INITIAL_SCORE_MAP)
+            self._key_indicators = clinics_report(clinics, period)
 
             self._key_indicators = {
                 key: (value / len(clinics))
