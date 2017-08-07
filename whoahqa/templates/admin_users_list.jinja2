@@ -3,8 +3,10 @@
 {% block page_title %} {{ self.title() }} {% endblock %}
 
 {% block breadcrumbs %}
+    <li>
     <i class="icon-angle-right"></i>
-    <li><a href="#">{{ gettext('Users') }}</a></li>
+    <a href="#">{{ gettext('Users') }}</a>
+    </li>
 {% endblock %}
 
 {% block content %}
