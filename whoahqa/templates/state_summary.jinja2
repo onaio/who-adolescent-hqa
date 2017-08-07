@@ -14,11 +14,20 @@
 {% block breadcrumbs %}
 {% if request.can_list_state %}
 <li><a href="{{request.route_url('states', traverse=())}}">{{ gettext('States') }}</a></li>
-<li><a href="#"> </a></li>
-<i class="icon-angle-right"></i>
 <li>
-       {{ state.name|format_location_name }}
-       {{ gettext(state.location_type|capitalize) }}
+<a href="#"> </a>
+<i class="icon-angle-right"></i>
+</li>
+<li>
+  {{ state.name|format_location_name }}
+  {{ gettext(state.location_type|capitalize) }}
+</li>
+{% endif %}
+{% if request.is_super_user %}
+<li>
+<i class="icon-angle-right"></i>
+    {{ state.name|format_location_name }}
+    {{ gettext(state.location_type|capitalize) }}
 </li>
 {% endif %}
 {% endblock %}

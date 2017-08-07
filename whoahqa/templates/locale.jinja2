@@ -8,8 +8,8 @@
     <a href="{{request.route_url('states', traverse=())}}">
         {{ gettext('States') }}
     </a>
+    <i class="icon-angle-right"></i>
   </li>
-  <i class="icon-angle-right"></i>
 {% endif %}
 {% if request.can_view_state %}
   <li class="">
@@ -17,8 +17,8 @@
     <a href="{{request.route_url('states', traverse=())}}">
         {{ gettext('State') }}
     </a>
+    <i class="icon-angle-right"></i>
   </li>
-  <i class="icon-angle-right"></i>
 {% endif %}
 {% if request.can_view_municipality and request.can_create_period %}
   {% if request.user %}
@@ -27,8 +27,8 @@
       <a href="{{request.route_url('municipalities', traverse=(request.user.location.id))}}">
           {{ gettext('Municipality') }}
       </a>
+      <i class="icon-angle-right"></i>
     </li>
-    <i class="icon-angle-right"></i>
   {% endif %}
 {% endif %}
 {% if request.user.group.name == 'clinic_manager' %}
@@ -37,9 +37,16 @@
       <a href="{{request.route_url('clinics', traverse=(), _query={'period': period.id})}}">
           {{ gettext('Clinic') }}
       </a>
+      <i class="icon-angle-right"></i>
     </li>
-    <i class="icon-angle-right"></i>
 {% endif %}
+<li>
+  {% if request.is_super_user %}
+    <i class="icon-angle-right"></i>
+  {% endif %}
+  <a href="{{ request.route_url('locale', traverse=()) }}">
+  {{ gettext('User Settings') }}</a>
+</li>
 {% endblock %}
 {% block sub_menu_item %}
   {% if request.can_list_state %}

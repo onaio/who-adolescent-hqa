@@ -3,9 +3,12 @@
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
     <li>
-      <a href="{{ request.route_url('admin', traverse=()) }}"><iclass="fa fa-desktop"></i> {{gettext('Users')}}</a>
-    </li>
+      <a href="{{ request.route_url('admin', traverse=()) }}"><i class="fa fa-desktop"></i>
       <i class="icon-angle-right"></i>
+      {{gettext('Users')}}
+      <i class="icon-angle-right"></i>
+      </a>
+    </li>
       <li class="active">{{ gettext('Edit User')}}</li>
 {% endblock %}
 {% block content %}

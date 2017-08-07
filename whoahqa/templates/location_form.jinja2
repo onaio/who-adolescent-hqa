@@ -12,10 +12,12 @@
 
 {% block breadcrumbs %}
     <li>
-      <a href="{{ request.route_url('locations', traverse=()) }}"><iclass="fa fa-desktop"></i>  {{ gettext('Locations')}}
+      <a href="{{ request.route_url('locations', traverse=()) }}"><i class="fa fa-desktop"></i>
+      <i class="icon-angle-right"></i>
+      {{ gettext('Locations') }}
+      <i class="icon-angle-right"></i>
       </a>
     </li>
-    <i class="icon-angle-right"></i>
     <li class="active">
       {% if location.id is none %}
         {{ gettext('New Location') }}

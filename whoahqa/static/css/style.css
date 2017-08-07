@@ -872,7 +872,7 @@ Page breadcrumb
 /* Page breadcrumb */
 .page-bar {
   border: 0;
-  height: auto;
+  height: 36px;
   padding: 0px;
   background-color: #eee;
   margin-bottom: 30px;

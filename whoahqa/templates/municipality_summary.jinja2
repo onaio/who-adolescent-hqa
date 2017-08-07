@@ -36,20 +36,24 @@
 {% block breadcrumbs %}
 {% if request.can_list_state %}
 <li><a href="{{request.route_url('states', traverse=())}}">{{ gettext('States') }}</a></li>
-<li><a href="#"> </a></li>
+<li><a href="#"> </a>
 <i class="icon-angle-right"></i>
+</li>
 {% endif %}
-  {% if request.can_view_state or request.can_list_state %}
+  {% if request.can_view_state or request.can_list_state or request.is_super_user %}
     <li>
+      {% if request.is_super_user %}
+        <i class="icon-angle-right"></i>
+      {% endif %}
       <a href="{{ state.get_url(request, period) }}">
         {{ state.name|format_location_name }}
         {{ gettext(state.location_type|capitalize) }}
       </a>
-      <i class="icon-angle-right"></i>
     </li>
   {% endif %}
-  {% if request.can_view_state or request.can_list_state %}
+  {% if request.can_view_state or request.can_list_state  or request.is_super_user %}
     <li>
+      <i class="icon-angle-right"></i>
         {{ municipality.name|format_location_name }}
         {{ gettext(municipality.location_type|capitalize) }}
     </li>
