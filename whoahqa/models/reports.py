@@ -1,4 +1,3 @@
-from collections import Counter
 from sqlalchemy import (
     Column,
     ForeignKey,
@@ -11,17 +10,13 @@ from sqlalchemy.orm.exc import (
     NoResultFound,
     MultipleResultsFound)
 
-from whoahqa.constants import characteristics
+from whoahqa.utils import INITIAL_SCORE_MAP
 from whoahqa.models import (
     Base,
     DBSession)
+from whoahqa.utils import clinics_report
 
 AVERAGE_SCORE_KEY = 'average_score'
-INITIAL_SCORE_MAP = {characteristics.EQUITABLE: 0,
-                     characteristics.ACCESSIBLE: 0,
-                     characteristics.ACCEPTABLE: 0,
-                     characteristics.APPROPRIATE: 0,
-                     characteristics.EFFECTIVE: 0}
 
 
 class ClinicReport(Base):
@@ -89,9 +84,7 @@ class ClinicReport(Base):
         reports = None
         clinic_count = len(clinics)
 
-        results = reduce(lambda x, y: Counter(x) + Counter(y),
-                         (c.key_indicators(period) for c in clinics),
-                         INITIAL_SCORE_MAP)
+        results = clinics_report(clinics, period)
 
         if clinic_count > 0:
             reports = {
