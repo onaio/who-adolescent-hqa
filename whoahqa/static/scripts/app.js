@@ -793,7 +793,6 @@ var App = function () {
             //core handlers
             handleInit(); // initialize core variables
             handleResponsiveOnResize(); // set and handle responsive    
-            handleUniform(); // hanfle custom radio & checkboxes
             handleScrollers(); // handles slim scrolling contents 
             handleResponsiveOnInit(); // handler responsive elements on page load
 
@@ -825,8 +824,7 @@ var App = function () {
             handleDropdowns(); // handle dropdowns
             handleTooltips(); // handle bootstrap tooltips
             handlePopovers(); // handles bootstrap popovers
-            handleAccordions(); //handles accordions 
-            handleUniform(); // hanfle custom radio & checkboxes     
+            handleAccordions(); //handles accordions      
             handleDropdownHover() // handles dropdown hover       
         },
 
