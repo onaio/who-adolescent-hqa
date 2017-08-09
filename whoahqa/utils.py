@@ -2,16 +2,22 @@ import csv
 import codecs
 import unicodedata
 
+from collections import Counter
 from hashids import Hashids
 from pyenketo import Enketo
 from babel.dates import format_date
-
+from whoahqa.constants import characteristics
 from pyramid.i18n import TranslationStringFactory, get_localizer
-
 
 translation_string_factory = TranslationStringFactory('who-ahqa')
 hashid = Hashids(min_length=4, alphabet='abcdefghijklmnpqrstuvwxyz123456789')
 enketo = Enketo()
+
+INITIAL_SCORE_MAP = {characteristics.EQUITABLE: 0,
+                     characteristics.ACCESSIBLE: 0,
+                     characteristics.ACCEPTABLE: 0,
+                     characteristics.APPROPRIATE: 0,
+                     characteristics.EFFECTIVE: 0}
 
 
 def tuple_to_dict_list(key_tuple, value_tuples):
@@ -53,6 +59,13 @@ def normalizeString(row):
 def valid_year(year):
     if year and year.isdigit() and int(year) >= 1900 and int(year) <= 2099:
             return int(year)
+
+
+def clinics_report(clinics, period):
+    results = reduce(lambda x, y: Counter(x) + Counter(y),
+                     (c.key_indicators(period) for c in clinics),
+                     INITIAL_SCORE_MAP)
+    return results
 
 
 class UnicodeDictReader(object):

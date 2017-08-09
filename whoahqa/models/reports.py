@@ -1,9 +1,7 @@
 from sqlalchemy import (
     Column,
     ForeignKey,
-    func,
-    Integer,
-    Numeric)
+    Integer)
 from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.orm import (
     backref,
@@ -12,10 +10,11 @@ from sqlalchemy.orm.exc import (
     NoResultFound,
     MultipleResultsFound)
 
-from whoahqa.constants import characteristics
+from whoahqa.utils import INITIAL_SCORE_MAP
 from whoahqa.models import (
     Base,
     DBSession)
+from whoahqa.utils import clinics_report
 
 AVERAGE_SCORE_KEY = 'average_score'
 
@@ -83,33 +82,16 @@ class ClinicReport(Base):
     @classmethod
     def get_clinic_reports(cls, clinics, period):
         reports = None
-        clinic_ids = [c.id for c in clinics]
         clinic_count = len(clinics)
 
-        results = DBSession.query(
-            func.sum(
-                ClinicReport.json_data['equitable'].astext.cast(Numeric)),
-            func.sum(
-                ClinicReport.json_data['accessible'].astext.cast(Numeric)),
-            func.sum(
-                ClinicReport.json_data['acceptable'].astext.cast(Numeric)),
-            func.sum(
-                ClinicReport.json_data['appropriate'].astext.cast(Numeric)),
-            func.sum(ClinicReport.json_data['effective'].astext.cast(Numeric))
-        ).filter(ClinicReport.clinic_id.in_(clinic_ids))\
-         .filter(ClinicReport.period == period).first()
-
-        report_data = {characteristics.EQUITABLE: results[0] or 0,
-                       characteristics.ACCESSIBLE: results[1] or 0,
-                       characteristics.ACCEPTABLE: results[2] or 0,
-                       characteristics.APPROPRIATE: results[3] or 0,
-                       characteristics.EFFECTIVE: results[4] or 0}
+        results = clinics_report(clinics, period)
 
         if clinic_count > 0:
             reports = {
                 key: (value / clinic_count)
-                for key, value in report_data.items()}
+                for key, value in results.items()
+                if value is not 0}
         else:
-            reports = report_data
+            reports = INITIAL_SCORE_MAP
 
         return reports
