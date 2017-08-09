@@ -5,15 +5,14 @@
 {% endblock %}
 {% block sub_menu_item %}
   <li class="selected">
+  <input type="checkbox" name ="group-1" id="group-1" checked>
     <a href="{{request.route_url('states', traverse=())}}">
         {{ gettext('States') }}
     </a>
-    <span class="icon-plus-sign locations-list collapsed" data-toggle="collapse" data-target="#states-list"></span>
-  </li>
   {%if request.can_list_state %}
-  <li class="sub-location collapse" id="states-list">
-    {% for state in states %}
-    <div style="margin: 0 auto;
+  <ul class="sub-location" id="states-list" style="list-style: none;">
+    {% for state in locations %}
+    <li style="margin: 0 auto;
     padding: 5px;
     margin-top: 1px !important;">
       <a href="{{state.get_url(request, period)}}" style="color: #def1fd;
@@ -22,25 +21,11 @@
           {{ state.name|format_location_name }}
           {{ gettext(state.location_type|capitalize) }}
       </a>
-      <span class="icon-plus-sign locations-list collapsed" data-toggle="collapse" data-target="#municipality-list"></span>
-      </div>
-      <li class="sub-sub-location collapse" id="municipality-list">
-      {% for municipality in state.children() %}
-        <div style="margin: 0 auto;
-    padding: 5px;
-    margin-top: 1px !important;">
-      <a href="{{municipality.get_url(request, period)}}" style="color: #def1fd;
-    margin: 0px 30px 0px 50px; font-weight: 300;
-    font-size: 14px; display: block;">
-          {{ municipality.name|format_location_name }}
-          {{ gettext(municipality.location_type|capitalize) }}
-      </a>
-      </div>
-      {% endfor %}
       </li>
     {% endfor %}
-    </li>
+    </ul>
   {% endif %}
+  </li>
 {% endblock %}
 {% block content %}
   <div class="row">
@@ -55,3 +40,23 @@
     </div>
   </div>
 {% endblock content %}
+{% block page_scripts%}
+<script type="text/javascript">
+  jQuery(document).ready(function(){
+  var accordionsMenu = $('.sub-menu');
+
+  if( accordionsMenu.length > 0 ) {
+    
+    accordionsMenu.each(function(){
+      var accordion = $(this);
+      //detect change in the input[type="checkbox"] value
+      accordion.on('change', 'input[type="checkbox"]', function(){
+        var checkbox = $(this);
+        console.log(checkbox.prop('checked'));
+        ( checkbox.prop('checked') ) ? checkbox.siblings('ul').attr('style', 'display:none;').slideDown(300) : checkbox.siblings('ul').attr('style', 'display:block;').slideUp(300);
+      });
+    });
+  }
+});
+</script>
+{% endblock %}

@@ -612,6 +612,24 @@ Page sidebar
   background: none;
 }
 
+.sub-menu input[type=checkbox] {
+  /* hide native checkbox */
+  position: absolute;
+  opacity: 0;
+}
+
+.sub-menu ul {
+  /* by default hide all sub menus */
+  display: none;
+}
+ 
+.sub-menu input[type=checkbox]:checked + label + ul,
+.sub-menu input[type=checkbox]:checked + label:nth-of-type(n) + ul {
+  /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
+  /* show children when item is checked */
+  display: block;
+}
+
 .locations-list {
   float: right;
   color: white;

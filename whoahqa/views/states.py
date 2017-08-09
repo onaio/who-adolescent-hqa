@@ -27,7 +27,7 @@ class StateViews(BaseClassViews):
                 'states', traverse=(user.location.id)))
 
         return {
-            'states': State.all(),
+            'locations': State.all(),
             'period': self.period,
             'periods': self.periods,
             'national_report': self.national_report(self.period),
