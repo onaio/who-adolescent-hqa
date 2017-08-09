@@ -1,3 +1,4 @@
+from collections import defaultdict
 from pyramid.security import (
     Allow,
     ALL_PERMISSIONS
@@ -14,11 +15,11 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.orm.exc import NoResultFound
 from whoahqa.constants import characteristics
 from whoahqa.utils import translation_string_factory as _
+from whoahqa.utils import clinics_report
 from whoahqa.models import (
     Base,
     BaseModelFactory)
 
-from whoahqa.models.reports import ClinicReport
 from whoahqa.constants import permissions as perms, groups
 from ..utils import format_location_name as fmt
 
@@ -60,8 +61,15 @@ class Location(Base):
         if self._key_indicators:
             return self._key_indicators
         else:
-            self._key_indicators = ClinicReport.get_clinic_reports(
-                clinics, period)
+            self._key_indicators = clinics_report(clinics, period)
+
+            self._key_indicators = {
+                key: (value / len(clinics))
+                for key, value in self._key_indicators.items()
+                if value is not 0}
+
+            if not self._key_indicators:
+                self._key_indicators = defaultdict(int)
 
             return self._key_indicators
 
