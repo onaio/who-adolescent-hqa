@@ -3,27 +3,40 @@
 {% block page_title %} {{ state.name|format_location_name }} {% endblock %}
 
 {% block sub_menu_item %}
-  <li class="selected" data-toggle="collapse" data-target="#municipality-list">
-    <a href="{{state.get_url(request, period)}}" style="pointer-events: none; cursor: default;">
+  <li class="selected">
+    <span class="icon-plus-sign state"></span>
+    <a href="{{state.get_url(request, period)}}">
         {{ state.name|format_location_name }}
         {{ gettext(state.location_type|capitalize) }}
-        <span class="arrow open"></span>
     </a>
-  </li>
-  <li class="sub-location collapse" id="municipality-list">
+    <input type="checkbox" name ="group-1" id="group-1" style="top: 0px;
+    left: 24px;">
+  <ul class="sub-location collapse" id="municipality-list">
   {% for municipality in state.children() %}
-        <a href="{{municipality.get_url(request, period)}}">
+  <li style="margin: 0 auto;
+    padding: 5px;
+    margin-top: 1px !important; white-space: nowrap;">
+    <input type="checkbox" name ="group-2" id="group-2" style="top: -5px;
+    left: 1px;">
+        <a href="{{municipality.get_url(request, period)}}" style="color: #def1fd;
+    margin: 0px 20px 0px -25px; font-weight: 300;
+    font-size: 14px; display: block;">
             {{ municipality.name|format_location_name }}
             {{ gettext(municipality.location_type|capitalize) }}
         </a>
-      {# {% for clinic in municipality.children() %}
-      <li class="sub-sub-location">
-          <a href="{{clinic.get_url(request, period)}}">
+        <span class="icon-plus-sign locations-list" style="margin: -17px -27px 1px 1px"></span>
+      <ul class="sub-location" id="municipality-list" style="list-style: none;">
+      {% for clinic in municipality.children() %}
+      <li style="margin: 0 auto; padding: 5px; margin-top: 1px !important; right: 35px; position: relative;">
+          <a href="{{clinic.get_url(request, period)}}" style="color: #def1fd;margin: 0px 0px 1px -27px; font-weight: 300; font-size: 14px; display: block; white-space: initial;">
               {{ clinic.name|format_location_name }}
           </a>
       </li>
-      {% endfor %} #}
+      {% endfor %}
+    </ul>
+    </li>
   {% endfor %}
+  </ul>
   </li>
 {% endblock %}
 
