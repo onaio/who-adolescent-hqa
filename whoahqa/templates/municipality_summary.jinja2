@@ -24,19 +24,23 @@
       </li>
     {% endfor %}
   {% else %}
-    <li class="selected" data-toggle="collapse" data-target="#clinics-list">
-      <a href="{{municipality.get_url(request, period)}}" style="pointer-events: none; cursor: default;">
+    <li class="selected">
+    <span class="icon-plus-sign state"></span>
+      <a href="{{municipality.get_url(request, period)}}">
           {{ municipality.name|format_location_name }}
           {{ gettext(municipality.location_type|capitalize) }}
-        <span class="arrow open"></span>
       </a>
-    </li>
-    <li class="sub-sub-location collapse" id="clinics-list">
+      <input type="checkbox" name ="group-1" id="group-1" style="top: -30px;
+    left: -3px;">
+    <ul class="sub-location" id="municipality-list" style="list-style: none;">
     {% for clinic in municipality.children() %}
-          <a href="{{clinic.get_url(request, period)}}">
+    <li style="margin: 0 auto; padding: 5px; margin-top: 1px !important; right: -10px; position: relative;">
+          <a href="{{clinic.get_url(request, period)}}" style="color: #def1fd;margin: 0px 0px 1px -27px; font-weight: 300; font-size: 14px; display: block; white-space: initial;">
               {{ clinic.name|format_location_name }}
           </a>
+    </li>
       {% endfor %}
+      </ul>
     </li>
   {% endif %}
 {% endblock %}
@@ -53,7 +57,7 @@
       {% if request.is_super_user %}
         <i class="icon-angle-right"></i>
       {% endif %}
-      <a href="{{ state.get_url(request, period) }}">
+       <a href="{{ state.get_url(request, period) }}">
         {{ state.name|format_location_name }}
         {{ gettext(state.location_type|capitalize) }}
       </a>

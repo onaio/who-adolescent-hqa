@@ -20,7 +20,7 @@
     <input type="checkbox" name ="group-2" id="group-2" style="top: -5px;
     left: 1px;">
       <a href="{{state.get_url(request, period)}}" style="color: #def1fd;
-    margin: 0px 20px 0px -10px; font-weight: 300;
+    margin: 0px 20px 0px -25px; font-weight: 300;
     font-size: 14px; display: block;">
           {{ state.name|format_location_name }}
           {{ gettext(state.location_type|capitalize) }}
@@ -28,11 +28,11 @@
       <span class="icon-plus-sign locations-list" style="margin: -17px -27px 1px 1px;"></span>
       <ul class="sub-location" id="municipality-list" style="list-style: none;">
       {% for municipality in state.children() %}
-        <li style="margin: 0 auto; padding: 5px; margin-top: 1px !important;">
-      <a href="{{municipality.get_url(request, period)}}" style="color: #def1fd;margin: 0px 20px 0px -9px; font-weight: 300; font-size: 14px; display: block; white-space: initial;">
-          {{ municipality.name|format_location_name }}
-          {{ gettext(municipality.location_type|capitalize) }}
-      </a>
+        <li style="margin: 0 auto; padding: 5px; margin-top: 1px !important; right: 35px; position: relative;">
+        <a href="{{municipality.get_url(request, period)}}" style="color: #def1fd;margin: 0px 20px 0px -23px; font-weight: 300; font-size: 14px; display: block; white-space: initial;">
+            {{ municipality.name|format_location_name }}
+            {{ gettext(municipality.location_type|capitalize) }}
+        </a>
       </li>
       {% endfor %}
       </ul>
@@ -55,24 +55,3 @@
     </div>
   </div>
 {% endblock content %}
-{% block page_scripts%}
-<script src="{{ request.static_url('whoahqa:static/scripts/modernizr.js') }}"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function(){
-  var accordionsMenu = $('.sub-menu');
-
-  if( accordionsMenu.length > 0 ) {
-    
-    accordionsMenu.each(function(){
-      var accordion = $(this);
-      //detect change in the input[type="checkbox"] value
-      accordion.on('change', 'input[type="checkbox"]', function(){
-        var checkbox = $(this);
-        console.log(checkbox.prop('checked'));
-        ( checkbox.prop('checked') ) ? checkbox.siblings('ul').attr('style', 'display:none;').slideDown(300) : checkbox.siblings('ul').attr('style', 'display:block; list-style:none; ').slideUp(300);
-      });
-    });
-  }
-});
-</script>
-{% endblock %}
