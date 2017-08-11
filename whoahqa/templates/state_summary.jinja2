@@ -1,6 +1,6 @@
 {% extends "base.jinja2" %}
 {% block title %} {{ gettext("State")}} {{ gettext("Scores") }}{% endblock %}
-{% block page_title %} {{ state.name|format_location_name }} {% endblock %}
+{% block page_title %} {{ state.name|format_location_name }} {{ gettext(state.location_type|capitalize) }} {% endblock %}
 
 {% block sub_menu_item %}
   <li class="selected">
