@@ -660,13 +660,11 @@ ul.sub-location {
   cursor: pointer;
 }
 
- span.icon-plus-sign.collapsed:before {
+
+ span.icon-plus-sign:before {
   content: "\f055" !important;
 }
 
- span.icon-plus-sign:before {
-  content: "\f056" !important;
-}
 
 /* 3rd level sub menu */
 .page-sidebar-menu > li > ul.sub-menu  > li ul.sub-menu {
