@@ -5,31 +5,31 @@
 {% endblock %}
 {% block sub_menu_item %}
   <li class="selected">
-    <span class="icon-plus-sign state"></span>
+    <span id="menu-icon" class="icon-plus-sign state"></span>
     <a href="{{request.route_url('states', traverse=())}}">
         {{ gettext('States') }}
     </a>
-    <input type="checkbox" name ="group-1" id="group-1" style="top: 0px;
+    <input type="checkbox" name ="group-1" id="chkbx" style="top: 0px;
     left: 24px;">
   {%if request.can_list_state %}
-  <ul class="sub-location" id="states-list" style="list-style: none;">
+  <ul class="sub-location temp" id="states-list" style="list-style: none;">
     {% for state in locations %}
     <li style="margin: 0 auto;
     padding: 5px;
-    margin-top: 1px !important; white-space: nowrap;">
-    <input type="checkbox" name ="group-2" id="group-2" style="top: -5px;
+    margin-top: 1px !important; white-space: nowrap;" class="sub-state">
+    <input type="checkbox" name ="group-2" id="chkbx" style="top: -5px;
     left: 1px;">
       <a href="{{state.get_url(request, period)}}" style="color: #def1fd;
-    margin: 0px 20px 0px -25px; font-weight: 300;
+    margin: 0px 20px 0px 15px; font-weight: 300;
     font-size: 14px; display: block;">
           {{ state.name|format_location_name }}
           {{ gettext(state.location_type|capitalize) }}
       </a>
-      <span class="icon-plus-sign locations-list" style="margin: -17px -27px 1px 1px;"></span>
-      <ul class="sub-location" id="municipality-list" style="list-style: none;">
+      <span class="icon-plus-sign locations-list" id="menu-icon" style="margin: -17px -27px 1px 1px;"></span>
+      <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
       {% for municipality in state.children() %}
-        <li style="margin: 0 auto; padding: 5px; margin-top: 1px !important; right: 35px; position: relative;">
-        <a href="{{municipality.get_url(request, period)}}" style="color: #def1fd;margin: 0px 20px 0px -23px; font-weight: 300; font-size: 14px; display: block; white-space: initial;">
+        <li style="margin: 0 auto; padding: 5px; margin-top: 1px !important; position: relative;" class="states-list">
+        <a href="{{municipality.get_url(request, period)}}" style="color: #def1fd;margin: 0px 20px 0px 20px; font-weight: 300; font-size: 14px; display: block; white-space: initial;">
             {{ municipality.name|format_location_name }}
             {{ gettext(municipality.location_type|capitalize) }}
         </a>
@@ -55,3 +55,5 @@
     </div>
   </div>
 {% endblock content %}
+{% block page_scripts %}
+{% endblock %}

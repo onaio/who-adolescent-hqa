@@ -638,6 +638,14 @@ Page sidebar
   display: block;
 }
 
+.sub-menu input ~ span#menu-icon:before {
+  content: "\f055" !important;
+}
+
+.sub-menu input:checked ~ span#menu-icon:before {
+  content: "\f056" !important;
+}
+
 ul.sub-location {
   list-style: none;
 }
@@ -3202,6 +3210,23 @@ section.clinics {
 
 #return-to-top:hover {
     opacity: 0.7;
+}
+
+.temp {
+  padding: 0px !important;
+}
+
+ul.sub-location li.active {
+  background: #0d77b6 !important;
+}
+
+ul.sub-location li:hover,
+ul.sub-location li.states-list {
+  background: #0d77b6 !important;
+}
+
+ul.sub-location li.sub-state:hover {
+  background: transparent !important;
 }
 
 /* left, right aligned form actions */
