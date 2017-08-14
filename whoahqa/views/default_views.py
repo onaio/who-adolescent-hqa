@@ -51,9 +51,19 @@ def set_locale(request):
         if locale and locale in available_languages:
             user_settings.language = locale
             user_settings.save()
+            referrer = request.cookies.get('referrer')
+            headers = request.response.headers
             request.response.set_cookie('_LOCALE_', locale)
             request.session.flash(
                 _("Language changed successfully"), "success")
+
+            if referrer:
+                return HTTPFound(
+                    location=referrer, headers=headers)
+
+    if request.method == "GET":
+        referrer = request.referrer
+        request.response.set_cookie('referrer', referrer)
 
     return {
         "available_languages": available_languages,
