@@ -7,7 +7,7 @@
     <li class="">
       <a href="{{request.route_url('municipalities', traverse=(request.user.location.id))}}">
           {{ request.user.location.name|title }}
-          {{ request.user.location.location_type|capitalize }}
+          {{ gettext(request.user.location.location_type|capitalize) }}
       </a>
     </li>
     {% endif %}
@@ -21,7 +21,7 @@
 	      <i class="icon-home"></i>
 	      <a href="{{request.route_url('municipalities', traverse=(request.user.location.id))}}">
 	      {{ request.user.location.name|title }}
-	      {{ request.user.location.location_type|capitalize }}
+	      {{ gettext(request.user.location.location_type|capitalize) }}
 	      </a>
 	      <i class="icon-angle-right"></i>
 	    </li>
