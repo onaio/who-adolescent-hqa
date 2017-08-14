@@ -4,31 +4,31 @@
 
 {% block sub_menu_item %}
   <li class="selected">
-    <span class="icon-plus-sign state"></span>
+    <span class="icon-plus-sign state" id="menu-icon"></span>
     <a href="{{state.get_url(request, period)}}">
         {{ state.name|format_location_name }}
         {{ gettext(state.location_type|capitalize) }}
     </a>
-    <input type="checkbox" name ="group-1" id="group-1" style="top: 0px;
+    <input type="checkbox" name ="group-1" id="chkbx" style="top: 0px;
     left: 24px;">
-  <ul class="sub-location collapse" id="municipality-list">
+  <ul class="sub-location temp" id="municipality-list">
   {% for municipality in state.children() %}
   <li style="margin: 0 auto;
     padding: 5px;
-    margin-top: 1px !important; white-space: nowrap;">
-    <input type="checkbox" name ="group-2" id="group-2" style="top: -5px;
+    margin-top: 1px !important; white-space: nowrap;" class="sub-state">
+    <input type="checkbox" name ="group-2" id="chkbx" style="top: -5px;
     left: 1px;">
         <a href="{{municipality.get_url(request, period)}}" style="color: #def1fd;
-    margin: 0px 20px 0px -25px; font-weight: 300;
+    margin: 0px 0px 0px 13px; font-weight: 300;
     font-size: 14px; display: block;">
             {{ municipality.name|format_location_name }}
             {{ gettext(municipality.location_type|capitalize) }}
         </a>
-        <span class="icon-plus-sign locations-list" style="margin: -17px -27px 1px 1px"></span>
-      <ul class="sub-location" id="municipality-list" style="list-style: none;">
+        <span class="icon-plus-sign locations-list" id="menu-icon" style="margin: -17px -27px 1px 1px"></span>
+      <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
       {% for clinic in municipality.children() %}
-      <li style="margin: 0 auto; padding: 5px; margin-top: 1px !important; right: 35px; position: relative;">
-          <a href="{{clinic.get_url(request, period)}}" style="color: #def1fd;margin: 0px 0px 1px -27px; font-weight: 300; font-size: 14px; display: block; white-space: initial;">
+      <li style="margin: 0 auto; padding: 5px; margin-top: 1px !important; position: relative; border-top: 0.4px solid #6f6f6f;background: #0b679e;">
+          <a href="{{clinic.get_url(request, period)}}" style="color: #def1fd;margin: 0px 0px 1px 17px; font-weight: 300; font-size: 14px; display: block; white-space: initial; width: 80%;">
               {{ clinic.name|format_location_name }}
           </a>
       </li>
