@@ -2,7 +2,7 @@
 {% block title %}{{ gettext("Scores") }}{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumb %}
-<li><a href="{{request.route_url('states', traverse=())}}">{{ gettext('Scores') }}</a></li>
+<li><a href="{{request.route_url('states', traverse=(), _query={'period': period.id})}}">{{ gettext('Scores') }}</a></li>
 {% endblock %}
 {% block content %}
   <div class="row">
