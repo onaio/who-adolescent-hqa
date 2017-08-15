@@ -12,7 +12,7 @@
 {% block sub_menu_item %}
   {% if not request.can_view_municipality and not request.can_view_state and not request.is_super_user and not request.can_list_state %}
   <li class="">
-  <a href="{{request.route_url('clinics', traverse=())}}">
+  <a href="{{request.route_url('clinics', traverse=(), _query={'period': period.id})}}">
   {{ gettext('Scores') }}</a>
   </li>
   {% endif %}
@@ -50,7 +50,7 @@
 
 {% block breadcrumbs %}
   {% if request.can_list_state %}
-  <li><a href="{{request.route_url('states', traverse=())}}">{{ gettext('States') }}</a></li>
+  <li><a href="{{request.route_url('states', traverse=(), _query={'period': period.id})}}">{{ gettext('States') }}</a></li>
   <li><a href="#"> </a>
   <i class="icon-angle-right"></i>
   </li>
@@ -80,7 +80,7 @@
   {% if not request.can_view_municipality and not request.can_view_state and not request.is_super_user and not request.can_list_state %}
   <li>
   <i class="icon-home"></i>
-  <a href="{{request.route_url('clinics', traverse=())}}">{{ gettext('Scores') }}</a>
+  <a href="{{request.route_url('clinics', traverse=(), _query={'period': period.id})}}">{{ gettext('Scores') }}</a>
   </li>
   <li><a href="#"> </a></li>
   <li>
