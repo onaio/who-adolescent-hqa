@@ -28,7 +28,8 @@ class ReportingPeriodViews(BaseClassViews):
         periods = ReportingPeriod.all()
         return {
             'periods': periods,
-            'period': ReportingPeriod.get_current_period()}
+            'period': self.period
+            }
 
     @view_config(
         name='new',
