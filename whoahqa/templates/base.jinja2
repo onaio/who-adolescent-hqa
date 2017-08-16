@@ -127,7 +127,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                         {%if request.url.find('periods') != -1 %}
                            selected
                         {% endif %}">
-                       <a href="{{ request.route_url('periods', traverse=('list')) }}">
+                       <a href="{{ request.route_url('periods', traverse=('list'), _query={'period': period.id})}}">
                          {{ gettext('Reporting Periods') }}
                        </a>
                      </li>
@@ -147,14 +147,14 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                         {%if request.url.find('locations') != -1 %}
                            selected
                         {% endif %}">
-                        <a href="{{ request.route_url('locations', traverse=('')) }}">
+                        <a href="{{ request.route_url('locations', traverse=(''), _query={'period': period.id})}}">
                         {{gettext('Manage Locations')}}</a>
                      </li>
                      <li class="
                         {%if request.url.find('manage') != -1 %}
                            selected
                         {% endif %}">
-                        <a href="{{ request.route_url('clinics', traverse=('manage')) }}">
+                        <a href="{{ request.route_url('clinics', traverse=('manage'), _query={'period': period.id})}}">
                         {{gettext('Manage Clinics')}}</a>
                      </li>
                    {% endif %}
@@ -205,7 +205,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <div class="page-title">
                   <div class="pull-right">
-                     <a href="{{request.route_url('locale', traverse=())}}" class="btn btn-default">
+                     <a href="{{request.route_url('locale', traverse=(), _query={'period': period.id})}}" class="btn btn-default">
                         <span class="glyphicon glyphicon-cog"></span>
                      </a>
                   </div>

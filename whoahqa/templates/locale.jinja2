@@ -5,7 +5,7 @@
 {% if request.can_list_state %}
   <li class="">
     <i class="icon-home"></i>
-    <a href="{{request.route_url('states', traverse=())}}">
+    <a href="{{request.route_url('states', traverse=(), _query={'period': period.id})}}">
         {{ gettext('States') }}
     </a>
     <i class="icon-angle-right"></i>
@@ -14,7 +14,7 @@
 {% if request.can_view_state %}
   <li class="">
     <i class="icon-home"></i>
-    <a href="{{request.route_url('states', traverse=())}}">
+    <a href="{{request.route_url('states', traverse=(), _query={'period': period.id})}}">
         {{ gettext('State') }}
     </a>
     <i class="icon-angle-right"></i>
@@ -24,7 +24,7 @@
   {% if request.user %}
     <li class="">
       <i class="icon-home"></i>
-      <a href="{{request.route_url('municipalities', traverse=(request.user.location.id))}}">
+      <a href="{{request.route_url('municipalities', traverse=(request.user.location.id), _query={'period': period.id})}}">
           {{ gettext('Municipality') }}
       </a>
       <i class="icon-angle-right"></i>
@@ -44,21 +44,21 @@
   {% if request.is_super_user %}
     <i class="icon-angle-right"></i>
   {% endif %}
-  <a href="{{ request.route_url('locale', traverse=()) }}">
+  <a href="{{ request.route_url('locale', traverse=(), _query={'period': period.id}) }}">
   {{ gettext('User Settings') }}</a>
 </li>
 {% endblock %}
 {% block sub_menu_item %}
   {% if request.can_list_state %}
   <li class="">
-    <a href="{{request.route_url('states', traverse=())}}">
+    <a href="{{request.route_url('states', traverse=(), _query={'period': period.id})}}">
         {{ gettext('States') }}
     </a>
   </li>
   {% endif %}
   {% if request.can_view_state %}
   <li class="">
-    <a href="{{request.route_url('states', traverse=())}}">
+    <a href="{{request.route_url('states', traverse=(), _query={'period': period.id})}}">
         {{ gettext('State') }}
     </a>
   </li>
