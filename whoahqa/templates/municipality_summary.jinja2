@@ -33,22 +33,42 @@
   {% else %}
     <li class="selected">
     <span class="icon-plus-sign state" id="menu-icon"></span>
-      <a href="{{municipality.get_url(request, period)}}">
-          {{ municipality.name|format_location_name }}
-          {{ gettext(municipality.location_type|capitalize) }}
-      </a>
-      <input type="checkbox" name ="group-1" id="chkbx" style="top: 7px;
-    left: 18px; margin: 0 !important; ">
-    <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
-    {% for clinic in municipality.children() %}
-    <li style="margin: 0 auto; padding: 5px; margin-top: 1px !important;position: relative;">
-          <a href="{{clinic.get_url(request, period)}}" style="color: #def1fd; margin-left: 25px; font-weight: 300; font-size: 14px; display: block; white-space: initial; width: 80%;">
+    <a href="{{state.get_url(request, period)}}">
+        {{ state.name|format_location_name }}
+        {{ gettext(state.location_type|capitalize) }}
+    </a>
+    <input type="checkbox" name ="group-1" id="chkbx" style="top: 0px;
+    left: 24px;">
+  <ul class="sub-location temp" id="municipality-list">
+  {% for child in state.children() %}
+  <li style="margin: 0 auto;
+    padding: 5px;
+    margin-top: 1px !important; white-space: nowrap;" class="sub-sub-state
+    {%if child.id == municipality.id%}
+          active
+        {% endif %}">
+    <input type="checkbox" name ="group-2" id="chkbx" style="top: -5px;
+    left: 1px;">
+        <a href="{{child.get_url(request, period)}}" style="color: #def1fd;
+    margin: 0px 0px 0px 13px; font-weight: 300;
+    font-size: 14px; display: block;">
+            {{ child.name|format_location_name }}
+            {{ gettext(child.location_type|capitalize) }}
+        </a>
+        <span class="icon-plus-sign locations-list" id="menu-icon" style="margin: -17px -27px 1px 1px"></span>
+      <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
+      {% for clinic in child.children() %}
+      <li style="margin: 0 auto; padding-top: 5px; margin-top: 1px !important; position: relative;" class="override">
+          <a href="{{clinic.get_url(request, period)}}" style="color: #def1fd;margin: 0px 0px 1px 17px; font-weight: 300; font-size: 14px; display: block; white-space: initial; width: 80%;">
               {{ clinic.name|format_location_name }}
           </a>
-    </li>
+      </li>
       {% endfor %}
-      </ul>
+    </ul>
     </li>
+  {% endfor %}
+  </ul>
+  </li>
   {% endif %}
 {% endblock %}
 
