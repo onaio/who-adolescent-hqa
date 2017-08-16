@@ -40,13 +40,16 @@
     <input type="checkbox" name ="group-1" id="chkbx" style="top: 0px;
     left: 24px;">
   <ul class="sub-location temp" id="municipality-list">
-  {% for child in state.children() %}
+  {% for child in state.children() %} 
   <li style="margin: 0 auto;
     padding: 5px;
     margin-top: 1px !important; white-space: nowrap;" class="sub-sub-state
     {%if child.id == municipality.id%}
           active
-        {% endif %}">
+        {% endif %}"
+        {% if child.id != municipality.id and not request.can_list_state %}
+        hidden
+        {% endif %}>
     <input type="checkbox" name ="group-2" id="chkbx" style="top: -5px;
     left: 1px;">
         <a href="{{child.get_url(request, period)}}" style="color: #def1fd;
