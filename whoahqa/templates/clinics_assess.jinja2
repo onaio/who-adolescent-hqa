@@ -5,7 +5,7 @@
   {% if not request.can_assess_clinics %}
     {% if request.user %}
     <li class="">
-      <a href="{{request.route_url('municipalities', traverse=(request.user.location.id))}}">
+      <a href="{{request.route_url('municipalities', traverse=(request.user.location.id), _query={'period': period.id})}}">
           {{ request.user.location.name|title }}
           {{ gettext(request.user.location.location_type|capitalize) }}
       </a>
@@ -19,7 +19,7 @@
 	{% if request.user %}
 	    <li class="">
 	      <i class="icon-home"></i>
-	      <a href="{{request.route_url('municipalities', traverse=(request.user.location.id))}}">
+	      <a href="{{request.route_url('municipalities', traverse=(request.user.location.id), _query={'period': period.id})}}">
 	      {{ request.user.location.name|title }}
 	      {{ gettext(request.user.location.location_type|capitalize) }}
 	      </a>
