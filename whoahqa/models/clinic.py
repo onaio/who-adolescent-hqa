@@ -159,22 +159,23 @@ class Clinic(Base):
         return clinics
 
     def get_num_responses_per_tool(self, period):
-        clinic_submissions_table = Base.metadata.tables['clinic_submissions']
+        from whoahqa.models import ClinicSubmission
         responses_per_tool = {}
         for tool, sample_frame in \
                 constants.RECOMMENDED_SAMPLE_FRAMES.iteritems():
             responses_per_tool[tool] = {
                 'sample_frame': sample_frame,
                 'responses': (
-                    DBSession.query(clinic_submissions_table).filter(
+                    DBSession.query(ClinicSubmission).filter(
                         and_(
-                            clinic_submissions_table.c.clinic_id == self.id,
-                            clinic_submissions_table.c.valid == true(),
-                            clinic_submissions_table.c.xform_id == tool,
-                            clinic_submissions_table.c.period == period))
-                    .distinct(clinic_submissions_table.c.submission_id)
+                            ClinicSubmission.clinic_id == self.id,
+                            ClinicSubmission.valid == true(),
+                            ClinicSubmission.xform_id == tool,
+                            ClinicSubmission.period == period))
+                    .distinct(ClinicSubmission.submission_id)
                     .count())
             }
+
         return responses_per_tool
 
     def get_num_responses_per_characteristic_xform_id(self, period):
