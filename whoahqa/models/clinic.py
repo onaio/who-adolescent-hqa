@@ -161,8 +161,15 @@ class Clinic(Base):
     def get_num_responses_per_tool(self, period):
         from whoahqa.models import ClinicSubmission
         responses_per_tool = {}
-        for tool, sample_frame in \
-                constants.RECOMMENDED_SAMPLE_FRAMES.iteritems():
+
+        sample_frames = {}
+
+        if period == '2017':
+            sample_frames = constants.RECOMMENDED_SAMPLE_FRAMES
+        else:
+            sample_frames = constants.RECOMMENDED_SAMPLE_FRAMES_V2
+
+        for tool, sample_frame in sample_frames.iteritems():
             responses_per_tool[tool] = {
                 'sample_frame': sample_frame,
                 'responses': (

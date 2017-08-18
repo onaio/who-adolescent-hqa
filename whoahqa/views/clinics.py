@@ -363,11 +363,23 @@ class ClinicViews(BaseClassViews):
 
         period = get_period_from_request(self.request)
 
+        sample_frames = {}
+
+        client_tools = {}
+
+        if period.form_xpath == '2017':
+            sample_frames = constants.RECOMMENDED_SAMPLE_FRAMES
+            client_tools = tuple_to_dict_list(
+                ("id", "name"), constants.CLIENT_TOOLS)
+        else:
+            sample_frames = constants.RECOMMENDED_SAMPLE_FRAMES_V2
+            client_tools = tuple_to_dict_list(
+                ("id", "name"), constants.CLIENT_TOOLS_V2)
+
         return {
             'clinics': clinics,
             'period': period,
             'periods': ReportingPeriod.get_active_periods(),
-            'client_tools': tuple_to_dict_list(
-                ("id", "name"), constants.CLIENT_TOOLS),
-            'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAMES,
+            'client_tools': client_tools,
+            'recommended_sample_frame': sample_frames,
         }
