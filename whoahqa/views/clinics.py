@@ -35,6 +35,14 @@ from whoahqa.views.base import BaseClassViews
 
 
 FORM_MAP = {
+    'adolescent_client_V2': 51328,
+    'health_care_provider_V2': 51345,
+    'support_staff_V2': 51366,
+    'health_facility_manager_V2': 51355,
+    'outreach_worker_V2': 51373,
+    'community_member_V2': 51334,
+    'adolescent_in_community_V2': 51330,
+    'observation_guide_V2': 51357,
     'adolescent_client_V3': 215285,
     'health_care_provider_V3': 215288,
     'support_staff_V3': 215292,
@@ -125,6 +133,7 @@ class ClinicViews(BaseClassViews):
         # redirects to the survey form for specified survey
         survey_form = self.request.GET.get('form')
         survey_id = FORM_MAP.get(survey_form)
+
         # get enketo edit url
         try:
             survey_url = enketo.get_survey_url(
