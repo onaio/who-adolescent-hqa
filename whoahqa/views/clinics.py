@@ -376,14 +376,18 @@ class ClinicViews(BaseClassViews):
 
         client_tools = {}
 
-        if period.form_xpath == '2017':
-            sample_frames = constants.RECOMMENDED_SAMPLE_FRAMES
-            client_tools = tuple_to_dict_list(
-                ("id", "name"), constants.CLIENT_TOOLS)
-        else:
-            sample_frames = constants.RECOMMENDED_SAMPLE_FRAMES_V2
-            client_tools = tuple_to_dict_list(
-                ("id", "name"), constants.CLIENT_TOOLS_V2)
+        _dict = {'2017': (
+            constants.RECOMMENDED_SAMPLE_FRAMES,
+            constants.CLIENT_TOOLS)
+        }
+
+        sample_frames, client_tools_cont = _dict.get(
+            period.form_xpath, (
+                constants.RECOMMENDED_SAMPLE_FRAMES_V2,
+                constants.CLIENT_TOOLS_V2)
+        )
+
+        client_tools = tuple_to_dict_list(("id", "name"), client_tools_cont)
 
         return {
             'clinics': clinics,
