@@ -30,7 +30,7 @@
     {% endfor %}
     </ul>
     </li>
-  {% else %}
+  {% elif request.can_list_state %}
     <li class="selected">
     <span class="icon-plus-sign state" id="menu-icon"></span>
     <a href="{{state.get_url(request, period)}}">
@@ -72,6 +72,25 @@
   {% endfor %}
   </ul>
   </li>
+  {% else %}
+    <li class="selected">
+    <span class="icon-plus-sign state" id="menu-icon"></span>
+      <a href="{{municipality.get_url(request, period)}}">
+          {{ municipality.name|format_location_name }}
+          {{ gettext(municipality.location_type|capitalize) }}
+      </a>
+      <input type="checkbox" name ="group-1" id="chkbx" style="top: 7px;
+    left: 18px; margin: 0 !important; ">
+    <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
+    {% for clinic in municipality.children() %}
+    <li style="margin: 0 auto; padding: 5px; margin-top: 1px !important;position: relative;">
+          <a href="{{clinic.get_url(request, period)}}" style="color: #def1fd; margin-left: 25px; font-weight: 300; font-size: 14px; display: block; white-space: initial; width: 80%;">
+              {{ clinic.name|format_location_name }}
+          </a>
+    </li>
+      {% endfor %}
+      </ul>
+    </li>
   {% endif %}
 {% endblock %}
 
