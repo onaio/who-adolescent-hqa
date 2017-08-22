@@ -10,6 +10,14 @@ OUTREACH_WORKER = 'outreach_worker_V3'
 COMMUNITY_MEMBER = 'community_member_V3'
 ADOLESCENT_IN_COMMUNITY = 'adolescent_in_community_V3'
 OBSERVATION_GUIDE = 'observation_guide_V3'
+ADOLESCENT_CLIENT_V2 = 'adolescent_client_V2'
+HEALTH_CARE_PROVIDER_V2 = 'health_care_provider_V2'
+SUPPORT_STAFF_V2 = 'support_staff_V2'
+HEALTH_FACILITY_MANAGER_V2 = 'health_facility_manager_V2'
+OUTREACH_WORKER_V2 = 'outreach_worker_V2'
+COMMUNITY_MEMBER_V2 = 'community_member_V2'
+ADOLESCENT_IN_COMMUNITY_V2 = 'adolescent_in_community_V2'
+OBSERVATION_GUIDE_V2 = 'observation_guide_V2'
 
 # Clinic registration
 CLINIC_REGISTRATION = 'clinic_registration'
@@ -24,6 +32,17 @@ CLIENT_TOOLS = [
     (COMMUNITY_MEMBER, _("Community Member")),
     (ADOLESCENT_IN_COMMUNITY, _("Adolescent in Community")),
     (OBSERVATION_GUIDE, _("Observation Guide"))
+]
+
+CLIENT_TOOLS_V2 = [
+    (ADOLESCENT_CLIENT_V2, _("Adolescent Client")),
+    (HEALTH_CARE_PROVIDER_V2, _("Health-care Provider")),
+    (SUPPORT_STAFF_V2, _("Support Staff")),
+    (HEALTH_FACILITY_MANAGER_V2, _("Health Facility Manager")),
+    (OUTREACH_WORKER_V2, _("Outreach Worker")),
+    (COMMUNITY_MEMBER_V2, _("Community Member")),
+    (ADOLESCENT_IN_COMMUNITY_V2, _("Adolescent in Community")),
+    (OBSERVATION_GUIDE_V2, _("Observation Guide"))
 ]
 
 CLIENT_TOOL_IDS = {
@@ -572,6 +591,17 @@ RECOMMENDED_SAMPLE_FRAMES = {
     COMMUNITY_MEMBER: 2,
     ADOLESCENT_IN_COMMUNITY: 5,
     OBSERVATION_GUIDE: 3
+}
+
+RECOMMENDED_SAMPLE_FRAMES_V2 = {
+    ADOLESCENT_CLIENT_V2: 6,
+    HEALTH_CARE_PROVIDER_V2: 5,
+    SUPPORT_STAFF_V2: 3,
+    HEALTH_FACILITY_MANAGER_V2: 1,
+    OUTREACH_WORKER_V2: 5,
+    COMMUNITY_MEMBER_V2: 2,
+    ADOLESCENT_IN_COMMUNITY_V2: 5,
+    OBSERVATION_GUIDE_V2: 3
 }
 
 MINIMUM_SAMPLE_FRAME_RATIO = 0.5
