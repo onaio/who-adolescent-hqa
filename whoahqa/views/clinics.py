@@ -35,6 +35,14 @@ from whoahqa.views.base import BaseClassViews
 
 
 FORM_MAP = {
+    'adolescent_client_V2': 51328,
+    'health_care_provider_V2': 51345,
+    'support_staff_V2': 51366,
+    'health_facility_manager_V2': 51355,
+    'outreach_worker_V2': 51373,
+    'community_member_V2': 51334,
+    'adolescent_in_community_V2': 51330,
+    'observation_guide_V2': 51357,
     'adolescent_client_V3': 215285,
     'health_care_provider_V3': 215288,
     'support_staff_V3': 215292,
@@ -125,6 +133,7 @@ class ClinicViews(BaseClassViews):
         # redirects to the survey form for specified survey
         survey_form = self.request.GET.get('form')
         survey_id = FORM_MAP.get(survey_form)
+
         # get enketo edit url
         try:
             survey_url = enketo.get_survey_url(
@@ -363,11 +372,27 @@ class ClinicViews(BaseClassViews):
 
         period = get_period_from_request(self.request)
 
+        sample_frames = {}
+
+        client_tools = {}
+
+        _dict = {'2017': (
+            constants.RECOMMENDED_SAMPLE_FRAMES,
+            constants.CLIENT_TOOLS)
+        }
+
+        sample_frames, client_tools_cont = _dict.get(
+            period.form_xpath, (
+                constants.RECOMMENDED_SAMPLE_FRAMES_V2,
+                constants.CLIENT_TOOLS_V2)
+        )
+
+        client_tools = tuple_to_dict_list(("id", "name"), client_tools_cont)
+
         return {
             'clinics': clinics,
             'period': period,
             'periods': ReportingPeriod.get_active_periods(),
-            'client_tools': tuple_to_dict_list(
-                ("id", "name"), constants.CLIENT_TOOLS),
-            'recommended_sample_frame': constants.RECOMMENDED_SAMPLE_FRAMES,
+            'client_tools': client_tools,
+            'recommended_sample_frame': sample_frames,
         }

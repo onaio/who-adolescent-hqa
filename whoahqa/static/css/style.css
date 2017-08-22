@@ -449,6 +449,10 @@ span.glyphicon {
   margin-top: 3px;
 }
 
+a.webform-link:hover {
+  text-decoration: none;
+}
+
 /***
 Page container
 ***/
@@ -948,6 +952,9 @@ Page breadcrumb
   background-color: #ddd;
 }
 
+.responses {
+  margin-right: 7px;
+}
 /***
 Footer
 ***/

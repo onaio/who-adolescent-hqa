@@ -33,7 +33,9 @@ peppercorn==0.4
 polib==1.0.5
 psycopg2==2.5.4
 pycrypto==2.6.1
-pyenketo==0.1dev
+
+# py-enketo
+-e git+git@github.com:onaio/py-enketo.git@0.1a0#egg=pyenketo
 pyflakes==0.8.1
 pyramid==1.8.3
 pyramid-debugtoolbar==2.2
