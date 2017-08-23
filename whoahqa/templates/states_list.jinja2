@@ -9,29 +9,21 @@
     <a href="{{request.route_url('states', traverse=())}}">
         {{ gettext('Brazil') }}
     </a>
-    <input type="checkbox" name ="group-1" id="chkbx" style="top: 0px;
-    left: 24px;">
+    <input type="checkbox" name ="group-1" id="chkbx" class="group-1">
   {%if request.can_list_state %}
   <ul class="sub-location temp" id="states-list" style="list-style: none;">
     {% for state in locations %}
-    <li style="margin: 0 auto;
-    padding: 5px;
-    margin-top: 1px !important; white-space: nowrap;" class="sub-state">
-    <input type="checkbox" name ="group-2" id="chkbx" style="top: -5px;
-    left: 1px;">
-      <a href="{{state.get_url(request, period)}}" style="color: #def1fd;
-    margin: 0px 20px 0px 15px; font-weight: 300;
-    font-size: 14px; display: block;">
+    <li class="sub-state list-states">
+    <input type="checkbox" name ="group-2" class="group-2" id="chkbx">
+      <a href="{{state.get_url(request, period)}}">
           {{ state.name|format_location_name }}
-          {{ gettext(state.location_type|capitalize) }}
       </a>
-      <span class="icon-plus-sign locations-list" id="menu-icon" style="margin: -17px -27px 1px 1px;"></span>
+      <span class="icon-plus-sign locations-list" id="menu-icon"></span>
       <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
       {% for municipality in state.children() %}
-        <li style="margin: 0 auto; padding: 5px; margin-top: 1px !important; position: relative;" class="states-list">
-        <a href="{{municipality.get_url(request, period)}}" style="color: #def1fd;margin: 0px 20px 0px 20px; font-weight: 300; font-size: 14px; display: block; white-space: initial;">
+        <li class="municipalities">
+        <a href="{{municipality.get_url(request, period)}}">
             {{ municipality.name|format_location_name }}
-            {{ gettext(municipality.location_type|capitalize) }}
         </a>
       </li>
       {% endfor %}

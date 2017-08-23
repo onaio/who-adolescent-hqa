@@ -669,8 +669,73 @@ ul.sub-location {
 }
 
 
- span.icon-plus-sign:before {
+span.icon-plus-sign:before {
   content: "\f055" !important;
+}
+
+input.group-1 {
+  top: 0px !important;
+  left: 24px !important;
+}
+
+input.group-2 {
+  top: -5px !important;
+  left: 1px !important;
+}
+
+ul.sub-location li.list-states,
+ul.sub-location li.list-municipalities {
+  margin: 0 auto;
+  padding: 5px;
+  margin-top: 1px !important;
+  white-space: nowrap;
+}
+
+ul.sub-location li.list-states a,
+ul.sub-location li.municipalities a,
+ul.sub-location li.list-municipalities a,
+ul.sub-location li.clinics a {
+  color: #def1fd;
+  margin: 0px 20px 0px 15px;
+  font-weight: 300;
+  font-size: 14px;
+  display: block;
+}
+
+ul.sub-location span#menu-icon {
+  margin: -17px -27px 1px 1px;
+}
+
+ul.sub-location li.municipalities,
+ul.sub-location li.clinics {
+  margin: 0 auto;
+  padding: 5px;
+  margin-top: 1px !important;
+  position: relative;
+}
+
+ul.sub-location li.municipalities a {
+  margin: 0px 20px 0px 20px !important;
+  white-space: initial;
+}
+
+ul.sub-location li.list-municipalities a {
+  margin: 0px 0px 0px 13px !important;
+}
+
+ul.sub-location li.clinics a,
+ul.sub-location li.municipality-clinics a.clinic {
+  margin: 0px 0px 1px 17px !important;
+  white-space: initial;
+  width: 80%;
+}
+
+ul.sub-location li.municipality-clinics a.clinic {
+  color: #def1fd;
+  font-weight: 300;
+  font-size: 14px;
+  display: block;
+  padding: 8px;
 }
 
 
@@ -3237,9 +3302,17 @@ ul.sub-location li.sub-sub-state a.active {
   background: #0d77b6 !important;
 }
 
-.override {
+ul.sub-location li.municipality-clinics {
   background: #084e78 !important;
+  margin: 0 auto;
+  padding-top: 5px;
+  margin-top: 7px !important;
+  margin-bottom: -7px !important;
+  margin-left: -5px;
+  margin-right: -5px;
+  position: relative;
 }
+
 /* left, right aligned form actions */
 .form-actions.right {
   padding-left: 0;

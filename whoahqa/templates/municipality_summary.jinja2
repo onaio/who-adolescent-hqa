@@ -8,42 +8,47 @@
 {% block sub_menu_item %}
   {% if request.can_view_state %}
     <li class="selected">
-    <span class="icon-plus-sign state" id="menu-icon"></span>
+    <span class="icon-minus-sign state" id="menu-icon"></span>
       <a href="{{state.get_url(request, period)}}">
           {{ state.name|format_location_name }}
-          {{ gettext(state.location_type|capitalize) }}
       </a>
       <input type="checkbox" name ="group-1" id="chkbx" style="top: 7px;
-    left: 18px; margin: 0 !important;">
-    <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
+    left: 18px; margin: 0 !important;" checked>
+    <ul class="sub-location temp" id="municipality-list" style="list-style: none; display: block;">
     {% for child in state.children() %}
-      <li class="sub-location
+      <li class="sub-location list-municipalities
         {%if child.id == municipality.id%}
           active
         {% endif %}
-        " style="margin: 0 auto; padding: 5px; margin-top: 1px !important;position: relative;">
+        ">
+        <input type="checkbox" name ="group-2" id="chkbx" style="top: -5px; left: 1px;">
         <a href="{{child.get_url(request, period)}}" style="color: #def1fd; margin-left: 25px; font-weight: 300; font-size: 14px; display: block; white-space: initial; width: 80%;">
             {{ child.name|format_location_name }}
-            {{ gettext(child.location_type|capitalize) }}
         </a>
+        <span class="icon-plus-sign locations-list" id="menu-icon" style="margin: -17px -27px 1px 1px"></span>
+        <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
+      {% for clinic in child.children() %}
+      <li style="margin: 0 auto; padding-top: 5px; margin-top: 7px !important; margin-bottom: -7px !important; margin-left: -5px; margin-right: -5px;position: relative;" class="override">
+          <a href="{{clinic.get_url(request, period)}}" style="color: #def1fd;margin: 0px 0px 1px 17px; font-weight: 300; font-size: 14px; display: block; white-space: initial; width: 80%; padding-left: 20px; padding-bottom: 5px;">
+              {{ clinic.name|format_location_name }}
+          </a>
+      </li>
+      {% endfor %}
+    </ul>
       </li>
     {% endfor %}
     </ul>
     </li>
   {% elif request.can_list_state %}
     <li class="selected">
-    <span class="icon-plus-sign state" id="menu-icon"></span>
+    <span class="icon-minus-sign state" id="menu-icon"></span>
     <a href="{{state.get_url(request, period)}}">
         {{ state.name|format_location_name }}
-        {{ gettext(state.location_type|capitalize) }}
     </a>
-    <input type="checkbox" name ="group-1" id="chkbx" style="top: 0px;
-    left: 24px;">
-  <ul class="sub-location temp" id="municipality-list">
+    <input type="checkbox" name ="group-1" class="group-1" id="chkbx" checked>
+  <ul class="sub-location temp" id="municipality-list" style="display: block;">
   {% for child in state.children() %} 
-  <li style="margin: 0 auto;
-    padding: 5px;
-    margin-top: 1px !important; white-space: nowrap;" class="sub-sub-state
+  <li class="list-municipalities
     {%if child.id == municipality.id%}
           active
         {% endif %}"
@@ -52,17 +57,14 @@
         {% endif %}>
     <input type="checkbox" name ="group-2" id="chkbx" style="top: -5px;
     left: 1px;">
-        <a href="{{child.get_url(request, period)}}" style="color: #def1fd;
-    margin: 0px 0px 0px 13px; font-weight: 300;
-    font-size: 14px; display: block;">
+        <a href="{{child.get_url(request, period)}}">
             {{ child.name|format_location_name }}
-            {{ gettext(child.location_type|capitalize) }}
         </a>
-        <span class="icon-plus-sign locations-list" id="menu-icon" style="margin: -17px -27px 1px 1px"></span>
+        <span class="icon-plus-sign locations-list" id="menu-icon"></span>
       <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
       {% for clinic in child.children() %}
-      <li style="margin: 0 auto; padding-top: 5px; margin-top: 1px !important; position: relative;" class="override">
-          <a href="{{clinic.get_url(request, period)}}" style="color: #def1fd;margin: 0px 0px 1px 17px; font-weight: 300; font-size: 14px; display: block; white-space: initial; width: 80%;">
+      <li class="municipality-clinics">
+          <a href="{{clinic.get_url(request, period)}}" class="clinic">
               {{ clinic.name|format_location_name }}
           </a>
       </li>
@@ -77,13 +79,12 @@
     <span class="icon-plus-sign state" id="menu-icon"></span>
       <a href="{{municipality.get_url(request, period)}}">
           {{ municipality.name|format_location_name }}
-          {{ gettext(municipality.location_type|capitalize) }}
       </a>
       <input type="checkbox" name ="group-1" id="chkbx" style="top: 7px;
     left: 18px; margin: 0 !important; ">
     <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
     {% for clinic in municipality.children() %}
-    <li style="margin: 0 auto; padding: 5px; margin-top: 1px !important;position: relative;">
+    <li class="clinics">
           <a href="{{clinic.get_url(request, period)}}" style="color: #def1fd; margin-left: 25px; font-weight: 300; font-size: 14px; display: block; white-space: initial; width: 80%;">
               {{ clinic.name|format_location_name }}
           </a>
