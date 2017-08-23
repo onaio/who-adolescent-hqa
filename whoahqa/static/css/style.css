@@ -3290,6 +3290,10 @@ ul.sub-location li.states-list {
   background: #0d77b6 !important;
 }
 
+ul.sub-location li.list-municipalities:hover {
+  background: transparent !important;
+}
+
 ul.sub-location li.sub-state:hover {
   background: transparent !important;
 }

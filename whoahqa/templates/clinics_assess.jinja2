@@ -4,11 +4,23 @@
 {% block sub_menu_item %}
   {% if not request.can_assess_clinics %}
     {% if request.user %}
-    <li class="">
+    <li class="selected">
+    <span class="icon-plus-sign state" id="menu-icon"></span>
       <a href="{{request.route_url('municipalities', traverse=(request.user.location.id), _query={'period': period.id})}}">
           {{ request.user.location.name|title }}
           {{ gettext(request.user.location.location_type|capitalize) }}
       </a>
+      <input type="checkbox" name ="group-1" id="chkbx" style="top: 7px;
+    left: 18px; margin: 0 !important; ">
+    <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
+    {% for clinic in clinics %}
+    <li class="clinics">
+          <a href="{{clinic.get_url(request, period)}}">
+              {{ clinic.name|format_location_name }}
+          </a>
+    </li>
+      {% endfor %}
+      </ul>
     </li>
     {% endif %}
   {% endif %}
