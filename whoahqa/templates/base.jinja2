@@ -133,10 +133,7 @@ Purchase: http://themeforest.net/item/conquer-responsive-admin-dashboard-templat
                      </li>
                    {% endif %}
                   {% if request.can_access_clinics and not request.is_super_user %}
-                     <li class="
-                        {%if request.url.find('assess') != -1 %}
-                           selected
-                        {% endif %}">
+                     <li class="">
                         <a href="{{ request.route_url('clinics', traverse=('assess'), _query={'period': period.id}) }}">
                            {{ gettext('Assessment Surveys') }}
                         </a>
