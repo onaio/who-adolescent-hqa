@@ -73,13 +73,12 @@ ul.page-sidebar-menu > li.active > a i {
 ul.page-sidebar-menu > li > ul.sub-menu > li:first-child > a {
   border-top: 0px !important;
 }
-ul.page-sidebar-menu > li > ul.sub-menu > li.active > a,
-ul.page-sidebar-menu > li > ul.sub-menu > li > a:hover {
+ul.page-sidebar-menu > li > ul.sub-menu > li.active > a {
   color: #ffffff !important;
   background: #0d77b6 !important;
 }
 ul.page-sidebar-menu > li > ul.sub-menu > li > a:hover {
-  background: #0d77b6 !important;
+  text-decoration: underline;
 }
 /* 3rd level sub menu */
 ul.page-sidebar-menu > li > ul.sub-menu li > ul.sub-menu > li.active > a,

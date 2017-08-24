@@ -1,24 +1,45 @@
 {% extends "base.jinja2" %}
 {% block title %} {{ gettext("State")}} {{ gettext("Scores") }}{% endblock %}
-{% block page_title %} {{ state.name|format_location_name }} {% endblock %}
+{% block page_title %} {{ state.name|format_location_name }} {{ gettext(state.location_type|capitalize) }} {% endblock %}
 
 {% block sub_menu_item %}
   <li class="selected">
+    <span class="icon-plus-sign state" id="menu-icon"></span>
     <a href="{{state.get_url(request, period)}}">
         {{ state.name|format_location_name }}
-        {{ gettext(state.location_type|capitalize) }}
     </a>
+    <input type="checkbox" name ="group-1" class="group-1" id="chkbx">
+  <ul class="sub-location temp" id="municipality-list">
+  {% for municipality in state.children() %}
+  <li class="sub-state list-municipalities">
+    <input type="checkbox" name ="group-2" id="chkbx" style="top: -5px;
+    left: 1px;">
+        <a href="{{municipality.get_url(request, period)}}">
+            {{ municipality.name|format_location_name }}
+        </a>
+        <span class="icon-plus-sign locations-list" id="menu-icon" style="margin: -17px -27px 1px 1px"></span>
+      <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
+      {% for clinic in municipality.children() %}
+      <li class="clinics">
+          <a href="{{clinic.get_url(request, period)}}">
+              {{ clinic.name|format_location_name }}
+          </a>
+      </li>
+      {% endfor %}
+    </ul>
+    </li>
+  {% endfor %}
+  </ul>
   </li>
 {% endblock %}
 
 {% block breadcrumbs %}
 {% if request.can_list_state %}
-<li><a href="{{request.route_url('states', traverse=(), _query={'period': period.id} )}}">{{ gettext('States') }}</a></li>
-<li>
-<a href="#"> </a>
-<i class="icon-angle-right"></i>
+<li><a href="{{request.route_url('states', traverse=(), _query={'period': period.id})}}">{{ gettext('Brazil') }}</a></li>
+<a href="#"> </a> 
 </li>
 <li>
+  <i class="icon-angle-right"></i>
   {{ state.name|format_location_name }}
   {{ gettext(state.location_type|capitalize) }}
 </li>
