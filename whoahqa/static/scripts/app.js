@@ -92,6 +92,20 @@ var App = function () {
         }
     }
 
+    var handleIconChange = function () {
+            $('#chkbx').change(function() {
+                var checked = $(this).is(":checked");
+                if(checked){
+                    $('span#menu-icon').removeClass('icon-plus-sign')
+                    $('span#menu-icon').addClass('icon-minus-sign')
+                }
+                else {
+                    $('span#menu-icon').removeClass('icon-minus-sign')
+                    $('span#menu-icon').addClass('icon-plus-sign')
+                }
+            })
+    }
+
     // reinitialize the laypot on window resize
     var handleResponsive = function () {
         handleSidebarState();
@@ -793,7 +807,6 @@ var App = function () {
             //core handlers
             handleInit(); // initialize core variables
             handleResponsiveOnResize(); // set and handle responsive    
-            handleUniform(); // hanfle custom radio & checkboxes
             handleScrollers(); // handles slim scrolling contents 
             handleResponsiveOnInit(); // handler responsive elements on page load
 
@@ -806,6 +819,7 @@ var App = function () {
             handleFixInputPlaceholderForIE(); // fixes/enables html5 placeholder attribute for IE9, IE8
             handleGoTop(); //handles scroll to top functionality in the footer
             handleTheme(); // handles style customer tool
+            handleIconChange(); //change icon on change event
 
             //ui component handlers
             handleFancybox() // handle fancy box
@@ -825,8 +839,7 @@ var App = function () {
             handleDropdowns(); // handle dropdowns
             handleTooltips(); // handle bootstrap tooltips
             handlePopovers(); // handles bootstrap popovers
-            handleAccordions(); //handles accordions 
-            handleUniform(); // hanfle custom radio & checkboxes     
+            handleAccordions(); //handles accordions      
             handleDropdownHover() // handles dropdown hover       
         },
 

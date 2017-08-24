@@ -1,13 +1,37 @@
 {% extends "base.jinja2" %}
-{% block title %}{{ gettext("States") }}{% endblock %}
+{% block title %}{{ gettext("Brazil") }}{% endblock %}
 {% block page_title %} {{ self.title() }} {% endblock %}
 {% block breadcrumbs %}
 {% endblock %}
 {% block sub_menu_item %}
   <li class="selected">
+    <span id="menu-icon" class="icon-plus-sign state"></span>
     <a href="{{request.route_url('states', traverse=())}}">
-        {{ gettext('States') }}
+        {{ gettext('Brazil') }}
     </a>
+    <input type="checkbox" name ="group-1" id="chkbx" class="group-1">
+  {%if request.can_list_state %}
+  <ul class="sub-location temp" id="states-list" style="list-style: none;">
+    {% for state in locations %}
+    <li class="sub-state list-states">
+    <input type="checkbox" name ="group-2" class="group-2" id="chkbx">
+      <a href="{{state.get_url(request, period)}}">
+          {{ state.name|format_location_name }}
+      </a>
+      <span class="icon-plus-sign locations-list" id="menu-icon"></span>
+      <ul class="sub-location temp" id="municipality-list" style="list-style: none;">
+      {% for municipality in state.children() %}
+        <li class="municipalities">
+        <a href="{{municipality.get_url(request, period)}}">
+            {{ municipality.name|format_location_name }}
+        </a>
+      </li>
+      {% endfor %}
+      </ul>
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
   </li>
 {% endblock %}
 {% block content %}
@@ -23,3 +47,21 @@
     </div>
   </div>
 {% endblock content %}
+{% block page_scripts %}
+  <script type="text/javascript">
+  var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {},
+  $checkboxes = $(".sub-menu :checkbox");
+
+  $checkboxes.on("change", function(){
+    $checkboxes.each(function(){
+      checkboxValues[this.id] = this.checked;
+    });
+    localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
+  });
+
+  // On page load
+  $.each(checkboxValues, function(key, value) {
+    $("#" + key).prop('checked', value);
+  });
+  </script>
+{% endblock %}
