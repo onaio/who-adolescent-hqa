@@ -9,6 +9,7 @@ from sqlalchemy import (
     DateTime,
     func,
 )
+from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql import select, and_
 from sqlalchemy.sql.expression import true
@@ -464,6 +465,8 @@ class ClinicFactory(BaseModelFactory):
             clinic = DBSession.query(Clinic).filter_by(id=clinic_id).one()
         except (ValueError, NoResultFound):
             raise KeyError
+        except OperationalError:
+            pass
         else:
             clinic.__parent__ = self
             clinic.__name__ = item
