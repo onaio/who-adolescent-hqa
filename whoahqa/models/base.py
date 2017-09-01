@@ -9,7 +9,10 @@ from sqlalchemy.orm import (
     sessionmaker,
 )
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.exc import OperationalError
+from sqlalchemy.exc import (
+    OperationalError,
+    DatabaseError,
+)
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql.expression import desc
 
@@ -29,10 +32,11 @@ class BaseModel(object):
     @classmethod
     def get(cls, *criterion):
         try:
-            instance = DBSession.query(cls).filter(*criterion).one()
+            return DBSession.query(cls).filter(*criterion).one()
         except OperationalError:
             pass
-        return instance
+        except DatabaseError:
+            pass
 
     @classmethod
     def all(cls, *criterion):
