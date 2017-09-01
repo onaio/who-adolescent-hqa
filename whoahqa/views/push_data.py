@@ -8,7 +8,7 @@ from ..utils import normalizeString, format_location_name as fmt
 
 @view_config(
     route_name='push',
-    match_param='action=clinics',
+    match_param='action=clinics.csv',
     request_method='GET',
     renderer='csv',
     permission=NO_PERMISSION_REQUIRED)

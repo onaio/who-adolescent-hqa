@@ -17,7 +17,6 @@ from pyramid.view import (
 from pyramid.response import Response
 from requests_oauthlib import OAuth2Session
 from sqlalchemy.orm.exc import NoResultFound
-
 from whoahqa.models import (
     DBSession,
     UserProfile,
