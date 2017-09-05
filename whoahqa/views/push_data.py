@@ -47,7 +47,7 @@ def push_facilities(request):
 
 @view_config(
     route_name='push',
-    match_param='action=periods',
+    match_param='action=periods.csv',
     request_method='GET',
     renderer='csv',
     permission=NO_PERMISSION_REQUIRED)
