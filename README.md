@@ -92,9 +92,21 @@ Installing
     pserve development.ini --reload
     ```
 
-Deploy to AWS
+Deployment
 -------------------
 Execute the following command to deploy from the dev host server
+
+### Stage
+
+```
+ansible-playbook -i inventory/ona-whoahqa-stage.ini whoahqa.yaml -vvvv --extra-vars="git_branch=master env_settings=production instance_ids=['i-02e706da7a3c850b0']" --vault-password-file ~/.vault_pass.txt
+```
+
+### Production
+
+```
+ansible-playbook -i inventory/ona-whoahqa.ini whoahqa.yaml -vvvv --extra-vars="git_branch=master env_settings=production instance_ids=['i-02e706da7a3c850b0']" --vault-password-file ~/.vault_pass.txt
+```
 
 ### NOTE
 
@@ -104,3 +116,4 @@ Before running the app or tests, you need to add
 export WHOAHQA_COUNTRY_SETTING=whoahqa.constants.brazil_characteristics
 ```
 to your `~/.bashrc` or `~/.zshrc` file.
+
