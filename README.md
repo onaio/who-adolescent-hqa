@@ -1,8 +1,8 @@
-who-ahqa README
-==================
+# WHO-AHQA README
 
-Installing
------------
+This project was built by Ona Systems Inc for the Brazilian Ministry of Health and the World Health Organization.
+
+## Installing
 
 1. Install Postgresql from the Postgresql repo - [http://wiki.postgresql.org/wiki/Apt](http://wiki.postgresql.org/wiki/Apt)
 
@@ -86,14 +86,20 @@ Installing
     alembic upgrade head
     ```
 
-6. Run the application
+6. Set the credentials in `development.ini`
+
+   > All credentials with `REPLACE_ME` as their value should be set to the appropriate values for your installation.
+   >
+   > You may also need to set the credentials in `production.ini` and `test.ini`
+
+7. Run the application
 
     ```
     pserve development.ini --reload
     ```
 
-Deployment
--------------------
+## Deployment
+
 Execute the following command to deploy from the dev host server
 
 ### Stage
@@ -117,3 +123,6 @@ export WHOAHQA_COUNTRY_SETTING=whoahqa.constants.brazil_characteristics
 ```
 to your `~/.bashrc` or `~/.zshrc` file.
 
+## Licenese
+
+All code is provided under the Apache 2 license.
