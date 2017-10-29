@@ -2,3 +2,16 @@
 ---
 
 -  Initial version
+
+1.0
+---
+
+- User management
+  - Links with Ona API using OAuth2
+  - Dashboard only users created in app
+  - Role management for all users
+- Management of reporting periods
+- Management of clinic, municipality, and state locations
+- 20 characteristics with sampling size and score visual indicators
+- 5 key indicators aggregated from the 20 characteristics
+  - Key indicators aggregated to the municipal, state, and national level
