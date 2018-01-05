@@ -2,6 +2,7 @@ import os
 import sys
 import transaction
 import requests
+import itertools
 
 
 from sqlalchemy import engine_from_config
@@ -17,6 +18,14 @@ from whoahqa.models import (
     Submission)
 
 FORM_MAP = {
+    'adolescent_client_V2': 51328,
+    'health_care_provider_V2': 51345,
+    'support_staff_V2': 51366,
+    'health_facility_manager_V2': 51355,
+    'outreach_worker_V2': 51373,
+    'community_member_V2': 51334,
+    'adolescent_in_community_V2': 51330,
+    'observation_guide_V2': 51357,
     'adolescent_client_V3': 215285,
     'health_care_provider_V3': 215288,
     'support_staff_V3': 215292,
@@ -47,7 +56,8 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
 
-    client_tool_list = [key for key, val in constants.CLIENT_TOOLS]
+    client_tool_list = [key for key, val in itertools.chain(
+        constants.CLIENT_TOOLS, constants.CLIENT_TOOLS_V2)]
 
     if form_id in client_tool_list:
         import_submissions_for(form_id)

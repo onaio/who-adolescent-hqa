@@ -97,4 +97,5 @@ class BaseCharacteristics(object):
             setattr(self, setting, setting_value)
             self._explicit_settings.add(setting)
 
+
 characteristics = LazyCharacteristics()
