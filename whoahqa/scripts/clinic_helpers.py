@@ -11,12 +11,9 @@ from pyramid.paster import (
 from whoahqa.models import (
     Base,
     DBSession,
-    Clinic,
-    ClinicReport)
+    Clinic)
 
-from whoahqa.models.user import (
-    delete_user_clinics,
-    user_clinics)
+from whoahqa.models.user import user_clinics
 
 
 def usage(argv):
@@ -41,12 +38,8 @@ def main(argv=sys.argv):
 
 def reset_all_clinics():
     # delete all Clinics
+    user_clinics.delete().where(
+        user_clinics.columns.clinic_id.in_(Clinic.all()))
     with transaction.manager:
-        for c in Clinic.all():
-            # import ipdb; ipdb.set_trace()
-            DBSession.query(ClinicReport).filter_by(clinic_id=c.id).delete()
-            delete_user_clinics([c.id for c in Clinic.all()])
-            DBSession.query(Clinic).filter_by(id=45).delete()
-            DBSession.query(Clinic).join(user_clinics).filter(
-                user_clinics.columns.clinic_id == c.id).delete()
-            DBSession.commit()
+        for cs in Clinic.all():
+            DBSession.delete(cs)
