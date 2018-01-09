@@ -56,7 +56,7 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
 
-    client_tool_list = [key for key, val in itertools.chain(
+    client_tool_list = [key for key, _val in itertools.chain(
         constants.CLIENT_TOOLS, constants.CLIENT_TOOLS_V2)]
 
     if form_id in client_tool_list:
