@@ -9,3 +9,15 @@ build:
 compose:
   database:
     image: onaio/postgis
+
+notify:
+  email:
+    from: $$FROM
+    host: $$SMTP_HOST
+    port: $$SMTP_PORT
+    username: $$SMTP_USERNAME
+    password: $$SMTP_PASSWORD
+    recipients:
+      - tech+drone@ona.io
+    on_success: true
+    on_failure: true
