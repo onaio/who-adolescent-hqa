@@ -59,6 +59,3 @@ zope.deprecation==4.1.1
 zope.interface==4.1.1
 zope.sqlalchemy==0.7.5
 mock==1.0.1
-pyOpenSSL==17.5.0
-ndg-httpsclient==0.4.3
-pyasn1==0.4.2
