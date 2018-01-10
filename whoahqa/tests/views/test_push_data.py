@@ -101,6 +101,7 @@ class TestPushData(IntegrationTestBase):
         reporting_period3.save()
 
         response = push_report_periods(self.request)
-        self.assertEqual(2, len(response['rows']))
-        self.assertEqual(['2017'], response['rows'][0])
-        self.assertEqual(['2018'], response['rows'][1])
+        self.assertEqual(3, len(response['rows']))
+        self.assertEqual(['2016'], response['rows'][0])
+        self.assertEqual(['2017'], response['rows'][1])
+        self.assertEqual(['2018'], response['rows'][2])
