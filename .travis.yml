@@ -1,0 +1,41 @@
+sudo: required
+dist: trusty
+language: python
+addons:
+  postgresql: 9.5.7
+  apt:
+    packages:
+      - build-essential
+      - git
+      - libpq-dev
+      - libxml2-dev
+      - libxslt1-dev
+      - python-pip
+      - python-virtualenv
+      - python-dev
+
+cache:
+  apt: true
+  directories:
+    - $HOME/.pip-cache/
+python:
+  - '2.7'
+
+services:
+  - postgresql
+
+before_install:
+  - export DEBIAN_FRONTEND=noninteractive;
+  - sudo -E apt-get -yq update &>> ~/apt-get-update.log;
+  - sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install postgresql-9.5-postgis-2.2
+  - export WHOAHQA_COUNTRY_SETTING=whoahqa.constants.brazil_characteristics
+
+install:
+  - sudo pip install -qr requirements.txt
+
+before_script:
+  - psql -c "CREATE USER whoahqa WITH PASSWORD 'whoahqa';" -h 127.0.0.1 -U postgres postgres
+  - psql -c "CREATE DATABASE whoahqa_test OWNER whoahqa;" -h 127.0.0.1 -U postgres postgres
+
+script:
+  - python setup.py test
