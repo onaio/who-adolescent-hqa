@@ -14,10 +14,6 @@ addons:
       - python-virtualenv
       - python-dev
 
-cache:
-  apt: true
-  directories:
-    - $HOME/.pip-cache/
 python:
   - '2.7'
 
@@ -31,7 +27,7 @@ before_install:
   - export WHOAHQA_COUNTRY_SETTING=whoahqa.constants.brazil_characteristics
 
 install:
-  - pip install -qr requirements.txt -vvvv
+  - sudo pip install -qr requirements.txt -vvvv
 
 before_script:
   - psql -c "CREATE USER whoahqa WITH PASSWORD 'whoahqa';" -h 127.0.0.1 -U postgres postgres
