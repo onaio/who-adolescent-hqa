@@ -31,7 +31,7 @@ before_install:
   - export WHOAHQA_COUNTRY_SETTING=whoahqa.constants.brazil_characteristics
 
 install:
-  - sudo pip install -qr requirements.txt
+  - pip install -qr requirements.txt -vvvv
 
 before_script:
   - psql -c "CREATE USER whoahqa WITH PASSWORD 'whoahqa';" -h 127.0.0.1 -U postgres postgres
