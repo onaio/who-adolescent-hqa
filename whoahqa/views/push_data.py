@@ -7,7 +7,8 @@ from whoahqa.models import (
     ReportingPeriod,
     State,
     Location)
-from ..utils import normalizeString, format_location_name as fmt
+
+from ..utils import normalizeString, format_location_name as fmt, xstr
 
 
 @view_config(
@@ -84,7 +85,7 @@ def push_locations(request):
         rows.append([
             location.name,
             location.location_type,
-            location.parent])
+            xstr(location.parent)])
 
     return {
         'header': header,

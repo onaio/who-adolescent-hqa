@@ -68,6 +68,12 @@ def clinics_report(clinics, period):
     return results
 
 
+def xstr(s):
+    if s is None:
+        return 'None'
+    return str(s)
+
+
 class UnicodeDictReader(object):
     def __init__(self, *args, **kw):
         self.encoding = kw.pop('encoding', 'utf-8')
