@@ -57,7 +57,7 @@ class Submission(Base):
     HANDLER_TO_XFORMS_MAPPING = (
         (ClinicReportHandler, [
             tool
-            for tool, _label in itertools.chain(
+            for tool, _ in itertools.chain(
                 constants.CLIENT_TOOLS,
                 constants.CLIENT_TOOLS_V2)]),
         (ClinicRegistrationHandler, [constants.CLINIC_REGISTRATION]),
