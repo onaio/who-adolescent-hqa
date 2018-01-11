@@ -1,147 +1,141 @@
 CNES,state,municipality,facility_name
-7938209,Acre,Rio Branco,Usf Manoel Bezerra Ii
-7942559,Acre,Rio Branco,Usf Luiz Gonzaga Ii
-3331806,Acre,Rio Branco,Usf Raimunda Dionisio
-7565089,Acre,Rio Branco,Usf Maria De Jesus Iii
-7799632,Acre,Rio Branco,Usf Valdeisa Correia Valdez
-2020025,Amapa,Macapa,Pmm Ubs Do Curiau
-2021161,Amapa,Macapa,Pmm Ubs Pacoval
-2021056,Amapa,Macapa,Pmm Ubs Hozanan De Souza
-6585604,Amapa,Macapa,Ppm Ubs Marabaixo
-2020602,Amapa,Macapa,Pmm Ubs Dr Lelio Silva
-2019914,Amapa,Macapa,Pmm Ubs Sao Joaquim Do Pacui
-2012871,Amazonas,Manaus,Ubs Lourenco Borghi
-5388376,Amazonas,Manaus,Ubs Santo Antonio
-2012898,Amazonas,Manaus,Ubs Frei Valerio
-2016109,Amazonas,Manaus,Psr N Sr De Fatima
-2015285,Amazonas,Manaus,Ubs Jose Amazonas Palhano
-7847866,Amazonas,Manaus,Ubs Fatima Andrade
-2013843,Amazonas,Manaus,Ubs Theodomiro Garrido
-2013517,Amazonas,Manaus,Ubs Santa Luzia
-2016117,Amazonas,Manaus,Ubs Rural Nossa Sra. Do Livramento
-2015323,Amazonas,Manaus,Ubs Mansour Bulbol
-2013916,Amazonas,Manaus,Ubs Dr.Alfredo Campos
-2015455,Amazonas,Manaus,Ubs Gebes De Melo Medeiro Filho
-2653419,Bahia,Salvador,Usf Boa Vista Do Lobato
-7592450,Bahia,Salvador,Usf Mussurunga I
+116,Pernambuco,Cabo De Santo Agostinho,Usf Charneca Ii
+256,Pernambuco,Cabo De Santo Agostinho,Usf Santa Rosa
 6890,Bahia,Salvador,Usf De Barreiras
-7872836,Bahia,Salvador,Usf Vale Do Cambonas
-6363857,Bahia,Salvador,Usf Alto De Coutos Ii
-7120761,Bahia,Lauro De Freitas,Usf Vila Praiana
-5672198,Bahia,Lauro De Freitas,Usf De Caji - Vida Nova
-2799243,Bahia,Lauro De Freitas,Ubs Irma Dulce
-2799189,Bahia,Lauro De Freitas,Ubs Antonio Carlos Rodrigues
-3044866,Bahia,Lauro De Freitas,Usf Espaco Cidadao
-2387883,Bahia,Camacari,Usf Nova Vitoria
-2387891,Bahia,Camacari,Usf Phoc Iii
-2387875,Bahia,Camacari,Ubs Vilas Abrantes
-2387824,Bahia,Camacari,Ubs Gleba B
-2500248,Bahia,Camacari,Usf De Fonte Das Aguas
-11215,Distrito Federal,Brazlandia,Centro De Saude N 01 Brazlandia
-11509,Distrito Federal,Brazlandia,Psr Incra 08 Brazlandia
-6662358,Distrito Federal,Brazlandia,Ubs 02 Vila Sao Jose
-10731,Distrito Federal,Brasilia,Centro De Saude N 09 Brasilia (Cruzeiro Novo)
-11355,Distrito Federal,Brasilia,Centro De Saude N 15 Brasilia (Vila Planalto)
-2617358,Distrito Federal,Brasilia,Centro De Saude Varjao
 10634,Distrito Federal,Paranoa,Centro De Saude N 01 Paranoa
-6268269,Distrito Federal,Paranoa,Centro De Saude Da Familia 02 - Itapoa
-7170939,Distrito Federal,Recanto Das Emas,Clinica Da Familia N. 01
-7417632,Distrito Federal,Recanto Das Emas,Clinica Da Familia N. 02
-5038669,Distrito Federal,Riacho Fundo,Centro De Saude Da Familia Riacho Fundo Ii
-7114397,Distrito Federal,Samambaia,Clinica Da Familia N. 03
-6921736,Distrito Federal,Samambaia,Clinica Da Familia N. 01 (Samambaia)
+10731,Distrito Federal,Brasilia,Centro De Saude N 09 Brasilia (Cruzeiro Novo)
+11215,Distrito Federal,Brazlandia,Centro De Saude N 01 Brazlandia
+11355,Distrito Federal,Brasilia,Centro De Saude N 15 Brasilia (Vila Planalto)
+11509,Distrito Federal,Brazlandia,Psr Incra 08 Brazlandia
 11568,Distrito Federal,Sobradinho,Clinica Da Familia 01 Nova Colina
-7368985,Distrito Federal,Sobradinho,Clinica Da Familia 02 Complexo Saude/Sobradinho Ii
-2779374,Distrito Federal,Guara,Centro De Saude Da Familia Numero 04  Estrutural
-3402177,Goias,Goiania,Csf Leste Universitario
-2653842,Goias,Goiania,Csf Ville De France
-2506408,Goias,Goiania,Csf Curitiba Iii
-2339420,Goias,Goiania,Csf Vera Cruz I
-3238458,Goias,Goiania,Csf Parque Santa Rita
-2653877,Goias,Goiania,Psf Vale Dos Sonhos
-2340461,Goias,Luziania,Ubsf Alto Das Caraibas
-5983525,Goias,Luziania,Ubsf Parque Santa Fe
-2340437,Goias,Luziania,Ubsf Residencial Copaibas
-6771882,Goias,Luziania,Psf Mandu
-6771912,Goias,Luziania,Ubsf Parque Estrela Dalva Iv
-22721,Minas Gerais,Belo Horizonte,Centro De Saude Vale Do Jatoba
+15474,Parana,Curitiba,Unidade De Saude De Capanema
+16802,Parana,Curitiba,Ums Bom Pastor Psf
+16843,Parana,Curitiba,Sao Jose
+16845,Parana,Curitiba,Ums Sao Braz
+16853,Parana,Curitiba,Ums Sao Jose Psf
+17213,Parana,Curitiba,Jardim Paranaense
+17434,Parana,Curitiba,Esperanca
+20338,Pernambuco,Cabo De Santo Agostinho,Usf Pirapama
+20346,Pernambuco,Cabo De Santo Agostinho,Usf Itapuama
+20389,Pernambuco,Cabo De Santo Agostinho,Usf Charnequinha
+20508,Pernambuco,Cabo De Santo Agostinho,Usf Bela Vista Ii
+22233,Pernambuco,Recife,Us 226 Psf Chao De Estrelas
+22365,Pernambuco,Recife,Usf237 Psf Sitio Das Palmeiras
 22543,Minas Gerais,Belo Horizonte,Maria Madalena Teodoro
 22624,Minas Gerais,Belo Horizonte,Centro De Saude Urucuia
-22756,Minas Gerais,Belo Horizonte,Centro De Saude Vila Cemig
-23965,Minas Gerais,Belo Horizonte,Centro De Saude Pindorama
-23841,Minas Gerais,Belo Horizonte,Centro De Saude Dom Bosco
-23086,Minas Gerais,Belo Horizonte,Cs Pe Fernando De Melo
-2708302,Minas Gerais,Belo Horizonte,Cs Capitao Eduardo
-22861,Minas Gerais,Belo Horizonte,Centro De Saude Novo Horizonte
-2695421,Minas Gerais,Belo Horizonte,Centro De Saude Floramar
 22721,Minas Gerais,Belo Horizonte,Centro De Saude Vale Do Jatoba
-22543,Minas Gerais,Belo Horizonte,Centro De Saude Maria Madalena Teodoro
-22624,Minas Gerais,Belo Horizonte,Centro De Saude Urucuia
 22756,Minas Gerais,Belo Horizonte,Centro De Saude Vila Cemig
-23841,Minas Gerais,Belo Horizonte,Centro De Saude Dom Bosco
-23086,Minas Gerais,Belo Horizonte,Centro De Saude Padre Fernando De Melo
+22861,Minas Gerais,Belo Horizonte,Centro De Saude Novo Horizonte
+23086,Minas Gerais,Belo Horizonte,Cs Pe Fernando De Melo
 23612,Minas Gerais,Belo Horizonte,Centro De Saude Jardim Leblon
 23620,Minas Gerais,Belo Horizonte,Centro De Saude Venda Nova
 23655,Minas Gerais,Belo Horizonte,Centro De Saude Mantiqueira
-2756072,Paraiba,Joao Pessoa,Usf Integrada Jardim Saude
-2399016,Paraiba,Joao Pessoa,Usf Integrada Grotao
-3063577,Paraiba,Joao Pessoa,Usf Integrada Complexo Verdes Mares
-2756102,Paraiba,Joao Pessoa,Usf Integrada Mandacaru
-3015963,Paraiba,Joao Pessoa,Usf Integrada Sao Jose
-2595419,Paraiba,Campina Grande,Ubs Raimundo Carneiro
+23841,Minas Gerais,Belo Horizonte,Centro De Saude Dom Bosco
+23965,Minas Gerais,Belo Horizonte,Centro De Saude Pindorama
+1111111,Sao Paulo,Sao Paulo,Clinica Imaginario De Sao Paulo
+2012871,Amazonas,Manaus,Ubs Lourenco Borghi
+2012898,Amazonas,Manaus,Ubs Frei Valerio
+2013517,Amazonas,Manaus,Ubs Santa Luzia
+2013843,Amazonas,Manaus,Ubs Theodomiro Garrido
+2013916,Amazonas,Manaus,Ubs Dr.Alfredo Campos
+2015285,Amazonas,Manaus,Ubs Jose Amazonas Palhano
+2015323,Amazonas,Manaus,Ubs Mansour Bulbol
+2015455,Amazonas,Manaus,Ubs Gebes De Melo Medeiro Filho
+2016109,Amazonas,Manaus,Psr N Sr De Fatima
+2016117,Amazonas,Manaus,Ubs Rural Nossa Sra. Do Livramento
+2019914,Amapa,Macapa,Pmm Ubs Sao Joaquim Do Pacui
+2020025,Amapa,Macapa,Pmm Ubs Do Curiau
+2020602,Amapa,Macapa,Pmm Ubs Dr Lelio Silva
+2021056,Amapa,Macapa,Pmm Ubs Hozanan De Souza
+2021161,Amapa,Macapa,Pmm Ubs Pacoval
+2035995,Sao Paulo,Guarulhos,Ubs Jardim Rosa De Franca
+2036002,Sao Paulo,Guarulhos,Ubs Jardim Flor Da Montanha
+2040077,Sao Paulo,Guarulhos,Ubs Cummins
+2054523,Sao Paulo,Guarulhos,Ubs Aracilia
+2237911,Rio Grande Do Sul,Porto Alegre,Usf Safira Nova
+2264404,Rio Grande Do Sul,Porto Alegre,Usf Castelo
+2265028,Rio Grande Do Sul,Porto Alegre,Usf Estrada Dos Alpes
+2265176,Rio Grande Do Sul,Porto Alegre,Usf Santissima Trindade
+2269376,Rio De Janeiro,Rio De Janeiro,Sms Cms Heitor Beltrao Ap 22
+2280795,Rio De Janeiro,Rio De Janeiro,Sms Cms Joao Barros Barreto Ap 21
+2288346,Rio De Janeiro,Rio De Janeiro,Sms Cms Marcolino Candau Ap 10
+2288370,Rio De Janeiro,Rio De Janeiro,Sms Cms Piindaro De Carvalho Rodrigues Ap 21
+2334186,Paraiba,Cabedelo,Usf Siqueira Campos
+2339420,Goias,Goiania,Csf Vera Cruz I
+2340437,Goias,Luziania,Ubsf Residencial Copaibas
+2340461,Goias,Luziania,Ubsf Alto Das Caraibas
+2343002,Paraiba,Cabedelo,Usf Pe. Alfredo Barbosa
+2343010,Paraiba,Cabedelo,Usf Renascer Ii
+2344785,Pernambuco,Olinda,Usf Beira Mangue I E Ii
+2344947,Pernambuco,Olinda,Usf Jardim Brasil V Equipe I E Ii
+2345013,Pernambuco,Olinda,Usf Alto Do Sol Nascente
+2345293,Pernambuco,Olinda,Usf Jardim Fragoso Beira Rio I E Ii
+2356716,Paraiba,Cabedelo,Usf Ponta De Mato
 2362325,Paraiba,Campina Grande,Ubs Adalberto Cesar
 2362643,Paraiba,Campina Grande,Esf Nely Maia
 2362759,Paraiba,Campina Grande,Ubs Benjamim B. Da Silva
-5053129,Paraiba,Campina Grande,Galante Ii
-2343010,Paraiba,Cabedelo,Usf Renascer Ii
-7480415,Paraiba,Cabedelo,Usf Oceania Vi
-2356716,Paraiba,Cabedelo,Usf Ponta De Mato
-2343002,Paraiba,Cabedelo,Usf Pe. Alfredo Barbosa
-2334186,Paraiba,Cabedelo,Usf Siqueira Campos
-16843,Parana,Curitiba,Sao Jose
-17434,Parana,Curitiba,Esperanca
-17213,Parana,Curitiba,Jardim Paranaense
-15474,Parana,Curitiba,Unidade De Saude De Capanema
-16802,Parana,Curitiba,Ums Bom Pastor Psf
-5446392,Parana,Curitiba,Ums Sambaqui Psf
-3862224,Parana,Curitiba,Ums Umbara Psf
-16853,Parana,Curitiba,Ums Sao Jose Psf
-16845,Parana,Curitiba,Ums Sao Braz
-7563736,Pernambuco,Recife,Upinha Acs Maria Rita Da Silva
-22365,Pernambuco,Recife,Usf237 Psf Sitio Das Palmeiras
-22233,Pernambuco,Recife,Us 226 Psf Chao De Estrelas
+2387824,Bahia,Camacari,Ubs Gleba B
+2387875,Bahia,Camacari,Ubs Vilas Abrantes
+2387883,Bahia,Camacari,Usf Nova Vitoria
+2387891,Bahia,Camacari,Usf Phoc Iii
+2399016,Paraiba,Joao Pessoa,Usf Integrada Grotao
+2500248,Bahia,Camacari,Usf De Fonte Das Aguas
+2506408,Goias,Goiania,Csf Curitiba Iii
+2595419,Paraiba,Campina Grande,Ubs Raimundo Carneiro
+2617358,Distrito Federal,Brasilia,Centro De Saude Varjao
+2653419,Bahia,Salvador,Usf Boa Vista Do Lobato
+2653842,Goias,Goiania,Csf Ville De France
+2653877,Goias,Goiania,Psf Vale Dos Sonhos
 2679787,Pernambuco,Recife,Us Psf 288 Morro De Conceicao
-3562581,Pernambuco,Recife,Us 316 Psf Bernard Van Leer
-2345293,Pernambuco,Olinda,Usf Jardim Fragoso Beira Rio I E Ii
-5915201,Pernambuco,Olinda,Usf Vila Sao Bento
-2344947,Pernambuco,Olinda,Usf Jardim Brasil V Equipe I E Ii
-2345013,Pernambuco,Olinda,Usf Alto Do Sol Nascente
-2344785,Pernambuco,Olinda,Usf Beira Mangue I E Ii
-116,Pernambuco,Cabo De Santo Agostinho,Usf Charneca Ii
-20508,Pernambuco,Cabo De Santo Agostinho,Usf Bela Vista Ii
-20389,Pernambuco,Cabo De Santo Agostinho,Usf Charnequinha
-20338,Pernambuco,Cabo De Santo Agostinho,Usf Pirapama
-20346,Pernambuco,Cabo De Santo Agostinho,Usf Itapuama
-256,Pernambuco,Cabo De Santo Agostinho,Usf Santa Rosa
-2288346,Rio De Janeiro,Rio De Janeiro,Sms Cms Marcolino Candau Ap 10
-2269376,Rio De Janeiro,Rio De Janeiro,Sms Cms Heitor Beltrao Ap 22
-6272053,Rio De Janeiro,Rio De Janeiro,Sms Cf Santa Marta Ap 21
-2288370,Rio De Janeiro,Rio De Janeiro,Sms Cms Piindaro De Carvalho Rodrigues Ap 21
-2280795,Rio De Janeiro,Rio De Janeiro,Sms Cms Joao Barros Barreto Ap 21
-6883354,Rio Grande Do Sul,Porto Alegre,Us Santa Marta
-2237911,Rio Grande Do Sul,Porto Alegre,Usf Safira Nova
-2265028,Rio Grande Do Sul,Porto Alegre,Usf Estrada Dos Alpes
-2264404,Rio Grande Do Sul,Porto Alegre,Usf Castelo
-2265176,Rio Grande Do Sul,Porto Alegre,Usf Santissima Trindade
-5473810,Rio Grande Do Sul,Porto Alegre,Usf Lomba Do Pinheiro
-1111111,Sao Paulo,Sao Paulo,Clinica Imaginario De Sao Paulo
+2695421,Minas Gerais,Belo Horizonte,Centro De Saude Floramar
+2708302,Minas Gerais,Belo Horizonte,Cs Capitao Eduardo
+2756072,Paraiba,Joao Pessoa,Usf Integrada Jardim Saude
+2756102,Paraiba,Joao Pessoa,Usf Integrada Mandacaru
+2779374,Distrito Federal,Guara,Centro De Saude Da Familia Numero 04  Estrutural
 2786788,Sao Paulo,Sao Paulo,Ubs Barro Branco
-6879810,Sao Paulo,Sao Paulo,Ubs Nova Esperanca Paulistano Ii
 2787040,Sao Paulo,Sao Paulo,Ubs Fazenda Da Juta I
-2789019,Sao Paulo,Sao Paulo,Ubs Vila Jaguara
 2787105,Sao Paulo,Sao Paulo,Ubs Horizonte Azul
-2054523,Sao Paulo,Guarulhos,Ubs Aracilia
+2789019,Sao Paulo,Sao Paulo,Ubs Vila Jaguara
+2799189,Bahia,Lauro De Freitas,Ubs Antonio Carlos Rodrigues
+2799243,Bahia,Lauro De Freitas,Ubs Irma Dulce
+3015963,Paraiba,Joao Pessoa,Usf Integrada Sao Jose
+3044866,Bahia,Lauro De Freitas,Usf Espaco Cidadao
+3063577,Paraiba,Joao Pessoa,Usf Integrada Complexo Verdes Mares
+3238458,Goias,Goiania,Csf Parque Santa Rita
 3323005,Sao Paulo,Guarulhos,Ubs Ponte Alta
-2040077,Sao Paulo,Guarulhos,Ubs Cummins
-2036002,Sao Paulo,Guarulhos,Ubs Jardim Flor Da Montanha
-2035995,Sao Paulo,Guarulhos,Ubs Jardim Rosa De Franca
+3331806,Acre,Rio Branco,Usf Raimunda Dionisio
+3402177,Goias,Goiania,Csf Leste Universitario
+3562581,Pernambuco,Recife,Us 316 Psf Bernard Van Leer
+3862224,Parana,Curitiba,Ums Umbara Psf
+5038669,Distrito Federal,Riacho Fundo,Centro De Saude Da Familia Riacho Fundo Ii
+5053129,Paraiba,Campina Grande,Galante Ii
+5388376,Amazonas,Manaus,Ubs Santo Antonio
+5446392,Parana,Curitiba,Ums Sambaqui Psf
+5473810,Rio Grande Do Sul,Porto Alegre,Usf Lomba Do Pinheiro
+5672198,Bahia,Lauro De Freitas,Usf De Caji - Vida Nova
+5915201,Pernambuco,Olinda,Usf Vila Sao Bento
+5983525,Goias,Luziania,Ubsf Parque Santa Fe
+6268269,Distrito Federal,Paranoa,Centro De Saude Da Familia 02 - Itapoa
+6272053,Rio De Janeiro,Rio De Janeiro,Sms Cf Santa Marta Ap 21
+6363857,Bahia,Salvador,Usf Alto De Coutos Ii
+6585604,Amapa,Macapa,Ppm Ubs Marabaixo
+6662358,Distrito Federal,Brazlandia,Ubs 02 Vila Sao Jose
+6771882,Goias,Luziania,Psf Mandu
+6771912,Goias,Luziania,Ubsf Parque Estrela Dalva Iv
+6879810,Sao Paulo,Sao Paulo,Ubs Nova Esperanca Paulistano Ii
+6883354,Rio Grande Do Sul,Porto Alegre,Us Santa Marta
+6921736,Distrito Federal,Samambaia,Clinica Da Familia N. 01 (Samambaia)
+7114397,Distrito Federal,Samambaia,Clinica Da Familia N. 03
+7120761,Bahia,Lauro De Freitas,Usf Vila Praiana
+7170939,Distrito Federal,Recanto Das Emas,Clinica Da Familia N. 01
+7368985,Distrito Federal,Sobradinho,Clinica Da Familia 02 Complexo Saude/Sobradinho Ii
+7417632,Distrito Federal,Recanto Das Emas,Clinica Da Familia N. 02
+7480415,Paraiba,Cabedelo,Usf Oceania Vi
+7563736,Pernambuco,Recife,Upinha Acs Maria Rita Da Silva
+7565089,Acre,Rio Branco,Usf Maria De Jesus Iii
+7592450,Bahia,Salvador,Usf Mussurunga I
+7799632,Acre,Rio Branco,Usf Valdeisa Correia Valdez
+7847866,Amazonas,Manaus,Ubs Fatima Andrade
+7872836,Bahia,Salvador,Usf Vale Do Cambonas
+7938209,Acre,Rio Branco,Usf Manoel Bezerra Ii
+7942559,Acre,Rio Branco,Usf Luiz Gonzaga Ii
