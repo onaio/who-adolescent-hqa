@@ -39,8 +39,8 @@ FORM_MAP = {
 
 def usage(argv):
     cmd = os.path.basename(argv[0])
-    print('usage: %s <config_uri>\n'
-          '(example: "%s development.ini")' % (cmd, cmd))
+    print('usage: %s <config_uri> <form_id_string>\n'
+          '(example: "%s development.ini adolescent_client_V3")' % (cmd, cmd))
     sys.exit(1)
 
 
