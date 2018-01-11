@@ -2,8 +2,16 @@ import datetime
 
 from pyramid import testing
 from whoahqa.tests import IntegrationTestBase
-from whoahqa.models import Clinic, Municipality, ReportingPeriod, State
-from whoahqa.views.push_data import push_facilities, push_report_periods
+from whoahqa.models import (
+    Clinic,
+    Municipality,
+    ReportingPeriod,
+    State,
+    Location)
+from whoahqa.views.push_data import (
+    push_facilities,
+    push_report_periods,
+    push_locations)
 
 
 class TestPushData(IntegrationTestBase):
@@ -41,6 +49,35 @@ class TestPushData(IntegrationTestBase):
         response = push_facilities(self.request)
 
         self.assertEqual(1, len(response['rows']))
+
+    def test_push_locations_without_data(self):
+        response = push_locations(self.request)
+
+        self.assertListEqual(
+            response['header'],
+            ['name', 'location_type', 'parent'])
+
+        self.assertEqual(0, len(response['rows']))
+
+    def test_push_locations_without_parents(self):
+        location_1 = Location(
+            id=20,
+            name='Location 1',
+            parent_id=None,
+            location_type='state',
+            parent=None)
+        location_2 = Location(
+            id=26,
+            name='Location 2',
+            parent_id=None,
+            location_type='state',
+            parent=None)
+
+        location_1.save()
+        location_2.save()
+
+        response = push_locations(self.request)
+        self.assertEqual(2, len(response['rows']))
 
     def test_push_report_periods_without_data(self):
         response = push_report_periods(self.request)
