@@ -20,6 +20,7 @@ addons:
 
 python:
   - '2.7'
+  
 
 services:
   - postgresql
@@ -33,7 +34,7 @@ before_install:
 install:
   - sudo apt-get install python-psycopg2
   - sudo -H pip install -U requests[security]
-  - which pg_config
+  - which psql
   - pip install -qr requirements.txt -vvvv
 
 before_script:
