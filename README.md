@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/onaio/who-adolescent-hqa.svg?branch=master)](https://travis-ci.org/onaio/who-adolescent-hqa)
+
 # WHO-AHQA README
 
 This project was built by Ona Systems Inc for the Brazilian Ministry of Health and the World Health Organization.
