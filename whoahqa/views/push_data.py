@@ -55,7 +55,7 @@ def push_report_periods(request):
     header = ['reporting_period']
     rows = []
 
-    reporting_periods = ReportingPeriod.get_available_periods()
+    reporting_periods = ReportingPeriod.get_active_periods()
 
     [rows.append([period.form_xpath]) for period in reporting_periods]
 

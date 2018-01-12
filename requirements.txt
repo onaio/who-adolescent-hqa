@@ -31,11 +31,11 @@ passlib==1.6.2
 pep8==1.5.7
 peppercorn==0.4
 polib==1.0.5
-psycopg2==2.5.4
+psycopg2==2.7.3.1
 pycrypto==2.6.1
 
 # py-enketo
--e git+git@github.com:onaio/py-enketo.git@0.1a0#egg=pyenketo
+-e git+https://github.com/onaio/py-enketo.git#egg=pyenketo
 pyflakes==0.8.1
 pyramid==1.8.3
 pyramid-debugtoolbar==2.2
@@ -54,7 +54,6 @@ translationstring==1.1
 uWSGI==2.0.15
 venusian==1.0
 waitress==0.8.9
-wsgiref==0.1.2
 zope.deprecation==4.1.1
 zope.interface==4.1.1
 zope.sqlalchemy==0.7.5
