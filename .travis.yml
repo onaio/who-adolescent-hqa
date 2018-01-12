@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 language: python
 addons:
-  postgresql: 9.5.7
+  postgresql: 9.5
   apt:
     packages:
       - build-essential
@@ -31,15 +31,15 @@ before_install:
   - sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install postgresql-9.5-postgis-2.2
   - export WHOAHQA_COUNTRY_SETTING=whoahqa.constants.brazil_characteristics
 
-install:
-  - sudo apt-get install python-psycopg2
-  - sudo -H pip install -U requests[security]
-  - which psql
-  - pip install -qr requirements.txt -vvvv
+# install:
+#   - sudo apt-get install python-psycopg2
+#   - sudo -H pip install -U requests[security]
+#   - which psql
+#   - pip install -qr requirements.txt -vvvv
 
 before_script:
-  - psql -c "CREATE USER whoahqa WITH PASSWORD 'whoahqa';" -h 127.0.0.1 -U postgres postgres
-  - psql -c "CREATE DATABASE whoahqa_test OWNER whoahqa;" -h 127.0.0.1 -U postgres postgres
+  - psql -U postgres -c "CREATE USER whoahqa WITH PASSWORD 'whoahqa'"
+  - psql -U postgres -c "CREATE DATABASE whoahqa_test OWNER whoahqa"
 
 script:
   - python setup.py test
