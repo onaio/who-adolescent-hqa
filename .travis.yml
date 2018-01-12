@@ -13,10 +13,13 @@ addons:
       - python-pip
       - python-virtualenv
       - python-dev
+      - libffi-dev
+      - libssl-dev
+      - postgresql-server-dev-all
+      - libcurl4-openssl-dev
 
 python:
   - '2.7'
-  
 
 services:
   - postgresql
