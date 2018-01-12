@@ -30,12 +30,6 @@ before_install:
   - sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install postgresql-9.5-postgis-2.2
   - export WHOAHQA_COUNTRY_SETTING=whoahqa.constants.brazil_characteristics
 
-# install:
-#   - sudo apt-get install python-psycopg2
-#   - sudo -H pip install -U requests[security]
-#   - which psql
-#   - pip install -qr requirements.txt -vvvv
-
 before_script:
   - psql -U postgres -c "CREATE USER whoahqa WITH PASSWORD 'whoahqa'"
   - psql -U postgres -c "CREATE DATABASE whoahqa_test OWNER whoahqa"
