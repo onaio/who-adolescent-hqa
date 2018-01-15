@@ -1,4 +1,5 @@
 import json
+import itertools
 
 from sqlalchemy import (
     Boolean,
@@ -54,8 +55,11 @@ class Submission(Base):
 
     # tools to handler mapping
     HANDLER_TO_XFORMS_MAPPING = (
-        (ClinicReportHandler,
-         [tool for tool, label in constants.CLIENT_TOOLS]),
+        (ClinicReportHandler, [
+            tool
+            for tool, _ in itertools.chain(
+                constants.CLIENT_TOOLS,
+                constants.CLIENT_TOOLS_V2)]),
         (ClinicRegistrationHandler, [constants.CLINIC_REGISTRATION]),
     )
 

@@ -2,8 +2,14 @@ from pyramid.view import (
     view_config,
 )
 from pyramid.security import NO_PERMISSION_REQUIRED
-from whoahqa.models import DBSession, ReportingPeriod, State
-from ..utils import normalizeString, format_location_name as fmt
+from whoahqa.constants import permissions as perms
+from whoahqa.models import (
+    DBSession,
+    ReportingPeriod,
+    State,
+    Location)
+
+from ..utils import normalizeString, format_location_name as fmt, xstr
 
 
 @view_config(
@@ -58,6 +64,29 @@ def push_report_periods(request):
     reporting_periods = ReportingPeriod.get_active_periods()
 
     [rows.append([period.form_xpath]) for period in reporting_periods]
+
+    return {
+        'header': header,
+        'rows': rows
+    }
+
+
+@view_config(
+    route_name='push',
+    match_param='action=locations.csv',
+    request_method='GET',
+    renderer='csv',
+    permission=perms.CAN_LIST_STATE)
+def push_locations(request):
+    locations = Location.all()
+    header = ['name', 'location_type', 'parent']
+    rows = []
+
+    for location in locations:
+        rows.append([
+            location.name,
+            location.location_type,
+            xstr(location.parent)])
 
     return {
         'header': header,
