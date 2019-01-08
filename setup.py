@@ -75,6 +75,7 @@ setup(name='who-ahqa',
       import_submissions = whoahqa.scripts.submission_importer:main
       import_health_data = whoahqa.scripts.import_health_data:main
       delete_clinics = whoahqa.scripts.clinic_helpers:main
+      delete_submissions = whoahqa.scripts.submission_helpers:main
       """,
       message_extractors=extractors
       )
