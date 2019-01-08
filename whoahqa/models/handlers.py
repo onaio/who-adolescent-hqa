@@ -18,8 +18,17 @@ class ClinicReportHandler(BaseSubmissionHandler):
     def parse_data(cls, raw_data):
         # split characteristic on [space] for multiple characteristic
         # submissions
-        characteristics = raw_data.get(
-            constants.CHARACTERISTIC, '').split(" ")
+        data_period = raw_data.get(constants.PERIOD_IDENTIFIER, None);
+        if data_period is None:
+            return None
+
+        if data_period == '2017':
+            characteristics = raw_data.get(
+            constants.CHARACTERISTIC, ''
+            ).split(" ")
+        else:
+            characteristics = [key.split('/')[2] for key, _ in raw_data.items()
+            if constants.CHARACTERISTIC.lower() in key.lower()]
         return (raw_data.get(constants.CLINIC_IDENTIFIER),
                 characteristics,
                 raw_data.get(constants.XFORM_ID),)

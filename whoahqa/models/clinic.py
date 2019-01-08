@@ -312,8 +312,12 @@ class Clinic(Base):
             for score_xpath, client_tools in mapping.items():
                 # generate characteristic tool scores
                 for client_tool_id in client_tools:
-                    recommended_sample_frame =\
-                        constants.RECOMMENDED_SAMPLE_FRAMES[client_tool_id]
+                    if client_tool_id in constants.RECOMMENDED_SAMPLE_FRAMES:
+                        recommended_sample_frame =\
+                            constants.RECOMMENDED_SAMPLE_FRAMES[client_tool_id]
+                    else:
+                        recommended_sample_frame =\
+                            constants.RECOMMENDED_SAMPLE_FRAMES_V2[client_tool_id]
                     num_questions = (constants.QUESTION_COUNT
                                      [characteristic][client_tool_id])
 
